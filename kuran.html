@@ -1,0 +1,1432 @@
+<!doctype html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+        <title>SADECE KURAN</title>
+        <link rel="icon" type="image/png" href="/logokuran2.jpg"/>
+        <link rel="apple-touch-icon" href="/logokuran2.jpg">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Roboto", sans-serif;
+                background: linear-gradient(45deg, #343a40, #495057, #6c757d, #343a40);
+                background-size: 400% 400%;
+                animation: gradientBG 15s ease infinite;
+                color: #ced4da;
+                line-height: 1.6;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                transition: all 0.5s ease;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            body::-webkit-scrollbar {
+                display: none;
+            }
+            #splash-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #6c757d;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                animation: fadeOutSplash 1s ease forwards 2s;
+            }
+            #splash-screen img {
+                width: 120px;
+                animation: fadeInLogo 1.5s ease-in-out;
+            }
+            #splash-screen span {
+                font-size: 0.9rem;
+                letter-spacing: 2px;
+                color: #ced4da;
+                opacity: 0;
+                animation: fadeInText 1s ease-out forwards 0.5s;
+            }
+            header {
+                background: rgba(73, 80, 87, 0.52);
+                padding: 15px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            header h1 {
+                font-size: 1.8rem;
+                font-family: "Verdana", sans-serif;
+                font-weight: 700;
+                color: #ced4da;
+                letter-spacing: 1px;
+                text-shadow:
+                    0 0 5px rgba(206, 212, 218, 0.7),
+                    0 0 10px rgba(206, 212, 218, 0.5),
+                    0 0 15px rgba(206, 212, 218, 0.3);
+                flex-grow: 1;
+                text-align: center;
+            }
+            .container {
+                flex: 1;
+                width: 100%;
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #controls {
+                background: #495057;
+                padding: 15px;
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+                position: relative;
+            }
+            #search {
+                flex: 1;
+                padding: 10px;
+                border: 1px solid #6c757d;
+                border-radius: 8px;
+                background: #212529;
+                color: #ced4da;
+                font-size: 0.9rem;
+                width: 100%;
+                transition: all 0.3s ease;
+            }
+            #search:focus {
+                outline: none;
+                border-color: #adb5bd;
+                background: #343a40;
+                box-shadow: 0 0 8px rgba(173, 181, 189, 0.2);
+                animation: pulseSearch 1.5s infinite;
+            }
+            #author-select {
+                padding: 12px;
+                border: none;
+                border-radius: 10px;
+                background: #212529;
+                color: #ced4da;
+                font-size: 0.9rem;
+                width: 100%;
+                cursor: pointer;
+                appearance: none;
+                background-image: linear-gradient(45deg, #212529, #343a40);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                transition: all 0.4s ease;
+                position: relative;
+                z-index: 1;
+            }
+            #author-select:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(173, 181, 189, 0.3);
+                background-image: linear-gradient(45deg, #343a40, #495057);
+            }
+            #author-select:focus {
+                outline: none;
+                box-shadow: 0 0 10px rgba(173, 181, 189, 0.5);
+                background-image: linear-gradient(45deg, #495057, #6c757d);
+            }
+            #author-select option {
+                background: #343a40;
+                color: #ced4da;
+                padding: 10px;
+                transition: all 0.3s ease;
+            }
+            #author-select option:hover {
+                background: #6c757d;
+            }
+            #loading-bar {
+                display: none;
+                width: 100%;
+                height: 6px;
+                background: #343a40;
+                border-radius: 3px;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+            #loading-bar .progress {
+                width: 0%;
+                height: 100%;
+                background: linear-gradient(90deg, #6c757d, #adb5bd);
+                transition: width 0.3s ease-in-out;
+                animation: loadingProgress 2s infinite;
+            }
+            button {
+                padding: 10px;
+                border: none;
+                border-radius: 8px;
+                background: #adb5bd;
+                color: #ffffff;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                width: 100%;
+            }
+            button:hover {
+                background: #868e96;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(134, 142, 150, 0.3);
+            }
+            #surahs {
+                width: 100%;
+                display: block;
+            }
+            .surah {
+                background: #495057;
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: 12px;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+                opacity: 0;
+                transform: translateX(-50px);
+                animation: slideInSurah 0.5s ease-out forwards;
+                animation-delay: calc(0.1s * var(--index));
+            }
+            .surah:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            }
+            .surah h2 {
+                font-size: 1.2rem;
+                font-weight: 400;
+                color: #ced4da;
+            }
+            .verse-result {
+                background: #495057;
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: 12px;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+            }
+            .verse-result:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            }
+            #verse-panel {
+                width: 100%;
+                background: #343a40;
+                padding: 25px;
+                border-radius: 16px;
+                display: none;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+                position: relative;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(5px);
+            }
+            #verse-panel.active {
+                display: block;
+                animation: slideInDown 0.4s ease-out;
+            }
+            #verse-panel h3 {
+                font-size: 1.6rem;
+                color: #ced4da;
+                margin-bottom: 20px;
+                font-weight: 400;
+                text-align: center;
+                letter-spacing: 0.5px;
+            }
+            #close-panel {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 30px;
+                height: 30px;
+                background: #495057;
+                border: none;
+                border-radius: 50%;
+                color: #ced4da;
+                font-size: 1rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+            #close-panel:hover {
+                background: #6c757d;
+                transform: scale(1.1);
+            }
+            .verse {
+                padding: 12px 0;
+                border-bottom: 1px solid #6c757d;
+                font-size: 1rem;
+                color: #ced4da;
+                transition: all 0.3s ease;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+                cursor: pointer;
+            }
+            .verse:hover {
+                background: #495057;
+                padding-left: 8px;
+            }
+            .verse:last-child {
+                border-bottom: none;
+            }
+            .verse-actions {
+                display: none;
+                gap: 8px;
+                transition: all 0.3s ease;
+                z-index: 1;
+            }
+            .verse:hover .verse-actions {
+                display: flex;
+            }
+            .verse .favorite-btn,
+            .verse .share-btn {
+                background: none;
+                border: none;
+                color: #ced4da;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                padding: 4px;
+            }
+            .verse .favorite-btn:hover,
+            .verse .share-btn:hover {
+                color: #ffffff;
+                transform: scale(1.1);
+            }
+            .verse .favorite-btn.active {
+                color: #ffd700;
+            }
+            #verse-detail-panel {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 95%;
+                max-width: 800px;
+                max-height: 90vh;
+                background: rgb(73, 80, 87);
+                padding: 25px;
+                border-radius: 16px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+                display: none;
+                z-index: 2000;
+                transition: all 0.4s ease;
+                backdrop-filter: blur(5px);
+                overflow-y: auto;
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            #verse-detail-panel::-webkit-scrollbar {
+                display: none;
+            }
+            #verse-detail-panel.active {
+                display: block;
+                animation: fadeInSingleVerse 0.5s ease-out;
+            }
+            #verse-detail-panel h3 {
+                font-size: 1.5rem;
+                color: #ced4da;
+                margin-bottom: 20px;
+                font-weight: 400;
+                text-align: center;
+                letter-spacing: 0.5px;
+            }
+            #verse-detail-panel .selected-translation {
+                font-size: 1.1rem;
+                color: #ced4da;
+                margin-bottom: 20px;
+                line-height: 1.8;
+                padding: 15px;
+                background: rgba(52, 58, 64, 0.89);
+                border-radius: 8px;
+                text-align: center;
+            }
+            #verse-detail-panel .other-translations {
+                font-size: 1rem;
+                color: #ced4da;
+                line-height: 1.6;
+            }
+            #verse-detail-panel .other-translations div {
+                margin-bottom: 10px;
+                padding: 10px;
+                background: rgba(52, 58, 64, 0.5);
+                border-radius: 8px;
+            }
+            #verse-detail-panel .back-btn {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 30px;
+                height: 30px;
+                background: #6c757d;
+                border: none;
+                border-radius: 50%;
+                color: #ffffff;
+                font-size: 1rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+            #verse-detail-panel .back-btn:hover {
+                background: #adb5bd;
+                transform: scale(1.1);
+            }
+            #verse-detail-panel .nav-btn {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 40px;
+                height: 40px;
+                background: #6c757d;
+                border: none;
+                border-radius: 50%;
+                color: #ffffff;
+                font-size: 1.2rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                z-index: 2100;
+            }
+            #verse-detail-panel .nav-btn:hover {
+                background: #adb5bd;
+                transform: translateY(-50%) scale(1.1);
+            }
+            #prev-verse-btn {
+                left: 10px;
+            }
+            #next-verse-btn {
+                right: 10px;
+            }
+            #favorites {
+                width: 100%;
+                background: #495057;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                color: #ced4da;
+                display: none;
+            }
+            #favorites .verse {
+                color: #ffffff;
+            }
+            #favorites h2 {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+            }
+            #favorites-list .verse {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            #back-to-surahs {
+                margin-top: 10px;
+            }
+            footer {
+                background: #495057;
+                color: #ced4da;
+                text-align: center;
+                padding: 10px;
+                font-size: 0.8rem;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            }
+            #theme-toggle {
+                width: 40px;
+                height: 40px;
+                border: none;
+                border-radius: 50%;
+                background: #212529;
+                color: #ffffff;
+                font-size: 1.2rem;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #theme-toggle:hover {
+                background: #343a40;
+                transform: scale(1.1);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            }
+            body.day-mode {
+                background: linear-gradient(45deg, #e8ecef, #ced4da, #adb5bd, #e8ecef);
+                background-size: 400% 400%;
+                animation: gradientBG 15s ease infinite;
+                color: #333;
+            }
+            body.day-mode header,
+            body.day-mode footer,
+            body.day-mode #controls,
+            body.day-mode .surah,
+            body.day-mode .verse-result,
+            body.day-mode #verse-panel,
+            body.day-mode #verse-detail-panel {
+                background: #ffffff;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            }
+            body.day-mode header h1 {
+                color: #495057;
+                text-shadow:
+                    0 0 5px rgba(108, 117, 125, 0.7),
+                    0 0 10px rgba(108, 117, 125, 0.5),
+                    0 0 15px rgba(108, 117, 125, 0.3);
+            }
+            body.day-mode #search,
+            body.day-mode #author-select {
+                background: #f8f9fa;
+                border-color: #ced4da;
+                color: #495057;
+            }
+            body.day-mode #search:focus,
+            body.day-mode #author-select:focus {
+                background: #ffffff;
+                border-color: #adb5bd;
+                box-shadow: 0 0 8px rgba(108, 117, 125, 0.2);
+            }
+            body.day-mode #author-select {
+                background-image: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            }
+            body.day-mode #author-select:hover {
+                background-image: linear-gradient(45deg, #e9ecef, #ced4da);
+            }
+            body.day-mode #author-select:focus {
+                background-image: linear-gradient(45deg, #ced4da, #adb5bd);
+            }
+            body.day-mode #loading-bar {
+                background: #e9ecef;
+            }
+            body.day-mode #loading-bar .progress {
+                background: linear-gradient(90deg, #6c757d, #5a6268);
+            }
+            body.day-mode button {
+                background: #6c757d;
+            }
+            body.day-mode button:hover {
+                background: #5a6268;
+            }
+            body.day-mode #theme-toggle,
+            body.day-mode .nav-btn {
+                background: rgb(108, 117, 125);
+            }
+            body.day-mode #theme-toggle:hover,
+            body.day-mode .nav-btn:hover {
+                background: #5a6268;
+            }
+            body.day-mode .surah h2,
+            body.day-mode .verse-result,
+            body.day-mode #verse-panel h3,
+            body.day-mode #verse-detail-panel h3,
+            body.day-mode .verse,
+            body.day-mode .selected-translation,
+            body.day-mode .other-translations {
+                color: #495057;
+            }
+            body.day-mode #close-panel {
+                color: #ced4da;
+                background: #6c757d;
+            }
+            body.day-mode #close-panel:hover {
+                background: #5a6268;
+                color: #ffffff;
+            }
+            body.day-mode #verse-detail-panel .back-btn {
+                color: #ffffff;
+                background: #6c757d;
+            }
+            body.day-mode #verse-detail-panel .back-btn:hover {
+                background: #5a6268;
+            }
+            body.day-mode .verse {
+                border-bottom-color: #e9ecef;
+            }
+            body.day-mode .verse:hover {
+                background: #f8f9fa;
+            }
+            body.day-mode .verse .favorite-btn,
+            body.day-mode .verse .share-btn {
+                color: #ced4da;
+            }
+            body.day-mode .verse .favorite-btn:hover,
+            body.day-mode .verse .share-btn:hover {
+                color: #ced4da;
+            }
+            body.day-mode .verse .favorite-btn.active {
+                color: #ffd700;
+            }
+            body.day-mode #verse-detail-panel {
+                background: #495057;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            }
+            body.day-mode #verse-detail-panel .selected-translation {
+                background: rgba(206, 212, 218, 0.1);
+            }
+            body.day-mode #verse-detail-panel .other-translations div {
+                background: rgba(206, 212, 218, 0.1);
+            }
+            .highlight {
+                background-color: #00ff00;
+                color: #000;
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+            @keyframes fadeOutSplash {
+                to {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+            }
+            @keyframes fadeInText {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes fadeInLogo {
+                from {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+            @keyframes slideInSurah {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            @keyframes slideInDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes pulseSearch {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(173, 181, 189, 0.7);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(173, 181, 189, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(173, 181, 189, 0);
+                }
+            }
+            @keyframes fadeInSingleVerse {
+                from {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0.9);
+                }
+                to {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
+            @keyframes gradientBG {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+            @keyframes loadingProgress {
+                0% { width: 0%; }
+                50% { width: 100%; }
+                100% { width: 0%; }
+            }
+            @media (max-width: 768px) {
+                header {
+                    padding: 10px;
+                }
+                header h1 {
+                    font-size: 1.5rem;
+                }
+                .container {
+                    padding: 15px;
+                }
+                #controls {
+                    flex-direction: column;
+                    padding: 10px;
+                }
+                #search,
+                #author-select,
+                button {
+                    width: 100%;
+                    font-size: 0.85rem;
+                }
+                .surah,
+                .verse-result {
+                    padding: 12px;
+                    margin-bottom: 8px;
+                }
+                .surah h2 {
+                    font-size: 1rem;
+                }
+                #verse-panel {
+                    padding: 20px;
+                }
+                #verse-panel h3 {
+                    font-size: 1.4rem;
+                }
+                .verse {
+                    font-size: 0.9rem;
+                    padding: 10px 0;
+                }
+                #verse-detail-panel {
+                    width: 95%;
+                    padding: 20px;
+                    max-height: 85vh;
+                }
+                #verse-detail-panel h3 {
+                    font-size: 1.3rem;
+                }
+                #verse-detail-panel .selected-translation {
+                    font-size: 1rem;
+                    padding: 12px;
+                }
+                #verse-detail-panel .other-translations {
+                    font-size: 0.9rem;
+                }
+                .verse .favorite-btn,
+                .verse .share-btn {
+                    font-size: 0.85rem;
+                    padding: 3px;
+                }
+                footer {
+                    padding: 8px;
+                    font-size: 0.75rem;
+                }
+                #theme-toggle {
+                    width: 35px;
+                    height: 35px;
+                    font-size: 1rem;
+                }
+                #prev-verse-btn {
+                    left: 10px;
+                }
+                #next-verse-btn {
+                    right: 10px;
+                }
+            }
+            @media (max-width: 480px) {
+                header h1 {
+                    font-size: 1.3rem;
+                }
+                #splash-screen img {
+                    width: 100px;
+                }
+                #splash-screen span {
+                    font-size: 0.8rem;
+                }
+                #verse-detail-panel {
+                    width: 98%;
+                    padding: 15px;
+                    max-height: 80vh;
+                }
+                #verse-detail-panel h3 {
+                    font-size: 1.2rem;
+                }
+                #verse-detail-panel .selected-translation {
+                    font-size: 0.9rem;
+                    padding: 10px;
+                }
+                #verse-detail-panel .other-translations {
+                    font-size: 0.85rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="splash-screen">
+            <img src="logo.PNG" alt="Logo" />
+            <span>THE LENG FARKIYLA</span>
+        </div>
+        <header>
+            <h1>SADECE KURAN</h1>
+            <button id="theme-toggle">☾</button>
+        </header>
+        <div class="container">
+            <div id="controls">
+                <input type="text" id="search" placeholder="Sure, ayet veya kelime ara..." />
+                <select id="author-select">
+                    <option value="">Meal Seçin</option>
+                </select>
+                <div id="loading-bar">
+                    <div class="progress"></div>
+                </div>
+                <button id="show-favorites">Favorileri Göster</button>
+            </div>
+            <div id="surahs"></div>
+            <div id="verse-panel">
+                <h3 id="panel-title"></h3>
+                <button id="close-panel">◄</button>
+                <div id="verses"></div>
+            </div>
+            <div id="verse-detail-panel">
+                <button id="back-btn" class="back-btn">◄</button>
+                <button id="prev-verse-btn" class="nav-btn">←</button>
+                <h3 id="verse-detail-title"></h3>
+                <div id="selected-translation" class="selected-translation"></div>
+                <div id="other-translations" class="other-translations"></div>
+                <button id="next-verse-btn" class="nav-btn">→</button>
+            </div>
+            <div id="favorites">
+                <h2>Favori Ayetler</h2>
+                <div id="favorites-list"></div>
+                <button id="back-to-surahs">Surelere Dön</button>
+            </div>
+        </div>
+        <footer>
+            <p>THE LENG</p>
+        </footer>
+        <script>
+            let quranData = [];
+            let jsonData = {};
+            let selectedAuthor = "Mehmet Okuyan";
+            const totalSurahs = 114;
+
+            // Sure isimleri haritası (şapkasız harflerle)
+            const surahNames = {
+                1: "Fatiha",
+                2: "Bakara",
+                3: "Al-i Imran",
+                4: "Nisa",
+                5: "Maide",
+                6: "Enam",
+                7: "Araf",
+                8: "Enfal",
+                9: "Tevbe",
+                10: "Yunus",
+                11: "Hud",
+                12: "Yusuf",
+                13: "Rad",
+                14: "Ibrahim",
+                15: "Hicr",
+                16: "Nahl",
+                17: "Isra",
+                18: "Kehf",
+                19: "Meryem",
+                20: "Ta-Ha",
+                21: "Enbiya",
+                22: "Hac",
+                23: "Muminun",
+                24: "Nur",
+                25: "Furkan",
+                26: "Suara",
+                27: "Neml",
+                28: "Kasas",
+                29: "Ankebut",
+                30: "Rum",
+                31: "Lokman",
+                32: "Secde",
+                33: "Ahzab",
+                34: "Sebe",
+                35: "Fatir",
+                36: "Yasin",
+                37: "Saffat",
+                38: "Sad",
+                39: "Zumer",
+                40: "Mumin",
+                41: "Fussilet",
+                42: "Sura",
+                43: "Zuhruf",
+                44: "Duhan",
+                45: "Casiye",
+                46: "Ahkaf",
+                47: "Muhammed",
+                48: "Fetih",
+                49: "Hucurat",
+                50: "Kaf",
+                51: "Zariyat",
+                52: "Tur",
+                53: "Necm",
+                54: "Kamer",
+                55: "Rahman",
+                56: "Vakia",
+                57: "Hadid",
+                58: "Mucadele",
+                59: "Hasr",
+                60: "Mumtehine",
+                61: "Saf",
+                62: "Cuma",
+                63: "Munafikun",
+                64: "Tegabun",
+                65: "Talak",
+                66: "Tahrim",
+                67: "Mulk",
+                68: "Kalem",
+                69: "Hakka",
+                70: "Mearic",
+                71: "Nuh",
+                72: "Cin",
+                73: "Muzzemmil",
+                74: "Muddessir",
+                75: "Kiyame",
+                76: "Insan",
+                77: "Murselat",
+                78: "Nebe",
+                79: "Naziat",
+                80: "Abese",
+                81: "Tekvir",
+                82: "Infitar",
+                83: "Mutaffifin",
+                84: "Insikak",
+                85: "Buruc",
+                86: "Tarik",
+                87: "Ala",
+                88: "Gasiye",
+                89: "Fecr",
+                90: "Beled",
+                91: "Sems",
+                92: "Leyl",
+                93: "Duha",
+                94: "Insirah",
+                95: "Tin",
+                96: "Alak",
+                97: "Kadr",
+                98: "Beyyine",
+                99: "Zilzal",
+                100: "Adiyat",
+                101: "Karia",
+                102: "Tekasur",
+                103: "Asr",
+                104: "Humeze",
+                105: "Fil",
+                106: "Kureys",
+                107: "Maun",
+                108: "Kevser",
+                109: "Kafirun",
+                110: "Nasr",
+                111: "Tebbet",
+                112: "Ihlas",
+                113: "Felak",
+                114: "Nas"
+            };
+
+            function getSurahName(id) {
+                return surahNames[id] || `Sure ${id}`;
+            }
+
+            function checkStorageAvailability() {
+                try {
+                    const test = "test";
+                    localStorage.setItem(test, test);
+                    localStorage.removeItem(test);
+                    return true;
+                } catch (e) {
+                    console.warn("LocalStorage kullanılamıyor:", e);
+                    return false;
+                }
+            }
+
+            function showLoading() {
+                const loadingBar = document.getElementById("loading-bar");
+                loadingBar.style.display = "block";
+            }
+
+            function hideLoading() {
+                const loadingBar = document.getElementById("loading-bar");
+                loadingBar.style.display = "none";
+            }
+
+            function loadAuthors(data) {
+                const select = document.getElementById("author-select");
+                select.innerHTML = '<option value="">Meal Seçin</option>';
+                const authorsSet = new Set();
+                data.surahs.forEach(surah => {
+                    surah.verses.forEach(verse => {
+                        verse.translations.forEach(trans => {
+                            authorsSet.add(trans.author);
+                        });
+                    });
+                });
+                const authors = Array.from(authorsSet);
+                authors.forEach(author => {
+                    const option = document.createElement("option");
+                    option.value = author;
+                    option.textContent = author;
+                    if (author === selectedAuthor) option.selected = true;
+                    select.appendChild(option);
+                });
+            }
+
+            async function loadQuranData(author) {
+                const cacheKey = `quranData_${author}`;
+                const cachedData = localStorage.getItem(cacheKey);
+
+                showLoading();
+
+                if (cachedData && checkStorageAvailability()) {
+                    const { data } = JSON.parse(cachedData);
+                    quranData = data;
+                    displaySurahs(quranData);
+                    hideLoading();
+                    return;
+                }
+
+                try {
+                    const response = await fetch("kuran_mealleri.json");
+                    if (!response.ok) {
+                        throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
+                    }
+                    jsonData = await response.json();
+
+                    quranData = jsonData.surahs.map(surah => ({
+                        sure: getSurahName(surah.id),
+                        ayetler: surah.verses.map(verse => {
+                            const translation = verse.translations.find(t => t.author === author);
+                            return translation ? `${verse.verse_id}. ${translation.text}` : `${verse.verse_id}. Çeviri bulunamadı`;
+                        })
+                    }));
+
+                    displaySurahs(quranData);
+
+                    if (checkStorageAvailability()) {
+                        try {
+                            localStorage.setItem(
+                                cacheKey,
+                                JSON.stringify({
+                                    data: quranData,
+                                    timestamp: Date.now()
+                                })
+                            );
+                        } catch (storageError) {
+                            console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
+                        }
+                    }
+                } catch (error) {
+                    console.error("JSON yüklenirken hata:", error);
+                    alert("Kuran mealleri yüklenirken bir hata oluştu: " + error.message);
+                } finally {
+                    hideLoading();
+                }
+            }
+
+            function displaySurahs(data) {
+                const surahsDiv = document.getElementById("surahs");
+                surahsDiv.innerHTML = "";
+                if (data.length === 0) {
+                    surahsDiv.innerHTML = "<p>Veri bulunamadı.</p>";
+                    return;
+                }
+                data.forEach((sure, index) => {
+                    const surahDiv = document.createElement("div");
+                    surahDiv.style.setProperty('--index', index);
+                    surahDiv.className = "surah";
+                    surahDiv.innerHTML = `<h2>${sure.sure}</h2>`;
+                    surahDiv.addEventListener("click", () => {
+                        displayVerses(sure.sure, sure.ayetler);
+                        surahsDiv.style.display = "none";
+                    });
+                    surahsDiv.appendChild(surahDiv);
+                });
+            }
+
+            function highlightText(text, searchTerm) {
+                if (!searchTerm) return text;
+                const regex = new RegExp(`(${searchTerm})`, "gi");
+                return text.replace(regex, '<span class="highlight">$1</span>');
+            }
+
+            function displaySearchResults(searchTerm) {
+                const surahsDiv = document.getElementById("surahs");
+                surahsDiv.innerHTML = "";
+
+                // Sure numarası ve ayet numarası ile arama kontrolü (örn: "4 1") veya sure adı ile (örn: "Fatiha 1")
+                const numberMatch = searchTerm.match(/^(\d+)\s+(\d+)$/); // "4 1" gibi
+                const surahVerseMatch = searchTerm.match(/^([a-zA-ZçÇğĞıİöÖşŞüÜ\s-]+)\s+(\d+)$/i); // "Fatiha 1" gibi
+
+                if (numberMatch || surahVerseMatch) {
+                    let surahId, verseId;
+
+                    if (numberMatch) {
+                        // "4 1" gibi sayısal format
+                        surahId = parseInt(numberMatch[1]);
+                        verseId = parseInt(numberMatch[2]);
+                    } else if (surahVerseMatch) {
+                        // "Fatiha 1" gibi sure adı formatı
+                        const surahNameInput = surahVerseMatch[1].trim().toLowerCase();
+                        verseId = parseInt(surahVerseMatch[2]);
+                        surahId = Object.keys(surahNames).find(
+                            (key) => surahNames[key].toLowerCase() === surahNameInput
+                        );
+                    }
+
+                    if (surahId && verseId) {
+                        const surahIndex = surahId - 1; // Sure ID'leri 1'den başladığı için 0 tabanlı diziye çeviriyoruz
+                        if (surahIndex >= 0 && surahIndex < quranData.length) {
+                            const sure = quranData[surahIndex];
+                            const ayet = sure.ayetler[verseId - 1]; // Ayet ID'leri 1'den başladığı için
+                            if (ayet) {
+                                const verseElement = document.createElement("div");
+                                verseElement.className = "verse-result";
+                                verseElement.innerHTML = `${sure.sure}: ${ayet}`;
+                                verseElement.addEventListener("click", (e) => {
+                                    e.stopPropagation();
+                                    displayVerseDetail(sure.sure, ayet, verseId - 1);
+                                    document.getElementById("surahs").style.display = "none";
+                                });
+                                surahsDiv.appendChild(verseElement);
+                                return; // Doğrudan ayeti gösterip fonksiyondan çıkıyoruz
+                            } else {
+                                surahsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
+                                return;
+                            }
+                        } else {
+                            surahsDiv.innerHTML = "<p>Belirtilen sure bulunamadı.</p>";
+                            return;
+                        }
+                    }
+                }
+
+                // Mevcut arama fonksiyonu (sure adı, ayet veya kelime arama)
+                quranData.forEach((sure, surahIndex) => {
+                    if (sure.sure.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        const surahElement = document.createElement("div");
+                        surahElement.className = "surah";
+                        surahElement.innerHTML = `<h2>${highlightText(sure.sure, searchTerm)}</h2>`;
+                        surahElement.addEventListener("click", () => {
+                            displayVerses(sure.sure, sure.ayetler);
+                            surahsDiv.style.display = "none";
+                        });
+                        surahsDiv.appendChild(surahElement);
+                    }
+
+                    sure.ayetler.forEach((ayet, verseIndex) => {
+                        if (ayet.toLowerCase().includes(searchTerm.toLowerCase())) {
+                            const verseElement = document.createElement("div");
+                            verseElement.className = "verse-result";
+                            verseElement.innerHTML = `${sure.sure}: ${highlightText(ayet, searchTerm)}`;
+                            verseElement.addEventListener("click", (e) => {
+                                e.stopPropagation();
+                                displayVerseDetail(sure.sure, ayet, verseIndex);
+                                document.getElementById("surahs").style.display = "none";
+                            });
+                            surahsDiv.appendChild(verseElement);
+                        }
+                    });
+                });
+
+                if (surahsDiv.innerHTML === "") {
+                    surahsDiv.innerHTML = "<p>Sonuç bulunamadı.</p>";
+                }
+            }
+
+            function displayVerses(sureName, ayetler) {
+                const panel = document.getElementById("verse-panel");
+                const panelTitle = document.getElementById("panel-title");
+                const versesDiv = document.getElementById("verses");
+                const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+                panelTitle.textContent = sureName;
+                versesDiv.innerHTML = ayetler
+                    .map((ayet) => {
+                        const isFavorite = favorites.some((f) => f.surah === sureName && f.verse === ayet);
+                        return `
+                <p class="verse" data-verse="${ayet}" data-surah="${sureName}">
+                    <span>${ayet}</span>
+                    <span class="verse-actions">
+                        <button class="favorite-btn ${isFavorite ? "active" : ""}" data-verse="${ayet}" data-surah="${sureName}">★</button>
+                        <button class="share-btn" data-verse="${ayet}" data-surah="${sureName}">↷</button>
+                    </span>
+                </p>`;
+                    })
+                    .join("");
+                panel.classList.add("active");
+
+                document.querySelectorAll(".favorite-btn").forEach((btn) => {
+                    btn.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const verse = btn.dataset.verse;
+                        const surah = btn.dataset.surah;
+                        toggleFavorite(surah, verse, btn);
+                    });
+                });
+
+                document.querySelectorAll(".share-btn").forEach((btn) => {
+                    btn.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const verse = btn.dataset.verse;
+                        const surah = btn.dataset.surah;
+                        shareVerse(surah, verse);
+                    });
+                });
+
+                document.querySelectorAll(".verse").forEach((verse, index) => {
+                    verse.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        displayVerseDetail(sureName, ayetler[index], index);
+                    });
+                });
+
+                document.querySelectorAll('.verse').forEach(verse => {
+                    verse.addEventListener('mouseenter', () => {
+                        verse.querySelector('.verse-actions').style.display = 'flex';
+                    });
+                    verse.addEventListener('mouseleave', () => {
+                        verse.querySelector('.verse-actions').style.display = 'none';
+                    });
+                });
+            }
+
+            function displayVerseDetail(sureName, selectedVerse, verseIndex) {
+                const panel = document.getElementById("verse-detail-panel");
+                const title = document.getElementById("verse-detail-title");
+                const selectedTranslation = document.getElementById("selected-translation");
+                const otherTranslations = document.getElementById("other-translations");
+                const surahIndex = jsonData.surahs.findIndex(s => getSurahName(s.id) === sureName);
+                const verseData = jsonData.surahs[surahIndex].verses[verseIndex];
+                const allTranslations = verseData.translations;
+
+                title.textContent = `${sureName} - Ayet ${verseData.verse_id}`;
+                selectedTranslation.textContent = selectedVerse;
+                otherTranslations.innerHTML = allTranslations
+                    .filter(t => t.author !== selectedAuthor)
+                    .map(t => `<div>${t.author}: ${verseData.verse_id}. ${t.text}</div>`)
+                    .join("");
+
+                panel.classList.add("active");
+                panel.style.display = "block";
+                document.getElementById("verse-panel").classList.remove("active");
+                document.getElementById("surahs").style.display = "none";
+
+                const prevBtn = document.getElementById("prev-verse-btn");
+                const nextBtn = document.getElementById("next-verse-btn");
+                prevBtn.onclick = () => navigateVerse(surahIndex, verseIndex, -1);
+                nextBtn.onclick = () => navigateVerse(surahIndex, verseIndex, 1);
+            }
+
+            function navigateVerse(surahIndex, verseIndex, direction) {
+                let newSurahIndex = surahIndex;
+                let newVerseIndex = verseIndex + direction;
+
+                if (newVerseIndex < 0) {
+                    newSurahIndex--;
+                    if (newSurahIndex < 0) newSurahIndex = jsonData.surahs.length - 1;
+                    newVerseIndex = jsonData.surahs[newSurahIndex].verses.length - 1;
+                } else if (newVerseIndex >= jsonData.surahs[surahIndex].verses.length) {
+                    newSurahIndex++;
+                    if (newSurahIndex >= jsonData.surahs.length) newSurahIndex = 0;
+                    newVerseIndex = 0;
+                }
+
+                const newSureName = getSurahName(jsonData.surahs[newSurahIndex].id);
+                const newVerse = quranData[newSurahIndex].ayetler[newVerseIndex];
+                displayVerseDetail(newSureName, newVerse, newVerseIndex);
+            }
+
+            function toggleFavorite(surah, verse, button) {
+                const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+                const isFavorite = favorites.some((f) => f.surah === surah && f.verse === verse);
+
+                if (isFavorite) {
+                    const updatedFavorites = favorites.filter((f) => !(f.surah === surah && f.verse === verse));
+                    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+                    button.classList.remove("active");
+                } else {
+                    favorites.push({ surah, verse });
+                    localStorage.setItem("favorites", JSON.stringify(favorites));
+                    button.classList.add("active");
+                }
+                displayFavorites();
+            }
+
+            function displayFavorites() {
+                const favoritesDiv = document.getElementById("favorites");
+                const favoritesList = document.getElementById("favorites-list");
+                const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+                favoritesList.innerHTML = favorites
+                    .map(
+                        (f) => `
+                <p class="verse" data-surah="${f.surah}" data-verse="${f.verse}">${f.surah}: ${f.verse}</p>
+            `
+                    )
+                    .join("");
+
+                document.querySelectorAll("#favorites-list .verse").forEach(verse => {
+                    verse.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const surah = verse.dataset.surah;
+                        const verseText = verse.dataset.verse;
+                        const surahIndex = quranData.findIndex(s => s.sure === surah);
+                        const verseIndex = quranData[surahIndex].ayetler.indexOf(verseText);
+                        displayVerseDetail(surah, verseText, verseIndex);
+                        favoritesDiv.style.display = "none";
+                    });
+                });
+            }
+
+            function shareVerse(surah, verse) {
+                const text = `${surah}: ${verse} - Sadece Kuran`;
+                if (navigator.share) {
+                    navigator
+                        .share({
+                            title: "Sadece Kuran",
+                            text: text,
+                            url: window.location.href
+                        })
+                        .catch((err) => console.log("Paylaşım hatası:", err));
+                } else {
+                    alert("Paylaşım desteklenmiyor, metni kopyalayın: " + text);
+                    navigator.clipboard.writeText(text);
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", async () => {
+                try {
+                    const response = await fetch("kuran_mealleri.json");
+                    if (!response.ok) {
+                        throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
+                    }
+                    jsonData = await response.json();
+                    loadAuthors(jsonData);
+                    await loadQuranData(selectedAuthor);
+                    loadTheme();
+                } catch (error) {
+                    console.error("Başlangıçta hata:", error);
+                    alert("Uygulama başlatılırken bir hata oluştu: " + error.message);
+                }
+
+                const prevVerseBtn = document.getElementById("prev-verse-btn");
+                const nextVerseBtn = document.getElementById("next-verse-btn");
+
+                let lastTap = 0;
+                const doubleTapDelay = 300;
+
+                function handleDoubleTap(event) {
+                    const currentTime = new Date().getTime();
+                    const tapGap = currentTime - lastTap;
+
+                    if (tapGap < doubleTapDelay && tapGap > 0) {
+                        event.preventDefault();
+                    }
+                    lastTap = currentTime;
+                }
+
+                prevVerseBtn.addEventListener("touchstart", handleDoubleTap);
+                nextVerseBtn.addEventListener("touchstart", handleDoubleTap);
+
+                document.getElementById("author-select").addEventListener("change", async (e) => {
+                    selectedAuthor = e.target.value;
+                    if (selectedAuthor) {
+                        await loadQuranData(selectedAuthor);
+                        document.getElementById("surahs").style.display = "block";
+                        document.getElementById("verse-panel").classList.remove("active");
+                        document.getElementById("verse-detail-panel").classList.remove("active");
+                        document.getElementById("favorites").style.display = "none";
+                    }
+                });
+
+                document.getElementById("close-panel").addEventListener("click", () => {
+                    const panel = document.getElementById("verse-panel");
+                    const surahsDiv = document.getElementById("surahs");
+                    panel.classList.remove("active");
+                    surahsDiv.style.display = "block";
+                });
+
+                document.getElementById("back-btn").addEventListener("click", () => {
+                    const panel = document.getElementById("verse-detail-panel");
+                    const surahsDiv = document.getElementById("surahs");
+                    const favoritesDiv = document.getElementById("favorites");
+                    panel.classList.remove("active");
+                    panel.style.display = "none";
+                    if (favoritesDiv.style.display === "block") {
+                        favoritesDiv.style.display = "block";
+                    } else {
+                        surahsDiv.style.display = "block";
+                        displaySurahs(quranData);
+                    }
+                });
+
+                document.getElementById("show-favorites").addEventListener("click", () => {
+                    document.getElementById("surahs").style.display = "none";
+                    document.getElementById("verse-panel").classList.remove("active");
+                    document.getElementById("verse-detail-panel").classList.remove("active");
+                    document.getElementById("favorites").style.display = "block";
+                    displayFavorites();
+                });
+
+                document.getElementById("back-to-surahs").addEventListener("click", () => {
+                    document.getElementById("favorites").style.display = "none";
+                    document.getElementById("surahs").style.display = "block";
+                    displaySurahs(quranData);
+                });
+            });
+
+            let searchTimeout;
+            document.getElementById("search").addEventListener("input", (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const searchTerm = e.target.value.trim();
+                    if (searchTerm === "") {
+                        displaySurahs(quranData);
+                        document.getElementById("verse-detail-panel").classList.remove("active");
+                        document.getElementById("verse-detail-panel").style.display = "none";
+                    } else {
+                        displaySearchResults(searchTerm);
+                    }
+                    document.getElementById("verse-panel").classList.remove("active");
+                }, 300);
+            });
+
+            function toggleTheme() {
+                document.body.classList.toggle("day-mode");
+                localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night");
+                updateThemeButton();
+            }
+
+            function loadTheme() {
+                const theme = localStorage.getItem("theme") || "night";
+                if (theme === "day") {
+                    document.body.classList.add("day-mode");
+                }
+                updateThemeButton();
+            }
+
+            function updateThemeButton() {
+                const themeToggle = document.getElementById("theme-toggle");
+                themeToggle.textContent = document.body.classList.contains("day-mode") ? "☀" : "☾";
+            }
+
+            document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+        </script>
+    </body>
+</html>
