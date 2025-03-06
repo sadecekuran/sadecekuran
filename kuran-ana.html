@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+    <title>SADECE KURAN - Makaleler</title>
+    <link rel="icon" type="image/png" href="/logokuran2.jpg"/>
+    <link rel="apple-touch-icon" href="/logokuran2.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Roboto", sans-serif;
+            background: linear-gradient(45deg, #343a40, #495057, #6c757d, #343a40);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #ced4da;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: all 0.5s ease;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body.day-mode {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef, #dee2e6, #f8f9fa);
+            color: #212529;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        header {
+            background: rgba(73, 80, 87, 0.52);
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.day-mode header {
+            background: rgba(248, 249, 250, 0.8);
+            color: #212529;
+        }
+        header h1 {
+            font-size: 1.8rem;
+            font-family: "Verdana", sans-serif;
+            font-weight: 700;
+            color: #ced4da;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(206, 212, 218, 0.7), 0 0 10px rgba(206, 212, 218, 0.5), 0 0 15px rgba(206, 212, 218, 0.3);
+            flex-grow: 1;
+            text-align: center;
+        }
+        body.day-mode header h1 {
+            color: #212529;
+            text-shadow: none;
+        }
+        .menu-icon {
+            font-size: 1.8rem;
+            color: #ced4da;
+            cursor: pointer;
+            padding: 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            display: block;
+        }
+        .menu-icon:hover {
+            transform: rotate(90deg);
+            color: #ffffff;
+        }
+        body.day-mode .menu-icon {
+            color: #212529;
+        }
+        body.day-mode .menu-icon:hover {
+            color: #495057;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: rgba(43, 48, 53, 0.5);
+            padding: 20px;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        body.day-mode .sidebar {
+            background: #ffffff;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar.show {
+            left: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+            margin-top: 60px;
+        }
+        .sidebar ul li {
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+        }
+        .sidebar.show ul li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .sidebar ul li:nth-child(1) { transition-delay: 0.1s; }
+        .sidebar ul li:nth-child(2) { transition-delay: 0.2s; }
+        .sidebar ul li:nth-child(3) { transition-delay: 0.3s; }
+        .sidebar ul li a {
+            color: #ced4da;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        body.day-mode .sidebar ul li a {
+            color: #212529;
+        }
+        .sidebar ul li a:hover {
+            background: #495057;
+            color: #ffffff;
+            transform: translateX(5px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        body.day-mode .sidebar ul li a:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+        .close-menu {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            color: #ced4da;
+            cursor: pointer;
+            padding: 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            background: none;
+            border: none;
+        }
+        .close-menu:hover {
+            transform: rotate(90deg);
+            color: #ffffff;
+        }
+        body.day-mode .close-menu {
+            color: #212529;
+        }
+        body.day-mode .close-menu:hover {
+            color: #495057;
+        }
+        .container {
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #controls {
+            background: #495057;
+            padding: 15px;
+            border-radius: 12px;
+            width: 100%;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        body.day-mode #controls {
+            background: #e9ecef;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        #search {
+            padding: 10px;
+            border: 1px solid #6c757d;
+            border-radius: 8px;
+            background: #212529;
+            color: #ced4da;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        body.day-mode #search {
+            background: #ffffff;
+            border: 1px solid #ced4da;
+            color: #212529;
+        }
+        #search:focus {
+            outline: none;
+            border-color: #adb5bd;
+            background: #343a40;
+            box-shadow: 0 0 8px rgba(173, 181, 189, 0.2);
+            animation: pulseSearch 1.5s infinite;
+        }
+        body.day-mode #search:focus {
+            background: #f8f9fa;
+            border-color: #6c757d;
+            box-shadow: 0 0 8px rgba(108, 117, 125, 0.2);
+        }
+        #filter-and-favorites {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        #category-filter {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #212529;
+            color: #ced4da;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+        body.day-mode #category-filter {
+            background: #ffffff;
+            color: #212529;
+            border: 1px solid #ced4da;
+        }
+        #category-filter:hover {
+            background: #343a40;
+        }
+        body.day-mode #category-filter:hover {
+            background: #f8f9fa;
+        }
+        #show-favorites {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #adb5bd;
+            color: #ffffff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 100px;
+        }
+        body.day-mode #show-favorites {
+            background: #6c757d;
+            color: #ffffff;
+        }
+        #show-favorites:hover {
+            background: #868e96;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(134, 142, 150, 0.3);
+        }
+        body.day-mode #show-favorites:hover {
+            background: #495057;
+        }
+        #articles {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            z-index: 1;
+        }
+        #favorites-list {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            z-index: 1;
+        }
+        .article-preview {
+            background: #495057;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInSurah 0.5s ease-out forwards;
+            animation-delay: calc(0.1s * var(--index));
+            position: relative;
+        }
+        body.day-mode .article-preview {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .article-preview:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .article-preview img.cover {
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .article-preview h2 {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: #ced4da;
+            margin-bottom: 5px;
+        }
+        body.day-mode .article-preview h2 {
+            color: #212529;
+        }
+        .article-preview .meta {
+            font-size: 0.8rem;
+            color: #adb5bd;
+            margin-bottom: 10px;
+        }
+        body.day-mode .article-preview .meta {
+            color: #6c757d;
+        }
+        .article-preview p {
+            font-size: 1rem;
+            color: #ced4da;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        body.day-mode .article-preview p {
+            color: #212529;
+        }
+        .category-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .category-baris { background-color: #4CAF50; }
+        .category-doga { background-color: #2196F3; }
+        .category-adalet { background-color: #F44336; }
+        .category-kavram { background-color: #a600ff; }
+        .category-belirsiz { background-color: #6c757d; }
+        .article-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .article-actions button {
+            background: none;
+            border: none;
+            color: #ced4da;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        body.day-mode .article-actions button {
+            color: #6c757d;
+        }
+        .article-actions button:hover {
+            color: #ffffff;
+        }
+        body.day-mode .article-actions button:hover {
+            color: #212529;
+        }
+        .article-actions .favorite-btn.active {
+            color: #ffd700;
+        }
+        #article-detail {
+            width: 100%;
+            background: #343a40;
+            padding: 25px;
+            border-radius: 16px;
+            display: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 5;
+            position: relative;
+        }
+        body.day-mode #article-detail {
+            background: #ffffff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        #article-detail.show {
+            display: block;
+            animation: slideInDown 0.4s ease-out;
+        }
+        #article-detail img.cover {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 2 / 1;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #article-detail h2 {
+            font-size: 1.8rem;
+            color: #ced4da;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        body.day-mode #article-detail h2 {
+            color: #212529;
+        }
+        #article-detail .meta {
+            font-size: 0.9rem;
+            color: #adb5bd;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        body.day-mode #article-detail .meta {
+            color: #6c757d;
+        }
+        #article-detail .content {
+            font-size: 1.1rem;
+            color: #ced4da;
+            text-align: justify;
+            line-height: 1.8;
+        }
+        body.day-mode #article-detail .content {
+            color: #212529;
+        }
+        #article-detail .content img {
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+        }
+        #article-detail .content p {
+            text-align: justify; /* Her paragrafın iki yana hizalı olmasını garantiler */
+        }
+        #close-article {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 30px;
+            height: 30px;
+            background: #495057;
+            border: none;
+            border-radius: 50%;
+            color: #ced4da;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        body.day-mode #close-article {
+            background: #e9ecef;
+            color: #212529;
+        }
+        #close-article:hover {
+            background: #6c757d;
+            transform: scale(1.1);
+        }
+        #favorites-panel {
+            width: 100%;
+            background: #495057;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 5;
+            position: relative;
+        }
+        body.day-mode #favorites-panel {
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        #favorites-panel.show {
+            display: block;
+        }
+        #favorites-panel h2 {
+            font-size: 1.4rem;
+            color: #ced4da;
+            margin-bottom: 15px;
+        }
+        body.day-mode #favorites-panel h2 {
+            color: #212529;
+        }
+        #back-to-articles {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #adb5bd;
+            color: #ffffff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        body.day-mode #back-to-articles {
+            background: #6c757d;
+            color: #ffffff;
+        }
+        #back-to-articles:hover {
+            background: #868e96;
+            transform: translateY(-2px);
+        }
+        body.day-mode #back-to-articles:hover {
+            background: #495057;
+        }
+        .remove-from-favorites {
+            background: #dc3545;
+            border: none;
+            border-radius: 4px;
+            color: #ffffff;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .remove-from-favorites:hover {
+            background: #c82333;
+        }
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .social-buttons button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-btn { background-color: #25D366; }
+        .twitter-btn { background-color: #1DA1F2; }
+        .facebook-btn { background-color: #4267B2; }
+        .social-buttons button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        footer {
+            background: #495057;
+            color: #ced4da;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.8rem;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        body.day-mode footer {
+            background: #e9ecef;
+            color: #212529;
+        }
+        #theme-toggle {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: #212529;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        body.day-mode #theme-toggle {
+            background: #6c757d;
+            color: #ffffff;
+        }
+        #theme-toggle:hover {
+            background: #343a40;
+            transform: scale(1.1);
+        }
+        .highlight {
+            background-color: #00ff00;
+            color: #000;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        #settings-panel {
+            width: 100%;
+            max-width: 400px;
+            background: #495057;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            backdrop-filter: blur(5px);
+        }
+        body.day-mode #settings-panel {
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        #settings-panel.show {
+            display: block;
+            animation: slideInDown 0.4s ease-out;
+        }
+        #settings-panel h2 {
+            font-size: 1.4rem;
+            color: #ced4da;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        body.day-mode #settings-panel h2 {
+            color: #212529;
+        }
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .settings-content label {
+            color: #ced4da;
+            font-size: 1rem;
+        }
+        body.day-mode .settings-content label {
+            color: #212529;
+        }
+        .settings-content input[type="range"] {
+            width: 100%;
+        }
+        .settings-content select {
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            background: #212529;
+            color: #ced4da;
+            font-size: 0.9rem;
+        }
+        body.day-mode .settings-content select {
+            background: #ffffff;
+            color: #212529;
+            border: 1px solid #ced4da;
+        }
+        #font-size-value {
+            color: #adb5bd;
+            margin-left: 10px;
+        }
+        body.day-mode #font-size-value {
+            color: #6c757d;
+        }
+        #close-settings {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: #495057;
+            border: none;
+            border-radius: 50%;
+            color: #ced4da;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        body.day-mode #close-settings {
+            background: #e9ecef;
+            color: #212529;
+        }
+        #close-settings:hover {
+            background: #6c757d;
+            transform: scale(1.1);
+        }
+        @media (max-width: 768px) {
+            #articles, #favorites-list {
+                grid-template-columns: 1fr;
+            }
+            header h1 { font-size: 1.5rem; }
+            .article-preview h2 { font-size: 1.2rem; }
+            .article-preview p { font-size: 0.9rem; }
+        }
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 200px;
+            }
+            .sidebar ul li a {
+                font-size: 1rem;
+                padding: 8px 10px;
+            }
+            #controls { padding: 10px; }
+            #search, #category-filter, #show-favorites { font-size: 0.85rem; }
+            .article-preview { padding: 10px; }
+            .article-preview h2 { font-size: 1.1rem; }
+            .article-preview p { font-size: 0.85rem; }
+            .category-tag { font-size: 0.6rem; padding: 3px 6px; }
+        }
+        @keyframes slideInSurah {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes pulseSearch {
+            0% { box-shadow: 0 0 0 0 rgba(173, 181, 189, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(173, 181, 189, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(173, 181, 189, 0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu-icon">☰</div>
+        <h1>SADECE KURAN</h1>
+        <button id="theme-toggle">☾</button>
+    </header>
+    <div class="sidebar">
+        <button class="close-menu">☰</button>
+        <ul>
+            <li><a href="https://theleng.site">THE LENG</a></li>
+            <li><a href="https://theleng.site/kuran">MEAL</a></li>
+            <li><a href="#" id="settings-link">⚙️ Ayarlar</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div id="controls">
+            <input type="text" id="search" placeholder="Makale ara..." />
+            <div id="filter-and-favorites">
+                <select id="category-filter">
+                    <option value="">Tüm Kategoriler</option>
+                    <option value="baris">Barış</option>
+                    <option value="doga">Doğa</option>
+                    <option value="kavram">KAVRAM</option>
+                    <option value="adalet">Adalet</option>
+                </select>
+                <button id="show-favorites">Favoriler</button>
+            </div>
+        </div>
+        <div id="articles"></div>
+        <div id="favorites-panel">
+            <h2>Favori Makaleler</h2>
+            <div id="favorites-list"></div>
+            <button id="back-to-articles">Makalelere Dön</button>
+        </div>
+        <div id="article-detail">
+            <button id="close-article">◄</button>
+            <img id="detail-image" class="cover" src="https://via.placeholder.com/800x400" alt="Kapak Resmi">
+            <h2 id="detail-title"></h2>
+            <div id="detail-meta" class="meta"></div>
+            <div id="detail-content" class="content"></div>
+            <div class="social-buttons">
+                <button class="whatsapp-btn" id="whatsapp-share">WhatsApp</button>
+                <button class="twitter-btn" id="twitter-share">Twitter</button>
+                <button class="facebook-btn" id="facebook-share">Facebook</button>
+            </div>
+        </div>
+        <div id="settings-panel">
+            <button id="close-settings">✖</button>
+            <h2>Ayarlar</h2>
+            <div class="settings-content">
+                <label for="font-size">Yazı Boyutu:</label>
+                <input type="range" id="font-size" min="12" max="36" value="16" step="1">
+                <span id="font-size-value">16px</span>
+                <label for="font-family">Font Ailesi:</label>
+                <select id="font-family">
+                    <option value="Roboto">Roboto</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>THE LENG</p>
+    </footer>
+    <script>
+        const articlesData = [
+            {
+                "title": "KADER NEDİR?",
+                "author": "Muhammed Yusuf Ertek",
+                "date": "05 Mart 2025",
+                "preview": "Kader alınyazısı mı? Yoksa Allah'ın evrendeki düzeni mi? Bu makalede, Kuran’ın kader anlayışını derinlemesine inceleyeceğiz...",
+                "content": `
+                    <p>Kader, İslam’da en çok tartışılan ve yanlış anlaşılan kavramlardan biridir. Çoğu insan, kaderi doğmadan önce yazılmış, değiştirilemez bir alın yazısı olarak görür. Ancak Kuran’a baktığımızda, kaderin bu dar anlayıştan çok daha geniş ve derin bir anlam taşıdığını fark ederiz. Kader, Allah’ın evrendeki düzeni, yasaları ve her şeyi kapsayan bilgeliğidir; insanın ise bu düzen içinde özgür iradesiyle yer aldığı bir sistemdir.</p>
+                    <p>Örneğin, <strong>Kamer Suresi 49. ayet</strong>te şöyle buyrulur: “Biz her şeyi bir ölçüye göre yarattık.” Bu ayet, kaderin evrensel bir düzen olduğunu açıkça ortaya koyar. Gökyüzündeki yıldızların hareketinden, doğadaki döngülere kadar her şey bu ilahi ölçüyle işler. Kader, kaosun değil, uyumun ve dengenin bir göstergesidir.</p>
+                    <img src="kader2.jpg" alt="Evrenin Düzeni">
+                    <p>Kuran’da kaderle ilgili bir diğer önemli vurgu, insanın özgür iradesine dikkat çeker. <strong>İnsan Suresi 3</strong>’te şöyle denir: “Şüphesiz, biz ona (insana) yolu gösterdik. İster şükredici olsun, ister nankör.” Bu ayet, kaderin insanın seçimleriyle şekillendiğini ifade eder. Allah, insana akıl ve irade vermiş, ona doğruyu ve yanlışı seçme özgürlüğü tanımıştır. Dolayısıyla, kader, statik bir yazgı değil, dinamik bir süreçtir.</p>
+                    <p>Kaderin bir başka boyutu, insanın eylemlerinin sonuçlarıyla bağlantılı olmasıdır. <strong>Şura Suresi 30</strong>’da Allah şöyle buyurur: “Başınıza gelen herhangi bir musibet, kendi ellerinizle işledikleriniz yüzündendir. (Yine de) Allah çoğunu affeder.” Bu ayet, yaşadığımız olayların genellikle kendi tercihlerimizin bir yansıması olduğunu gösterir. Kader, Allah’ın her şeyi bilmesiyle insanın sorumluluğunu birleştiren bir denge sunar.</p>
+                    <p>Modern dünyada kader, genellikle “her şey önceden belirlenmiş” gibi fatalist bir yaklaşımla karıştırılır. Ancak Kuran, insanın çaba ve dua ile kaderini etkileyebileceğini öğretir. <strong>Necm Suresi 39</strong>’da “Şüphesiz insan için kendi çalışmasından başka bir şey yoktur” denilerek, insanın emeğinin ve iradesinin kaderdeki rolü vurgulanır. Dahası, hadislerde “Dua, kaderi değiştirir” ifadesiyle, insanın Allah’a yönelerek sonuçları dönüştürebileceği belirtilir.</p>
+                    <p>Sonuç olarak, Kuran’da kader, ne yalnızca bir alın yazısı ne de tamamen insanın kontrolünde bir olgudur. Kader, Allah’ın evreni yarattığı ölçü ve düzen ile insanın bu düzen içindeki özgür iradesinin birleşimidir. Zorluklar karşısında “kaderim buymuş” diyerek pasif kalmak yerine, Kuran’ın öğrettiği gibi çaba göstermek, dua etmek ve sorumluluk almak, kaderi anlamanın ve yaşamanın en doğru yoludur. Bu evrensel mesaj, insan hayatına hem anlam hem de yön katmaya devam etmektedir.</p>
+                `,
+                "category": "kavram",
+                "image": "kader.jpg"
+            },
+            { 
+                title: "Kuran’da Doğa ve Çevre Bilinci", 
+                author: "Zeynep Kaya", 
+                date: "02 Mart 2025", 
+                preview: "Kuran’ın çevreye verdiği önem ve doğanın korunmasıyla ilgili ayetler üzerine bir inceleme. Modern dünyada çevre bilinci...", 
+                content: "<p>Kuran, doğanın bir emanet olduğunu vurgular. <strong>Nahl Suresi 14</strong>’te denizlerin insanlara sunduğu nimetlerden bahsedilir.</p><img src='https://via.placeholder.com/600x450' alt='Doğa Resmi'><p>Bu, çevreye duyarlılık mesajıdır ve modern çevre bilinciyle uyumludur.</p>",
+                category: "doga", 
+                image: "cbh2.jpg" 
+            },
+            {
+                title: "Kuran’da Sabır ve Dayanıklılık",
+                author: "Ali Veli",
+                date: "07 Mart 2025",
+                preview: "Bu makalede, Kuran’ın sabır ve dayanıklılık konusundaki öğretilerini derinlemesine inceleyeceğiz. İnsan hayatındaki zorluklara karşı nasıl bir duruş sergilenmesi gerektiği üzerine...",
+                content: `
+                    <p>Kuran, insan hayatında karşılaşılan zorluklara karşı sabır ve dayanıklılık göstermenin önemini vurgulayan bir rehberdir. Sabır, yalnızca pasif bir bekleyiş değil, aynı zamanda aktif bir direniş ve umutla dolu bir duruştur. Kuran’da sabır, birçok ayette hem bireysel hem de toplumsal bağlamda ele alınır ve bu kavram, Müslümanlar için bir erdem olarak sunulur.</p>
+                    <p>Örneğin, <strong>Bakara Suresi 153. ayet</strong>te şöyle buyrulur: “Ey iman edenler! Sabır ve namazla yardım dileyin. Şüphesiz Allah sabredenlerle beraberdir.” Bu ayet, sabrın yalnızca bir içsel çaba olmadığını, aynı zamanda Allah’a yönelerek güç bulunabileceğini ifade eder. Sabır, zorluklar karşısında teslimiyet değil, aksine bir mücadele aracıdır.</p>
+                    <img src="https://via.placeholder.com/600x450" alt="Sabır Resmi">
+                    <p>Kuran’da sabırla ilgili bir diğer önemli örnek, <strong>Al-i İmran Suresi 200</strong>’de geçer: “Ey iman edenler! Sabredin, sabırda yarışın, birbirinize destek olun ve Allah’tan korkun ki kurtuluşa eresiniz.” Bu ayet, sabrın bireysel bir eylem olmanın ötesinde, topluluk içinde bir dayanışma unsuru olduğunu gösterir. İnsanlar, birbirlerine sabırla destek olduklarında, zorlukların üstesinden daha kolay gelebilirler.</p>
+                    <p>Sabır, aynı zamanda Hz. Eyyub’un hikayesiyle de örneklendirilir. Eyyub Peygamber, ağır hastalıklar ve kayıplarla sınanmasına rağmen Allah’a olan inancını ve sabrını hiç kaybetmemiştir. <strong>Sad Suresi 41-44</strong>’te onun bu sabrı ve sonunda Allah tarafından ödüllendirilmesi detaylı bir şekilde anlatılır. Bu hikaye, sabrın uzun vadede nasıl bir mükafat getirebileceğinin en güzel kanıtlarından biridir.</p>
+                    <p>Modern dünyada sabır, genellikle hızlı sonuç alma beklentisiyle çelişen bir kavram gibi görünebilir. Ancak Kuran, sabrın zamanla anlam kazandığını ve insanın ruhsal olgunluğunu artırdığını öğretir. Örneğin, <strong>Şura Suresi 43</strong>’te “Kim sabreder ve affederse, şüphesiz bu, işlerin en güzelidir” denilerek sabrın affedicilikle birleştiğinde ne kadar güçlü bir erdem olduğu vurgulanır.</p>
+                    <p>Sonuç olarak, Kuran’da sabır ve dayanıklılık, hayatın her alanında uygulanabilir bir ilke olarak sunulur. Zorluklarla karşılaşıldığında pes etmek yerine, bu zorlukları birer sınav olarak görüp sabırla hareket etmek, hem bireyin kendi iç huzurunu sağlar hem de toplumun dayanışmasını güçlendirir. Kuran’ın bu evrensel mesajı, günümüzde de geçerliliğini korumakta ve insanlara rehberlik etmektedir.</p>
+                `,
+                category: "kavram",
+                image: "cbh.jpg"
+            },
+            
+            { 
+                title: "Kuran’da Adalet Kavramı", 
+                author: "Mehmet Demir", 
+                date: "03 Mart 2025", 
+                preview: "Kuran’ın adalet anlayışını ve bu kavramın bireysel ve toplumsal hayattaki yansımalarını ele alan bir çalışma...", 
+                content: "<p>Kuran, adaleti emreder. <strong>Nisa Suresi 135</strong>’te “Adil olun, yakınlarınızın aleyhine bile olsa” denir.</p><img src='https://via.placeholder.com/600x450' alt='Adalet Resmi'><p>Bu, toplumsal adaletin temel taşıdır.</p>",
+                category: "adalet", 
+                image: "cbh3.jpg" 
+            }
+        ];
+
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm.replace(/[İI]/g, '[İIıi]')})`, "gi");
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function displayArticles(articles) {
+            const articlesDiv = document.getElementById("articles");
+            articlesDiv.innerHTML = "";
+            articles.forEach((article, index) => {
+                const articleDiv = document.createElement("div");
+                articleDiv.style.setProperty('--index', index);
+                articleDiv.className = "article-preview";
+                const isFavorite = JSON.parse(localStorage.getItem("favorites") || "[]").some(f => f.title === article.title);
+                articleDiv.innerHTML = `
+                    <span class="category-tag category-${article.category}">${article.category.toUpperCase()}</span>
+                    <img src="${article.image}" class="cover" alt="Kapak Resmi">
+                    <h2>${article.title}</h2>
+                    <div class="meta">Yazar: ${article.author} | Tarih: ${article.date}</div>
+                    <p>${article.preview}</p>
+                    <div class="article-actions">
+                        <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-title="${article.title}">★</button>
+                        <button class="share-btn" data-title="${article.title}">↷</button>
+                    </div>
+                `;
+                articleDiv.addEventListener("click", (e) => {
+                    if (e.target.tagName !== "BUTTON") {
+                        showArticleDetail(article);
+                    }
+                });
+                articlesDiv.appendChild(articleDiv);
+            });
+        }
+
+        function displayFavorites() {
+            try {
+                console.log("Favoriler gösteriliyor...");
+                const favoritesPanel = document.getElementById("favorites-panel");
+                const favoritesList = document.getElementById("favorites-list");
+                const articlesDiv = document.getElementById("articles");
+                const articleDetail = document.getElementById("article-detail");
+                let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+                favorites = favorites.filter(fav => articlesData.some(article => article.title === fav.title));
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+
+                favoritesList.innerHTML = "";
+                if (favorites.length === 0) {
+                    favoritesList.innerHTML = "<p>Henüz favori makale eklenmemiş.</p>";
+                } else {
+                    favorites.forEach((article, index) => {
+                        const category = article.category || "belirsiz";
+                        const articleDiv = document.createElement("div");
+                        articleDiv.style.setProperty('--index', index);
+                        articleDiv.className = "article-preview";
+                        articleDiv.innerHTML = `
+                            <span class="category-tag category-${category}">${category.toUpperCase()}</span>
+                            <img src="${article.image}" class="cover" alt="Kapak Resmi">
+                            <h2>${article.title}</h2>
+                            <div class="meta">Yazar: ${article.author} | Tarih: ${article.date}</div>
+                            <p>${article.preview}</p>
+                            <button class="remove-from-favorites" data-title="${article.title}">Favorilerden Kaldır</button>
+                        `;
+                        articleDiv.addEventListener("click", (e) => {
+                            if (e.target.tagName !== "BUTTON") {
+                                showArticleDetail(article);
+                                favoritesPanel.classList.remove("show");
+                            }
+                        });
+                        favoritesList.appendChild(articleDiv);
+                    });
+                }
+                articlesDiv.style.display = "none";
+                articleDetail.classList.remove("show");
+                favoritesPanel.classList.add("show");
+                console.log("Favoriler paneli gösterildi.");
+            } catch (error) {
+                console.error("Favoriler gösterilirken hata oluştu:", error);
+            }
+        }
+
+        function showArticleDetail(article) {
+            const detail = document.getElementById("article-detail");
+            document.getElementById("detail-image").src = article.image;
+            document.getElementById("detail-title").textContent = article.title;
+            document.getElementById("detail-meta").textContent = `Yazar: ${article.author} | Tarih: ${article.date}`;
+            document.getElementById("detail-content").innerHTML = article.content;
+
+            const whatsappBtn = document.getElementById("whatsapp-share");
+            const twitterBtn = document.getElementById("twitter-share");
+            const facebookBtn = document.getElementById("facebook-share");
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(`${article.title} - Sadece Kuran`);
+
+            whatsappBtn.onclick = () => window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
+            twitterBtn.onclick = () => window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+            facebookBtn.onclick = () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+
+            detail.classList.add("show");
+            document.getElementById("articles").style.display = "none";
+            document.getElementById("favorites-panel").classList.remove("show");
+
+            const savedFontSize = localStorage.getItem("fontSize");
+            if (savedFontSize) {
+                document.getElementById("detail-content").style.fontSize = `${savedFontSize}px`;
+            }
+        }
+
+        function searchAndFilterArticles(searchTerm, category) {
+            let filteredArticles = articlesData;
+            if (searchTerm) {
+                filteredArticles = filteredArticles.filter(article => 
+                    article.title.toLocaleLowerCase('tr-TR').includes(searchTerm.toLocaleLowerCase('tr-TR')) || 
+                    article.preview.toLocaleLowerCase('tr-TR').includes(searchTerm.toLocaleLowerCase('tr-TR'))
+                );
+            }
+            if (category) {
+                filteredArticles = filteredArticles.filter(article => article.category === category);
+            }
+            displayArticles(filteredArticles.map(article => ({
+                ...article,
+                title: highlightText(article.title, searchTerm),
+                preview: highlightText(article.preview, searchTerm)
+            })));
+        }
+
+        function toggleFavorite(title, button) {
+            let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+            const isFavorite = favorites.some(f => f.title === title);
+            if (isFavorite) {
+                favorites = favorites.filter(f => f.title !== title);
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                button.classList.remove("active");
+            } else {
+                const articleToAdd = articlesData.find(a => a.title === title);
+                if (articleToAdd) {
+                    favorites.push(articleToAdd);
+                    localStorage.setItem("favorites", JSON.stringify(favorites));
+                    button.classList.add("active");
+                }
+            }
+            if (document.getElementById("favorites-panel").classList.contains("show")) {
+                displayFavorites();
+            }
+        }
+
+        function removeFromFavorites(title) {
+            let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+            favorites = favorites.filter(f => f.title !== title);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            displayFavorites();
+            displayArticles(articlesData);
+        }
+
+        function shareArticle(title) {
+            const article = articlesData.find(a => a.title === title);
+            const text = `${article.title} - Sadece Kuran`;
+            if (navigator.share) {
+                navigator.share({ title: article.title, text, url: window.location.href })
+                    .catch(err => console.log("Paylaşım hatası:", err));
+            } else {
+                alert("Paylaşım: " + text);
+                navigator.clipboard.writeText(text);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuIcon = document.querySelector(".menu-icon");
+            const sidebar = document.querySelector(".sidebar");
+            const closeMenu = document.querySelector(".close-menu");
+            const articleDetail = document.getElementById("article-detail");
+            const favoritesPanel = document.getElementById("favorites-panel");
+            const articlesDiv = document.getElementById("articles");
+            const closeArticle = document.getElementById("close-article");
+            const showFavoritesBtn = document.getElementById("show-favorites");
+            const settingsLink = document.getElementById("settings-link");
+            const settingsPanel = document.getElementById("settings-panel");
+            const closeSettings = document.getElementById("close-settings");
+            const fontSizeInput = document.getElementById("font-size");
+            const fontSizeValue = document.getElementById("font-size-value");
+            const fontFamilySelect = document.getElementById("font-family");
+
+            if (!showFavoritesBtn) {
+                console.error("Favoriler butonu bulunamadı!");
+                return;
+            }
+
+            menuIcon.addEventListener("click", (e) => {
+                e.stopPropagation();
+                sidebar.classList.toggle("show");
+            });
+
+            closeMenu.addEventListener("click", (e) => {
+                e.stopPropagation();
+                sidebar.classList.remove("show");
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!sidebar.contains(e.target) && !menuIcon.contains(e.target)) {
+                    sidebar.classList.remove("show");
+                }
+            });
+
+            closeArticle.addEventListener("click", () => {
+                articleDetail.classList.remove("show");
+                articlesDiv.style.display = "grid";
+            });
+
+            showFavoritesBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                console.log("Favoriler butonuna tıklandı.");
+                displayFavorites();
+            });
+
+            document.getElementById("back-to-articles").addEventListener("click", () => {
+                favoritesPanel.classList.remove("show");
+                articlesDiv.style.display = "grid";
+                displayArticles(articlesData);
+            });
+
+            let searchTimeout;
+            document.getElementById("search").addEventListener("input", (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchAndFilterArticles(e.target.value.trim(), document.getElementById("category-filter").value);
+                }, 300);
+            });
+
+            document.getElementById("category-filter").addEventListener("change", (e) => {
+                searchAndFilterArticles(document.getElementById("search").value.trim(), e.target.value);
+            });
+
+            document.addEventListener("click", (e) => {
+                if (e.target.classList.contains("favorite-btn")) {
+                    toggleFavorite(e.target.dataset.title, e.target);
+                } else if (e.target.classList.contains("share-btn")) {
+                    shareArticle(e.target.dataset.title);
+                } else if (e.target.classList.contains("remove-from-favorites")) {
+                    removeFromFavorites(e.target.dataset.title);
+                }
+            });
+
+            displayArticles(articlesData);
+
+            function toggleTheme() {
+                document.body.classList.toggle("day-mode");
+                localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night");
+                document.getElementById("theme-toggle").textContent = document.body.classList.contains("day-mode") ? "☀" : "☾";
+            }
+
+            document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+            if (localStorage.getItem("theme") === "day") document.body.classList.add("day-mode");
+
+            settingsLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                settingsPanel.classList.add("show");
+                sidebar.classList.remove("show");
+            });
+
+            closeSettings.addEventListener("click", () => {
+                settingsPanel.classList.remove("show");
+            });
+
+            fontSizeInput.addEventListener("input", () => {
+                const size = fontSizeInput.value;
+                fontSizeValue.textContent = `${size}px`;
+                document.body.style.fontSize = `${size}px`;
+                document.querySelector("#article-detail .content").style.fontSize = `${size}px`;
+                localStorage.setItem("fontSize", size);
+            });
+
+            fontFamilySelect.addEventListener("change", () => {
+                const font = fontFamilySelect.value;
+                document.body.style.fontFamily = font;
+                document.querySelector("#article-detail .content").style.fontFamily = font;
+                localStorage.setItem("fontFamily", font);
+            });
+
+            const savedFontSize = localStorage.getItem("fontSize");
+            const savedFontFamily = localStorage.getItem("fontFamily");
+            if (savedFontSize) {
+                fontSizeInput.value = savedFontSize;
+                fontSizeValue.textContent = `${savedFontSize}px`;
+                document.body.style.fontSize = `${savedFontSize}px`;
+                document.querySelector("#article-detail .content").style.fontSize = `${savedFontSize}px`;
+            }
+            if (savedFontFamily) {
+                fontFamilySelect.value = savedFontFamily;
+                document.body.style.fontFamily = savedFontFamily;
+                document.querySelector("#article-detail .content").style.fontFamily = savedFontFamily;
+            }
+        });
+    </script>
+</body>
+</html>
