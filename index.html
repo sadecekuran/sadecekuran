@@ -1,804 +1,905 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
-    <title>SADECE KURAN</title>
-    <link rel="icon" type="image/png" href="/logokuran2.jpg"/>
-    <link rel="apple-touch-icon" href="/logokuran2.jpg">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: "Roboto", sans-serif;
-            background: linear-gradient(45deg, #343a40, #495057, #6c757d, #343a40);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #ced4da;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            transition: all 0.5s ease;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        body.day-mode {
-            background: linear-gradient(45deg, #f8f9fa, #e9ecef, #dee2e6, #f8f9fa);
-            color: #212529;
-        }
-        body::-webkit-scrollbar {
-            display: none;
-        }
-        header {
-            background: rgba(73, 80, 87, 0.52);
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        body.day-mode header {
-            background: rgba(248, 249, 250, 0.8);
-            color: #212529;
-        }
-        header h1 {
-            font-size: 1.8rem;
-            font-family: "Verdana", sans-serif;
-            font-weight: 700;
-            color: #ced4da;
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px rgba(206, 212, 218, 0.7), 0 0 10px rgba(206, 212, 218, 0.5), 0 0 15px rgba(206, 212, 218, 0.3);
-            flex-grow: 1;
-            text-align: center;
-        }
-        body.day-mode header h1 {
-            color: #212529;
-            text-shadow: none;
-        }
-        .menu-icon {
-            font-size: 1.8rem;
-            color: #ced4da;
-            cursor: pointer;
-            padding: 10px;
-            transition: transform 0.3s ease, color 0.3s ease;
-            display: block;
-        }
-        .menu-icon:hover {
-            transform: rotate(90deg);
-            color: #ffffff;
-        }
-        body.day-mode .menu-icon {
-            color: #212529;
-        }
-        body.day-mode .menu-icon:hover {
-            color: #495057;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 300px;
-            height: 100%;
-            background: rgba(43, 48, 53, 0.5);
-            padding: 20px;
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 20;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
-        body.day-mode .sidebar {
-            background: #ffffff;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .sidebar.show {
-            left: 0;
-        }
-        .sidebar ul {
-            list-style: none;
-            margin-top: 60px;
-        }
-        .sidebar ul li {
-            margin: 20px 0;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: all 0.3s ease;
-        }
-        .sidebar.show ul li {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .sidebar ul li:nth-child(1) { transition-delay: 0.1s; }
-        .sidebar ul li:nth-child(2) { transition-delay: 0.2s; }
-        .sidebar ul li:nth-child(3) { transition-delay: 0.3s; }
-        .sidebar ul li a {
-            color: #ced4da;
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 500;
-            display: block;
-            padding: 10px 15px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        body.day-mode .sidebar ul li a {
-            color: #212529;
-        }
-        .sidebar ul li a:hover {
-            background: #495057;
-            color: #ffffff;
-            transform: translateX(5px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        body.day-mode .sidebar ul li a:hover {
-            background: #e9ecef;
-            color: #495057;
-        }
-        .close-menu {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.8rem;
-            color: #ced4da;
-            cursor: pointer;
-            padding: 10px;
-            transition: transform 0.3s ease, color 0.3s ease;
-            background: none;
-            border: none;
-        }
-        .close-menu:hover {
-            transform: rotate(90deg);
-            color: #ffffff;
-        }
-        body.day-mode .close-menu {
-            color: #212529;
-        }
-        body.day-mode .close-menu:hover {
-            color: #495057;
-        }
-        .container {
-            flex: 1;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        #controls {
-            background: #495057;
-            padding: 15px;
-            border-radius: 12px;
-            width: 100%;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        body.day-mode #controls {
-            background: #e9ecef;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        #search {
-            padding: 10px;
-            border: 1px solid #6c757d;
-            border-radius: 8px;
-            background: #212529;
-            color: #ced4da;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        body.day-mode #search {
-            background: #ffffff;
-            border: 1px solid #ced4da;
-            color: #212529;
-        }
-        #search:focus {
-            outline: none;
-            border-color: #adb5bd;
-            background: #343a40;
-            box-shadow: 0 0 8px rgba(173, 181, 189, 0.2);
-            animation: pulseSearch 1.5s infinite;
-        }
-        body.day-mode #search:focus {
-            background: #f8f9fa;
-            border-color: #6c757d;
-            box-shadow: 0 0 8px rgba(108, 117, 125, 0.2);
-        }
-        #filter-and-favorites {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        #category-filter {
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            background: #212529;
-            color: #ced4da;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 150px;
-        }
-        body.day-mode #category-filter {
-            background: #ffffff;
-            color: #212529;
-            border: 1px solid #ced4da;
-        }
-        #category-filter:hover {
-            background: #343a40;
-        }
-        body.day-mode #category-filter:hover {
-            background: #f8f9fa;
-        }
-        #show-favorites {
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background: #adb5bd;
-            color: #ffffff;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 100px;
-        }
-        body.day-mode #show-favorites {
-            background: #6c757d;
-            color: #ffffff;
-        }
-        #show-favorites:hover {
-            background: #868e96;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(134, 142, 150, 0.3);
-        }
-        body.day-mode #show-favorites:hover {
-            background: #495057;
-        }
-        #articles {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            z-index: 1;
-        }
-        #favorites-list {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            z-index: 1;
-        }
-        .article-preview {
-            background: #495057;
-            padding: 15px;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateX(-50px);
-            animation: slideInSurah 0.5s ease-out forwards;
-            animation-delay: calc(0.1s * var(--index));
-            position: relative;
-        }
-        body.day-mode .article-preview {
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .article-preview:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-        .article-preview img.cover {
-            width: 100%;
-            aspect-ratio: 2 / 1;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .article-preview h2 {
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: #ced4da;
-            margin-bottom: 5px;
-        }
-        body.day-mode .article-preview h2 {
-            color: #212529;
-        }
-        .article-preview .meta {
-            font-size: 0.8rem;
-            color: #adb5bd;
-            margin-bottom: 10px;
-        }
-        body.day-mode .article-preview .meta {
-            color: #6c757d;
-        }
-        .article-preview p {
-            font-size: 1rem;
-            color: #ced4da;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
-        body.day-mode .article-preview p {
-            color: #212529;
-        }
-        .category-tag {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 4px 8px;
-            font-size: 0.7rem;
-            color: #fff;
-            border-radius: 4px;
-        }
-        .category-baris { background-color: #4CAF50; }
-        .category-doga { background-color: #2196F3; }
-        .category-adalet { background-color: #F44336; }
-        .category-kavram { background-color: #a600ff; }
-        .category-belirsiz { background-color: #6c757d; }
-        .article-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        .article-actions button {
-            background: none;
-            border: none;
-            color: #ced4da;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        body.day-mode .article-actions button {
-            color: #6c757d;
-        }
-        .article-actions button:hover {
-            color: #ffffff;
-        }
-        body.day-mode .article-actions button:hover {
-            color: #212529;
-        }
-        .article-actions .favorite-btn.active {
-            color: #ffd700;
-        }
-        #article-detail {
-            width: 100%;
-            background: #343a40;
-            padding: 25px;
-            border-radius: 16px;
-            display: none;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            z-index: 5;
-            position: relative;
-        }
-        body.day-mode #article-detail {
-            background: #ffffff;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        }
-        #article-detail.show {
-            display: block;
-            animation: slideInDown 0.4s ease-out;
-        }
-        #article-detail img.cover {
-            width: 100%;
-            max-width: 800px;
-            aspect-ratio: 2 / 1;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #article-detail h2 {
-            font-size: 1.8rem;
-            color: #ced4da;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        body.day-mode #article-detail h2 {
-            color: #212529;
-        }
-        #article-detail .meta {
-            font-size: 0.9rem;
-            color: #adb5bd;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        body.day-mode #article-detail .meta {
-            color: #6c757d;
-        }
-        #article-detail .content {
-            font-size: 1.1rem;
-            color: #ced4da;
-            text-align: justify;
-            line-height: 1.8;
-        }
-        body.day-mode #article-detail .content {
-            color: #212529;
-        }
-        #article-detail .content img {
-            width: 100%;
-            max-width: 600px;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
-        }
-        #article-detail .content p {
-            text-align: justify; /* Her paragrafın iki yana hizalı olmasını garantiler */
-        }
-        #close-article {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 30px;
-            height: 30px;
-            background: #495057;
-            border: none;
-            border-radius: 50%;
-            color: #ced4da;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        body.day-mode #close-article {
-            background: #e9ecef;
-            color: #212529;
-        }
-        #close-article:hover {
-            background: #6c757d;
-            transform: scale(1.1);
-        }
-        #favorites-panel {
-            width: 100%;
-            background: #495057;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 5;
-            position: relative;
-        }
-        body.day-mode #favorites-panel {
-            background: #ffffff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        #favorites-panel.show {
-            display: block;
-        }
-        #favorites-panel h2 {
-            font-size: 1.4rem;
-            color: #ced4da;
-            margin-bottom: 15px;
-        }
-        body.day-mode #favorites-panel h2 {
-            color: #212529;
-        }
-        #back-to-articles {
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background: #adb5bd;
-            color: #ffffff;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        body.day-mode #back-to-articles {
-            background: #6c757d;
-            color: #ffffff;
-        }
-        #back-to-articles:hover {
-            background: #868e96;
-            transform: translateY(-2px);
-        }
-        body.day-mode #back-to-articles:hover {
-            background: #495057;
-        }
-        .remove-from-favorites {
-            background: #dc3545;
-            border: none;
-            border-radius: 4px;
-            color: #ffffff;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .remove-from-favorites:hover {
-            background: #c82333;
-        }
-        .social-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .social-buttons button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .whatsapp-btn { background-color: #25D366; }
-        .twitter-btn { background-color: #1DA1F2; }
-        .facebook-btn { background-color: #4267B2; }
-        .social-buttons button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-        footer {
-            background: #495057;
-            color: #ced4da;
-            text-align: center;
-            padding: 10px;
-            font-size: 0.8rem;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-        body.day-mode footer {
-            background: #e9ecef;
-            color: #212529;
-        }
-        #theme-toggle {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            background: #212529;
-            color: #ffffff;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        body.day-mode #theme-toggle {
-            background: #6c757d;
-            color: #ffffff;
-        }
-        #theme-toggle:hover {
-            background: #343a40;
-            transform: scale(1.1);
-        }
-        .highlight {
-            background-color: #00ff00;
-            color: #000;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        #settings-panel {
-            width: 100%;
-            max-width: 400px;
-            background: #495057;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 20;
-            backdrop-filter: blur(5px);
-        }
-        body.day-mode #settings-panel {
-            background: #ffffff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        #settings-panel.show {
-            display: block;
-            animation: slideInDown 0.4s ease-out;
-        }
-        #settings-panel h2 {
-            font-size: 1.4rem;
-            color: #ced4da;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        body.day-mode #settings-panel h2 {
-            color: #212529;
-        }
-        .settings-content {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .settings-content label {
-            color: #ced4da;
-            font-size: 1rem;
-        }
-        body.day-mode .settings-content label {
-            color: #212529;
-        }
-        .settings-content input[type="range"] {
-            width: 100%;
-        }
-        .settings-content select {
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            background: #212529;
-            color: #ced4da;
-            font-size: 0.9rem;
-        }
-        body.day-mode .settings-content select {
-            background: #ffffff;
-            color: #212529;
-            border: 1px solid #ced4da;
-        }
-        #font-size-value {
-            color: #adb5bd;
-            margin-left: 10px;
-        }
-        body.day-mode #font-size-value {
-            color: #6c757d;
-        }
-        #close-settings {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 30px;
-            height: 30px;
-            background: #495057;
-            border: none;
-            border-radius: 50%;
-            color: #ced4da;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        body.day-mode #close-settings {
-            background: #e9ecef;
-            color: #212529;
-        }
-        #close-settings:hover {
-            background: #6c757d;
-            transform: scale(1.1);
-        }
-        @media (max-width: 768px) {
-            #articles, #favorites-list {
-                grid-template-columns: 1fr;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+        <title>SADECE KURAN</title>
+        <link rel="icon" type="image/png" href="/logokuran2.jpg" />
+        <link rel="apple-touch-icon" href="/logokuran2.jpg" />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
-            header h1 { font-size: 1.5rem; }
-            .article-preview h2 { font-size: 1.2rem; }
-            .article-preview p { font-size: 0.9rem; }
-        }
-        @media (max-width: 480px) {
+            body {
+                font-family: "Roboto", sans-serif;
+                background: linear-gradient(45deg, #343a40, #495057, #6c757d, #343a40);
+                background-size: 400% 400%;
+                animation: gradientBG 15s ease infinite;
+                color: #ced4da;
+                line-height: 1.6;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                transition: all 0.5s ease;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            body.day-mode {
+                background: linear-gradient(45deg, #f8f9fa, #e9ecef, #dee2e6, #f8f9fa);
+                color: #212529;
+            }
+            body::-webkit-scrollbar {
+                display: none;
+            }
+            header {
+                background: rgba(73, 80, 87, 0.52);
+                padding: 15px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            body.day-mode header {
+                background: rgba(248, 249, 250, 0.8);
+                color: #212529;
+            }
+            header h1 {
+                font-size: 1.8rem;
+                font-family: "Verdana", sans-serif;
+                font-weight: 700;
+                color: #ced4da;
+                letter-spacing: 1px;
+                text-shadow:
+                    0 0 5px rgba(206, 212, 218, 0.7),
+                    0 0 10px rgba(206, 212, 218, 0.5),
+                    0 0 15px rgba(206, 212, 218, 0.3);
+                flex-grow: 1;
+                text-align: center;
+            }
+            body.day-mode header h1 {
+                color: #212529;
+                text-shadow: none;
+            }
+            .menu-icon {
+                font-size: 1.8rem;
+                color: #ced4da;
+                cursor: pointer;
+                padding: 10px;
+                transition:
+                    transform 0.3s ease,
+                    color 0.3s ease;
+                display: block;
+            }
+            .menu-icon:hover {
+                transform: rotate(90deg);
+                color: #ffffff;
+            }
+            body.day-mode .menu-icon {
+                color: #212529;
+            }
+            body.day-mode .menu-icon:hover {
+                color: #495057;
+            }
             .sidebar {
-                width: 200px;
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 300px;
+                height: 100%;
+                background: rgba(43, 48, 53, 0.5);
+                padding: 20px;
+                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 20;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(10px);
+            }
+            body.day-mode .sidebar {
+                background: #ffffff;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .sidebar.show {
+                left: 0;
+            }
+            .sidebar ul {
+                list-style: none;
+                margin-top: 60px;
+            }
+            .sidebar ul li {
+                margin: 20px 0;
+                opacity: 0;
+                transform: translateX(-20px);
+                transition: all 0.3s ease;
+            }
+            .sidebar.show ul li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            .sidebar ul li:nth-child(1) {
+                transition-delay: 0.1s;
+            }
+            .sidebar ul li:nth-child(2) {
+                transition-delay: 0.2s;
+            }
+            .sidebar ul li:nth-child(3) {
+                transition-delay: 0.3s;
             }
             .sidebar ul li a {
-                font-size: 1rem;
-                padding: 8px 10px;
+                color: #ced4da;
+                text-decoration: none;
+                font-size: 1.2rem;
+                font-weight: 500;
+                display: block;
+                padding: 10px 15px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
             }
-            #controls { padding: 10px; }
-            #search, #category-filter, #show-favorites { font-size: 0.85rem; }
-            .article-preview { padding: 10px; }
-            .article-preview h2 { font-size: 1.1rem; }
-            .article-preview p { font-size: 0.85rem; }
-            .category-tag { font-size: 0.6rem; padding: 3px 6px; }
-        }
-        @keyframes slideInSurah {
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes pulseSearch {
-            0% { box-shadow: 0 0 0 0 rgba(173, 181, 189, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(173, 181, 189, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(173, 181, 189, 0); }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="menu-icon">☰</div>
-        <h1>SADECE KURAN</h1>
-        <button id="theme-toggle">☾</button>
-    </header>
-    <div class="sidebar">
-        <button class="close-menu">☰</button>
-        <ul>
-            <li><a href="https://theleng.site">THE LENG</a></li>
-            <li><a href="https://sadecekuran.com.tr/kuran">MEAL</a></li>
-            <li><a href="#" id="settings-link">⚙️ Ayarlar</a></li>
-        </ul>
-    </div>
-    <div class="container">
-        <div id="controls">
-            <input type="text" id="search" placeholder="Makale ara..." />
-            <div id="filter-and-favorites">
-                <select id="category-filter">
-                    <option value="">Tüm Kategoriler</option>
-                    <option value="baris">Barış</option>
-                    <option value="doga">Doğa</option>
-                    <option value="kavram">KAVRAM</option>
-                    <option value="adalet">Adalet</option>
-                </select>
-                <button id="show-favorites">Favoriler</button>
+            body.day-mode .sidebar ul li a {
+                color: #212529;
+            }
+            .sidebar ul li a:hover {
+                background: #495057;
+                color: #ffffff;
+                transform: translateX(5px);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            body.day-mode .sidebar ul li a:hover {
+                background: #e9ecef;
+                color: #495057;
+            }
+            .close-menu {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                font-size: 1.8rem;
+                color: #ced4da;
+                cursor: pointer;
+                padding: 10px;
+                transition:
+                    transform 0.3s ease,
+                    color 0.3s ease;
+                background: none;
+                border: none;
+            }
+            .close-menu:hover {
+                transform: rotate(90deg);
+                color: #ffffff;
+            }
+            body.day-mode .close-menu {
+                color: #212529;
+            }
+            body.day-mode .close-menu:hover {
+                color: #495057;
+            }
+            .container {
+                flex: 1;
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #controls {
+                background: #495057;
+                padding: 15px;
+                border-radius: 12px;
+                width: 100%;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            body.day-mode #controls {
+                background: #e9ecef;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            #search {
+                padding: 10px;
+                border: 1px solid #6c757d;
+                border-radius: 8px;
+                background: #212529;
+                color: #ced4da;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+                width: 100%;
+            }
+            body.day-mode #search {
+                background: #ffffff;
+                border: 1px solid #ced4da;
+                color: #212529;
+            }
+            #search:focus {
+                outline: none;
+                border-color: #adb5bd;
+                background: #343a40;
+                box-shadow: 0 0 8px rgba(173, 181, 189, 0.2);
+                animation: pulseSearch 1.5s infinite;
+            }
+            body.day-mode #search:focus {
+                background: #f8f9fa;
+                border-color: #6c757d;
+                box-shadow: 0 0 8px rgba(108, 117, 125, 0.2);
+            }
+            #filter-and-favorites {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            #category-filter {
+                padding: 12px;
+                border: none;
+                border-radius: 10px;
+                background: #212529;
+                color: #ced4da;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                flex: 1;
+                min-width: 150px;
+            }
+            body.day-mode #category-filter {
+                background: #ffffff;
+                color: #212529;
+                border: 1px solid #ced4da;
+            }
+            #category-filter:hover {
+                background: #343a40;
+            }
+            body.day-mode #category-filter:hover {
+                background: #f8f9fa;
+            }
+            #show-favorites {
+                padding: 10px;
+                border: none;
+                border-radius: 8px;
+                background: #adb5bd;
+                color: #ffffff;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                flex: 1;
+                min-width: 100px;
+            }
+            body.day-mode #show-favorites {
+                background: #6c757d;
+                color: #ffffff;
+            }
+            #show-favorites:hover {
+                background: #868e96;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(134, 142, 150, 0.3);
+            }
+            body.day-mode #show-favorites:hover {
+                background: #495057;
+            }
+            #articles {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 15px;
+                z-index: 1;
+            }
+            #favorites-list {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 15px;
+                z-index: 1;
+            }
+            .article-preview {
+                background: #495057;
+                padding: 15px;
+                border-radius: 12px;
+                cursor: pointer;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+                opacity: 0;
+                transform: translateX(-50px);
+                animation: slideInSurah 0.5s ease-out forwards;
+                animation-delay: calc(0.1s * var(--index));
+                position: relative;
+            }
+            body.day-mode .article-preview {
+                background: #ffffff;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            .article-preview:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            }
+            .article-preview img.cover {
+                width: 100%;
+                aspect-ratio: 2 / 1;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+            .article-preview h2 {
+                font-size: 1.4rem;
+                font-weight: 400;
+                color: #ced4da;
+                margin-bottom: 5px;
+            }
+            body.day-mode .article-preview h2 {
+                color: #212529;
+            }
+            .article-preview .meta {
+                font-size: 0.8rem;
+                color: #adb5bd;
+                margin-bottom: 10px;
+            }
+            body.day-mode .article-preview .meta {
+                color: #6c757d;
+            }
+            .article-preview p {
+                font-size: 1rem;
+                color: #ced4da;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+            body.day-mode .article-preview p {
+                color: #212529;
+            }
+            .category-tag {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                padding: 4px 8px;
+                font-size: 0.7rem;
+                color: #fff;
+                border-radius: 4px;
+            }
+            .category-arastirma {
+                background-color: #4caf50;
+            }
+            .category-doga {
+                background-color: #2196f3;
+            }
+            .category-adalet {
+                background-color: #f44336;
+            }
+            .category-kavram {
+                background-color: #a600ff;
+            }
+            .category-belirsiz {
+                background-color: #6c757d;
+            }
+            .article-actions {
+                display: flex;
+                gap: 8px;
+                margin-top: 10px;
+            }
+            .article-actions button {
+                background: none;
+                border: none;
+                color: #ced4da;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            body.day-mode .article-actions button {
+                color: #6c757d;
+            }
+            .article-actions button:hover {
+                color: #ffffff;
+            }
+            body.day-mode .article-actions button:hover {
+                color: #212529;
+            }
+            .article-actions .favorite-btn.active {
+                color: #ffd700;
+            }
+            #article-detail {
+                width: 100%;
+                background: #343a40;
+                padding: 25px;
+                border-radius: 16px;
+                display: none;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+                backdrop-filter: blur(5px);
+                z-index: 5;
+                position: relative;
+            }
+            body.day-mode #article-detail {
+                background: #ffffff;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            }
+            #article-detail.show {
+                display: block;
+                animation: slideInDown 0.4s ease-out;
+            }
+            #article-detail img.cover {
+                width: 100%;
+                max-width: 800px;
+                aspect-ratio: 2 / 1;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #article-detail h2 {
+                font-size: 1.8rem;
+                color: #ced4da;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            body.day-mode #article-detail h2 {
+                color: #212529;
+            }
+            #article-detail .meta {
+                font-size: 0.9rem;
+                color: #adb5bd;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            body.day-mode #article-detail .meta {
+                color: #6c757d;
+            }
+            #article-detail .content {
+                font-size: 1.1rem;
+                color: #ced4da;
+                text-align: justify;
+                line-height: 1.8;
+            }
+            body.day-mode #article-detail .content {
+                color: #212529;
+            }
+            #article-detail .content img {
+                width: 100%;
+                max-width: 600px;
+                aspect-ratio: 4 / 3;
+                object-fit: cover;
+                border-radius: 8px;
+                margin: 15px auto;
+                display: block;
+            }
+            #article-detail .content p {
+                text-align: justify; /* Her paragrafın iki yana hizalı olmasını garantiler */
+            }
+            #close-article {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 30px;
+                height: 30px;
+                background: #495057;
+                border: none;
+                border-radius: 50%;
+                color: #ced4da;
+                font-size: 1rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+            body.day-mode #close-article {
+                background: #e9ecef;
+                color: #212529;
+            }
+            #close-article:hover {
+                background: #6c757d;
+                transform: scale(1.1);
+            }
+            #favorites-panel {
+                width: 100%;
+                background: #495057;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                display: none;
+                z-index: 5;
+                position: relative;
+            }
+            body.day-mode #favorites-panel {
+                background: #ffffff;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            #favorites-panel.show {
+                display: block;
+            }
+            #favorites-panel h2 {
+                font-size: 1.4rem;
+                color: #ced4da;
+                margin-bottom: 15px;
+            }
+            body.day-mode #favorites-panel h2 {
+                color: #212529;
+            }
+            #back-to-articles {
+                padding: 10px;
+                border: none;
+                border-radius: 8px;
+                background: #adb5bd;
+                color: #ffffff;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 10px;
+            }
+            body.day-mode #back-to-articles {
+                background: #6c757d;
+                color: #ffffff;
+            }
+            #back-to-articles:hover {
+                background: #868e96;
+                transform: translateY(-2px);
+            }
+            body.day-mode #back-to-articles:hover {
+                background: #495057;
+            }
+            .remove-from-favorites {
+                background: #dc3545;
+                border: none;
+                border-radius: 4px;
+                color: #ffffff;
+                padding: 5px 10px;
+                font-size: 0.8rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .remove-from-favorites:hover {
+                background: #c82333;
+            }
+            .social-buttons {
+                display: flex;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            .social-buttons button {
+                padding: 8px 12px;
+                border: none;
+                border-radius: 8px;
+                color: #ffffff;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .whatsapp-btn {
+                background-color: #25d366;
+            }
+            .twitter-btn {
+                background-color: #1da1f2;
+            }
+            .facebook-btn {
+                background-color: #4267b2;
+            }
+            .social-buttons button:hover {
+                opacity: 0.9;
+                transform: translateY(-2px);
+            }
+            footer {
+                background: #495057;
+                color: #ced4da;
+                text-align: center;
+                padding: 10px;
+                font-size: 0.8rem;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+            body.day-mode footer {
+                background: #e9ecef;
+                color: #212529;
+            }
+            #theme-toggle {
+                width: 40px;
+                height: 40px;
+                border: none;
+                border-radius: 50%;
+                background: #212529;
+                color: #ffffff;
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            body.day-mode #theme-toggle {
+                background: #6c757d;
+                color: #ffffff;
+            }
+            #theme-toggle:hover {
+                background: #343a40;
+                transform: scale(1.1);
+            }
+            .highlight {
+                background-color: #00ff00;
+                color: #000;
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+            #settings-panel {
+                width: 100%;
+                max-width: 400px;
+                background: #495057;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 20;
+                backdrop-filter: blur(5px);
+            }
+            body.day-mode #settings-panel {
+                background: #ffffff;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            #settings-panel.show {
+                display: block;
+                animation: slideInDown 0.4s ease-out;
+            }
+            #settings-panel h2 {
+                font-size: 1.4rem;
+                color: #ced4da;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            body.day-mode #settings-panel h2 {
+                color: #212529;
+            }
+            .settings-content {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .settings-content label {
+                color: #ced4da;
+                font-size: 1rem;
+            }
+            body.day-mode .settings-content label {
+                color: #212529;
+            }
+            .settings-content input[type="range"] {
+                width: 100%;
+            }
+            .settings-content select {
+                padding: 8px;
+                border: none;
+                border-radius: 8px;
+                background: #212529;
+                color: #ced4da;
+                font-size: 0.9rem;
+            }
+            body.day-mode .settings-content select {
+                background: #ffffff;
+                color: #212529;
+                border: 1px solid #ced4da;
+            }
+            #font-size-value {
+                color: #adb5bd;
+                margin-left: 10px;
+            }
+            body.day-mode #font-size-value {
+                color: #6c757d;
+            }
+            #close-settings {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 30px;
+                height: 30px;
+                background: #495057;
+                border: none;
+                border-radius: 50%;
+                color: #ced4da;
+                font-size: 1rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+            body.day-mode #close-settings {
+                background: #e9ecef;
+                color: #212529;
+            }
+            #close-settings:hover {
+                background: #6c757d;
+                transform: scale(1.1);
+            }
+            @media (max-width: 768px) {
+                #articles,
+                #favorites-list {
+                    grid-template-columns: 1fr;
+                }
+                header h1 {
+                    font-size: 1.5rem;
+                }
+                .article-preview h2 {
+                    font-size: 1.2rem;
+                }
+                .article-preview p {
+                    font-size: 0.9rem;
+                }
+            }
+            @media (max-width: 480px) {
+                .sidebar {
+                    width: 200px;
+                }
+                .sidebar ul li a {
+                    font-size: 1rem;
+                    padding: 8px 10px;
+                }
+                #controls {
+                    padding: 10px;
+                }
+                #search,
+                #category-filter,
+                #show-favorites {
+                    font-size: 0.85rem;
+                }
+                .article-preview {
+                    padding: 10px;
+                }
+                .article-preview h2 {
+                    font-size: 1.1rem;
+                }
+                .article-preview p {
+                    font-size: 0.85rem;
+                }
+                .category-tag {
+                    font-size: 0.6rem;
+                    padding: 3px 6px;
+                }
+            }
+            @keyframes slideInSurah {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            @keyframes slideInDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes gradientBG {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+            @keyframes pulseSearch {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(173, 181, 189, 0.7);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(173, 181, 189, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(173, 181, 189, 0);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="menu-icon">☰</div>
+            <h1>SADECE KURAN</h1>
+            <button id="theme-toggle">☾</button>
+        </header>
+        <div class="sidebar">
+            <button class="close-menu">☰</button>
+            <ul>
+                <li><a href="https://theleng.site">THE LENG</a></li>
+                <li><a href="https://sadecekuran.com.tr/kuran">MEAL</a></li>
+                <li><a href="#" id="settings-link">⚙️ Ayarlar</a></li>
+            </ul>
+        </div>
+        <div class="container">
+            <div id="controls">
+                <input type="text" id="search" placeholder="Makale ara..." />
+                <div id="filter-and-favorites">
+                    <select id="category-filter">
+                        <option value="">Tüm Kategoriler</option>
+                        <option value="arastirma">ARAŞTIRMA</option>
+                        <option value="doga">Doğa</option>
+                        <option value="kavram">KAVRAM</option>
+                        <option value="adalet">Adalet</option>
+                    </select>
+                    <button id="show-favorites">Favoriler</button>
+                </div>
+            </div>
+            <div id="articles"></div>
+            <div id="favorites-panel">
+                <h2>Favori Makaleler</h2>
+                <div id="favorites-list"></div>
+                <button id="back-to-articles">Makalelere Dön</button>
+            </div>
+            <div id="article-detail">
+                <button id="close-article">◄</button>
+                <img id="detail-image" class="cover" src="kader2.jpg" alt="Kapak Resmi" />
+                <h2 id="detail-title"></h2>
+                <div id="detail-meta" class="meta"></div>
+                <div id="detail-content" class="content"></div>
+                <div class="social-buttons">
+                    <button class="whatsapp-btn" id="whatsapp-share">WhatsApp</button>
+                    <button class="twitter-btn" id="twitter-share">Twitter</button>
+                    <button class="facebook-btn" id="facebook-share">Facebook</button>
+                </div>
+            </div>
+            <div id="settings-panel">
+                <button id="close-settings">✖</button>
+                <h2>Ayarlar</h2>
+                <div class="settings-content">
+                    <label for="font-size">Yazı Boyutu:</label>
+                    <input type="range" id="font-size" min="9" max="36" value="12" step="1" />
+                    <span id="font-size-value">12px</span>
+                    <label for="font-family">Font Ailesi:</label>
+                    <select id="font-family">
+                        <option value="Roboto">Roboto</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
+                </div>
             </div>
         </div>
-        <div id="articles"></div>
-        <div id="favorites-panel">
-            <h2>Favori Makaleler</h2>
-            <div id="favorites-list"></div>
-            <button id="back-to-articles">Makalelere Dön</button>
-        </div>
-        <div id="article-detail">
-            <button id="close-article">◄</button>
-            <img id="detail-image" class="cover" src="kader2.jpg" alt="Kapak Resmi">
-            <h2 id="detail-title"></h2>
-            <div id="detail-meta" class="meta"></div>
-            <div id="detail-content" class="content"></div>
-            <div class="social-buttons">
-                <button class="whatsapp-btn" id="whatsapp-share">WhatsApp</button>
-                <button class="twitter-btn" id="twitter-share">Twitter</button>
-                <button class="facebook-btn" id="facebook-share">Facebook</button>
-            </div>
-        </div>
-        <div id="settings-panel">
-            <button id="close-settings">✖</button>
-            <h2>Ayarlar</h2>
-            <div class="settings-content">
-                <label for="font-size">Yazı Boyutu:</label>
-                <input type="range" id="font-size" min="12" max="36" value="16" step="1">
-                <span id="font-size-value">16px</span>
-                <label for="font-family">Font Ailesi:</label>
-                <select id="font-family">
-                    <option value="Roboto">Roboto</option>
-                    <option value="Arial">Arial</option>
-                    <option value="Verdana">Verdana</option>
-                    <option value="Times New Roman">Times New Roman</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <footer>
-        <p>THE LENG</p>
-    </footer>
-    <script>
-        const articlesData = [
-            {
-                "title": "KADER NEDİR?",
-                "author": "Muhammed Yusuf Ertek",
-                "date": "05 Mart 2025",
-                "preview": "Kader alınyazısı mı? Yoksa Allah'ın evrendeki düzeni mi? Bu makalede, Kuran’ın kader anlayışını derinlemesine inceleyeceğiz...",
-                "content": `
+        <footer>
+            <p>THE LENG</p>
+        </footer>
+        <script>
+            const articlesData = [
+                
+                {
+                    title: "İSLAM'A SIZINTI",
+                    author: "Muhammed Yusuf ERTEK",
+                    date: "08 Nisan 2025",
+                    preview: "Batıl inançlar İslam’a nasıl sızdı? Hurafeler dinin özünü nasıl etkiliyor? Bu makalede, Kur’an ışığında batıl inançların kökenlerini, etkilerini ve çözüm yollarını derinlemesine inceleyeceğiz...",
+                    content: `
+                        <p>İslam dini, Allah’ın kelamı olan Kur’an-ı Kerim üzerine temellendirilmiş evrensel bir inanç sistemidir. Ancak, tarihsel süreçte halk arasında yerleşen bazı batıl inançlar, dinin özünden ziyade eski kültürel inançların ve gündelik yaşamın korkularının etkisiyle İslam’a sızmıştır. Bu makalede, hadis kültürü içinden gelen hurafelerin tarihsel kökenleri, sosyo-kültürel yansımaları, psikolojik etkileri ve günümüz toplumundaki yansımaları detaylı bir şekilde ele alınacaktır.</p>
+                        <p>Batıl inançların kökeni, İslam öncesi inanç sistemlerine dayanır. Coğrafyamızda Zerdüştlük, Şamanizm ve Yunan-Roma mitolojileri gibi sistemler, insanların doğaüstü olaylara olan merakını beslemiş ve hurafelerin temelini oluşturmuştur. Örneğin, metalin koruyucu gücüne dair tılsım inancı, eski uygarlıkların büyüsel ritüellerinden kalmadır. <strong>En’am Suresi 138</strong>’de cahiliye toplumunun batıl uygulamaları eleştirilir: “Onlar, Allah’a ortak koştukları şeylere dayanarak dediler ki: ‘Bu hayvanlar ve ekinler yasaktır.’” Bu ayet, eski inançların İslam’a sızmasının bir göstergesidir.</p>
+                        <p>Yerel gelenekler ve folklor da hurafelerin yayılmasında etkili olmuştur. Nazar boncuğu, muska ve tılsım gibi semboller, halk kültürünün birer parçası haline gelmiştir. Ancak <strong>Şura Suresi 30</strong>’da “Başınıza gelen herhangi bir musibet, kendi ellerinizle işledikleriniz yüzündendir” buyrulur; bu, insanın kaderini hurafelerle değil, kendi eylemleriyle şekillendirdiğini gösterir. Bu semboller, toplumsal güveni artırmak yerine akılcı düşünceyi zayıflatır ve dini sapmalara yol açar.</p>
+                        <p>Hadis kültürüne karışan hurafeler, İslam’ın yanlış anlaşılmasına neden olmuştur. Örneğin, gece tırnak kesmenin kötü ruhları çağıracağına dair inanış, sahih olmayan rivayetlerden türemiştir. <strong>İsra Suresi 81</strong>’de “Hak geldi, batıl zail oldu” buyrulurken, bu tür asılsız inanışların geçersizliği vurgulanır. Cuma günü temizlik ya da yemek yasakları gibi ritüeller de Cuma namazının faziletini gölgeleyen yanlış uygulamalardır.</p>
+                        <p>Resim ve heykel konusundaki hurafeler de yaygındır. ‘Resim olan mekânda melek girmez’ gibi ifadeler, sanatı yasaklayan bir algı oluşturmuştur. Oysa Kur’an, sanatı doğrudan yasaklamaz; <strong>Furkan Suresi 2</strong>’de “O, her şeyi yarattı ve takdir etti” buyruğu, yaratımın güzelliklerini kapsar. Günümüzde dekoratif objelere yönelik korkular, bu hurafelerin modern yansımalarıdır ve kültürel gelişimi kısıtlar.</p>
+                        <p>Evde yalnız kalma ve Kur’an okuma ile ilgili inanışlar da dikkat çeker. ‘Evde yalnızken Kur’an okumak tehlikelidir’ gibi hurafeler, cin korkusuna dayanır. Ancak <strong>Bakara Suresi 186</strong>’da “Kullarım bana dua ettiklerinde, onların duasını kabul ederim” buyrulur; Kur’an her durumda bir nurdur ve bu tür sapkın düşünceler geçersizdir. Ailelerdeki bu inançlar, korkuyu besler ve aklı köreltir.</p>
+                        <p>Köpek, tılsım ve isimlerle ilgili hurafeler de yaygındır. ‘Köpek giren eve melek girmez’ gibi inanışlar, hayvanların yanlış yorumlanmasından kaynaklanır. <strong>Nahl Suresi 93</strong>’te “Yaptıklarınızdan sorulacaksınız” denilerek, insanın kendi eylemlerinden sorumlu olduğu belirtilir. Muska uygulamaları ve ‘Muhammed ismi taşıyanlar belirli davranışlara uymalı’ gibi hurafeler ise kaderi isimlere bağlayan bir yanılsamadır.</p>
+                        <img src="sızıntı2.webp" alt="Batıl İnançların Toplumsal Yansıması">
+                        <p>Batıl inançlar, korku psikolojisini körükler. İnsanlar belirsizlikten korkar ve bu korku, hurafelerle beslenir. <strong>İnsan Suresi 3</strong>’te “Şüphesiz, biz ona (insana) yolu gösterdik. İster şükredici olsun, ister nankör” buyrulur; bu, insanın akıl ve iradesiyle hareket etmesi gerektiğini gösterir. Hurafeler, bilgi kirliliğine yol açarak toplumsal bilinci zayıflatır.</p>
+                        <p>Toplumsal baskılar ve istismar, hurafelerin bir diğer sonucudur. ‘El âlem ne der?’ gibi dayatmalar, bireylerin özgür düşüncesini kısıtlar. Sahte hocalar, muskalarla maddi çıkar sağlar; bu, <strong>Bakara Suresi 188</strong>’deki “Allah kimseyi kapasitesinin ötesinde bir yükümlülüğe tabi tutmaz” ilkesine aykırıdır. Bu istismar, ekonomik sömürüye dönüşür.</p>
+                        <p>Genç nesiller, hurafeler nedeniyle manevi çöküş ve ideolojik yabancılaşma yaşar. Yetersiz din eğitimi, yüzeysel inançları besler. <strong>Zümer Suresi 53</strong>’te “Allah’ın rahmetinden ümit kesmeyin” buyrulurken, hurafeler bu umudu gölgeler. Bilimsel düşüncenin yerini batıl inançlar aldığında, gençler dinden uzaklaşır.</p>
+                        <p>Günümüzde hurafeler, sosyal medyada hızla yayılır. ‘Dijital hurafeler’ olarak yanlış bilgiler, doğruymuş gibi kabul edilir. <strong>Kasas Suresi 68</strong>’de “Allah dilediği şeyi yaratır ve takdir eder” buyrulurken, insanın bu düzen içindeki sorumluluğu da vurgulanır. Kriz anlarında hurafe temelli paylaşımlar artar.</p>
+                        <p>Sahada gözlemlenen uygulamalar, hurafelerin gücünü gösterir. Pazar yerlerinde, cami çevrelerinde ‘nazara karşı’ ritüeller yaygındır. Kırsal bölgelerde eski gelenekler, modern eğitimle çelişse de sürmektedir. <strong>Bakara Suresi 256</strong>’da “Dinde zorlama yoktur” buyrulur; bu, hurafelerin dayatmacı doğasına karşı bir settir.</p>
+                        <p>Çözüm, eğitim ve bilinçlendirmedir. <strong>Necm Suresi 39</strong>’da “Şüphesiz insan için kendi çalışmasından başka bir şey yoktur” denilerek, çabanın önemi vurgulanır. Kur’an’ın doğru yorumu, akademik çevrelerle gençlere aktarılmalıdır. Toplumsal forumlar, hurafelerle mücadelede farkındalık yaratır.</p>
+                        <p>Medya ve dijital dünya, doğru bilgi yayılımında sorumludur. Sosyal medya, sahih içeriklere öncelik vermeli; eleştirel okuryazarlık teşvik edilmelidir. <strong>Ahzab Suresi 70-71</strong>’de “Doğru konuşun, Allah sizin amellerinizi düzeltir” buyrulur; bu, bilginin gücüne işarettir.</p>
+                        <p>Dinî yetkinlik, hurafelerle mücadelede kilit roldedir. Yetkin hocalar, sahih bilgiyi yaymalı; din alimleri toplumsal farkındalığı artırmalıdır. <strong>İsra Suresi 15</strong>’te “Biz bir toplumu, bir elçi göndermeden cezalandırmayız” buyrulur; bu, doğru rehberliğin önemini gösterir.</p>
+                        <p>Sonuç olarak, batıl inançlar İslam’ın özüne aykırıdır ve Kur’an bu yanlışlıkları düzeltir. <strong>Furkan Suresi 2</strong>’den <strong>En’am Suresi 138</strong>’e kadar pek çok ayet, Allah’ın düzeninin hurafelerle kirletilemeyeceğini kanıtlar. İnsan, hurafelere sığınmak yerine, akıl, çaba ve dua ile hareket etmelidir. Bu mesaj, toplumu aydınlatmanın ve batılın gölgesinden kurtulmanın yoludur.</p>
+                `,
+                    category: "arastirma",
+                    image: "sızıntı.webp"
+                },
+                {
+                    title: "KADER NEDİR?",
+                    author: "Muhammed Yusuf Ertek",
+                    date: "05 Mart 2025",
+                    preview:
+                        "Kader alınyazısı mı? Yoksa Allah'ın evrendeki düzeni mi? Bu makalede, Kuran’ın kader anlayışını derinlemesine inceleyeceğiz...",
+                    content: `
                     <p>Kader, İslam’da en çok tartışılan ve yanlış anlaşılan kavramlardan biridir. Geleneksel anlayışta, çoğu insan kaderi doğmadan önce yazılmış, değiştirilemez bir alın yazısı olarak görür ve bu görüş, insanın hayatını pasif bir kabullenişle yaşamasına neden olabilir. Ancak Kuran’a baktığımızda, kaderin bu dar ve fatalist anlayıştan çok daha geniş ve derin bir anlam taşıdığını fark ederiz. Kader, Allah’ın evrendeki düzeni, yasaları ve her şeyi kapsayan bilgeliğidir; insanın ise bu düzen içinde özgür iradesiyle yer aldığı dinamik bir sistemdir. Bu makalede, Kuran ayetleriyle kaderin alın yazısı olmadığını, Allah’ın ilahi düzeni olduğunu delillendireceğiz.</p>
                     <p>Kuran, kaderi evrensel bir düzen olarak tanımlar. <strong>Kamer Suresi 49</strong>’da şöyle buyrulur: “Biz her şeyi bir ölçüye göre yarattık.” Bu ayet, evrenin her detayının Allah tarafından ölçülü ve dengeli bir şekilde yaratıldığını gösterir. Benzer şekilde, <strong>Furkan Suresi 2</strong>’de “O, her şeyi yarattı ve takdir etti” denilerek, Allah’ın yaratışındaki düzen ve ölçüye vurgu yapılır. <strong>Yasin Suresi 38</strong>’de ise “Güneş de kendi yörüngesinde akıp gitmektedir. Bu, mutlak kudret sahibi ve her şeyi bilen Allah’ın takdiridir” buyrulur. Bu ayetler, gök cisimlerinin bile Allah’ın belirlediği bir düzen içinde hareket ettiğini ve kaderin kaosun değil, uyumun bir göstergesi olduğunu ortaya koyar.</p>
                     <img src="kader3.png" alt="Evrenin Düzeni">
@@ -808,15 +909,16 @@
                     <p>Modern dünyada kader, genellikle “her şey önceden belirlenmiş” gibi fatalist bir yaklaşımla karıştırılır. Ancak Kuran, bu yanlış anlamayı düzeltir. <strong>Kasas Suresi 68</strong>’de “Allah dilediği şeyi yaratır ve dilediği şeyi takdir eder” denir, ancak bu, Allah’ın üstün iradesine vurgu yapar ve insanın özgür iradesini iptal etmez. <strong>Bakara Suresi 256</strong>’da “Dinde zorlama yoktur. Doğru yol, sapık yoldan ayrılmıştır” buyrularak, insanın inanma veya inanmama konusunda özgür olduğu ifade edilir. <strong>Nahl Suresi 91</strong>’de “Allah ile yaptığınız antlaşmayı yerine getirin” denilerek, insanın seçim yapma sorumluluğu hatırlatılır. Bu ayetler, Allah’ın her şeyi bilmesiyle insanın özgür iradesinin bir arada var olabileceğini gösterir; kader, alın yazısı gibi sabit bir senaryo değildir.</p>
                     <p>Sonuç olarak, Kuran’da kader, ne yalnızca bir alın yazısı ne de tamamen insanın kontrolünde bir olgudur. Kader, Allah’ın evreni yarattığı ölçü ve düzen ile insanın bu düzen içindeki özgür iradesinin birleşimidir. <strong>Furkan Suresi 2</strong>’den <strong>İnsan Suresi 3</strong>’e kadar pek çok ayet, kaderin Allah’ın ilahi düzeni olduğunu ve insanın bu düzen içinde sorumlu bir aktör olduğunu kanıtlar. Zorluklar karşısında “kaderim buymuş” diyerek pasif kalmak yerine, Kuran’ın öğrettiği gibi çaba göstermek, dua etmek ve sorumluluk almak, kaderi anlamanın ve yaşamanın en doğru yoludur. Bu evrensel mesaj, insan hayatına hem anlam hem de yön katmaya devam etmektedir.</p>
                 `,
-                "category": "kavram",
-                "image": "kader2.jpg"
-            },
-            {
-                "title": "KANDİLLER NEDİR?",
-                "author": "Muhammed Yusuf Ertek",
-                "date": "05 Mart 2025",
-                "preview": "Kandiller İslam’da gerçekten kutsal geceler mi? Yoksa sonradan eklenmiş gelenekler mi? Bu makalede, Kuran’a dayanarak kandillerin İslam’daki yerini inceleyeceğiz...",
-                "content": `
+                    category: "kavram",
+                    image: "kader2.jpg"
+                },
+                {
+                    title: "KANDİLLER NEDİR?",
+                    author: "Muhammed Yusuf Ertek",
+                    date: "05 Mart 2025",
+                    preview:
+                        "Kandiller İslam’da gerçekten kutsal geceler mi? Yoksa sonradan eklenmiş gelenekler mi? Bu makalede, Kuran’a dayanarak kandillerin İslam’daki yerini inceleyeceğiz...",
+                    content: `
                     <p>Kandiller, İslam dünyasında özellikle Türk kültüründe önemli kabul edilen beş geceyi (Mevlid, Regaib, Mirac, Berat ve Kadir geceleri) kapsayan bir kavramdır. Bu geceler, özel ibadetler, dualar ve camilerin aydınlatılmasıyla kutlanır. Ancak, Kuran’a baktığımızda, bu gecelerin İslam’da özel bir yerinin olmadığını ve sonradan eklendiğini görüyoruz. Bu makalede, kandillerin Kuran’daki temellerini ve tarihsel kökenlerini inceleyerek, bunların İslam’daki yerinin olmadığını ayetlerle delillendireceğiz.</p>
                     <p>Kuran’da yalnızca Kadir Gecesi özel bir gece olarak belirtilir. <strong>Kadir Suresi 1-5</strong>’te şöyle buyrulur: “Şüphesiz, Biz onu Kadir Gecesi’nde indirdik. Sen Kadir Gecesi’nin ne olduğunu bilir misin? Kadir Gecesi bin aydan hayırlıdır. Melekler ve Ruh, Rablerinin izniyle, her emir için o gece inerler. O gece tan yeri ağarıncaya kadar selâmdır.” Bu ayetler, Kadir Gecesi’nin Kuran’ın indirildiği gece olduğunu ve bin aydan daha hayırlı olduğunu açıkça ortaya koyar. Ancak, bu gecenin kesin tarihi Kuran’da belirtilmez; geleneksel olarak Ramazan’ın 27. gecesi kabul edilse de, bu bilgi hadislere dayanır.</p>
                     <img src="kandiller1.png" alt="Kandillerin Kültürel Kutlaması">
@@ -825,15 +927,16 @@
                     <p>Tarihsel olarak, kandillerin kökeni Hz. Muhammed’in yaşadığı dönemden çok sonrasına dayanır. Örneğin, Mevlid Kandili 13. yüzyılda Erbil Atabegi Muzafferüddin Kökböri tarafından başlatılmış, Osmanlı’da ise yaygınlaşmıştır. Regaib, Mirac ve Berat kandilleri de 10. yüzyıldan itibaren bazı bölgelerde kutlanmaya başlanmış, ancak bu uygulamalar Kuran’da değil, kültürel geleneklerde kök salmıştır. “Kandil” kelimesi bile, Osmanlı’da camilerin kandillerle aydınlatılmasından gelir ve dini bir terimden çok kültürel bir anlam taşır.</p>
                     <p>Sonuç olarak, Kuran’da Kadir Gecesi dışında kandillerin bir temeli yoktur. Bu geceler, İslam’ın ilk dönemlerinde değil, yüzyıllar sonra ortaya çıkmış ve kültürel geleneklerle şekillenmiştir. <strong>Nahl Suresi 116</strong>’da “Kendi dillerinizle, ‘Bu helal, bu haram’ diyerek Allah’a yalan uydurmayın” denilerek, dinde olmayan şeyleri eklemenin sakıncalı olduğu uyarısı yapılır. Kandiller, ne Kuran’da ne de İslam’ın temelinde yer alır; bu nedenle, bunların İslam’da kutsal geceler olarak değil, sonradan eklenmiş gelenekler olarak görülmesi gerekir.</p>
                 `,
-                "category": "kavram",
-                "image": "kandiller2.jpg"
-            },
-            {
-                "title": "RECM CEZASI NEDİR?",
-                "author": "Muhammed Yusuf Ertek",
-                "date": "04 Mart 2025",
-                "preview": "Recm cezası İslam’da gerçekten var mı? Yoksa hadislerle sonradan eklenmiş bir gelenek mi? Bu makalede, Kuran’a dayanarak recm cezasının İslam’daki yerini inceleyeceğiz...",
-                "content": `
+                    category: "kavram",
+                    image: "kandiller2.jpg"
+                },
+                {
+                    title: "RECM CEZASI NEDİR?",
+                    author: "Muhammed Yusuf Ertek",
+                    date: "04 Mart 2025",
+                    preview:
+                        "Recm cezası İslam’da gerçekten var mı? Yoksa hadislerle sonradan eklenmiş bir gelenek mi? Bu makalede, Kuran’a dayanarak recm cezasının İslam’daki yerini inceleyeceğiz...",
+                    content: `
                     <p>Recm cezası, yani taşlayarak öldürme, İslam dünyasında özellikle geleneksel anlayışta zina suçuna karşı uygulandığı iddia edilen bir cezadır. Bu ceza, genellikle evli kişilerin zina yapması durumunda devreye girer ve hadis kaynaklarına dayandırılır. Ancak, Kuran’a baktığımızda, recm cezasının İslam’da herhangi bir temeli olmadığını ve sonradan eklenmiş bir gelenek olduğunu görüyoruz. Bu makalede, recm cezasının Kuran’daki yerini ayetlerle inceleyerek, bunun İslam’ın özünde olmadığını delillendireceğiz.</p>
                     <p>Kuran’da zina suçunun cezası açıkça belirtilmiştir. <strong>Nur Suresi 2-5</strong>’te şöyle buyrulur: “Zina eden kadın ile zina eden erkekten her birine yüz sopa vurun. Allah’a ve ahiret gününe inanıyorsanız, onlara karşı merhamete kapılmayın; inananlar arasında bir topluluk da bu cezanın uygulanmasına şahit olsun.” Bu ayetler, zina eden herkese -evli ya da bekar ayrımı olmaksızın- 100 sopa cezası verilmesini emreder. Recm cezasına dair ise Kuran’da tek bir atıf bile bulunmaz.</p>
                     <img src="recm.jpg" alt="Recm Cezasının Tarihsel Tartışması">
@@ -842,15 +945,16 @@
                     <p>Tarihsel olarak, recm cezasının kökeni İslam’dan önceki Arap geleneklerine veya Yahudi hukukuna dayanır. Tevrat’ta (Deuteronomy 22:22) zina için recm cezası öngörülmüş, bu uygulama hadisler yoluyla İslam’a sızmıştır. Bazı hadisler, Kuran’da bir zamanlar recm ayeti olduğunu ancak bunun kaldırıldığını iddia etse de, bu iddia Kuran’ın değişmezliği ilkesine aykırıdır. <strong>Hicr Suresi 9</strong>’da “Şüphesiz o zikri (Kuran’ı) biz indirdik ve onu koruyacak olan da bizleriz” denilerek Kuran’ın korunmuşluğu vurgulanır.</p>
                     <p>Sonuç olarak, Kuran’da recm cezasına dair bir temel yoktur. Zina için öngörülen tek ceza 100 sopadır ve recm, hadislerle sonradan eklenmiş bir uygulamadır. <strong>Nahl Suresi 116</strong>’da “Kendi dillerinizle, ‘Bu helal, bu haram’ diyerek Allah’a yalan uydurmayın” denilerek, dinde olmayan şeyleri eklemenin sakıncalı olduğu uyarısı yapılır. Recm cezası, ne Kuran’da ne de İslam’ın temelinde yer alır; bu nedenle, bunun İslam’da bir ceza olarak değil, kültürel bir gelenek olarak görülmesi gerekir.</p>
                 `,
-                "category": "kavram",
-                "image": "recm1.jpg"
-            },
-            {
-                "title": "ŞEFAAT NEDİR?",
-                "author": "Muhammed Yusuf Ertek",
-                "date": "04 Mart 2025",
-                "preview": "Şefaat İslam’da gerçekten peygamberler, şeyhler ya da alimler tarafından mı yapılır? Yoksa yalnızca Allah’a mı aittir? Bu makalede, Kuran’a dayanarak Şefaat inancının İslam’daki yerini inceleyeceğiz...",
-                "content": `
+                    category: "kavram",
+                    image: "recm1.jpg"
+                },
+                {
+                    title: "ŞEFAAT NEDİR?",
+                    author: "Muhammed Yusuf Ertek",
+                    date: "04 Mart 2025",
+                    preview:
+                        "Şefaat İslam’da gerçekten peygamberler, şeyhler ya da alimler tarafından mı yapılır? Yoksa yalnızca Allah’a mı aittir? Bu makalede, Kuran’a dayanarak Şefaat inancının İslam’daki yerini inceleyeceğiz...",
+                    content: `
                     <p>Şefaat, İslam’da kıyamet günü birinin başka biri adına Allah’a yalvararak onun bağışlanmasını veya durumunun iyileştirilmesini istemesi olarak tanımlanır. Geleneksel İslam anlayışında, yalnızca Hz. Muhammed ve diğer peygamberler değil, aynı zamanda şeyhler, alimler ve kutsal addedilen kişiler de inananlar adına Şefaat edebileceği inancı yaygındır. Bu kişiler, cehennemden kurtarıcı ya da cennete geçişi kolaylaştırıcı birer aracı olarak görülür. Ancak, Kuran’a baktığımızda, Şefaat’in yalnızca Allah’a ait olduğunu, kimsenin -ne peygamberlerin ne de şeyh ve alimlerin- cehennemden kurtaramayacağını ve ancak cenneti hak edenlerin durumunun Allah’ın izniyle iyileşebileceğini görüyoruz. Bu makalede, Şefaat kavramını Kuran ayetleriyle inceleyerek, özellikle şeyh ve alimlerin Şefaat yetkisinin İslam’da olmadığını detaylı bir şekilde delillendireceğiz.</p>
                     <p>Kuran’da Şefaat’in genel olarak mümkün olmadığı açıkça belirtilir. <strong>Bakara Suresi 48</strong>’de şöyle buyrulur: “Ve korkun o günden ki, bir kimse kendi nefsine yeterli olmaz, ondan hiçbir fidye kabul edilmeyecek, hiçbir Şefaat onun lehine kabul edilmeyecek ve onlar yardıma kavuşamazlar.” Bu ayet, kıyamet günü herkesin kendi amelleriyle yargılanacağını ve Şefaat’in -kimden gelirse gelsin- kimseyi kurtaramayacağını vurgular. Benzer şekilde, <strong>Bakara Suresi 254</strong>’te “O gün ticaret yok, dostluk yok, Şefaat yok” denilerek, Şefaat’in geçersizliği tekrarlanır. Bu ayetler, Şefaat’in şeyhler ya da alimler gibi kişilerce yapılabileceğine dair herhangi bir kapı bırakmaz.</p>
                     <img src="sefaat2.png" alt="Şefaat İnancının Kültürel Kökenleri">
@@ -862,68 +966,69 @@
                     <p>Ek olarak, <strong>Ankebut Suresi 12</strong>’de “Kâfirler, iman edenlere dediler ki: ‘Bizim yolumuza uyun, sizin günahlarınızı biz taşıyalım.’ Oysa onlar, onların günahlarından hiçbir şey taşıyamazlar” denilerek, kimsenin bir başkasının günahını üstlenemeyeceği belirtilir. Eğer şeyh ve alimler Şefaat ederek müritlerini kurtarabilseydi, bu ayet böyle bir yetkiyi tanırdı; ancak Kuran, böyle bir yetkiyi yalnızca Allah’a verir. <strong>Nahl Suresi 116</strong>’da ise “Kendi dillerinizle, ‘Bu helal, bu haram’ diyerek Allah’a yalan uydurmayın” denilerek, dinde olmayan şeyleri eklemenin sakıncalı olduğu uyarısı yapılır. Şeyh ve alimlerin Şefaat yetkisi, bu bağlamda Kuran’a aykırı bir uydurmadır.</p>
                     <p>Sonuç olarak, Kuran’da Şefaat yalnızca Allah’a aittir ve ne peygamberler, ne şeyhler, ne de alimler kimseyi cehennemden kurtaramaz. Cenneti hak edenlerin durumu Allah’ın izniyle iyileşebilir, ancak bu, amellerin yerine geçmez ve insanlara böyle bir yetki verilmez. Geleneksel Şefaat inancı, özellikle şeyh ve alimlerin Şefaat edeceğine dair iddia, hadisler ve tasavvufi geleneklerle sonradan eklenmiş bir sapmadır ve İslam’ın özünde yer almaz. Kuran, inananları Şefaat umuduna değil, kendi amellerine ve Allah’la doğrudan bağa yöneltir. Şeyh ve alimlerin Şefaat yetkisi, Kuran’ın monoteistik ruhuna aykırı bir inançtır ve İslam’da hiçbir dayanağı yoktur.</p>
                 `,
-                "category": "kavram",
-                "image": "sefaat1.jpg"
+                    category: "kavram",
+                    image: "sefaat1.jpg"
+                }
+            ];
+
+            function highlightText(text, searchTerm) {
+                if (!searchTerm) return text;
+                const regex = new RegExp(`(${searchTerm.replace(/[İI]/g, "[İIıi]")})`, "gi");
+                return text.replace(regex, '<span class="highlight">$1</span>');
             }
-            
-        ];
 
-        function highlightText(text, searchTerm) {
-            if (!searchTerm) return text;
-            const regex = new RegExp(`(${searchTerm.replace(/[İI]/g, '[İIıi]')})`, "gi");
-            return text.replace(regex, '<span class="highlight">$1</span>');
-        }
-
-        function displayArticles(articles) {
-            const articlesDiv = document.getElementById("articles");
-            articlesDiv.innerHTML = "";
-            articles.forEach((article, index) => {
-                const articleDiv = document.createElement("div");
-                articleDiv.style.setProperty('--index', index);
-                articleDiv.className = "article-preview";
-                const isFavorite = JSON.parse(localStorage.getItem("favorites") || "[]").some(f => f.title === article.title);
-                articleDiv.innerHTML = `
+            function displayArticles(articles) {
+                const articlesDiv = document.getElementById("articles");
+                articlesDiv.innerHTML = "";
+                articles.forEach((article, index) => {
+                    const articleDiv = document.createElement("div");
+                    articleDiv.style.setProperty("--index", index);
+                    articleDiv.className = "article-preview";
+                    const isFavorite = JSON.parse(localStorage.getItem("favorites") || "[]").some(
+                        (f) => f.title === article.title
+                    );
+                    articleDiv.innerHTML = `
                     <span class="category-tag category-${article.category}">${article.category.toUpperCase()}</span>
                     <img src="${article.image}" class="cover" alt="Kapak Resmi">
                     <h2>${article.title}</h2>
                     <div class="meta">Yazar: ${article.author} | Tarih: ${article.date}</div>
                     <p>${article.preview}</p>
                     <div class="article-actions">
-                        <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-title="${article.title}">★</button>
+                        <button class="favorite-btn ${isFavorite ? "active" : ""}" data-title="${article.title}">★</button>
                         <button class="share-btn" data-title="${article.title}">↷</button>
                     </div>
                 `;
-                articleDiv.addEventListener("click", (e) => {
-                    if (e.target.tagName !== "BUTTON") {
-                        showArticleDetail(article);
-                    }
+                    articleDiv.addEventListener("click", (e) => {
+                        if (e.target.tagName !== "BUTTON") {
+                            showArticleDetail(article);
+                        }
+                    });
+                    articlesDiv.appendChild(articleDiv);
                 });
-                articlesDiv.appendChild(articleDiv);
-            });
-        }
+            }
 
-        function displayFavorites() {
-            try {
-                console.log("Favoriler gösteriliyor...");
-                const favoritesPanel = document.getElementById("favorites-panel");
-                const favoritesList = document.getElementById("favorites-list");
-                const articlesDiv = document.getElementById("articles");
-                const articleDetail = document.getElementById("article-detail");
-                let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+            function displayFavorites() {
+                try {
+                    console.log("Favoriler gösteriliyor...");
+                    const favoritesPanel = document.getElementById("favorites-panel");
+                    const favoritesList = document.getElementById("favorites-list");
+                    const articlesDiv = document.getElementById("articles");
+                    const articleDetail = document.getElementById("article-detail");
+                    let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
-                favorites = favorites.filter(fav => articlesData.some(article => article.title === fav.title));
-                localStorage.setItem("favorites", JSON.stringify(favorites));
+                    favorites = favorites.filter((fav) => articlesData.some((article) => article.title === fav.title));
+                    localStorage.setItem("favorites", JSON.stringify(favorites));
 
-                favoritesList.innerHTML = "";
-                if (favorites.length === 0) {
-                    favoritesList.innerHTML = "<p>Henüz favori makale eklenmemiş.</p>";
-                } else {
-                    favorites.forEach((article, index) => {
-                        const category = article.category || "belirsiz";
-                        const articleDiv = document.createElement("div");
-                        articleDiv.style.setProperty('--index', index);
-                        articleDiv.className = "article-preview";
-                        articleDiv.innerHTML = `
+                    favoritesList.innerHTML = "";
+                    if (favorites.length === 0) {
+                        favoritesList.innerHTML = "<p>Henüz favori makale eklenmemiş.</p>";
+                    } else {
+                        favorites.forEach((article, index) => {
+                            const category = article.category || "belirsiz";
+                            const articleDiv = document.createElement("div");
+                            articleDiv.style.setProperty("--index", index);
+                            articleDiv.className = "article-preview";
+                            articleDiv.innerHTML = `
                             <span class="category-tag category-${category}">${category.toUpperCase()}</span>
                             <img src="${article.image}" class="cover" alt="Kapak Resmi">
                             <h2>${article.title}</h2>
@@ -931,235 +1036,248 @@
                             <p>${article.preview}</p>
                             <button class="remove-from-favorites" data-title="${article.title}">Favorilerden Kaldır</button>
                         `;
-                        articleDiv.addEventListener("click", (e) => {
-                            if (e.target.tagName !== "BUTTON") {
-                                showArticleDetail(article);
-                                favoritesPanel.classList.remove("show");
-                            }
+                            articleDiv.addEventListener("click", (e) => {
+                                if (e.target.tagName !== "BUTTON") {
+                                    showArticleDetail(article);
+                                    favoritesPanel.classList.remove("show");
+                                }
+                            });
+                            favoritesList.appendChild(articleDiv);
                         });
-                        favoritesList.appendChild(articleDiv);
-                    });
+                    }
+                    articlesDiv.style.display = "none";
+                    articleDetail.classList.remove("show");
+                    favoritesPanel.classList.add("show");
+                    console.log("Favoriler paneli gösterildi.");
+                } catch (error) {
+                    console.error("Favoriler gösterilirken hata oluştu:", error);
                 }
-                articlesDiv.style.display = "none";
-                articleDetail.classList.remove("show");
-                favoritesPanel.classList.add("show");
-                console.log("Favoriler paneli gösterildi.");
-            } catch (error) {
-                console.error("Favoriler gösterilirken hata oluştu:", error);
             }
-        }
 
-        function showArticleDetail(article) {
-            const detail = document.getElementById("article-detail");
-            document.getElementById("detail-image").src = article.image;
-            document.getElementById("detail-title").textContent = article.title;
-            document.getElementById("detail-meta").textContent = `Yazar: ${article.author} | Tarih: ${article.date}`;
-            document.getElementById("detail-content").innerHTML = article.content;
+            function showArticleDetail(article) {
+                const detail = document.getElementById("article-detail");
+                document.getElementById("detail-image").src = article.image;
+                document.getElementById("detail-title").textContent = article.title;
+                document.getElementById("detail-meta").textContent =
+                    `Yazar: ${article.author} | Tarih: ${article.date}`;
+                document.getElementById("detail-content").innerHTML = article.content;
 
-            const whatsappBtn = document.getElementById("whatsapp-share");
-            const twitterBtn = document.getElementById("twitter-share");
-            const facebookBtn = document.getElementById("facebook-share");
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent(`${article.title} - Sadece Kuran`);
+                const whatsappBtn = document.getElementById("whatsapp-share");
+                const twitterBtn = document.getElementById("twitter-share");
+                const facebookBtn = document.getElementById("facebook-share");
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent(`${article.title} - Sadece Kuran`);
 
-            whatsappBtn.onclick = () => window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
-            twitterBtn.onclick = () => window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
-            facebookBtn.onclick = () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+                whatsappBtn.onclick = () =>
+                    window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, "_blank");
+                twitterBtn.onclick = () =>
+                    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, "_blank");
+                facebookBtn.onclick = () =>
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, "_blank");
 
-            detail.classList.add("show");
-            document.getElementById("articles").style.display = "none";
-            document.getElementById("favorites-panel").classList.remove("show");
+                detail.classList.add("show");
+                document.getElementById("articles").style.display = "none";
+                document.getElementById("favorites-panel").classList.remove("show");
 
-            const savedFontSize = localStorage.getItem("fontSize");
-            if (savedFontSize) {
-                document.getElementById("detail-content").style.fontSize = `${savedFontSize}px`;
+                const savedFontSize = localStorage.getItem("fontSize");
+                if (savedFontSize) {
+                    document.getElementById("detail-content").style.fontSize = `${savedFontSize}px`;
+                }
             }
-        }
 
-        function searchAndFilterArticles(searchTerm, category) {
-            let filteredArticles = articlesData;
-            if (searchTerm) {
-                filteredArticles = filteredArticles.filter(article => 
-                    article.title.toLocaleLowerCase('tr-TR').includes(searchTerm.toLocaleLowerCase('tr-TR')) || 
-                    article.preview.toLocaleLowerCase('tr-TR').includes(searchTerm.toLocaleLowerCase('tr-TR'))
+            function searchAndFilterArticles(searchTerm, category) {
+                let filteredArticles = articlesData;
+                if (searchTerm) {
+                    filteredArticles = filteredArticles.filter(
+                        (article) =>
+                            article.title.toLocaleLowerCase("tr-TR").includes(searchTerm.toLocaleLowerCase("tr-TR")) ||
+                            article.preview.toLocaleLowerCase("tr-TR").includes(searchTerm.toLocaleLowerCase("tr-TR"))
+                    );
+                }
+                if (category) {
+                    filteredArticles = filteredArticles.filter((article) => article.category === category);
+                }
+                displayArticles(
+                    filteredArticles.map((article) => ({
+                        ...article,
+                        title: highlightText(article.title, searchTerm),
+                        preview: highlightText(article.preview, searchTerm)
+                    }))
                 );
             }
-            if (category) {
-                filteredArticles = filteredArticles.filter(article => article.category === category);
-            }
-            displayArticles(filteredArticles.map(article => ({
-                ...article,
-                title: highlightText(article.title, searchTerm),
-                preview: highlightText(article.preview, searchTerm)
-            })));
-        }
 
-        function toggleFavorite(title, button) {
-            let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-            const isFavorite = favorites.some(f => f.title === title);
-            if (isFavorite) {
-                favorites = favorites.filter(f => f.title !== title);
-                localStorage.setItem("favorites", JSON.stringify(favorites));
-                button.classList.remove("active");
-            } else {
-                const articleToAdd = articlesData.find(a => a.title === title);
-                if (articleToAdd) {
-                    favorites.push(articleToAdd);
+            function toggleFavorite(title, button) {
+                let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+                const isFavorite = favorites.some((f) => f.title === title);
+                if (isFavorite) {
+                    favorites = favorites.filter((f) => f.title !== title);
                     localStorage.setItem("favorites", JSON.stringify(favorites));
-                    button.classList.add("active");
+                    button.classList.remove("active");
+                } else {
+                    const articleToAdd = articlesData.find((a) => a.title === title);
+                    if (articleToAdd) {
+                        favorites.push(articleToAdd);
+                        localStorage.setItem("favorites", JSON.stringify(favorites));
+                        button.classList.add("active");
+                    }
+                }
+                if (document.getElementById("favorites-panel").classList.contains("show")) {
+                    displayFavorites();
                 }
             }
-            if (document.getElementById("favorites-panel").classList.contains("show")) {
+
+            function removeFromFavorites(title) {
+                let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+                favorites = favorites.filter((f) => f.title !== title);
+                localStorage.setItem("favorites", JSON.stringify(favorites));
                 displayFavorites();
-            }
-        }
-
-        function removeFromFavorites(title) {
-            let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-            favorites = favorites.filter(f => f.title !== title);
-            localStorage.setItem("favorites", JSON.stringify(favorites));
-            displayFavorites();
-            displayArticles(articlesData);
-        }
-
-        function shareArticle(title) {
-            const article = articlesData.find(a => a.title === title);
-            const text = `${article.title} - Sadece Kuran`;
-            if (navigator.share) {
-                navigator.share({ title: article.title, text, url: window.location.href })
-                    .catch(err => console.log("Paylaşım hatası:", err));
-            } else {
-                alert("Paylaşım: " + text);
-                navigator.clipboard.writeText(text);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const menuIcon = document.querySelector(".menu-icon");
-            const sidebar = document.querySelector(".sidebar");
-            const closeMenu = document.querySelector(".close-menu");
-            const articleDetail = document.getElementById("article-detail");
-            const favoritesPanel = document.getElementById("favorites-panel");
-            const articlesDiv = document.getElementById("articles");
-            const closeArticle = document.getElementById("close-article");
-            const showFavoritesBtn = document.getElementById("show-favorites");
-            const settingsLink = document.getElementById("settings-link");
-            const settingsPanel = document.getElementById("settings-panel");
-            const closeSettings = document.getElementById("close-settings");
-            const fontSizeInput = document.getElementById("font-size");
-            const fontSizeValue = document.getElementById("font-size-value");
-            const fontFamilySelect = document.getElementById("font-family");
-
-            if (!showFavoritesBtn) {
-                console.error("Favoriler butonu bulunamadı!");
-                return;
-            }
-
-            menuIcon.addEventListener("click", (e) => {
-                e.stopPropagation();
-                sidebar.classList.toggle("show");
-            });
-
-            closeMenu.addEventListener("click", (e) => {
-                e.stopPropagation();
-                sidebar.classList.remove("show");
-            });
-
-            document.addEventListener("click", (e) => {
-                if (!sidebar.contains(e.target) && !menuIcon.contains(e.target)) {
-                    sidebar.classList.remove("show");
-                }
-            });
-
-            closeArticle.addEventListener("click", () => {
-                articleDetail.classList.remove("show");
-                articlesDiv.style.display = "grid";
-            });
-
-            showFavoritesBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                console.log("Favoriler butonuna tıklandı.");
-                displayFavorites();
-            });
-
-            document.getElementById("back-to-articles").addEventListener("click", () => {
-                favoritesPanel.classList.remove("show");
-                articlesDiv.style.display = "grid";
                 displayArticles(articlesData);
-            });
+            }
 
-            let searchTimeout;
-            document.getElementById("search").addEventListener("input", (e) => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    searchAndFilterArticles(e.target.value.trim(), document.getElementById("category-filter").value);
-                }, 300);
-            });
+            function shareArticle(title) {
+                const article = articlesData.find((a) => a.title === title);
+                const text = `${article.title} - Sadece Kuran`;
+                if (navigator.share) {
+                    navigator
+                        .share({ title: article.title, text, url: window.location.href })
+                        .catch((err) => console.log("Paylaşım hatası:", err));
+                } else {
+                    alert("Paylaşım: " + text);
+                    navigator.clipboard.writeText(text);
+                }
+            }
 
-            document.getElementById("category-filter").addEventListener("change", (e) => {
-                searchAndFilterArticles(document.getElementById("search").value.trim(), e.target.value);
-            });
+            document.addEventListener("DOMContentLoaded", () => {
+                const menuIcon = document.querySelector(".menu-icon");
+                const sidebar = document.querySelector(".sidebar");
+                const closeMenu = document.querySelector(".close-menu");
+                const articleDetail = document.getElementById("article-detail");
+                const favoritesPanel = document.getElementById("favorites-panel");
+                const articlesDiv = document.getElementById("articles");
+                const closeArticle = document.getElementById("close-article");
+                const showFavoritesBtn = document.getElementById("show-favorites");
+                const settingsLink = document.getElementById("settings-link");
+                const settingsPanel = document.getElementById("settings-panel");
+                const closeSettings = document.getElementById("close-settings");
+                const fontSizeInput = document.getElementById("font-size");
+                const fontSizeValue = document.getElementById("font-size-value");
+                const fontFamilySelect = document.getElementById("font-family");
 
-            document.addEventListener("click", (e) => {
-                if (e.target.classList.contains("favorite-btn")) {
-                    toggleFavorite(e.target.dataset.title, e.target);
-                } else if (e.target.classList.contains("share-btn")) {
-                    shareArticle(e.target.dataset.title);
-                } else if (e.target.classList.contains("remove-from-favorites")) {
-                    removeFromFavorites(e.target.dataset.title);
+                if (!showFavoritesBtn) {
+                    console.error("Favoriler butonu bulunamadı!");
+                    return;
+                }
+
+                menuIcon.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle("show");
+                });
+
+                closeMenu.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.remove("show");
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!sidebar.contains(e.target) && !menuIcon.contains(e.target)) {
+                        sidebar.classList.remove("show");
+                    }
+                });
+
+                closeArticle.addEventListener("click", () => {
+                    articleDetail.classList.remove("show");
+                    articlesDiv.style.display = "grid";
+                });
+
+                showFavoritesBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    console.log("Favoriler butonuna tıklandı.");
+                    displayFavorites();
+                });
+
+                document.getElementById("back-to-articles").addEventListener("click", () => {
+                    favoritesPanel.classList.remove("show");
+                    articlesDiv.style.display = "grid";
+                    displayArticles(articlesData);
+                });
+
+                let searchTimeout;
+                document.getElementById("search").addEventListener("input", (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        searchAndFilterArticles(
+                            e.target.value.trim(),
+                            document.getElementById("category-filter").value
+                        );
+                    }, 300);
+                });
+
+                document.getElementById("category-filter").addEventListener("change", (e) => {
+                    searchAndFilterArticles(document.getElementById("search").value.trim(), e.target.value);
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (e.target.classList.contains("favorite-btn")) {
+                        toggleFavorite(e.target.dataset.title, e.target);
+                    } else if (e.target.classList.contains("share-btn")) {
+                        shareArticle(e.target.dataset.title);
+                    } else if (e.target.classList.contains("remove-from-favorites")) {
+                        removeFromFavorites(e.target.dataset.title);
+                    }
+                });
+
+                displayArticles(articlesData);
+
+                function toggleTheme() {
+                    document.body.classList.toggle("day-mode");
+                    localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night");
+                    document.getElementById("theme-toggle").textContent = document.body.classList.contains("day-mode")
+                        ? "☀"
+                        : "☾";
+                }
+
+                document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+                if (localStorage.getItem("theme") === "day") document.body.classList.add("day-mode");
+
+                settingsLink.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    settingsPanel.classList.add("show");
+                    sidebar.classList.remove("show");
+                });
+
+                closeSettings.addEventListener("click", () => {
+                    settingsPanel.classList.remove("show");
+                });
+
+                fontSizeInput.addEventListener("input", () => {
+                    const size = fontSizeInput.value;
+                    fontSizeValue.textContent = `${size}px`;
+                    document.body.style.fontSize = `${size}px`;
+                    document.querySelector("#article-detail .content").style.fontSize = `${size}px`;
+                    localStorage.setItem("fontSize", size);
+                });
+
+                fontFamilySelect.addEventListener("change", () => {
+                    const font = fontFamilySelect.value;
+                    document.body.style.fontFamily = font;
+                    document.querySelector("#article-detail .content").style.fontFamily = font;
+                    localStorage.setItem("fontFamily", font);
+                });
+
+                const savedFontSize = localStorage.getItem("fontSize");
+                const savedFontFamily = localStorage.getItem("fontFamily");
+                if (savedFontSize) {
+                    fontSizeInput.value = savedFontSize;
+                    fontSizeValue.textContent = `${savedFontSize}px`;
+                    document.body.style.fontSize = `${savedFontSize}px`;
+                    document.querySelector("#article-detail .content").style.fontSize = `${savedFontSize}px`;
+                }
+                if (savedFontFamily) {
+                    fontFamilySelect.value = savedFontFamily;
+                    document.body.style.fontFamily = savedFontFamily;
+                    document.querySelector("#article-detail .content").style.fontFamily = savedFontFamily;
                 }
             });
-
-            displayArticles(articlesData);
-
-            function toggleTheme() {
-                document.body.classList.toggle("day-mode");
-                localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night");
-                document.getElementById("theme-toggle").textContent = document.body.classList.contains("day-mode") ? "☀" : "☾";
-            }
-
-            document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
-            if (localStorage.getItem("theme") === "day") document.body.classList.add("day-mode");
-
-            settingsLink.addEventListener("click", (e) => {
-                e.preventDefault();
-                settingsPanel.classList.add("show");
-                sidebar.classList.remove("show");
-            });
-
-            closeSettings.addEventListener("click", () => {
-                settingsPanel.classList.remove("show");
-            });
-
-            fontSizeInput.addEventListener("input", () => {
-                const size = fontSizeInput.value;
-                fontSizeValue.textContent = `${size}px`;
-                document.body.style.fontSize = `${size}px`;
-                document.querySelector("#article-detail .content").style.fontSize = `${size}px`;
-                localStorage.setItem("fontSize", size);
-            });
-
-            fontFamilySelect.addEventListener("change", () => {
-                const font = fontFamilySelect.value;
-                document.body.style.fontFamily = font;
-                document.querySelector("#article-detail .content").style.fontFamily = font;
-                localStorage.setItem("fontFamily", font);
-            });
-
-            const savedFontSize = localStorage.getItem("fontSize");
-            const savedFontFamily = localStorage.getItem("fontFamily");
-            if (savedFontSize) {
-                fontSizeInput.value = savedFontSize;
-                fontSizeValue.textContent = `${savedFontSize}px`;
-                document.body.style.fontSize = `${savedFontSize}px`;
-                document.querySelector("#article-detail .content").style.fontSize = `${savedFontSize}px`;
-            }
-            if (savedFontFamily) {
-                fontFamilySelect.value = savedFontFamily;
-                document.body.style.fontFamily = savedFontFamily;
-                document.querySelector("#article-detail .content").style.fontFamily = savedFontFamily;
-            }
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
