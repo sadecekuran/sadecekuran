@@ -10,17 +10,17 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             :root {
-                --primary-dark: #1a1a2e;
-                --secondary-dark: #16213e;
-                --accent-dark: #0f3460;
+                --primary-dark: #1e1e24;
+                --secondary-dark: #2d2d35;
+                --accent-dark: #3a3a47;
                 --text-dark: #e1e1e6;
-                --highlight-dark: #4caf50;
+                --highlight-dark: #8e8e8e;
                 
-                --primary-light: #f8f9fa;
-                --secondary-light: #e9ecef;
-                --accent-light: #dee2e6;
-                --text-light: #212529;
-                --highlight-light: #4caf50;
+                --primary-light: #f0f0f0;
+                --secondary-light: #e0e0e0;
+                --accent-light: #d0d0d0;
+                --text-light: #333333;
+                --highlight-light: #8e8e8e;
                 
                 --transition-speed: 0.3s;
                 --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -48,10 +48,11 @@
                 display: flex;
                 flex-direction: column;
                 min-height: 100vh;
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: background 0.5s var(--transition-function), color 0.3s var(--transition-function);
                 scrollbar-width: thin;
                 scrollbar-color: var(--accent-dark) var(--primary-dark);
                 overflow-x: hidden;
+                will-change: background-color, color;
             }
             
             body.day-mode {
@@ -81,9 +82,51 @@
                 background-color: var(--accent-light);
             }
             
+            #splash-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark), var(--accent-dark));
+                background-size: 400% 400%;
+                animation: gradientBG 15s ease infinite;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                transition: opacity 0.8s ease, visibility 0.8s ease;
+            }
+            
+            #splash-screen.hide {
+                opacity: 0;
+                visibility: hidden;
+            }
+            
+            #splash-screen img {
+                width: 120px;
+                animation: pulseLogo 2s infinite alternate;
+                filter: drop-shadow(0 0 10px rgba(142, 142, 142, 0.5));
+                margin-bottom: 20px;
+                will-change: transform, filter;
+            }
+            
+            #splash-screen span {
+                font-size: 1rem;
+                letter-spacing: 3px;
+                color: var(--text-dark);
+                font-weight: 500;
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeInText 1s ease-out forwards 0.5s;
+                text-shadow: 0 0 10px rgba(142, 142, 142, 0.5);
+            }
+            
             header {
-                background: rgba(26, 26, 46, 0.8);
+                background: rgba(30, 30, 36, 0.8);
                 backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
                 padding: 15px 20px;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
                 position: sticky;
@@ -92,11 +135,12 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: background 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function);
+                will-change: background, box-shadow;
             }
             
             body.day-mode header {
-                background: rgba(248, 249, 250, 0.8);
+                background: rgba(240, 240, 240, 0.8);
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             }
             
@@ -105,21 +149,22 @@
                 font-weight: 700;
                 color: var(--text-dark);
                 letter-spacing: 1px;
-                text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+                text-shadow: 0 0 10px rgba(142, 142, 142, 0.5);
                 flex-grow: 1;
                 text-align: center;
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: color 0.3s var(--transition-function), transform 0.3s var(--transition-function);
                 transform: translateY(0);
+                will-change: transform, color;
             }
             
             header h1:hover {
                 transform: translateY(-2px);
-                text-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+                text-shadow: 0 0 15px rgba(142, 142, 142, 0.7);
             }
             
             body.day-mode header h1 {
                 color: var(--text-light);
-                text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+                text-shadow: 0 0 10px rgba(142, 142, 142, 0.3);
             }
             
             .menu-icon {
@@ -135,6 +180,7 @@
                 width: 40px;
                 height: 40px;
                 background: rgba(255, 255, 255, 0.1);
+                will-change: transform, background;
             }
             
             .menu-icon:hover {
@@ -157,18 +203,20 @@
                 left: -300px;
                 width: 300px;
                 height: 100%;
-                background: rgba(22, 33, 62, 0.95);
+                background: rgba(45, 45, 53, 0.95);
                 backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
                 padding: 80px 20px 20px;
                 transition: all 0.4s var(--transition-function);
                 z-index: 90;
                 box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
                 overflow-y: auto;
                 border-right: 1px solid rgba(255, 255, 255, 0.1);
+                will-change: transform;
             }
             
             body.day-mode .sidebar {
-                background: rgba(248, 249, 250, 0.95);
+                background: rgba(224, 224, 224, 0.95);
                 box-shadow: 5px 0 25px rgba(0, 0, 0, 0.1);
                 border-right: 1px solid rgba(0, 0, 0, 0.1);
             }
@@ -216,6 +264,7 @@
                 border-radius: 12px;
                 transition: all var(--transition-speed) var(--transition-function);
                 background: rgba(255, 255, 255, 0.05);
+                will-change: transform, background;
             }
             
             body.day-mode .sidebar ul li a {
@@ -232,12 +281,12 @@
                 background: var(--highlight-dark);
                 color: #ffffff;
                 transform: translateX(5px) scale(1.02);
-                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
             }
             
             body.day-mode .sidebar ul li a:hover {
                 background: var(--highlight-light);
-                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
             }
             
             .close-menu {
@@ -258,6 +307,7 @@
                 height: 40px;
                 border-radius: 50%;
                 background: rgba(255, 255, 255, 0.1);
+                will-change: transform, background;
             }
             
             .close-menu:hover {
@@ -288,19 +338,21 @@
             }
             
             #controls {
-                background: rgba(15, 52, 96, 0.8);
+                background: rgba(58, 58, 71, 0.8);
                 backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
                 padding: 20px;
                 border-radius: 16px;
                 width: 100%;
                 margin-bottom: 30px;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: transform 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function), background 0.3s var(--transition-function);
                 display: flex;
                 flex-direction: column;
                 gap: 15px;
                 transform: translateY(0);
                 border: 1px solid rgba(255, 255, 255, 0.1);
+                will-change: transform, box-shadow;
             }
             
             #controls:hover {
@@ -309,7 +361,7 @@
             }
             
             body.day-mode #controls {
-                background: rgba(255, 255, 255, 0.9);
+                background: rgba(208, 208, 208, 0.9);
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
                 border: 1px solid rgba(0, 0, 0, 0.1);
             }
@@ -322,10 +374,10 @@
                 padding: 15px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 12px;
-                background: rgba(26, 26, 46, 0.5);
+                background: rgba(30, 30, 36, 0.5);
                 color: var(--text-dark);
                 font-size: 1rem;
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: all 0.3s var(--transition-function);
                 width: 100%;
                 font-family: 'Poppins', sans-serif;
             }
@@ -339,13 +391,13 @@
             #search:focus {
                 outline: none;
                 border-color: var(--highlight-dark);
-                box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+                box-shadow: 0 0 0 3px rgba(142, 142, 142, 0.3);
                 transform: scale(1.01);
             }
             
             body.day-mode #search:focus {
                 border-color: var(--highlight-light);
-                box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+                box-shadow: 0 0 0 3px rgba(142, 142, 142, 0.2);
             }
             
             #filter-and-favorites {
@@ -358,11 +410,11 @@
                 padding: 15px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 12px;
-                background: rgba(26, 26, 46, 0.5);
+                background: rgba(30, 30, 36, 0.5);
                 color: var(--text-dark);
                 font-size: 1rem;
                 cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: all 0.3s var(--transition-function);
                 flex: 1;
                 min-width: 150px;
                 font-family: 'Poppins', sans-serif;
@@ -377,7 +429,7 @@
                 background-color: #ffffff;
                 color: var(--text-light);
                 border: 1px solid rgba(0, 0, 0, 0.1);
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23212529' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             }
             
             #category-filter:hover {
@@ -397,7 +449,7 @@
                 color: #ffffff;
                 font-size: 1rem;
                 cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: all 0.3s var(--transition-function);
                 flex: 1;
                 min-width: 120px;
                 font-family: 'Poppins', sans-serif;
@@ -406,6 +458,7 @@
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
+                will-change: transform, background, box-shadow;
             }
             
             #show-favorites i {
@@ -413,9 +466,9 @@
             }
             
             #show-favorites:hover {
-                background: #43a047;
+                background: #777777;
                 transform: translateY(-2px) scale(1.02);
-                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
             }
             
             body.day-mode #show-favorites {
@@ -423,8 +476,8 @@
             }
             
             body.day-mode #show-favorites:hover {
-                background: #43a047;
-                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+                background: #777777;
+                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
             }
             
             #articles {
@@ -433,6 +486,7 @@
                 grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
                 gap: 25px;
                 z-index: 1;
+                contain: content;
             }
             
             #favorites-list {
@@ -441,29 +495,33 @@
                 grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
                 gap: 25px;
                 z-index: 1;
+                contain: content;
             }
             
             .article-preview {
-                background: rgba(15, 52, 96, 0.7);
+                background: rgba(58, 58, 71, 0.7);
                 backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
                 padding: 0;
                 border-radius: 16px;
                 cursor: pointer;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: transform 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function), background 0.3s var(--transition-function);
                 opacity: 0;
                 transform: translateY(30px);
                 animation: fadeInUp 0.6s var(--transition-function) forwards;
-                animation-delay: calc(0.1s * var(--index));
+                animation-delay: calc(0.05s * var(--index));
                 position: relative;
                 overflow: hidden;
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 display: flex;
                 flex-direction: column;
+                will-change: transform, opacity;
+                contain: layout style;
             }
             
             body.day-mode .article-preview {
-                background: rgba(255, 255, 255, 0.9);
+                background: rgba(208, 208, 208, 0.9);
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
                 border: 1px solid rgba(0, 0, 0, 0.1);
             }
@@ -491,6 +549,7 @@
                 height: 100%;
                 object-fit: cover;
                 transition: all 0.5s var(--transition-function);
+                will-change: transform;
             }
             
             .article-preview:hover img.cover {
@@ -613,6 +672,7 @@
                 gap: 5px;
                 padding: 8px 12px;
                 border-radius: 8px;
+                will-change: transform, background;
             }
             
             body.day-mode .article-actions button {
@@ -643,8 +703,9 @@
             
             #article-detail {
                 width: 100%;
-                background: rgba(15, 52, 96, 0.9);
+                background: rgba(58, 58, 71, 0.9);
                 backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
                 padding: 30px;
                 border-radius: 20px;
                 display: none;
@@ -654,10 +715,11 @@
                 position: relative;
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 margin-bottom: 30px;
+                contain: content;
             }
             
             body.day-mode #article-detail {
-                background: rgba(255, 255, 255, 0.95);
+                background: rgba(208, 208, 208, 0.95);
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
                 border: 1px solid rgba(0, 0, 0, 0.1);
             }
@@ -778,7 +840,7 @@
                 left: 20px;
                 width: 40px;
                 height: 40px;
-                background: rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.55);
                 border: none;
                 border-radius: 50%;
                 color: var(--text-dark);
@@ -789,6 +851,7 @@
                 justify-content: center;
                 transition: all var(--transition-speed) var(--transition-function);
                 z-index: 10;
+                will-change: transform, background, color;
             }
             
             body.day-mode #close-article {
@@ -799,6 +862,7 @@
             #close-article:hover {
                 background: var(--highlight-dark);
                 transform: rotate(-90deg);
+                color: #ffffff;
             }
             
             body.day-mode #close-article:hover {
@@ -807,8 +871,9 @@
             
             #favorites-panel {
                 width: 100%;
-                background: rgba(15, 52, 96, 0.9);
+                background: rgba(58, 58, 71, 0.9);
                 backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
                 padding: 30px;
                 border-radius: 20px;
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
@@ -816,10 +881,12 @@
                 z-index: 5;
                 position: relative;
                 border: 1px solid rgba(255, 255, 255, 0.1);
+                margin-bottom: 30px;
+                contain: content;
             }
             
             body.day-mode #favorites-panel {
-                background: rgba(255, 255, 255, 0.95);
+                background: rgba(208, 208, 208, 0.95);
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
                 border: 1px solid rgba(0, 0, 0, 0.1);
             }
@@ -865,6 +932,7 @@
                 gap: 10px;
                 font-weight: 500;
                 font-family: 'Poppins', sans-serif;
+                will-change: transform, background, box-shadow;
             }
             
             body.day-mode #back-to-articles {
@@ -872,13 +940,13 @@
             }
             
             #back-to-articles:hover {
-                background: #43a047;
+                background: #777777;
                 transform: translateY(-3px) scale(1.02);
-                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
             }
             
             body.day-mode #back-to-articles:hover {
-                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
             }
             
             .remove-from-favorites {
@@ -897,6 +965,7 @@
                 margin-top: 10px;
                 font-weight: 500;
                 font-family: 'Poppins', sans-serif;
+                will-change: transform, background, box-shadow;
             }
             
             .remove-from-favorites:hover {
@@ -926,6 +995,7 @@
                 gap: 8px;
                 font-weight: 500;
                 font-family: 'Poppins', sans-serif;
+                will-change: transform, background, box-shadow;
             }
             
             .whatsapp-btn {
@@ -946,8 +1016,9 @@
             }
             
             footer {
-                background: rgba(15, 52, 96, 0.8);
+                background: rgba(58, 58, 71, 0.8);
                 backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
                 color: var(--text-dark);
                 text-align: center;
                 padding: 20px;
@@ -956,10 +1027,11 @@
                 z-index: 10;
                 position: relative;
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
+                transition: background 0.3s var(--transition-function), color 0.3s var(--transition-function);
             }
             
             body.day-mode footer {
-                background: rgba(248, 249, 250, 0.8);
+                background: rgba(208, 208, 208, 0.8);
                 color: var(--text-light);
                 box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
                 border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -978,6 +1050,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                will-change: transform, background;
             }
             
             body.day-mode #theme-toggle {
@@ -995,7 +1068,7 @@
             }
             
             .highlight {
-                background-color: rgba(76, 175, 80, 0.3);
+                background-color: rgba(142, 142, 142, 0.3);
                 color: inherit;
                 padding: 2px 4px;
                 border-radius: 4px;
@@ -1004,14 +1077,15 @@
             }
             
             body.day-mode .highlight {
-                background-color: rgba(76, 175, 80, 0.2);
+                background-color: rgba(142, 142, 142, 0.2);
             }
             
             #settings-panel {
                 width: 100%;
                 max-width: 450px;
-                background: rgba(15, 52, 96, 0.95);
+                background: rgba(58, 58, 71, 0.95);
                 backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
                 padding: 30px;
                 border-radius: 20px;
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
@@ -1025,7 +1099,7 @@
             }
             
             body.day-mode #settings-panel {
-                background: rgba(255, 255, 255, 0.95);
+                background: rgba(208, 208, 208, 0.95);
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
                 border: 1px solid rgba(0, 0, 0, 0.1);
             }
@@ -1103,14 +1177,14 @@
             
             .settings-content input[type="range"]::-webkit-slider-thumb:hover {
                 transform: scale(1.2);
-                background: #43a047;
+                background: #777777;
             }
             
             .settings-content select {
                 padding: 12px 15px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: 12px;
-                background: rgba(26, 26, 46, 0.5);
+                background: rgba(30, 30, 36, 0.5);
                 color: var(--text-dark);
                 font-size: 1rem;
                 font-family: 'Poppins', sans-serif;
@@ -1127,7 +1201,7 @@
                 background-color: #ffffff;
                 color: var(--text-light);
                 border: 1px solid rgba(0, 0, 0, 0.1);
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23212529' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             }
             
             .settings-content select:hover {
@@ -1171,6 +1245,7 @@
                 align-items: center;
                 justify-content: center;
                 transition: all var(--transition-speed) var(--transition-function);
+                will-change: transform, background, color;
             }
             
             body.day-mode #close-settings {
@@ -1181,10 +1256,26 @@
             #close-settings:hover {
                 background: var(--highlight-dark);
                 transform: rotate(90deg);
+                color: #ffffff;
             }
             
             body.day-mode #close-settings:hover {
                 background: var(--highlight-light);
+            }
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(3px);
+                -webkit-backdrop-filter: blur(3px);
+                z-index: 150;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
             }
             
             .overlay.show {
@@ -1319,18 +1410,6 @@
                 }
                 100% {
                     background-position: 0% 50%;
-                }
-            }
-            
-            @keyframes pulse {
-                0% {
-                    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
-                }
-                70% {
-                    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
-                }
-                100% {
-                    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
                 }
             }
         </style>
@@ -1533,52 +1612,100 @@
                 return text.replace(regex, '<span class="highlight">$1</span>');
             }
 
+            // Performans için DOM fragment kullanımı
             function displayArticles(articles) {
                 const articlesDiv = document.getElementById("articles");
                 articlesDiv.innerHTML = "";
-                articles.forEach((article, index) => {
-                    const articleDiv = document.createElement("div");
-                    articleDiv.style.setProperty("--index", index);
-                    articleDiv.className = "article-preview";
-                    const isFavorite = JSON.parse(localStorage.getItem("favorites") || "[]").some(
-                        (f) => f.title === article.title
-                    );
-                    articleDiv.innerHTML = `
-                    <span class="category-tag category-${article.category}">${article.category.toUpperCase()}</span>
-                    <div class="image-container">
-                        <img src="${article.image}" class="cover" alt="Kapak Resmi">
-                    </div>
-                    <div class="content">
-                        <h2>${article.title}</h2>
-                        <div class="meta">
-                            <i class="fas fa-user"></i> ${article.author} 
-                            <i class="fas fa-calendar-alt"></i> ${article.date}
-                        </div>
-                        <p>${article.preview}</p>
-                        <div class="article-actions">
-                            <button class="favorite-btn ${isFavorite ? "active" : ""}" data-title="${article.title}">
-                                <i class="fas fa-star"></i>
-                                <span>Favori</span>
-                            </button>
-                            <button class="share-btn" data-title="${article.title}">
-                                <i class="fas fa-share-alt"></i>
-                                <span>Paylaş</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                    articleDiv.addEventListener("click", (e) => {
-                        if (!e.target.closest('button')) {
+                
+                if (articles.length === 0) {
+                    articlesDiv.innerHTML = "<p style='text-align: center; margin: 30px 0; font-size: 1.1rem;'>Sonuç bulunamadı.</p>";
+                    return;
+                }
+                
+                const fragment = document.createDocumentFragment();
+                
+                // Batch işleme için
+                const batchSize = 5;
+                let currentIndex = 0;
+                
+                function processBatch() {
+                    const endIndex = Math.min(currentIndex + batchSize, articles.length);
+                    
+                    for (let i = currentIndex; i < endIndex; i++) {
+                        const article = articles[i];
+                        const articleDiv = document.createElement("div");
+                        articleDiv.style.setProperty("--index", i);
+                        articleDiv.className = "article-preview";
+                        const isFavorite = JSON.parse(localStorage.getItem("favorites") || "[]").some(
+                            (f) => f.title === article.title
+                        );
+                        
+                        articleDiv.innerHTML = `
+                            <span class="category-tag category-${article.category}">${article.category.toUpperCase()}</span>
+                            <div class="image-container">
+                                <img src="${article.image}" class="cover" alt="Kapak Resmi" loading="lazy">
+                            </div>
+                            <div class="content">
+                                <h2>${article.title}</h2>
+                                <div class="meta">
+                                    <i class="fas fa-user"></i> ${article.author} 
+                                    <i class="fas fa-calendar-alt"></i> ${article.date}
+                                </div>
+                                <p>${article.preview}</p>
+                                <div class="article-actions">
+                                    <button class="favorite-btn ${isFavorite ? "active" : ""}" data-title="${article.title}">
+                                        <i class="fas fa-star"></i>
+                                        <span>${isFavorite ? "Favorilerde" : "Favori"}</span>
+                                    </button>
+                                    <button class="share-btn" data-title="${article.title}">
+                                        <i class="fas fa-share-alt"></i>
+                                        <span>Paylaş</span>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        
+                        fragment.appendChild(articleDiv);
+                    }
+                    
+                    articlesDiv.appendChild(fragment.cloneNode(true));
+                    
+                    currentIndex = endIndex;
+                    
+                    if (currentIndex < articles.length) {
+                        // Sonraki batch'i işlemek için requestAnimationFrame kullan
+                        requestAnimationFrame(processBatch);
+                    }
+                }
+                
+                // İlk batch'i başlat
+                processBatch();
+                
+                // Event delegation ile tıklama olaylarını yönet
+                articlesDiv.addEventListener("click", (e) => {
+                    const articleDiv = e.target.closest('.article-preview');
+                    const favoriteBtn = e.target.closest('.favorite-btn');
+                    const shareBtn = e.target.closest('.share-btn');
+                    
+                    if (favoriteBtn) {
+                        e.stopPropagation();
+                        toggleFavorite(favoriteBtn.dataset.title, favoriteBtn);
+                    } else if (shareBtn) {
+                        e.stopPropagation();
+                        shareArticle(shareBtn.dataset.title);
+                    } else if (articleDiv && !e.target.closest('button')) {
+                        const title = articleDiv.querySelector('h2').textContent;
+                        const article = articles.find(a => a.title === title);
+                        if (article) {
                             showArticleDetail(article);
                         }
-                    });
-                    articlesDiv.appendChild(articleDiv);
+                    }
                 });
             }
 
+            // Performans için DOM fragment kullanımı
             function displayFavorites() {
                 try {
-                    console.log("Favoriler gösteriliyor...");
                     const favoritesPanel = document.getElementById("favorites-panel");
                     const favoritesList = document.getElementById("favorites-list");
                     const articlesDiv = document.getElementById("articles");
@@ -1589,44 +1716,45 @@
                     localStorage.setItem("favorites", JSON.stringify(favorites));
 
                     favoritesList.innerHTML = "";
+                    
                     if (favorites.length === 0) {
                         favoritesList.innerHTML = "<p style='text-align: center; margin: 30px 0; font-size: 1.1rem;'>Henüz favori makale eklenmemiş.</p>";
                     } else {
+                        const fragment = document.createDocumentFragment();
+                        
                         favorites.forEach((article, index) => {
                             const category = article.category || "belirsiz";
                             const articleDiv = document.createElement("div");
                             articleDiv.style.setProperty("--index", index);
                             articleDiv.className = "article-preview";
+                            
                             articleDiv.innerHTML = `
-                            <span class="category-tag category-${category}">${category.toUpperCase()}</span>
-                            <div class="image-container">
-                                <img src="${article.image}" class="cover" alt="Kapak Resmi">
-                            </div>
-                            <div class="content">
-                                <h2>${article.title}</h2>
-                                <div class="meta">
-                                    <i class="fas fa-user"></i> ${article.author} 
-                                    <i class="fas fa-calendar-alt"></i> ${article.date}
+                                <span class="category-tag category-${category}">${category.toUpperCase()}</span>
+                                <div class="image-container">
+                                    <img src="${article.image}" class="cover" alt="Kapak Resmi" loading="lazy">
                                 </div>
-                                <p>${article.preview}</p>
-                                <button class="remove-from-favorites" data-title="${article.title}">
-                                    <i class="fas fa-trash-alt"></i> Favorilerden Kaldır
-                                </button>
-                            </div>
-                        `;
-                            articleDiv.addEventListener("click", (e) => {
-                                if (!e.target.closest('button')) {
-                                    showArticleDetail(article);
-                                    favoritesPanel.classList.remove("show");
-                                }
-                            });
-                            favoritesList.appendChild(articleDiv);
+                                <div class="content">
+                                    <h2>${article.title}</h2>
+                                    <div class="meta">
+                                        <i class="fas fa-user"></i> ${article.author} 
+                                        <i class="fas fa-calendar-alt"></i> ${article.date}
+                                    </div>
+                                    <p>${article.preview}</p>
+                                    <button class="remove-from-favorites" data-title="${article.title}">
+                                        <i class="fas fa-trash-alt"></i> Favorilerden Kaldır
+                                    </button>
+                                </div>
+                            `;
+                            
+                            fragment.appendChild(articleDiv);
                         });
+                        
+                        favoritesList.appendChild(fragment);
                     }
+                    
                     articlesDiv.style.display = "none";
                     articleDetail.classList.remove("show");
                     favoritesPanel.classList.add("show");
-                    console.log("Favoriler paneli gösterildi.");
                 } catch (error) {
                     console.error("Favoriler gösterilirken hata oluştu:", error);
                 }
@@ -1634,14 +1762,20 @@
 
             function showArticleDetail(article) {
                 const detail = document.getElementById("article-detail");
-                document.getElementById("detail-image").src = article.image;
-                document.getElementById("detail-title").textContent = article.title;
-                document.getElementById("detail-meta").innerHTML = `
+                const detailImage = document.getElementById("detail-image");
+                const detailTitle = document.getElementById("detail-title");
+                const detailMeta = document.getElementById("detail-meta");
+                const detailContent = document.getElementById("detail-content");
+                
+                // Performans için önce DOM'u güncelle, sonra görünürlüğü değiştir
+                detailImage.src = article.image;
+                detailTitle.textContent = article.title;
+                detailMeta.innerHTML = `
                     <i class="fas fa-user"></i> ${article.author} 
                     <i class="fas fa-calendar-alt"></i> ${article.date}
                     <i class="fas fa-tag"></i> ${article.category.toUpperCase()}
                 `;
-                document.getElementById("detail-content").innerHTML = article.content;
+                detailContent.innerHTML = article.content;
 
                 const whatsappBtn = document.getElementById("whatsapp-share");
                 const twitterBtn = document.getElementById("twitter-share");
@@ -1656,46 +1790,98 @@
                 facebookBtn.onclick = () =>
                     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, "_blank");
 
+                // Görünürlüğü değiştir
                 detail.classList.add("show");
                 document.getElementById("articles").style.display = "none";
                 document.getElementById("favorites-panel").classList.remove("show");
 
+                // Kayıtlı font boyutunu uygula
                 const savedFontSize = localStorage.getItem("fontSize");
                 if (savedFontSize) {
-                    document.getElementById("detail-content").style.fontSize = `${savedFontSize}px`;
+                    detailContent.style.fontSize = `${savedFontSize}px`;
                 }
                 
-                // Scroll to top when showing article detail
+                // Sayfa başına kaydır
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
             }
 
+            // Arama optimizasyonu
             function searchAndFilterArticles(searchTerm, category) {
-                let filteredArticles = articlesData;
-                if (searchTerm) {
-                    filteredArticles = filteredArticles.filter(
-                        (article) =>
-                            article.title.toLocaleLowerCase("tr-TR").includes(searchTerm.toLocaleLowerCase("tr-TR")) ||
-                            article.preview.toLocaleLowerCase("tr-TR").includes(searchTerm.toLocaleLowerCase("tr-TR"))
-                    );
-                }
-                if (category) {
-                    filteredArticles = filteredArticles.filter((article) => article.category === category);
-                }
-                displayArticles(
-                    filteredArticles.map((article) => ({
+                if (window.Worker) {
+                    const searchWorker = new Worker(URL.createObjectURL(new Blob([`
+                        self.onmessage = function(e) {
+                            const { articlesData, searchTerm, category } = e.data;
+                            let filteredArticles = articlesData;
+                            
+                            if (searchTerm) {
+                                const searchTermLower = searchTerm.toLocaleLowerCase("tr-TR");
+                                filteredArticles = filteredArticles.filter(
+                                    (article) =>
+                                        article.title.toLocaleLowerCase("tr-TR").includes(searchTermLower) ||
+                                        article.preview.toLocaleLowerCase("tr-TR").includes(searchTermLower)
+                                );
+                            }
+                            
+                            if (category) {
+                                filteredArticles = filteredArticles.filter((article) => article.category === category);
+                            }
+                            
+                            self.postMessage(filteredArticles);
+                        };
+                    `], { type: 'application/javascript' })));
+                    
+                    searchWorker.onmessage = function(e) {
+                        const filteredArticles = e.data;
+                        
+                        // Arama terimini vurgula
+                        const highlightedArticles = filteredArticles.map((article) => ({
+                            ...article,
+                            title: searchTerm ? highlightText(article.title, searchTerm) : article.title,
+                            preview: searchTerm ? highlightText(article.preview, searchTerm) : article.preview
+                        }));
+                        
+                        displayArticles(highlightedArticles);
+                        
+                        // Worker'ı temizle
+                        searchWorker.terminate();
+                    };
+                    
+                    searchWorker.postMessage({ articlesData, searchTerm, category });
+                } else {
+                    // Web Worker desteklenmiyorsa normal arama yap
+                    let filteredArticles = articlesData;
+                    
+                    if (searchTerm) {
+                        const searchTermLower = searchTerm.toLocaleLowerCase("tr-TR");
+                        filteredArticles = filteredArticles.filter(
+                            (article) =>
+                                article.title.toLocaleLowerCase("tr-TR").includes(searchTermLower) ||
+                                article.preview.toLocaleLowerCase("tr-TR").includes(searchTermLower)
+                        );
+                    }
+                    
+                    if (category) {
+                        filteredArticles = filteredArticles.filter((article) => article.category === category);
+                    }
+                    
+                    // Arama terimini vurgula
+                    const highlightedArticles = filteredArticles.map((article) => ({
                         ...article,
-                        title: highlightText(article.title, searchTerm),
-                        preview: highlightText(article.preview, searchTerm)
-                    }))
-                );
+                        title: searchTerm ? highlightText(article.title, searchTerm) : article.title,
+                        preview: searchTerm ? highlightText(article.preview, searchTerm) : article.preview
+                    }));
+                    
+                    displayArticles(highlightedArticles);
+                }
             }
 
             function toggleFavorite(title, button) {
                 let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
                 const isFavorite = favorites.some((f) => f.title === title);
+                
                 if (isFavorite) {
                     favorites = favorites.filter((f) => f.title !== title);
                     localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -1710,6 +1896,7 @@
                         button.querySelector('span').textContent = "Favorilerde";
                     }
                 }
+                
                 if (document.getElementById("favorites-panel").classList.contains("show")) {
                     displayFavorites();
                 }
@@ -1721,7 +1908,7 @@
                 localStorage.setItem("favorites", JSON.stringify(favorites));
                 displayFavorites();
                 
-                // Update favorite buttons in articles list
+                // Favori butonlarını güncelle
                 const favoriteButtons = document.querySelectorAll(`.favorite-btn[data-title="${title}"]`);
                 favoriteButtons.forEach(button => {
                     button.classList.remove("active");
@@ -1732,17 +1919,46 @@
             function shareArticle(title) {
                 const article = articlesData.find((a) => a.title === title);
                 const text = `${article.title} - Sadece Kuran`;
+                
                 if (navigator.share) {
                     navigator
                         .share({ title: article.title, text, url: window.location.href })
                         .catch((err) => console.log("Paylaşım hatası:", err));
                 } else {
-                    alert("Paylaşım: " + text);
-                    navigator.clipboard.writeText(text);
+                    navigator.clipboard.writeText(text)
+                        .then(() => {
+                            // Kopyalandı bildirimi
+                            const notification = document.createElement('div');
+                            notification.style.position = 'fixed';
+                            notification.style.bottom = '20px';
+                            notification.style.left = '50%';
+                            notification.style.transform = 'translateX(-50%)';
+                            notification.style.background = 'rgba(142, 142, 142, 0.9)';
+                            notification.style.color = 'white';
+                            notification.style.padding = '10px 20px';
+                            notification.style.borderRadius = '5px';
+                            notification.style.zIndex = '1000';
+                            notification.textContent = 'Metin kopyalandı';
+                            document.body.appendChild(notification);
+                            
+                            setTimeout(() => {
+                                notification.style.opacity = '0';
+                                notification.style.transition = 'opacity 0.5s ease';
+                                setTimeout(() => {
+                                    document.body.removeChild(notification);
+                                }, 500);
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Kopyalama hatası:', err);
+                            alert("Paylaşım desteklenmiyor, metni manuel kopyalayın: " + text);
+                        });
                 }
             }
 
+            // Performans için olay dinleyicilerini optimize et
             document.addEventListener("DOMContentLoaded", () => {
+                // Event delegation kullanarak olay dinleyicilerini azalt
                 const menuIcon = document.querySelector(".menu-icon");
                 const sidebar = document.querySelector(".sidebar");
                 const closeMenu = document.querySelector(".close-menu");
@@ -1758,19 +1974,17 @@
                 const fontSizeValue = document.getElementById("font-size-value");
                 const fontFamilySelect = document.getElementById("font-family");
                 const settingsOverlay = document.getElementById("settings-overlay");
-
-                if (!showFavoritesBtn) {
-                    console.error("Favoriler butonu bulunamadı!");
-                    return;
-                }
+                const backToArticles = document.getElementById("back-to-articles");
+                const categoryFilter = document.getElementById("category-filter");
+                const searchInput = document.getElementById("search");
+                const themeToggle = document.getElementById("theme-toggle");
 
                 menuIcon.addEventListener("click", (e) => {
                     e.stopPropagation();
                     sidebar.classList.toggle("show");
                 });
 
-                closeMenu.addEventListener("click", (e) => {
-                    e.stopPropagation();
+                closeMenu.addEventListener("click", () => {
                     sidebar.classList.remove("show");
                 });
 
@@ -1785,44 +1999,49 @@
                     articlesDiv.style.display = "grid";
                 });
 
-                showFavoritesBtn.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    console.log("Favoriler butonuna tıklandı.");
+                showFavoritesBtn.addEventListener("click", () => {
                     displayFavorites();
                 });
 
-                document.getElementById("back-to-articles").addEventListener("click", () => {
+                backToArticles.addEventListener("click", () => {
                     favoritesPanel.classList.remove("show");
                     articlesDiv.style.display = "grid";
                 });
 
-                let searchTimeout;
-                document.getElementById("search").addEventListener("input", (e) => {
-                    clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        searchAndFilterArticles(
-                            e.target.value.trim(),
-                            document.getElementById("category-filter").value
-                        );
-                    }, 300);
-                });
+                // Arama için debounce fonksiyonu
+                function debounce(func, wait) {
+                    let timeout;
+                    return function(...args) {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => func.apply(this, args), wait);
+                    };
+                }
 
-                document.getElementById("category-filter").addEventListener("change", (e) => {
-                    searchAndFilterArticles(document.getElementById("search").value.trim(), e.target.value);
-                });
+                // Arama için debounce uygula
+                const debouncedSearch = debounce(function() {
+                    searchAndFilterArticles(
+                        searchInput.value.trim(),
+                        categoryFilter.value
+                    );
+                }, 300);
 
+                searchInput.addEventListener("input", debouncedSearch);
+                categoryFilter.addEventListener("change", debouncedSearch);
+
+                // Event delegation ile favoriler ve paylaşım butonlarını yönet
                 document.addEventListener("click", (e) => {
-                    if (e.target.closest('.favorite-btn')) {
-                        const button = e.target.closest('.favorite-btn');
-                        toggleFavorite(button.dataset.title, button);
+                    const favoriteBtn = e.target.closest('.favorite-btn');
+                    const shareBtn = e.target.closest('.share-btn');
+                    const removeFromFavoritesBtn = e.target.closest('.remove-from-favorites');
+                    
+                    if (favoriteBtn) {
+                        toggleFavorite(favoriteBtn.dataset.title, favoriteBtn);
                         e.stopPropagation();
-                    } else if (e.target.closest('.share-btn')) {
-                        const button = e.target.closest('.share-btn');
-                        shareArticle(button.dataset.title);
+                    } else if (shareBtn) {
+                        shareArticle(shareBtn.dataset.title);
                         e.stopPropagation();
-                    } else if (e.target.closest('.remove-from-favorites')) {
-                        const button = e.target.closest('.remove-from-favorites');
-                        removeFromFavorites(button.dataset.title);
+                    } else if (removeFromFavoritesBtn) {
+                        removeFromFavorites(removeFromFavoritesBtn.dataset.title);
                         e.stopPropagation();
                     }
                 });
@@ -1841,12 +2060,12 @@
                     }
                 }
 
-                document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+                themeToggle.addEventListener("click", toggleTheme);
                 
                 // Set initial theme based on localStorage
                 if (localStorage.getItem("theme") === "day") {
                     document.body.classList.add("day-mode");
-                    document.getElementById("theme-toggle").querySelector('i').className = "fas fa-sun";
+                    themeToggle.querySelector('i').className = "fas fa-sun";
                 }
 
                 settingsLink.addEventListener("click", (e) => {
@@ -1869,7 +2088,6 @@
                 fontSizeInput.addEventListener("input", () => {
                     const size = fontSizeInput.value;
                     fontSizeValue.textContent = `${size}px`;
-                    document.body.style.fontSize = `${size}px`;
                     document.querySelector("#article-detail .content").style.fontSize = `${size}px`;
                     localStorage.setItem("fontSize", size);
                 });
