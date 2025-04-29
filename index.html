@@ -1,1446 +1,1442 @@
 <!doctype html>
 <html lang="tr">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
-        <title>SADECE KURAN</title>
-        <link rel="icon" type="image/png" href="/logokuran2.jpg" />
-        <link rel="apple-touch-icon" href="/logokuran2.jpg" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <style>
-            :root {
-                --primary-dark: #1e1e24;
-                --secondary-dark: #2d2d35;
-                --accent-dark: #3a3a47;
-                --text-dark: #e1e1e6;
-                --highlight-dark: #8e8e8e;
-                
-                --primary-light: #f0f0f0;
-                --secondary-light: #e0e0e0;
-                --accent-light: #d0d0d0;
-                --text-light: #333333;
-                --highlight-light: #8e8e8e;
-                
-                --transition-speed: 0.3s;
-                --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
-                
-                --category-arastirma: #4caf50;
-                --category-doga: #2196f3;
-                --category-adalet: #f44336;
-                --category-kavram: #a600ff;
-                --category-belirsiz: #6c757d;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+    <title>SADECE KURAN</title>
+    <link rel="icon" type="image/png" href="/logokuran2.jpg" />
+    <link rel="apple-touch-icon" href="/logokuran2.jpg" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #1e1e24;
+            --secondary-dark: #2d2d35;
+            --accent-dark: #3a3a47;
+            --text-dark: #e1e1e6;
+            --highlight-dark: #8e8e8e;
             
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
+            --primary-light: #f0f0f0;
+            --secondary-light: #e0e0e0;
+            --accent-light: #d0d0d0;
+            --text-light: #333333;
+            --highlight-light: #8e8e8e;
             
-            body {
-                font-family: 'Poppins', sans-serif;
-                background-color: var(--primary-dark);
-                color: var(--text-dark);
-                line-height: 1.6;
-                display: flex;
-                flex-direction: column;
-                min-height: 100vh;
-                transition: background-color 0.3s var(--transition-function), color 0.3s var(--transition-function);
-                scrollbar-width: thin;
-                scrollbar-color: var(--accent-dark) var(--primary-dark);
-                overflow-x: hidden;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
+            --transition-speed: 0.3s;
+            --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
             
-            body.day-mode {
-                background-color: var(--primary-light);
-                color: var(--text-light);
-                scrollbar-color: var(--accent-light) var(--primary-light);
-            }
-            
-            body::-webkit-scrollbar {
-                width: 8px;
-            }
-            
-            body::-webkit-scrollbar-track {
-                background: var(--primary-dark);
-            }
-            
-            body.day-mode::-webkit-scrollbar-track {
-                background: var(--primary-light);
-            }
-            
-            body::-webkit-scrollbar-thumb {
-                background-color: var(--accent-dark);
-                border-radius: 20px;
-            }
-            
-            body.day-mode::-webkit-scrollbar-thumb {
-                background-color: var(--accent-light);
-            }
-            
-            header {
-                background: rgba(30, 30, 36, 0.8);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                padding: 15px 20px;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-                position: sticky;
-                top: 0;
-                z-index: 100;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                transition: background 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function);
-                will-change: transform;
-            }
-            
-            body.day-mode header {
-                background: rgba(240, 240, 240, 0.8);
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --category-arastirma: #4caf50;
+            --category-doga: #2196f3;
+            --category-adalet: #f44336;
+            --category-kavram: #a600ff;
+            --category-belirsiz: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s var(--transition-function), color 0.3s var(--transition-function);
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-dark) var(--primary-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body.day-mode {
+            background-color: var(--primary-light);
+            color: var(--text-light);
+            scrollbar-color: var(--accent-light) var(--primary-light);
+        }
+        
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: var(--primary-dark);
+        }
+        
+        body.day-mode::-webkit-scrollbar-track {
+            background: var(--primary-light);
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--accent-dark);
+            border-radius: 20px;
+        }
+        
+        body.day-mode::-webkit-scrollbar-thumb {
+            background-color: var(--accent-light);
+        }
+        
+        header {
+            background: rgba(30, 30, 36, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function);
+            will-change: transform;
+        }
+        
+        body.day-mode header {
+            background: rgba(240, 240, 240, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(142, 142, 142, 0.5);
+            flex-grow: 1;
+            text-align: center;
+            transition: color 0.3s var(--transition-function), transform 0.3s var(--transition-function);
+            transform: translateY(0);
+        }
+        
+        header h1:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 0 15px rgba(142, 142, 142, 0.7);
+        }
+        
+        body.day-mode header h1 {
+            color: var(--text-light);
+            text-shadow: 0 0 10px rgba(142, 142, 142, 0.3);
+        }
+        
+        .menu-icon {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all var(--transition-speed) var(--transition-function);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            will-change: transform;
+        }
+        
+        .menu-icon:hover {
+            transform: rotate(90deg);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        body.day-mode .menu-icon {
+            color: var(--text-light);
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        body.day-mode .menu-icon:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: rgba(45, 45, 53, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 80px 20px 20px;
+            transition: transform 0.4s var(--transition-function);
+            z-index: 90;
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            will-change: transform;
+            transform: translateX(-300px);
+        }
+        
+        body.day-mode .sidebar {
+            background: rgba(224, 224, 224, 0.95);
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar.show {
+            transform: translateX(300px);
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar ul li {
+            margin: 15px 0;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.5s ease;
+        }
+        
+        .sidebar.show ul li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .sidebar ul li:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+        
+        .sidebar ul li:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+        
+        .sidebar ul li:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+        
+        .sidebar ul li a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all var(--transition-speed) var(--transition-function);
+            background: rgba(255, 255, 255, 0.05);
+            will-change: transform;
+        }
+        
+        body.day-mode .sidebar ul li a {
+            color: var(--text-light);
+            background: rgba(0, 0, 0, 0.03);
+        }
+        
+        .sidebar ul li a i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .sidebar ul li a:hover {
+            background: var(--highlight-dark);
+            color: #ffffff;
+            transform: translateX(5px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
+        }
+        
+        body.day-mode .sidebar ul li a:hover {
+            background: var(--highlight-light);
+            box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 10px;
+            transition: all var(--transition-speed) var(--transition-function);
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            will-change: transform;
+        }
+        
+        .close-menu:hover {
+            transform: rotate(90deg);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        body.day-mode .close-menu {
+            color: var(--text-light);
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        body.day-mode .close-menu:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        #controls {
+            background: rgba(58, 58, 71, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 16px;
+            width: 100%;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function), background 0.3s var(--transition-function);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transform: translateY(0);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            will-change: transform;
+        }
+        
+        #controls:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.day-mode #controls {
+            background: rgba(208, 208, 208, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        body.day-mode #controls:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        #search {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(30, 30, 36, 0.5);
+            color: var(--text-dark);
+            font-size: 1rem;
+            transition: all 0.3s var(--transition-function);
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body.day-mode #search {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+        }
+        
+        #search:focus {
+            outline: none;
+            border-color: var(--highlight-dark);
+            box-shadow: 0 0 0 3px rgba(142, 142, 142, 0.3);
+            transform: scale(1.01);
+        }
+        
+        body.day-mode #search:focus {
+            border-color: var(--highlight-light);
+            box-shadow: 0 0 0 3px rgba(142, 142, 142, 0.2);
+        }
+        
+        #filter-and-favorites {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        #category-filter {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(30, 30, 36, 0.5);
+            color: var(--text-dark);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-function);
+            flex: 1;
+            min-width: 150px;
+            font-family: 'Poppins', sans-serif;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e1e1e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+        }
+        
+        body.day-mode #category-filter {
+            background-color: #ffffff;
+            color: var(--text-light);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+        
+        #category-filter:hover {
+            border-color: var(--highlight-dark);
+            transform: translateY(-2px);
+        }
+        
+        body.day-mode #category-filter:hover {
+            border-color: var(--highlight-light);
+        }
+        
+        #show-favorites {
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: var(--highlight-dark);
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-function);
+            flex: 1;
+            min-width: 120px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            will-change: transform;
+        }
+        
+        #show-favorites i {
+            font-size: 1.1rem;
+        }
+        
+        #show-favorites:hover {
+            background: #777777;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
+        }
+        
+        body.day-mode #show-favorites {
+            background: var(--highlight-light);
+        }
+        
+        body.day-mode #show-favorites:hover {
+            background: #777777;
+            box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
+        }
+        
+        #articles {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            z-index: 1;
+            contain: content;
+        }
+        
+        #favorites-list {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            z-index: 1;
+            contain: content;
+        }
+        
+        .article-preview {
+            background: rgba(58, 58, 71, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function), background 0.3s var(--transition-function);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            will-change: transform;
+            contain: layout style;
+            opacity: 1; /* Changed from 0 to 1 for immediate visibility */
+            transform: translateY(0); /* Changed from translateY(30px) to 0 */
+        }
+        
+        body.day-mode .article-preview {
+            background: rgba(208, 208, 208, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-preview:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+        
+        body.day-mode .article-preview:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .article-preview .image-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+            background-color: rgba(30, 30, 36, 0.3); /* Placeholder background */
+        }
+        
+        .article-preview img.cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s var(--transition-function);
+            will-change: transform;
+        }
+        
+        .article-preview:hover img.cover {
+            transform: scale(1.1);
+        }
+        
+        .article-preview .content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .article-preview h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            transition: color var(--transition-speed) var(--transition-function);
+            line-height: 1.3;
+        }
+        
+        body.day-mode .article-preview h2 {
+            color: var(--text-light);
+        }
+        
+        .article-preview .meta {
+            font-size: 0.85rem;
+            color: rgba(225, 225, 230, 0.7);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        body.day-mode .article-preview .meta {
+            color: rgba(33, 37, 41, 0.7);
+        }
+        
+        .article-preview .meta i {
+            font-size: 0.9rem;
+        }
+        
+        .article-preview p {
+            font-size: 1rem;
+            color: var(--text-dark);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+        
+        body.day-mode .article-preview p {
+            color: var(--text-light);
+        }
+        
+        .category-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            color: #fff;
+            border-radius: 30px;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            transition: transform var(--transition-speed) var(--transition-function), box-shadow var(--transition-speed) var(--transition-function);
+        }
+        
+        .article-preview:hover .category-tag {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .category-arastirma {
+            background-color: var(--category-arastirma);
+        }
+        
+        .category-doga {
+            background-color: var(--category-doga);
+        }
+        
+        .category-adalet {
+            background-color: var(--category-adalet);
+        }
+        
+        .category-kavram {
+            background-color: var(--category-kavram);
+        }
+        
+        .category-belirsiz {
+            background-color: var(--category-belirsiz);
+        }
+        
+        .article-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        body.day-mode .article-actions {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-actions button {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--transition-function);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            will-change: transform;
+        }
+        
+        body.day-mode .article-actions button {
+            color: var(--text-light);
+        }
+        
+        .article-actions button span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .article-actions button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        body.day-mode .article-actions button:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .article-actions .favorite-btn.active {
+            color: #ffd700;
+        }
+        
+        .article-actions .favorite-btn.active:hover {
+            color: #ffcc00;
+        }
+        
+        #article-detail {
+            width: 100%;
+            background: rgba(58, 58, 71, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            display: none;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transition: opacity var(--transition-speed) var(--transition-function);
+            z-index: 5;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            contain: content;
+        }
+        
+        body.day-mode #article-detail {
+            background: rgba(208, 208, 208, 0.95);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        #article-detail.show {
+            display: block;
+            animation: fadeInScale 0.5s var(--transition-function);
+        }
+        
+        #article-detail .image-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 16px;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background-color: rgba(30, 30, 36, 0.3); /* Placeholder background */
+        }
+        
+        body.day-mode #article-detail .image-container {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        #article-detail img.cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s var(--transition-function);
+        }
+        
+        #article-detail h2 {
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        body.day-mode #article-detail h2 {
+            color: var(--text-light);
+        }
+        
+        #article-detail .meta {
+            font-size: 1rem;
+            color: rgba(225, 225, 230, 0.7);
+            text-align: center;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        body.day-mode #article-detail .meta {
+            color: rgba(33, 37, 41, 0.7);
+        }
+        
+        #article-detail .meta i {
+            font-size: 1.1rem;
+        }
+        
+        #article-detail .content {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            text-align: justify;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        body.day-mode #article-detail .content {
+            color: var(--text-light);
+        }
+        
+        #article-detail .content img {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 12px;
+            margin: 25px auto;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform var(--transition-speed) var(--transition-function), box-shadow var(--transition-speed) var(--transition-function);
+        }
+        
+        body.day-mode #article-detail .content img {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        #article-detail .content img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.day-mode #article-detail .content img:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        #article-detail .content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        #article-detail .content strong {
+            color: var(--highlight-dark);
+            font-weight: 600;
+        }
+        
+        body.day-mode #article-detail .content strong {
+            color: var(--highlight-light);
+        }
+        
+        #close-article {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-speed) var(--transition-function);
+            z-index: 10;
+            will-change: transform;
+        }
+        
+        body.day-mode #close-article {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+        }
+        
+        #close-article:hover {
+            background: var(--highlight-dark);
+            transform: rotate(-90deg);
+            color: #ffffff;
+        }
+        
+        body.day-mode #close-article:hover {
+            background: var(--highlight-light);
+        }
+        
+        #favorites-panel {
+            width: 100%;
+            background: rgba(58, 58, 71, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 5;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            contain: content;
+        }
+        
+        body.day-mode #favorites-panel {
+            background: rgba(208, 208, 208, 0.95);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        #favorites-panel.show {
+            display: block;
+            animation: fadeInScale 0.5s var(--transition-function);
+        }
+        
+        #favorites-panel h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        #favorites-panel h2 i {
+            color: #ffd700;
+        }
+        
+        body.day-mode #favorites-panel h2 {
+            color: var(--text-light);
+        }
+        
+        #back-to-articles {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            background: var(--highlight-dark);
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--transition-function);
+            margin: 20px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            will-change: transform;
+        }
+        
+        body.day-mode #back-to-articles {
+            background: var(--highlight-light);
+        }
+        
+        #back-to-articles:hover {
+            background: #777777;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
+        }
+        
+        body.day-mode #back-to-articles:hover {
+            box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
+        }
+        
+        .remove-from-favorites {
+            background: #f44336;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--transition-function);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            will-change: transform;
+        }
+        
+        .remove-from-favorites:hover {
+            background: #e53935;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+        }
+        
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-buttons button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--transition-function);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            will-change: transform;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25d366;
+        }
+        
+        .twitter-btn {
+            background-color: #1da1f2;
+        }
+        
+        .facebook-btn {
+            background-color: #4267b2;
+        }
+        
+        .social-buttons button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        footer {
+            background: rgba(58, 58, 71, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-dark);
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s var(--transition-function), color 0.3s var(--transition-function);
+        }
+        
+        body.day-mode footer {
+            background: rgba(208, 208, 208, 0.8);
+            color: var(--text-light);
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        #theme-toggle {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--transition-function);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+        }
+        
+        body.day-mode #theme-toggle {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+        }
+        
+        #theme-toggle:hover {
+            transform: rotate(360deg) scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        body.day-mode #theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .highlight {
+            background-color: rgba(142, 142, 142, 0.3);
+            color: inherit;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all var(--transition-speed) var(--transition-function);
+        }
+        
+        body.day-mode .highlight {
+            background-color: rgba(142, 142, 142, 0.2);
+        }
+        
+        #settings-panel {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(58, 58, 71, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 200;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        body.day-mode #settings-panel {
+            background: rgba(208, 208, 208, 0.95);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        #settings-panel.show {
+            display: block;
+            animation: fadeInScale 0.5s var(--transition-function);
+        }
+        
+        #settings-panel h2 {
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        body.day-mode #settings-panel h2 {
+            color: var(--text-light);
+        }
+        
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .settings-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .settings-content label {
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        body.day-mode .settings-content label {
+            color: var(--text-light);
+        }
+        
+        .settings-content input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        body.day-mode .settings-content input[type="range"] {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .settings-content input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--highlight-dark);
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--transition-function);
+        }
+        
+        .settings-content input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #777777;
+        }
+        
+        .settings-content select {
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(30, 30, 36, 0.5);
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all var(--transition-speed) var(--transition-function);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e1e1e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+        }
+        
+        body.day-mode .settings-content select {
+            background-color: #ffffff;
+            color: var(--text-light);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+        
+        .settings-content select:hover {
+            border-color: var(--highlight-dark);
+        }
+        
+        .font-size-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        #font-size-value {
+            color: var(--text-dark);
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 8px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        body.day-mode #font-size-value {
+            color: var(--text-light);
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        #close-settings {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-speed) var(--transition-function);
+            will-change: transform;
+        }
+        
+        body.day-mode #close-settings {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+        }
+        
+        #close-settings:hover {
+            background: var(--highlight-dark);
+            transform: rotate(90deg);
+            color: #ffffff;
+        }
+        
+        body.day-mode #close-settings:hover {
+            background: var(--highlight-light);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 150;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media (max-width: 768px) {
+            #articles,
+            #favorites-list {
+                grid-template-columns: 1fr;
             }
             
             header h1 {
-                font-size: 1.8rem;
-                font-weight: 700;
-                color: var(--text-dark);
-                letter-spacing: 1px;
-                text-shadow: 0 0 10px rgba(142, 142, 142, 0.5);
-                flex-grow: 1;
-                text-align: center;
-                transition: color 0.3s var(--transition-function), transform 0.3s var(--transition-function);
-                transform: translateY(0);
-            }
-            
-            header h1:hover {
-                transform: translateY(-2px);
-                text-shadow: 0 0 15px rgba(142, 142, 142, 0.7);
-            }
-            
-            body.day-mode header h1 {
-                color: var(--text-light);
-                text-shadow: 0 0 10px rgba(142, 142, 142, 0.3);
-            }
-            
-            .menu-icon {
                 font-size: 1.5rem;
-                color: var(--text-dark);
-                cursor: pointer;
-                padding: 10px;
-                border-radius: 50%;
-                transition: all var(--transition-speed) var(--transition-function);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 40px;
-                height: 40px;
-                background: rgba(255, 255, 255, 0.1);
-                will-change: transform;
-            }
-            
-            .menu-icon:hover {
-                transform: rotate(90deg);
-                background: rgba(255, 255, 255, 0.2);
-            }
-            
-            body.day-mode .menu-icon {
-                color: var(--text-light);
-                background: rgba(0, 0, 0, 0.05);
-            }
-            
-            body.day-mode .menu-icon:hover {
-                background: rgba(0, 0, 0, 0.1);
-            }
-            
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: -300px;
-                width: 300px;
-                height: 100%;
-                background: rgba(45, 45, 53, 0.95);
-                backdrop-filter: blur(15px);
-                -webkit-backdrop-filter: blur(15px);
-                padding: 80px 20px 20px;
-                transition: transform 0.4s var(--transition-function);
-                z-index: 90;
-                box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
-                overflow-y: auto;
-                border-right: 1px solid rgba(255, 255, 255, 0.1);
-                will-change: transform;
-                transform: translateX(-300px);
-            }
-            
-            body.day-mode .sidebar {
-                background: rgba(224, 224, 224, 0.95);
-                box-shadow: 5px 0 25px rgba(0, 0, 0, 0.1);
-                border-right: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            .sidebar.show {
-                transform: translateX(300px);
-            }
-            
-            .sidebar ul {
-                list-style: none;
-            }
-            
-            .sidebar ul li {
-                margin: 15px 0;
-                opacity: 0;
-                transform: translateX(-30px);
-                transition: all 0.5s ease;
-            }
-            
-            .sidebar.show ul li {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            
-            .sidebar ul li:nth-child(1) {
-                transition-delay: 0.1s;
-            }
-            
-            .sidebar ul li:nth-child(2) {
-                transition-delay: 0.2s;
-            }
-            
-            .sidebar ul li:nth-child(3) {
-                transition-delay: 0.3s;
-            }
-            
-            .sidebar ul li a {
-                color: var(--text-dark);
-                text-decoration: none;
-                font-size: 1.1rem;
-                font-weight: 500;
-                display: flex;
-                align-items: center;
-                padding: 12px 15px;
-                border-radius: 12px;
-                transition: all var(--transition-speed) var(--transition-function);
-                background: rgba(255, 255, 255, 0.05);
-                will-change: transform;
-            }
-            
-            body.day-mode .sidebar ul li a {
-                color: var(--text-light);
-                background: rgba(0, 0, 0, 0.03);
-            }
-            
-            .sidebar ul li a i {
-                margin-right: 10px;
-                font-size: 1.2rem;
-            }
-            
-            .sidebar ul li a:hover {
-                background: var(--highlight-dark);
-                color: #ffffff;
-                transform: translateX(5px) scale(1.02);
-                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
-            }
-            
-            body.day-mode .sidebar ul li a:hover {
-                background: var(--highlight-light);
-                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
-            }
-            
-            .close-menu {
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                font-size: 1.5rem;
-                color: var(--text-dark);
-                cursor: pointer;
-                padding: 10px;
-                transition: all var(--transition-speed) var(--transition-function);
-                background: none;
-                border: none;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.1);
-                will-change: transform;
-            }
-            
-            .close-menu:hover {
-                transform: rotate(90deg);
-                background: rgba(255, 255, 255, 0.2);
-            }
-            
-            body.day-mode .close-menu {
-                color: var(--text-light);
-                background: rgba(0, 0, 0, 0.05);
-            }
-            
-            body.day-mode .close-menu:hover {
-                background: rgba(0, 0, 0, 0.1);
-            }
-            
-            .container {
-                flex: 1;
-                width: 100%;
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                position: relative;
-                z-index: 1;
-            }
-            
-            #controls {
-                background: rgba(58, 58, 71, 0.8);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                padding: 20px;
-                border-radius: 16px;
-                width: 100%;
-                margin-bottom: 30px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: transform 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function), background 0.3s var(--transition-function);
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                transform: translateY(0);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                will-change: transform;
-            }
-            
-            #controls:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            }
-            
-            body.day-mode #controls {
-                background: rgba(208, 208, 208, 0.9);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            body.day-mode #controls:hover {
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-            }
-            
-            #search {
-                padding: 15px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-                background: rgba(30, 30, 36, 0.5);
-                color: var(--text-dark);
-                font-size: 1rem;
-                transition: all 0.3s var(--transition-function);
-                width: 100%;
-                font-family: 'Poppins', sans-serif;
-            }
-            
-            body.day-mode #search {
-                background: #ffffff;
-                border: 1px solid rgba(0, 0, 0, 0.1);
-                color: var(--text-light);
-            }
-            
-            #search:focus {
-                outline: none;
-                border-color: var(--highlight-dark);
-                box-shadow: 0 0 0 3px rgba(142, 142, 142, 0.3);
-                transform: scale(1.01);
-            }
-            
-            body.day-mode #search:focus {
-                border-color: var(--highlight-light);
-                box-shadow: 0 0 0 3px rgba(142, 142, 142, 0.2);
-            }
-            
-            #filter-and-favorites {
-                display: flex;
-                gap: 15px;
-                flex-wrap: wrap;
-            }
-            
-            #category-filter {
-                padding: 15px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-                background: rgba(30, 30, 36, 0.5);
-                color: var(--text-dark);
-                font-size: 1rem;
-                cursor: pointer;
-                transition: all 0.3s var(--transition-function);
-                flex: 1;
-                min-width: 150px;
-                font-family: 'Poppins', sans-serif;
-                appearance: none;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e1e1e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-                background-repeat: no-repeat;
-                background-position: right 15px center;
-                background-size: 16px;
-            }
-            
-            body.day-mode #category-filter {
-                background-color: #ffffff;
-                color: var(--text-light);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            }
-            
-            #category-filter:hover {
-                border-color: var(--highlight-dark);
-                transform: translateY(-2px);
-            }
-            
-            body.day-mode #category-filter:hover {
-                border-color: var(--highlight-light);
-            }
-            
-            #show-favorites {
-                padding: 15px;
-                border: none;
-                border-radius: 12px;
-                background: var(--highlight-dark);
-                color: #ffffff;
-                font-size: 1rem;
-                cursor: pointer;
-                transition: all 0.3s var(--transition-function);
-                flex: 1;
-                min-width: 120px;
-                font-family: 'Poppins', sans-serif;
-                font-weight: 500;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                will-change: transform;
-            }
-            
-            #show-favorites i {
-                font-size: 1.1rem;
-            }
-            
-            #show-favorites:hover {
-                background: #777777;
-                transform: translateY(-2px) scale(1.02);
-                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
-            }
-            
-            body.day-mode #show-favorites {
-                background: var(--highlight-light);
-            }
-            
-            body.day-mode #show-favorites:hover {
-                background: #777777;
-                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
-            }
-            
-            #articles {
-                width: 100%;
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 25px;
-                z-index: 1;
-                contain: content;
-            }
-            
-            #favorites-list {
-                width: 100%;
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 25px;
-                z-index: 1;
-                contain: content;
-            }
-            
-            .article-preview {
-                background: rgba(58, 58, 71, 0.7);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                padding: 0;
-                border-radius: 16px;
-                cursor: pointer;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: transform 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function), background 0.3s var(--transition-function);
-                position: relative;
-                overflow: hidden;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                display: flex;
-                flex-direction: column;
-                will-change: transform;
-                contain: layout style;
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            
-            .article-preview.visible {
-                opacity: 1;
-                transform: translateY(0);
-                transition: opacity 0.6s var(--transition-function), transform 0.6s var(--transition-function);
-            }
-            
-            body.day-mode .article-preview {
-                background: rgba(208, 208, 208, 0.9);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            .article-preview:hover {
-                transform: translateY(-10px) scale(1.02);
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-                z-index: 2;
-            }
-            
-            body.day-mode .article-preview:hover {
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-            }
-            
-            .article-preview .image-container {
-                position: relative;
-                width: 100%;
-                height: 200px;
-                overflow: hidden;
-                border-radius: 16px 16px 0 0;
-            }
-            
-            .article-preview img.cover {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.5s var(--transition-function);
-                will-change: transform;
-            }
-            
-            .article-preview:hover img.cover {
-                transform: scale(1.1);
-            }
-            
-            .article-preview .content {
-                padding: 20px;
-                flex: 1;
-                display: flex;
-                flex-direction: column;
             }
             
             .article-preview h2 {
-                font-size: 1.4rem;
-                font-weight: 600;
-                color: var(--text-dark);
-                margin-bottom: 10px;
-                transition: color var(--transition-speed) var(--transition-function);
-                line-height: 1.3;
-            }
-            
-            body.day-mode .article-preview h2 {
-                color: var(--text-light);
-            }
-            
-            .article-preview .meta {
-                font-size: 0.85rem;
-                color: rgba(225, 225, 230, 0.7);
-                margin-bottom: 15px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            body.day-mode .article-preview .meta {
-                color: rgba(33, 37, 41, 0.7);
-            }
-            
-            .article-preview .meta i {
-                font-size: 0.9rem;
+                font-size: 1.3rem;
             }
             
             .article-preview p {
-                font-size: 1rem;
-                color: var(--text-dark);
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                margin-bottom: 15px;
-                flex: 1;
-            }
-            
-            body.day-mode .article-preview p {
-                color: var(--text-light);
-            }
-            
-            .category-tag {
-                position: absolute;
-                top: 15px;
-                left: 15px;
-                padding: 6px 12px;
-                font-size: 0.75rem;
-                color: #fff;
-                border-radius: 30px;
-                font-weight: 500;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-                z-index: 2;
-                transition: transform var(--transition-speed) var(--transition-function), box-shadow var(--transition-speed) var(--transition-function);
-            }
-            
-            .article-preview:hover .category-tag {
-                transform: translateY(-3px);
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            }
-            
-            .category-arastirma {
-                background-color: var(--category-arastirma);
-            }
-            
-            .category-doga {
-                background-color: var(--category-doga);
-            }
-            
-            .category-adalet {
-                background-color: var(--category-adalet);
-            }
-            
-            .category-kavram {
-                background-color: var(--category-kavram);
-            }
-            
-            .category-belirsiz {
-                background-color: var(--category-belirsiz);
-            }
-            
-            .article-actions {
-                display: flex;
-                gap: 15px;
-                margin-top: auto;
-                padding-top: 15px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            body.day-mode .article-actions {
-                border-top: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            .article-actions button {
-                background: none;
-                border: none;
-                color: var(--text-dark);
-                font-size: 1.1rem;
-                cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                padding: 8px 12px;
-                border-radius: 8px;
-                will-change: transform;
-            }
-            
-            body.day-mode .article-actions button {
-                color: var(--text-light);
-            }
-            
-            .article-actions button span {
-                font-size: 0.9rem;
-                font-weight: 500;
-            }
-            
-            .article-actions button:hover {
-                background: rgba(255, 255, 255, 0.1);
-                transform: translateY(-2px);
-            }
-            
-            body.day-mode .article-actions button:hover {
-                background: rgba(0, 0, 0, 0.05);
-            }
-            
-            .article-actions .favorite-btn.active {
-                color: #ffd700;
-            }
-            
-            .article-actions .favorite-btn.active:hover {
-                color: #ffcc00;
+                font-size: 0.95rem;
             }
             
             #article-detail {
-                width: 100%;
-                background: rgba(58, 58, 71, 0.9);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                padding: 30px;
-                border-radius: 20px;
-                display: none;
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-                transition: opacity var(--transition-speed) var(--transition-function);
-                z-index: 5;
-                position: relative;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                margin-bottom: 30px;
-                contain: content;
-            }
-            
-            body.day-mode #article-detail {
-                background: rgba(208, 208, 208, 0.95);
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            #article-detail.show {
-                display: block;
-                animation: fadeInScale 0.5s var(--transition-function);
-            }
-            
-            #article-detail .image-container {
-                position: relative;
-                width: 100%;
-                max-width: 800px;
-                height: 400px;
-                overflow: hidden;
-                border-radius: 16px;
-                margin: 0 auto 30px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            }
-            
-            body.day-mode #article-detail .image-container {
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            }
-            
-            #article-detail img.cover {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.5s var(--transition-function);
+                padding: 20px;
             }
             
             #article-detail h2 {
-                font-size: 2.2rem;
-                color: var(--text-dark);
-                margin-bottom: 15px;
-                text-align: center;
-                font-weight: 700;
-                line-height: 1.3;
-            }
-            
-            body.day-mode #article-detail h2 {
-                color: var(--text-light);
-            }
-            
-            #article-detail .meta {
-                font-size: 1rem;
-                color: rgba(225, 225, 230, 0.7);
-                text-align: center;
-                margin-bottom: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 15px;
-                flex-wrap: wrap;
-            }
-            
-            body.day-mode #article-detail .meta {
-                color: rgba(33, 37, 41, 0.7);
-            }
-            
-            #article-detail .meta i {
-                font-size: 1.1rem;
+                font-size: 1.8rem;
             }
             
             #article-detail .content {
-                font-size: 1.1rem;
-                color: var(--text-dark);
-                text-align: justify;
-                line-height: 1.8;
-                max-width: 800px;
-                margin: 0 auto;
-            }
-            
-            body.day-mode #article-detail .content {
-                color: var(--text-light);
-            }
-            
-            #article-detail .content img {
-                width: 100%;
-                max-width: 700px;
-                border-radius: 12px;
-                margin: 25px auto;
-                display: block;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: transform var(--transition-speed) var(--transition-function), box-shadow var(--transition-speed) var(--transition-function);
-            }
-            
-            body.day-mode #article-detail .content img {
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            }
-            
-            #article-detail .content img:hover {
-                transform: scale(1.02);
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            }
-            
-            body.day-mode #article-detail .content img:hover {
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            }
-            
-            #article-detail .content p {
-                margin-bottom: 20px;
-                text-align: justify;
-            }
-            
-            #article-detail .content strong {
-                color: var(--highlight-dark);
-                font-weight: 600;
-            }
-            
-            body.day-mode #article-detail .content strong {
-                color: var(--highlight-light);
-            }
-            
-            #close-article {
-                position: absolute;
-                top: 20px;
-                left: 20px;
-                width: 40px;
-                height: 40px;
-                background: rgba(255, 255, 255, 0.1);
-                border: none;
-                border-radius: 50%;
-                color: var(--text-dark);
-                font-size: 1.2rem;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all var(--transition-speed) var(--transition-function);
-                z-index: 10;
-                will-change: transform;
-            }
-            
-            body.day-mode #close-article {
-                background: rgba(0, 0, 0, 0.05);
-                color: var(--text-light);
-            }
-            
-            #close-article:hover {
-                background: var(--highlight-dark);
-                transform: rotate(-90deg);
-                color: #ffffff;
-            }
-            
-            body.day-mode #close-article:hover {
-                background: var(--highlight-light);
-            }
-            
-            #favorites-panel {
-                width: 100%;
-                background: rgba(58, 58, 71, 0.9);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                padding: 30px;
-                border-radius: 20px;
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-                display: none;
-                z-index: 5;
-                position: relative;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                margin-bottom: 30px;
-                contain: content;
-            }
-            
-            body.day-mode #favorites-panel {
-                background: rgba(208, 208, 208, 0.95);
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            #favorites-panel.show {
-                display: block;
-                animation: fadeInScale 0.5s var(--transition-function);
-            }
-            
-            #favorites-panel h2 {
-                font-size: 1.8rem;
-                color: var(--text-dark);
-                margin-bottom: 25px;
-                text-align: center;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-            }
-            
-            #favorites-panel h2 i {
-                color: #ffd700;
-            }
-            
-            body.day-mode #favorites-panel h2 {
-                color: var(--text-light);
-            }
-            
-            #back-to-articles {
-                padding: 15px 25px;
-                border: none;
-                border-radius: 12px;
-                background: var(--highlight-dark);
-                color: #ffffff;
                 font-size: 1rem;
-                cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
-                margin: 20px auto 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-                font-weight: 500;
-                font-family: 'Poppins', sans-serif;
-                will-change: transform;
             }
             
-            body.day-mode #back-to-articles {
-                background: var(--highlight-light);
+            #article-detail .image-container {
+                height: 250px;
             }
             
-            #back-to-articles:hover {
-                background: #777777;
-                transform: translateY(-3px) scale(1.02);
-                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.4);
+            #filter-and-favorites {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 280px;
             }
             
-            body.day-mode #back-to-articles:hover {
-                box-shadow: 0 5px 15px rgba(142, 142, 142, 0.2);
+            .sidebar ul li a {
+                font-size: 1rem;
+                padding: 10px;
             }
             
-            .remove-from-favorites {
-                background: #f44336;
-                border: none;
-                border-radius: 8px;
-                color: #ffffff;
-                padding: 8px 15px;
+            #controls {
+                padding: 15px;
+            }
+            
+            #search,
+            #category-filter,
+            #show-favorites {
                 font-size: 0.9rem;
-                cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 5px;
-                margin-top: 10px;
-                font-weight: 500;
-                font-family: 'Poppins', sans-serif;
-                will-change: transform;
+                padding: 12px;
             }
             
-            .remove-from-favorites:hover {
-                background: #e53935;
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+            .article-preview .content {
+                padding: 15px;
             }
             
-            .social-buttons {
-                display: flex;
-                gap: 15px;
-                margin-top: 30px;
-                justify-content: center;
-                flex-wrap: wrap;
+            .article-preview h2 {
+                font-size: 1.2rem;
+            }
+            
+            .article-preview p {
+                font-size: 0.9rem;
+            }
+            
+            .category-tag {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
+            
+            #article-detail h2 {
+                font-size: 1.6rem;
+            }
+            
+            #article-detail .content {
+                font-size: 0.95rem;
             }
             
             .social-buttons button {
-                padding: 12px 20px;
-                border: none;
-                border-radius: 12px;
-                color: #ffffff;
-                font-size: 1rem;
-                cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-weight: 500;
-                font-family: 'Poppins', sans-serif;
-                will-change: transform;
-            }
-            
-            .whatsapp-btn {
-                background-color: #25d366;
-            }
-            
-            .twitter-btn {
-                background-color: #1da1f2;
-            }
-            
-            .facebook-btn {
-                background-color: #4267b2;
-            }
-            
-            .social-buttons button:hover {
-                transform: translateY(-3px) scale(1.05);
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            }
-            
-            footer {
-                background: rgba(58, 58, 71, 0.8);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                color: var(--text-dark);
-                text-align: center;
-                padding: 20px;
+                padding: 10px 15px;
                 font-size: 0.9rem;
-                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
-                z-index: 10;
-                position: relative;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                transition: background 0.3s var(--transition-function), color 0.3s var(--transition-function);
-            }
-            
-            body.day-mode footer {
-                background: rgba(208, 208, 208, 0.8);
-                color: var(--text-light);
-                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-                border-top: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            #theme-toggle {
-                width: 45px;
-                height: 45px;
-                border: none;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.1);
-                color: var(--text-dark);
-                font-size: 1.2rem;
-                cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                will-change: transform;
-            }
-            
-            body.day-mode #theme-toggle {
-                background: rgba(0, 0, 0, 0.05);
-                color: var(--text-light);
-            }
-            
-            #theme-toggle:hover {
-                transform: rotate(360deg) scale(1.1);
-                background: rgba(255, 255, 255, 0.2);
-            }
-            
-            body.day-mode #theme-toggle:hover {
-                background: rgba(0, 0, 0, 0.1);
-            }
-            
-            .highlight {
-                background-color: rgba(142, 142, 142, 0.3);
-                color: inherit;
-                padding: 2px 4px;
-                border-radius: 4px;
-                font-weight: 500;
-                transition: all var(--transition-speed) var(--transition-function);
-            }
-            
-            body.day-mode .highlight {
-                background-color: rgba(142, 142, 142, 0.2);
             }
             
             #settings-panel {
-                width: 100%;
-                max-width: 450px;
-                background: rgba(58, 58, 71, 0.95);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                padding: 30px;
-                border-radius: 20px;
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-                display: none;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                z-index: 200;
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                width: 90%;
+                padding: 20px;
             }
-            
-            body.day-mode #settings-panel {
-                background: rgba(208, 208, 208, 0.95);
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            #settings-panel.show {
-                display: block;
-                animation: fadeInScale 0.5s var(--transition-function);
-            }
-            
-            #settings-panel h2 {
-                font-size: 1.6rem;
-                color: var(--text-dark);
-                margin-bottom: 25px;
-                text-align: center;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-            }
-            
-            body.day-mode #settings-panel h2 {
-                color: var(--text-light);
-            }
-            
-            .settings-content {
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .settings-group {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .settings-content label {
-                color: var(--text-dark);
-                font-size: 1rem;
-                font-weight: 500;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            body.day-mode .settings-content label {
-                color: var(--text-light);
-            }
-            
-            .settings-content input[type="range"] {
-                width: 100%;
-                height: 8px;
-                -webkit-appearance: none;
-                appearance: none;
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 5px;
-                outline: none;
-            }
-            
-            body.day-mode .settings-content input[type="range"] {
-                background: rgba(0, 0, 0, 0.1);
-            }
-            
-            .settings-content input[type="range"]::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                appearance: none;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: var(--highlight-dark);
-                cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
-            }
-            
-            .settings-content input[type="range"]::-webkit-slider-thumb:hover {
-                transform: scale(1.2);
-                background: #777777;
-            }
-            
-            .settings-content select {
-                padding: 12px 15px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-                background: rgba(30, 30, 36, 0.5);
-                color: var(--text-dark);
-                font-size: 1rem;
-                font-family: 'Poppins', sans-serif;
-                cursor: pointer;
-                transition: all var(--transition-speed) var(--transition-function);
-                appearance: none;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e1e1e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-                background-repeat: no-repeat;
-                background-position: right 15px center;
-                background-size: 16px;
-            }
-            
-            body.day-mode .settings-content select {
-                background-color: #ffffff;
-                color: var(--text-light);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            }
-            
-            .settings-content select:hover {
-                border-color: var(--highlight-dark);
-            }
-            
-            .font-size-display {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-            
-            #font-size-value {
-                color: var(--text-dark);
-                font-weight: 500;
-                background: rgba(255, 255, 255, 0.1);
-                padding: 5px 10px;
-                border-radius: 8px;
-                min-width: 60px;
-                text-align: center;
-            }
-            
-            body.day-mode #font-size-value {
-                color: var(--text-light);
-                background: rgba(0, 0, 0, 0.05);
-            }
-            
-            #close-settings {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                width: 40px;
-                height: 40px;
-                background: rgba(255, 255, 255, 0.1);
-                border: none;
-                border-radius: 50%;
-                color: var(--text-dark);
-                font-size: 1.2rem;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all var(--transition-speed) var(--transition-function);
-                will-change: transform;
-            }
-            
-            body.day-mode #close-settings {
-                background: rgba(0, 0, 0, 0.05);
-                color: var(--text-light);
-            }
-            
-            #close-settings:hover {
-                background: var(--highlight-dark);
-                transform: rotate(90deg);
-                color: #ffffff;
-            }
-            
-            body.day-mode #close-settings:hover {
-                background: var(--highlight-light);
-            }
-            
-            .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(3px);
-                -webkit-backdrop-filter: blur(3px);
-                z-index: 150;
+        }
+        
+        @keyframes fadeInScale {
+            from {
                 opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.3s ease, visibility 0.3s ease;
+                transform: scale(0.9);
             }
-            
-            .overlay.show {
+            to {
                 opacity: 1;
-                visibility: visible;
+                transform: scale(1);
             }
-            
-            @media (max-width: 768px) {
-                #articles,
-                #favorites-list {
-                    grid-template-columns: 1fr;
-                }
-                
-                header h1 {
-                    font-size: 1.5rem;
-                }
-                
-                .article-preview h2 {
-                    font-size: 1.3rem;
-                }
-                
-                .article-preview p {
-                    font-size: 0.95rem;
-                }
-                
-                #article-detail {
-                    padding: 20px;
-                }
-                
-                #article-detail h2 {
-                    font-size: 1.8rem;
-                }
-                
-                #article-detail .content {
-                    font-size: 1rem;
-                }
-                
-                #article-detail .image-container {
-                    height: 250px;
-                }
-                
-                #filter-and-favorites {
-                    flex-direction: column;
-                }
-            }
-            
-            @media (max-width: 480px) {
-                .sidebar {
-                    width: 280px;
-                }
-                
-                .sidebar ul li a {
-                    font-size: 1rem;
-                    padding: 10px;
-                }
-                
-                #controls {
-                    padding: 15px;
-                }
-                
-                #search,
-                #category-filter,
-                #show-favorites {
-                    font-size: 0.9rem;
-                    padding: 12px;
-                }
-                
-                .article-preview .content {
-                    padding: 15px;
-                }
-                
-                .article-preview h2 {
-                    font-size: 1.2rem;
-                }
-                
-                .article-preview p {
-                    font-size: 0.9rem;
-                }
-                
-                .category-tag {
-                    font-size: 0.7rem;
-                    padding: 4px 8px;
-                }
-                
-                #article-detail h2 {
-                    font-size: 1.6rem;
-                }
-                
-                #article-detail .content {
-                    font-size: 0.95rem;
-                }
-                
-                .social-buttons button {
-                    padding: 10px 15px;
-                    font-size: 0.9rem;
-                }
-                
-                #settings-panel {
-                    width: 90%;
-                    padding: 20px;
-                }
-            }
-            
-            @keyframes fadeInScale {
-                from {
-                    opacity: 0;
-                    transform: scale(0.9);
-                }
-                to {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <div class="menu-icon"><i class="fas fa-bars"></i></div>
-            <h1>SADECE KURAN</h1>
-            <button id="theme-toggle"><i class="fas fa-moon"></i></button>
-        </header>
-        
-        <div class="sidebar">
-            <button class="close-menu"><i class="fas fa-times"></i></button>
-            <ul>
-                <li><a href="https://theleng.site"><i class="fas fa-globe"></i> THE LENG</a></li>
-                <li><a href="https://sadecekuran.com.tr/kuran"><i class="fas fa-book-open"></i> MEAL</a></li>
-                <li><a href="#" id="settings-link"><i class="fas fa-cog"></i> Ayarlar</a></li>
-            </ul>
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu-icon"><i class="fas fa-bars"></i></div>
+        <h1>SADECE KURAN</h1>
+        <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+    </header>
+    
+    <div class="sidebar">
+        <button class="close-menu"><i class="fas fa-times"></i></button>
+        <ul>
+            <li><a href="https://theleng.site"><i class="fas fa-globe"></i> THE LENG</a></li>
+            <li><a href="https://sadecekuran.com.tr/kuran"><i class="fas fa-book-open"></i> MEAL</a></li>
+            <li><a href="#" id="settings-link"><i class="fas fa-cog"></i> Ayarlar</a></li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <div id="controls">
+            <input type="text" id="search" placeholder="Makale ara..." />
+            <div id="filter-and-favorites">
+                <select id="category-filter">
+                    <option value="">Tüm Kategoriler</option>
+                    <option value="arastirma">ARAŞTIRMA</option>
+                    <option value="doga">Doğa</option>
+                    <option value="kavram">KAVRAM</option>
+                    <option value="adalet">Adalet</option>
+                </select>
+                <button id="show-favorites"><i class="fas fa-star"></i> Favoriler</button>
+            </div>
         </div>
         
-        <div class="container">
-            <div id="controls">
-                <input type="text" id="search" placeholder="Makale ara..." />
-                <div id="filter-and-favorites">
-                    <select id="category-filter">
-                        <option value="">Tüm Kategoriler</option>
-                        <option value="arastirma">ARAŞTIRMA</option>
-                        <option value="doga">Doğa</option>
-                        <option value="kavram">KAVRAM</option>
-                        <option value="adalet">Adalet</option>
+        <div id="articles"></div>
+        
+        <div id="favorites-panel">
+            <h2><i class="fas fa-star"></i> Favori Makaleler</h2>
+            <div id="favorites-list"></div>
+            <button id="back-to-articles"><i class="fas fa-arrow-left"></i> Makalelere Dön</button>
+        </div>
+        
+        <div id="article-detail">
+            <button id="close-article"><i class="fas fa-arrow-left"></i></button>
+            <div class="image-container">
+                <img id="detail-image" class="cover" src="kader2.jpg" alt="Kapak Resmi" />
+            </div>
+            <h2 id="detail-title"></h2>
+            <div id="detail-meta" class="meta"></div>
+            <div id="detail-content" class="content"></div>
+            <div class="social-buttons">
+                <button class="whatsapp-btn" id="whatsapp-share"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                <button class="twitter-btn" id="twitter-share"><i class="fab fa-twitter"></i> Twitter</button>
+                <button class="facebook-btn" id="facebook-share"><i class="fab fa-facebook-f"></i> Facebook</button>
+            </div>
+        </div>
+        
+        <div id="settings-panel">
+            <button id="close-settings"><i class="fas fa-times"></i></button>
+            <h2><i class="fas fa-cog"></i> Ayarlar</h2>
+            <div class="settings-content">
+                <div class="settings-group">
+                    <div class="font-size-display">
+                        <label for="font-size"><i class="fas fa-text-height"></i> Yazı Boyutu:</label>
+                        <span id="font-size-value">16px</span>
+                    </div>
+                    <input type="range" id="font-size" min="12" max="24" value="16" step="1" />
+                </div>
+                
+                <div class="settings-group">
+                    <label for="font-family"><i class="fas fa-font"></i> Font Ailesi:</label>
+                    <select id="font-family">
+                        <option value="Poppins">Poppins</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Times New Roman">Times New Roman</option>
                     </select>
-                    <button id="show-favorites"><i class="fas fa-star"></i> Favoriler</button>
-                </div>
-            </div>
-            
-            <div id="articles"></div>
-            
-            <div id="favorites-panel">
-                <h2><i class="fas fa-star"></i> Favori Makaleler</h2>
-                <div id="favorites-list"></div>
-                <button id="back-to-articles"><i class="fas fa-arrow-left"></i> Makalelere Dön</button>
-            </div>
-            
-            <div id="article-detail">
-                <button id="close-article"><i class="fas fa-arrow-left"></i></button>
-                <div class="image-container">
-                    <img id="detail-image" class="cover" src="kader2.jpg" alt="Kapak Resmi" loading="lazy" />
-                </div>
-                <h2 id="detail-title"></h2>
-                <div id="detail-meta" class="meta"></div>
-                <div id="detail-content" class="content"></div>
-                <div class="social-buttons">
-                    <button class="whatsapp-btn" id="whatsapp-share"><i class="fab fa-whatsapp"></i> WhatsApp</button>
-                    <button class="twitter-btn" id="twitter-share"><i class="fab fa-twitter"></i> Twitter</button>
-                    <button class="facebook-btn" id="facebook-share"><i class="fab fa-facebook-f"></i> Facebook</button>
-                </div>
-            </div>
-            
-            <div id="settings-panel">
-                <button id="close-settings"><i class="fas fa-times"></i></button>
-                <h2><i class="fas fa-cog"></i> Ayarlar</h2>
-                <div class="settings-content">
-                    <div class="settings-group">
-                        <div class="font-size-display">
-                            <label for="font-size"><i class="fas fa-text-height"></i> Yazı Boyutu:</label>
-                            <span id="font-size-value">16px</span>
-                        </div>
-                        <input type="range" id="font-size" min="12" max="24" value="16" step="1" />
-                    </div>
-                    
-                    <div class="settings-group">
-                        <label for="font-family"><i class="fas fa-font"></i> Font Ailesi:</label>
-                        <select id="font-family">
-                            <option value="Poppins">Poppins</option>
-                            <option value="Arial">Arial</option>
-                            <option value="Verdana">Verdana</option>
-                            <option value="Times New Roman">Times New Roman</option>
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="overlay" id="settings-overlay"></div>
-        
-        <footer>
-            <p>© 2025 THE LENG | SADECE KURAN</p>
-        </footer>
-        
-        <script>
-            const articlesData = [
-                {
+    </div>
+    
+    <div class="overlay" id="settings-overlay"></div>
+    
+    <footer>
+        <p>© 2025 THE LENG | SADECE KURAN</p>
+    </footer>
+    
+    <script>
+        const articlesData = [
+            {
                     title: "İSLAM'A SIZINTI",
                     author: "Muhammed Yusuf ERTEK",
                     date: "09 Nisan 2025",
@@ -1522,580 +1518,591 @@
                     category: "kavram",
                     image: "recm1.jpg"
                 },
-                {
-                    title: "ŞEFAAT NEDİR?",
-                    author: "Muhammed Yusuf Ertek",
-                    date: "04 Mart 2025",
-                    preview:
-                        "Şefaat İslam'da gerçekten peygamberler, şeyhler ya da alimler tarafından mı yapılır? Yoksa yalnızca Allah'a mı aittir? Bu makalede, Kuran'a dayanarak Şefaat inancının İslam'daki yerini inceleyeceğiz...",
-                    content: `
-                    <p>Şefaat, İslam'da kıyamet günü birinin başka biri adına Allah'a yalvararak onun bağışlanmasını veya durumunun iyileştirilmesini istemesi olarak tanımlanır. Geleneksel İslam anlayışında, yalnızca Hz. Muhammed ve diğer peygamberler değil, aynı zamanda şeyhler, alimler ve kutsal addedilen kişiler de inananlar adına Şefaat edebileceği inancı yaygındır. Bu kişiler, cehennemden kurtarıcı ya da cennete geçişi kolaylaştırıcı birer aracı olarak görülür. Ancak, Kuran'a baktığımızda, Şefaat'in yalnızca Allah'a ait olduğunu, kimsenin -ne peygamberlerin ne de şeyh ve alimlerin- cehennemden kurtaramayacağını ve ancak cenneti hak edenlerin durumunun Allah'ın izniyle iyileşebileceğini görüyoruz. Bu makalede, Şefaat kavramını Kuran ayetleriyle inceleyerek, özellikle şeyh ve alimlerin Şefaat yetkisinin İslam'da olmadığını detaylı bir şekilde delillendireceğiz.</p>
-                    <p>Kuran'da Şefaat'in genel olarak mümkün olmadığı açıkça belirtilir. <strong>Bakara Suresi 48</strong>'de şöyle buyrulur: "Ve korkun o günden ki, bir kimse kendi nefsine yeterli olmaz, ondan hiçbir fidye kabul edilmeyecek, hiçbir Şefaat onun lehine kabul edilmeyecek ve onlar yardıma kavuşamazlar." Bu ayet, kıyamet günü herkesin kendi amelleriyle yargılanacağını ve Şefaat'in -kimden gelirse gelsin- kimseyi kurtaramayacağını vurgular. Benzer şekilde, <strong>Bakara Suresi 254</strong>'te "O gün ticaret yok, dostluk yok, Şefaat yok" denilerek, Şefaat'in geçersizliği tekrarlanır. Bu ayetler, Şefaat'in şeyhler ya da alimler gibi kişilerce yapılabileceğine dair herhangi bir kapı bırakmaz.</p>
-                    <img src="sefaat2.png" alt="Şefaat İnancının Kültürel Kökenleri" loading="lazy">
-                    <p>Bununla birlikte, Kuran'da Şefaat'in Allah'ın izniyle sınırlı bir şekilde gerçekleşebileceğine dair ayetler de bulunur. <strong>Necm Suresi 26</strong>'da şöyle denir: "Göklerde nice melekler var ki, onların Şefaatı hiçbir fayda vermez; ancak Allah dilediğine ve razı olduktan sonra izin verdiği zaman." Ayrıca, <strong>Zümer Suresi 44</strong>'te "Şefaat, hepsi Allah'ındır. Göklerin ve yerin hükümdarlığı O'nundur" buyrularak, Şefaat yetkisinin yalnızca Allah'a ait olduğu açıkça ifade edilir. Bu ayetler, Şefaat'in peygamberler dâhil herhangi bir insan tarafından değil, yalnızca Allah'ın izniyle ve O'nun belirlediği çerçevede gerçekleşebileceğini gösterir. Şeyh ve alimlerin Şefaat yetkisi ise bu ayetlerde tamamen dışlanır, çünkü Kuran'da böyle bir yetki insanlara değil, sadece Allah'a atfedilir.</p>
-                    <p>Geleneksel İslamcılar, Şefaat'in Hz. Muhammed tarafından yapılacağını hadislere dayandırırken, bu yetkiyi zamanla şeyh ve alimlere de genişletmiştir. Özellikle tarikat ve cemaat yapılarında, şeyhlerin veya önde gelen alimlerin müritlerini cennete götüreceği, günahlarını affettireceği ya da cehennemden kurtaracağı inancı kökleşmiştir. Ancak Kuran, bu  günahlarını affettireceği ya da cehennemden kurtaracağı inancı kökleşmiştir. Ancak Kuran, bu tür bir inancın İslam'ın özüne aykırı olduğunu net bir şekilde ortaya koyar. <strong>Yunus Suresi 18</strong>'de "Allah'ı bırakıp, kendilerine ne zarar ne de fayda verebilecek şeylere tapıyorlar ve 'Bunlar Allah katında bizim Şefaatçilerimizdir' diyorlar. De ki: 'Allah'a, göklerde ve yerde bilmediği bir şeyi mi haber veriyorsunuz?'" denilerek, Allah dışında Şefaatçi kabul etmenin şirk olduğu vurgulanır. Şeyh ve alimlerin Şefaat yetkisine sahip olduğu iddiası, bu ayete göre açıkça bir sapmadır.</p>
-                    <p>Kuran, İslam'ın tamamlanmış bir din olduğunu bildirir ve ek aracılara ihtiyaç olmadığını ifade eder. <strong>Maide Suresi 3</strong>'te "Bugün size dininizi tamamladım, size nimetimi tamamladım ve size İslam'ı din olarak beğendim" denilerek, Kuran'ın yeterli olduğu vurgulanır. Ayrıca, <strong>A'raf Suresi 53</strong>'te "Şefaat edenler var mı ki bizim için Şefaat etsinler?" diye soranların çaresizliği anlatılır ve bu, Şefaat'in kurtarıcı bir güç olmadığına işaret eder. Eğer şeyh ve alimlerin Şefaat yetkisi olsaydı, Kuran'da bu açıkça belirtilirdi; oysa Kuran, böyle bir yetkiyi yalnızca Allah'a verir ve insanlara herhangi bir aracı rol tanımaz.</p>
-                    <p>Şeyh ve alimlerin Şefaat edeceğine dair inanç, İslam'ın ilk dönemlerinde değil, sonraki yüzyıllarda tasavvufun etkisiyle ortaya çıkmıştır. Örneğin, tarikat liderlerinin "keramet" sahibi olduğu ve müritlerini kurtarabileceği fikri, hadislerin yorumlanması ve kültürel geleneklerin dini anlayışla harmanlanmasıyla şekillenmiştir. Ancak Kuran, her bireyin kendi amelleriyle yargılanacağını net bir şekilde ortaya koyar. <strong>Zümer Suresi 7</strong>'de "Eğer küfrederlerse, şüphesiz Allah onlara muhtaç değildir. Kulları için O, şükredenleri sever" denilerek, kurtuluşun Şefaat'e değil, amellere bağlı olduğu belirtilir. Şefaat, kimseyi cehennemden kurtarmaz; olsa olsa cenneti hak edenlerin durumunu Allah'ın izniyle iyileştirebilir. Bu da şeyh ve alimlerin Şefaat iddiasını geçersiz kılar.</p>
-                    <p>Tarihsel olarak, Şefaat inancının genişletilmesi İslam'dan önceki dinlerden ve kültürel geleneklerden etkilenmiştir. Örneğin, Hıristiyanlıkta İsa'nın inananlar için Şefaat etmesi ya da pagan toplumlarda kutsal kişilerin aracı kabul edilmesi, benzer bir inanç yapısını yansıtır. İslam'a bu anlayış, hadisler ve tasavvufi yorumlarla sızmıştır. Özellikle şeyh ve alimlerin Şefaat edeceğine dair inanç, dinin monoteistik özünü zedeler ve Allah ile kul arasına aracı koyma eğilimini güçlendirir. <strong>Şura Suresi 46</strong>'da "Onların Allah'tan başka kendilerine yardım edecek dostları yoktur. Allah kimi saptırırsa, artık onun için bir yol yoktur" denilerek, Allah dışında kimsenin kurtarıcı olamayacağı vurgulanır. Bu ayet, şeyh ve alimlerin Şefaat yetkisi iddiasını açıkça reddeder.</p>
-                    <p>Ek olarak, <strong>Ankebut Suresi 12</strong>'de "Kâfirler, iman edenlere dediler ki: 'Bizim yolumuza uyun, sizin günahlarınızı biz taşıyalım.' Oysa onlar, onların günahlarından hiçbir şey taşıyamazlar" denilerek, kimsenin bir başkasının günahını üstlenemeyeceği belirtilir. Eğer şeyh ve alimler Şefaat ederek müritlerini kurtarabilseydi, bu ayet böyle bir yetkiyi tanırdı; ancak Kuran, böyle bir yetkiyi yalnızca Allah'a verir. <strong>Nahl Suresi 116</strong>'da ise "Kendi dillerinizle, 'Bu helal, bu haram' diyerek Allah'a yalan uydurmayın" denilerek, dinde olmayan şeyleri eklemenin sakıncalı olduğu uyarısı yapılır. Şeyh ve alimlerin Şefaat yetkisi, bu bağlamda Kuran'a aykırı bir uydurmadır.</p>
-                    <p>Sonuç olarak, Kuran'da Şefaat yalnızca Allah'a aittir ve ne peygamberler, ne şeyhler, ne de alimler kimseyi cehennemden kurtaramaz. Cenneti hak edenlerin durumu Allah'ın izniyle iyileşebilir, ancak bu, amellerin yerine geçmez ve insanlara böyle bir yetki verilmez. Geleneksel Şefaat inancı, özellikle şeyh ve alimlerin Şefaat edeceğine dair iddia, hadisler ve tasavvufi geleneklerle sonradan eklenmiş bir sapmadır ve İslam'ın özünde yer almaz. Kuran, inananları Şefaat umuduna değil, kendi amellerine ve Allah'la doğrudan bağa yöneltir. Şeyh ve alimlerin Şefaat yetkisi, Kuran'ın monoteistik ruhuna aykırı bir inançtır ve İslam'da hiçbir dayanağı yoktur.</p>
+            {
+                title: "ŞEFAAT NEDİR?",
+                author: "Muhammed Yusuf Ertek",
+                date: "04 Mart 2025",
+                preview:
+                    "Şefaat İslam'da gerçekten peygamberler, şeyhler ya da alimler tarafından mı yapılır? Yoksa yalnızca Allah'a mı aittir? Bu makalede, Kuran'a dayanarak Şefaat inancının İslam'daki yerini inceleyeceğiz...",
+                content: `
+                <p>Şefaat, İslam'da kıyamet günü birinin başka biri adına Allah'a yalvararak onun bağışlanmasını veya durumunun iyileştirilmesini istemesi olarak tanımlanır. Geleneksel İslam anlayışında, yalnızca Hz. Muhammed ve diğer peygamberler değil, aynı zamanda şeyhler, alimler ve kutsal addedilen kişiler de inananlar adına Şefaat edebileceği inancı yaygındır. Bu kişiler, cehennemden kurtarıcı ya da cennete geçişi kolaylaştırıcı birer aracı olarak görülür. Ancak, Kuran'a baktığımızda, Şefaat'in yalnızca Allah'a ait olduğunu, kimsenin -ne peygamberlerin ne de şeyh ve alimlerin- cehennemden kurtaramayacağını ve ancak cenneti hak edenlerin durumunun Allah'ın izniyle iyileşebileceğini görüyoruz. Bu makalede, Şefaat kavramını Kuran ayetleriyle inceleyerek, özellikle şeyh ve alimlerin Şefaat yetkisinin İslam'da olmadığını detaylı bir şekilde delillendireceğiz.</p>
+                <p>Kuran'da Şefaat'in genel olarak mümkün olmadığı açıkça belirtilir. <strong>Bakara Suresi 48</strong>'de şöyle buyrulur: "Ve korkun o günden ki, bir kimse kendi nefsine yeterli olmaz, ondan hiçbir fidye kabul edilmeyecek, hiçbir Şefaat onun lehine kabul edilmeyecek ve onlar yardıma kavuşamazlar." Bu ayet, kıyamet günü herkesin kendi amelleriyle yargılanacağını ve Şefaat'in -kimden gelirse gelsin- kimseyi kurtaramayacağını vurgular. Benzer şekilde, <strong>Bakara Suresi 254</strong>'te "O gün ticaret yok, dostluk yok, Şefaat yok" denilerek, Şefaat'in geçersizliği tekrarlanır. Bu ayetler, Şefaat'in şeyhler ya da alimler gibi kişilerce yapılabileceğine dair herhangi bir kapı bırakmaz.</p>
+                <img src="sefaat2.png" alt="Şefaat İnancının Kültürel Kökenleri">
+                <p>Bununla birlikte, Kuran'da Şefaat'in Allah'ın izniyle sınırlı bir şekilde gerçekleşebileceğine dair ayetler de bulunur. <strong>Necm Suresi 26</strong>'da şöyle denir: "Göklerde nice melekler var ki, onların Şefaatı hiçbir fayda vermez; ancak Allah dilediğine ve razı olduktan sonra izin verdiği zaman." Ayrıca, <strong>Zümer Suresi 44</strong>'te "Şefaat, hepsi Allah'ındır. Göklerin ve yerin hükümdarlığı O'nundur" buyrularak, Şefaat yetkisinin yalnızca Allah'a ait olduğu açıkça ifade edilir. Bu ayetler, Şefaat'in peygamberler dâhil herhangi bir insan tarafından değil, yalnızca Allah'ın izniyle ve O'nun belirlediği çerçevede gerçekleşebileceğini gösterir. Şeyh ve alimlerin Şefaat yetkisi ise bu ayetlerde tamamen dışlanır, çünkü Kuran'da böyle bir yetki insanlara değil, sadece Allah'a atfedilir.</p>
+                <p>Geleneksel İslamcılar, Şefaat'in Hz. Muhammed tarafından yapılacağını hadislere dayandırırken, bu yetkiyi zamanla şeyh ve alimlere de genişletmiştir. Özellikle tarikat ve cemaat yapılarında, şeyhlerin veya önde gelen alimlerin müritlerini cennete götüreceği, günahlarını affettireceği ya da cehennemden kurtaracağı inancı kökleşmiştir. Ancak Kuran, bu tür bir inancın İslam'ın özüne aykırı olduğunu net bir şekilde ortaya koyar. <strong>Yunus Suresi 18</strong>'de "Allah'ı bırakıp, kendilerine ne zarar ne de fayda verebilecek şeylere tapıyorlar ve 'Bunlar Allah katında bizim Şefaatçilerimizdir' diyorlar. De ki: 'Allah'a, göklerde ve yerde bilmediği bir şeyi mi haber veriyorsunuz?'" denilerek, Allah dışında Şefaatçi kabul etmenin şirk olduğu vurgulanır. Şeyh ve alimlerin Şefaat yetkisine sahip olduğu iddiası, bu ayete göre açıkça bir sapmadır.</p>
+                <p>Kuran, İslam'ın tamamlanmış bir din olduğunu bildirir ve ek aracılara ihtiyaç olmadığını ifade eder. <strong>Maide Suresi 3</strong>'te "Bugün size dininizi tamamladım, size nimetimi tamamladım ve size İslam'ı din olarak beğendim" denilerek, Kuran'ın yeterli olduğu vurgulanır. Ayrıca, <strong>A'raf Suresi 53</strong>'te "Şefaat edenler var mı ki bizim için Şefaat etsinler?" diye soranların çaresizliği anlatılır ve bu, Şefaat'in kurtarıcı bir güç olmadığına işaret eder. Eğer şeyh ve alimlerin Şefaat yetkisi olsaydı, Kuran'da bu açıkça belirtilirdi; oysa Kuran, böyle bir yetkiyi yalnızca Allah'a verir ve insanlara herhangi bir aracı rol tanımaz.</p>
+                <p>Şeyh ve alimlerin Şefaat edeceğine dair inanç, İslam'ın ilk dönemlerinde değil, sonraki yüzyıllarda tasavvufun etkisiyle ortaya çıkmıştır. Örneğin, tarikat liderlerinin "keramet" sahibi olduğu ve müritlerini kurtarabileceği fikri, hadislerin yorumlanması ve kültürel geleneklerin dini anlayışla harmanlanmasıyla şekillenmiştir. Ancak Kuran, her bireyin kendi amelleriyle yargılanacağını net bir şekilde ortaya koyar. <strong>Zümer Suresi 7</strong>'de "Eğer küfrederlerse, şüphesiz Allah onlara muhtaç değildir. Kulları için O, şükredenleri sever" denilerek, kurtuluşun Şefaat'e değil, amellere bağlı olduğu belirtilir. Şefaat, kimseyi cehennemden kurtarmaz; olsa olsa cenneti hak edenlerin durumunu Allah'ın izniyle iyileştirebilir. Bu da şeyh ve aliml  olsa olsa cenneti hak edenlerin durumunu Allah'ın izniyle iyileştirebilir. Bu da şeyh ve alimlerin Şefaat iddiasını geçersiz kılar.</p>
+                <p>Tarihsel olarak, Şefaat inancının genişletilmesi İslam'dan önceki dinlerden ve kültürel geleneklerden etkilenmiştir. Örneğin, Hıristiyanlıkta İsa'nın inananlar için Şefaat etmesi ya da pagan toplumlarda kutsal kişilerin aracı kabul edilmesi, benzer bir inanç yapısını yansıtır. İslam'a bu anlayış, hadisler ve tasavvufi yorumlarla sızmıştır. Özellikle şeyh ve alimlerin Şefaat edeceğine dair inanç, dinin monoteistik özünü zedeler ve Allah ile kul arasına aracı koyma eğilimini güçlendirir. <strong>Şura Suresi 46</strong>'da "Onların Allah'tan başka kendilerine yardım edecek dostları yoktur. Allah kimi saptırırsa, artık onun için bir yol yoktur" denilerek, Allah dışında kimsenin kurtarıcı olamayacağı vurgulanır. Bu ayet, şeyh ve alimlerin Şefaat yetkisi iddiasını açıkça reddeder.</p>
+                <p>Ek olarak, <strong>Ankebut Suresi 12</strong>'de "Kâfirler, iman edenlere dediler ki: 'Bizim yolumuza uyun, sizin günahlarınızı biz taşıyalım.' Oysa onlar, onların günahlarından hiçbir şey taşıyamazlar" denilerek, kimsenin bir başkasının günahını üstlenemeyeceği belirtilir. Eğer şeyh ve alimler Şefaat ederek müritlerini kurtarabilseydi, bu ayet böyle bir yetkiyi tanırdı; ancak Kuran, böyle bir yetkiyi yalnızca Allah'a verir. <strong>Nahl Suresi 116</strong>'da ise "Kendi dillerinizle, 'Bu helal, bu haram' diyerek Allah'a yalan uydurmayın" denilerek, dinde olmayan şeyleri eklemenin sakıncalı olduğu uyarısı yapılır. Şeyh ve alimlerin Şefaat yetkisi, bu bağlamda Kuran'a aykırı bir uydurmadır.</p>
+                <p>Sonuç olarak, Kuran'da Şefaat yalnızca Allah'a aittir ve ne peygamberler, ne şeyhler, ne de alimler kimseyi cehennemden kurtaramaz. Cenneti hak edenlerin durumu Allah'ın izniyle iyileşebilir, ancak bu, amellerin yerine geçmez ve insanlara böyle bir yetki verilmez. Geleneksel Şefaat inancı, özellikle şeyh ve alimlerin Şefaat edeceğine dair iddia, hadisler ve tasavvufi geleneklerle sonradan eklenmiş bir sapmadır ve İslam'ın özünde yer almaz. Kuran, inananları Şefaat umuduna değil, kendi amellerine ve Allah'la doğrudan bağa yöneltir. Şeyh ve alimlerin Şefaat yetkisi, Kuran'ın monoteistik ruhuna aykırı bir inançtır ve İslam'da hiçbir dayanağı yoktur.</p>
                 `,
-                    category: "kavram",
-                    image: "sefaat1.jpg"
-                }
-            ];
+                category: "kavram",
+                image: "sefaat1.jpg"
+            }
+        ];
 
-            // Performans için IntersectionObserver kullanımı
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
+        // Sayfa yüklenmeden önce tüm içeriği hazırla
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tüm makaleleri hemen yükle - kaydırma beklemeden
+            displayArticles(articlesData);
+            
+            // Görüntüleri önceden yükle
+            preloadImages();
+            
+            // Olay dinleyicileri
+            setupEventListeners();
+            
+            // Kayıtlı ayarları uygula
+            applyStoredSettings();
+        });
 
-            // Görünürlük kontrolü için IntersectionObserver
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
+        // Görüntüleri önceden yükle
+        function preloadImages() {
+            // Tüm makale görüntülerini önceden yükle
+            articlesData.forEach(article => {
+                const img = new Image();
+                img.src = article.image;
+                
+                // İçerik içindeki görüntüleri de önceden yükle
+                if (article.content) {
+                    // İçerikten img etiketlerini çıkar
+                    const imgRegex = /<img[^>]+src="([^">]+)"/g;
+                    let match;
+                    while (match = imgRegex.exec(article.content)) {
+                        const contentImg = new Image();
+                        contentImg.src = match[1];
                     }
-                });
-            }, observerOptions);
-
-            // Metin vurgulama fonksiyonu - daha verimli
-            function highlightText(text, searchTerm) {
-                if (!searchTerm || searchTerm.trim() === '') return text;
-                
-                // Türkçe karakter desteği için
-                const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-                    .replace(/[İI]/g, '[İIıi]');
-                
-                const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
-                return text.replace(regex, '<span class="highlight">$1</span>');
-            }
-
-            // DOM manipülasyonunu optimize eden fonksiyon
-            function createArticleElement(article, index, searchTerm = '') {
-                const articleDiv = document.createElement('div');
-                articleDiv.className = 'article-preview';
-                articleDiv.dataset.index = index;
-                
-                const isFavorite = JSON.parse(localStorage.getItem('favorites') || '[]')
-                    .some(f => f.title === article.title);
-                
-                // HTML içeriğini bir kerede oluştur
-                articleDiv.innerHTML = `
-                    <span class="category-tag category-${article.category}">${article.category.toUpperCase()}</span>
-                    <div class="image-container">
-                        <img src="${article.image}" class="cover" alt="Kapak Resmi" loading="lazy">
-                    </div>
-                    <div class="content">
-                        <h2>${searchTerm ? highlightText(article.title, searchTerm) : article.title}</h2>
-                        <div class="meta">
-                            <i class="fas fa-user"></i> ${article.author} 
-                            <i class="fas fa-calendar-alt"></i> ${article.date}
-                        </div>
-                        <p>${searchTerm ? highlightText(article.preview, searchTerm) : article.preview}</p>
-                        <div class="article-actions">
-                            <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-title="${article.title}">
-                                <i class="fas fa-star"></i>
-                                <span>${isFavorite ? 'Favorilerde' : 'Favori'}</span>
-                            </button>
-                            <button class="share-btn" data-title="${article.title}">
-                                <i class="fas fa-share-alt"></i>
-                                <span>Paylaş</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                // IntersectionObserver ile görünürlük takibi
-                observer.observe(articleDiv);
-                
-                return articleDiv;
-            }
-
-            // Makaleleri gösterme fonksiyonu - optimize edilmiş
-            function displayArticles(articles, searchTerm = '') {
-                const articlesDiv = document.getElementById('articles');
-                
-                // DOM manipülasyonlarını azaltmak için fragment kullanımı
-                const fragment = document.createDocumentFragment();
-                
-                // Önce içeriği temizle
-                articlesDiv.innerHTML = '';
-                
-                if (articles.length === 0) {
-                    const noResultsMsg = document.createElement('p');
-                    noResultsMsg.style.textAlign = 'center';
-                    noResultsMsg.style.margin = '30px 0';
-                    noResultsMsg.style.fontSize = '1.1rem';
-                    noResultsMsg.textContent = 'Sonuç bulunamadı.';
-                    articlesDiv.appendChild(noResultsMsg);
-                    return;
                 }
-                
-                // Makaleleri ekle
-                articles.forEach((article, index) => {
-                    const articleElement = createArticleElement(article, index, searchTerm);
+            });
+        }
+
+        // Makaleleri gösterme fonksiyonu - optimize edilmiş
+        function displayArticles(articles, searchTerm = '') {
+            const articlesDiv = document.getElementById('articles');
+            
+            // DOM manipülasyonlarını azaltmak için fragment kullanımı
+            const fragment = document.createDocumentFragment();
+            
+            // Önce içeriği temizle
+            articlesDiv.innerHTML = '';
+            
+            if (articles.length === 0) {
+                const noResultsMsg = document.createElement('p');
+                noResultsMsg.style.textAlign = 'center';
+                noResultsMsg.style.margin = '30px 0';
+                noResultsMsg.style.fontSize = '1.1rem';
+                noResultsMsg.textContent = 'Sonuç bulunamadı.';
+                articlesDiv.appendChild(noResultsMsg);
+                return;
+            }
+            
+            // Makaleleri ekle - hepsini bir kerede
+            articles.forEach((article, index) => {
+                const articleElement = createArticleElement(article, index, searchTerm);
+                fragment.appendChild(articleElement);
+            });
+            
+            // Tüm değişiklikleri bir kerede DOM'a ekle
+            articlesDiv.appendChild(fragment);
+        }
+
+        // DOM manipülasyonunu optimize eden fonksiyon
+        function createArticleElement(article, index, searchTerm = '') {
+            const articleDiv = document.createElement('div');
+            articleDiv.className = 'article-preview';
+            articleDiv.dataset.index = index;
+            
+            const isFavorite = JSON.parse(localStorage.getItem('favorites') || '[]')
+                .some(f => f.title === article.title);
+            
+            // HTML içeriğini bir kerede oluştur
+            articleDiv.innerHTML = `
+                <span class="category-tag category-${article.category}">${article.category.toUpperCase()}</span>
+                <div class="image-container">
+                    <img src="${article.image}" class="cover" alt="Kapak Resmi">
+                </div>
+                <div class="content">
+                    <h2>${searchTerm ? highlightText(article.title, searchTerm) : article.title}</h2>
+                    <div class="meta">
+                        <i class="fas fa-user"></i> ${article.author} 
+                        <i class="fas fa-calendar-alt"></i> ${article.date}
+                    </div>
+                    <p>${searchTerm ? highlightText(article.preview, searchTerm) : article.preview}</p>
+                    <div class="article-actions">
+                        <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-title="${article.title}">
+                            <i class="fas fa-star"></i>
+                            <span>${isFavorite ? 'Favorilerde' : 'Favori'}</span>
+                        </button>
+                        <button class="share-btn" data-title="${article.title}">
+                            <i class="fas fa-share-alt"></i>
+                            <span>Paylaş</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return articleDiv;
+        }
+
+        // Metin vurgulama fonksiyonu - daha verimli
+        function highlightText(text, searchTerm) {
+            if (!searchTerm || searchTerm.trim() === '') return text;
+            
+            // Türkçe karakter desteği için
+            const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+                .replace(/[İI]/g, '[İIıi]');
+            
+            const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Favorileri gösterme fonksiyonu - optimize edilmiş
+        function displayFavorites() {
+            const favoritesPanel = document.getElementById('favorites-panel');
+            const favoritesList = document.getElementById('favorites-list');
+            const articlesDiv = document.getElementById('articles');
+            const articleDetail = document.getElementById('article-detail');
+            
+            // Favorileri al ve filtrele
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            favorites = favorites.filter(fav => articlesData.some(article => article.title === fav.title));
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // DOM manipülasyonlarını azaltmak için fragment kullanımı
+            const fragment = document.createDocumentFragment();
+            
+            // Önce içeriği temizle
+            favoritesList.innerHTML = '';
+            
+            if (favorites.length === 0) {
+                const noFavoritesMsg = document.createElement('p');
+                noFavoritesMsg.style.textAlign = 'center';
+                noFavoritesMsg.style.margin = '30px 0';
+                noFavoritesMsg.style.fontSize = '1.1rem';
+                noFavoritesMsg.textContent = 'Henüz favori makale eklenmemiş.';
+                favoritesList.appendChild(noFavoritesMsg);
+            } else {
+                // Favorileri ekle
+                favorites.forEach((article, index) => {
+                    const articleElement = createArticleElement(article, index);
+                    
+                    // Favori butonunu kaldır ve yerine silme butonu ekle
+                    const actionDiv = articleElement.querySelector('.article-actions');
+                    actionDiv.innerHTML = `
+                        <button class="remove-from-favorites" data-title="${article.title}">
+                            <i class="fas fa-trash-alt"></i> Favorilerden Kaldır
+                        </button>
+                    `;
+                    
                     fragment.appendChild(articleElement);
                 });
                 
                 // Tüm değişiklikleri bir kerede DOM'a ekle
-                articlesDiv.appendChild(fragment);
+                favoritesList.appendChild(fragment);
             }
+            
+            // Panelleri göster/gizle
+            articlesDiv.style.display = 'none';
+            articleDetail.classList.remove('show');
+            favoritesPanel.classList.add('show');
+        }
 
-            // Favorileri gösterme fonksiyonu - optimize edilmiş
-            function displayFavorites() {
-                const favoritesPanel = document.getElementById('favorites-panel');
-                const favoritesList = document.getElementById('favorites-list');
-                const articlesDiv = document.getElementById('articles');
-                const articleDetail = document.getElementById('article-detail');
-                
-                // Favorileri al ve filtrele
-                let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-                favorites = favorites.filter(fav => articlesData.some(article => article.title === fav.title));
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                
-                // DOM manipülasyonlarını azaltmak için fragment kullanımı
-                const fragment = document.createDocumentFragment();
-                
-                // Önce içeriği temizle
-                favoritesList.innerHTML = '';
-                
-                if (favorites.length === 0) {
-                    const noFavoritesMsg = document.createElement('p');
-                    noFavoritesMsg.style.textAlign = 'center';
-                    noFavoritesMsg.style.margin = '30px 0';
-                    noFavoritesMsg.style.fontSize = '1.1rem';
-                    noFavoritesMsg.textContent = 'Henüz favori makale eklenmemiş.';
-                    favoritesList.appendChild(noFavoritesMsg);
-                } else {
-                    // Favorileri ekle
-                    favorites.forEach((article, index) => {
-                        const articleElement = createArticleElement(article, index);
-                        
-                        // Favori butonunu kaldır ve yerine silme butonu ekle
-                        const actionDiv = articleElement.querySelector('.article-actions');
-                        actionDiv.innerHTML = `
-                            <button class="remove-from-favorites" data-title="${article.title}">
-                                <i class="fas fa-trash-alt"></i> Favorilerden Kaldır
-                            </button>
-                        `;
-                        
-                        fragment.appendChild(articleElement);
-                    });
-                    
-                    // Tüm değişiklikleri bir kerede DOM'a ekle
-                    favoritesList.appendChild(fragment);
+        // Makale detayını gösterme fonksiyonu - optimize edilmiş
+        function showArticleDetail(article) {
+            const detail = document.getElementById('article-detail');
+            const detailImage = document.getElementById('detail-image');
+            const detailTitle = document.getElementById('detail-title');
+            const detailMeta = document.getElementById('detail-meta');
+            const detailContent = document.getElementById('detail-content');
+            
+            // DOM güncellemelerini minimize et
+            requestAnimationFrame(() => {
+                // Görüntüyü önce yükle
+                if (detailImage.src !== article.image) {
+                    detailImage.src = article.image;
                 }
                 
-                // Panelleri göster/gizle
-                articlesDiv.style.display = 'none';
-                articleDetail.classList.remove('show');
-                favoritesPanel.classList.add('show');
-            }
-
-            // Makale detayını gösterme fonksiyonu - optimize edilmiş
-            function showArticleDetail(article) {
-                const detail = document.getElementById('article-detail');
-                const detailImage = document.getElementById('detail-image');
-                const detailTitle = document.getElementById('detail-title');
-                const detailMeta = document.getElementById('detail-meta');
-                const detailContent = document.getElementById('detail-content');
+                detailTitle.textContent = article.title;
+                detailMeta.innerHTML = `
+                    <i class="fas fa-user"></i> ${article.author} 
+                    <i class="fas fa-calendar-alt"></i> ${article.date}
+                    <i class="fas fa-tag"></i> ${article.category.toUpperCase()}
+                `;
+                detailContent.innerHTML = article.content;
                 
-                // DOM güncellemelerini minimize et
-                requestAnimationFrame(() => {
-                    // Görüntüyü önce yükle
-                    if (detailImage.src !== article.image) {
-                        detailImage.src = article.image;
-                    }
-                    
-                    detailTitle.textContent = article.title;
-                    detailMeta.innerHTML = `
-                        <i class="fas fa-user"></i> ${article.author} 
-                        <i class="fas fa-calendar-alt"></i> ${article.date}
-                        <i class="fas fa-tag"></i> ${article.category.toUpperCase()}
-                    `;
-                    detailContent.innerHTML = article.content;
-                    
-                    // Paylaşım butonlarını ayarla
-                    const url = encodeURIComponent(window.location.href);
-                    const text = encodeURIComponent(`${article.title} - Sadece Kuran`);
-                    
-                    document.getElementById('whatsapp-share').onclick = () => 
-                        window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
-                    document.getElementById('twitter-share').onclick = () => 
-                        window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
-                    document.getElementById('facebook-share').onclick = () => 
-                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
-                    
-                    // Görünürlüğü değiştir
-                    detail.classList.add('show');
-                    document.getElementById('articles').style.display = 'none';
-                    document.getElementById('favorites-panel').classList.remove('show');
-                    
-                    // Kayıtlı font boyutunu uygula
-                    const savedFontSize = localStorage.getItem('fontSize');
-                    if (savedFontSize) {
-                        detailContent.style.fontSize = `${savedFontSize}px`;
-                    }
-                    
-                    // Sayfa başına kaydır - smooth scroll
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-
-            // Arama ve filtreleme fonksiyonu - optimize edilmiş
-            function searchAndFilterArticles(searchTerm, category) {
-                // Arama ve filtreleme işlemini web worker ile yap
-                if ('Worker' in window) {
-                    const workerCode = `
-                        self.onmessage = function(e) {
-                            const { articlesData, searchTerm, category } = e.data;
-                            let filteredArticles = [...articlesData];
-                            
-                            if (searchTerm && searchTerm.trim() !== '') {
-                                const searchTermLower = searchTerm.toLowerCase();
-                                filteredArticles = filteredArticles.filter(article => 
-                                    article.title.toLowerCase().includes(searchTermLower) || 
-                                    article.preview.toLowerCase().includes(searchTermLower)
-                                );
-                            }
-                            
-                            if (category && category.trim() !== '') {
-                                filteredArticles = filteredArticles.filter(article => 
-                                    article.category === category
-                                );
-                            }
-                            
-                            self.postMessage(filteredArticles);
-                        };
-                    `;
-                    
-                    const blob = new Blob([workerCode], { type: 'application/javascript' });
-                    const worker = new Worker(URL.createObjectURL(blob));
-                    
-                    worker.onmessage = function(e) {
-                        displayArticles(e.data, searchTerm);
-                        worker.terminate();
-                    };
-                    
-                    worker.postMessage({ articlesData, searchTerm, category });
-                } else {
-                    // Web worker desteklenmiyorsa normal arama yap
-                    let filteredArticles = [...articlesData];
-                    
-                    if (searchTerm && searchTerm.trim() !== '') {
-                        const searchTermLower = searchTerm.toLowerCase();
-                        filteredArticles = filteredArticles.filter(article => 
-                            article.title.toLowerCase().includes(searchTermLower) || 
-                            article.preview.toLowerCase().includes(searchTermLower)
-                        );
-                    }
-                    
-                    if (category && category.trim() !== '') {
-                        filteredArticles = filteredArticles.filter(article => 
-                            article.category === category
-                        );
-                    }
-                    
-                    displayArticles(filteredArticles, searchTerm);
-                }
-            }
-
-            // Favori ekleme/çıkarma fonksiyonu - optimize edilmiş
-            function toggleFavorite(title, button) {
-                let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-                const isFavorite = favorites.some(f => f.title === title);
+                // Paylaşım butonlarını ayarla
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent(`${article.title} - Sadece Kuran`);
                 
-                if (isFavorite) {
-                    favorites = favorites.filter(f => f.title !== title);
-                    button.classList.remove('active');
-                    button.querySelector('span').textContent = 'Favori';
-                } else {
-                    const articleToAdd = articlesData.find(a => a.title === title);
-                    if (articleToAdd) {
-                        favorites.push(articleToAdd);
-                        button.classList.add('active');
-                        button.querySelector('span').textContent = 'Favorilerde';
-                    }
+                document.getElementById('whatsapp-share').onclick = () => 
+                    window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
+                document.getElementById('twitter-share').onclick = () => 
+                    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+                document.getElementById('facebook-share').onclick = () => 
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+                
+                // Görünürlüğü değiştir
+                detail.classList.add('show');
+                document.getElementById('articles').style.display = 'none';
+                document.getElementById('favorites-panel').classList.remove('show');
+                
+                // Kayıtlı font boyutunu uygula
+                const savedFontSize = localStorage.getItem('fontSize');
+                if (savedFontSize) {
+                    detailContent.style.fontSize = `${savedFontSize}px`;
                 }
                 
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                
-                // Favoriler paneli açıksa güncelle
-                if (document.getElementById('favorites-panel').classList.contains('show')) {
-                    displayFavorites();
-                }
-            }
-
-            // Favorilerden çıkarma fonksiyonu - optimize edilmiş
-            function removeFromFavorites(title) {
-                let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-                favorites = favorites.filter(f => f.title !== title);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                
-                // Favoriler panelini güncelle
-                displayFavorites();
-                
-                // Favori butonlarını güncelle
-                document.querySelectorAll(`.favorite-btn[data-title="${title}"]`).forEach(button => {
-                    button.classList.remove('active');
-                    button.querySelector('span').textContent = 'Favori';
+                // Sayfa başına kaydır - smooth scroll
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
-            }
-
-            // Paylaşım fonksiyonu - optimize edilmiş
-            function shareArticle(title) {
-                const article = articlesData.find(a => a.title === title);
-                const text = `${article.title} - Sadece Kuran`;
-                
-                if (navigator.share) {
-                    navigator.share({ 
-                        title: article.title, 
-                        text, 
-                        url: window.location.href 
-                    }).catch(err => console.log('Paylaşım hatası:', err));
-                } else {
-                    navigator.clipboard.writeText(text)
-                        .then(() => {
-                            // Kopyalandı bildirimi - performans için optimize edilmiş
-                            const notification = document.createElement('div');
-                            Object.assign(notification.style, {
-                                position: 'fixed',
-                                bottom: '20px',
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                background: 'rgba(142, 142, 142, 0.9)',
-                                color: 'white',
-                                padding: '10px 20px',
-                                borderRadius: '5px',
-                                zIndex: '1000'
-                            });
-                            notification.textContent = 'Metin kopyalandı';
-                            document.body.appendChild(notification);
-                            
-                            // Bildirimi kaldır
-                            setTimeout(() => {
-                                notification.style.opacity = '0';
-                                notification.style.transition = 'opacity 0.5s ease';
-                                setTimeout(() => {
-                                    document.body.removeChild(notification);
-                                }, 500);
-                            }, 2000);
-                        })
-                        .catch(err => {
-                            console.error('Kopyalama hatası:', err);
-                            alert('Paylaşım desteklenmiyor, metni manuel kopyalayın: ' + text);
-                        });
-                }
-            }
-
-            // Debounce fonksiyonu - arama için
-            function debounce(func, wait) {
-                let timeout;
-                return function(...args) {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(this, args), wait);
-                };
-            }
-
-            // Sayfa yüklendiğinde çalışacak kod
-            document.addEventListener('DOMContentLoaded', () => {
-                // Olay dinleyicileri için referanslar
-                const menuIcon = document.querySelector('.menu-icon');
-                const sidebar = document.querySelector('.sidebar');
-                const closeMenu = document.querySelector('.close-menu');
-                const articleDetail = document.getElementById('article-detail');
-                const favoritesPanel = document.getElementById('favorites-panel');
-                const articlesDiv = document.getElementById('articles');
-                const closeArticle = document.getElementById('close-article');
-                const showFavoritesBtn = document.getElementById('show-favorites');
-                const settingsLink = document.getElementById('settings-link');
-                const settingsPanel = document.getElementById('settings-panel');
-                const closeSettings = document.getElementById('close-settings');
-                const fontSizeInput = document.getElementById('font-size');
-                const fontSizeValue = document.getElementById('font-size-value');
-                const fontFamilySelect = document.getElementById('font-family');
-                const settingsOverlay = document.getElementById('settings-overlay');
-                const backToArticles = document.getElementById('back-to-articles');
-                const categoryFilter = document.getElementById('category-filter');
-                const searchInput = document.getElementById('search');
-                const themeToggle = document.getElementById('theme-toggle');
-
-                // Menü açma/kapama
-                menuIcon.addEventListener('click', e => {
-                    e.stopPropagation();
-                    sidebar.classList.toggle('show');
-                });
-
-                closeMenu.addEventListener('click', () => {
-                    sidebar.classList.remove('show');
-                });
-
-                // Dışarı tıklandığında menüyü kapat - event delegation
-                document.addEventListener('click', e => {
-                    if (!sidebar.contains(e.target) && !menuIcon.contains(e.target)) {
-                        sidebar.classList.remove('show');
-                    }
-                });
-
-                // Makale detayını kapat
-                closeArticle.addEventListener('click', () => {
-                    articleDetail.classList.remove('show');
-                    articlesDiv.style.display = 'grid';
-                });
-
-                // Favorileri göster
-                showFavoritesBtn.addEventListener('click', () => {
-                    displayFavorites();
-                });
-
-                // Makalelere dön
-                backToArticles.addEventListener('click', () => {
-                    favoritesPanel.classList.remove('show');
-                    articlesDiv.style.display = 'grid';
-                });
-
-                // Arama için debounce uygula
-                const debouncedSearch = debounce(() => {
-                    searchAndFilterArticles(
-                        searchInput.value.trim(),
-                        categoryFilter.value
-                    );
-                }, 300);
-
-                searchInput.addEventListener('input', debouncedSearch);
-                categoryFilter.addEventListener('change', debouncedSearch);
-
-                // Event delegation ile tıklama olaylarını yönet
-                document.addEventListener('click', e => {
-                    // Makale önizleme tıklaması
-                    const articlePreview = e.target.closest('.article-preview');
-                    if (articlePreview && !e.target.closest('button')) {
-                        const title = articlePreview.querySelector('h2').textContent.replace(/<[^>]*>/g, ''); // HTML etiketlerini temizle
-                        const article = articlesData.find(a => a.title === title);
-                        if (article) {
-                            showArticleDetail(article);
-                        }
-                        return;
-                    }
-                    
-                    // Favori butonu tıklaması
-                    const favoriteBtn = e.target.closest('.favorite-btn');
-                    if (favoriteBtn) {
-                        toggleFavorite(favoriteBtn.dataset.title, favoriteBtn);
-                        e.stopPropagation();
-                        return;
-                    }
-                    
-                    // Paylaş butonu tıklaması
-                    const shareBtn = e.target.closest('.share-btn');
-                    if (shareBtn) {
-                        shareArticle(shareBtn.dataset.title);
-                        e.stopPropagation();
-                        return;
-                    }
-                    
-                    // Favorilerden kaldır butonu tıklaması
-                    const removeFromFavoritesBtn = e.target.closest('.remove-from-favorites');
-                    if (removeFromFavoritesBtn) {
-                        removeFromFavorites(removeFromFavoritesBtn.dataset.title);
-                        e.stopPropagation();
-                        return;
-                    }
-                });
-
-                // İlk yüklemede makaleleri göster
-                displayArticles(articlesData);
-
-                // Tema değiştirme
-                function toggleTheme() {
-                    document.body.classList.toggle('day-mode');
-                    localStorage.setItem('theme', document.body.classList.contains('day-mode') ? 'day' : 'night');
-                    
-                    const themeIcon = themeToggle.querySelector('i');
-                    themeIcon.className = document.body.classList.contains('day-mode') ? 'fas fa-sun' : 'fas fa-moon';
-                }
-
-                themeToggle.addEventListener('click', toggleTheme);
-                
-                // Kayıtlı temayı uygula
-                if (localStorage.getItem('theme') === 'day') {
-                    document.body.classList.add('day-mode');
-                    themeToggle.querySelector('i').className = 'fas fa-sun';
-                }
-
-                // Ayarlar paneli
-                settingsLink.addEventListener('click', e => {
-                    e.preventDefault();
-                    settingsPanel.classList.add('show');
-                    settingsOverlay.classList.add('show');
-                    sidebar.classList.remove('show');
-                });
-
-                closeSettings.addEventListener('click', () => {
-                    settingsPanel.classList.remove('show');
-                    settingsOverlay.classList.remove('show');
-                });
-                
-                settingsOverlay.addEventListener('click', () => {
-                    settingsPanel.classList.remove('show');
-                    settingsOverlay.classList.remove('show');
-                });
-
-                // Font boyutu ayarı
-                fontSizeInput.addEventListener('input', () => {
-                    const size = fontSizeInput.value;
-                    fontSizeValue.textContent = `${size}px`;
-                    
-                    // Performans için throttle
-                    requestAnimationFrame(() => {
-                        document.querySelector('#article-detail .content').style.fontSize = `${size}px`;
-                        localStorage.setItem('fontSize', size);
-                    });
-                });
-
-                // Font ailesi ayarı
-                fontFamilySelect.addEventListener('change', () => {
-                    const font = fontFamilySelect.value;
-                    
-                    // Performans için throttle
-                    requestAnimationFrame(() => {
-                        document.body.style.fontFamily = font;
-                        document.querySelector('#article-detail .content').style.fontFamily = font;
-                        localStorage.setItem('fontFamily', font);
-                    });
-                });
-
-                // Kayıtlı ayarları uygula
-                const savedFontSize = localStorage.getItem('fontSize') || '16';
-                const savedFontFamily = localStorage.getItem('fontFamily') || 'Poppins';
-                
-                fontSizeInput.value = savedFontSize;
-                fontSizeValue.textContent = `${savedFontSize}px`;
-                document.body.style.fontSize = `${savedFontSize}px`;
-                
-                fontFamilySelect.value = savedFontFamily;
-                document.body.style.fontFamily = savedFontFamily;
-                
-                // Pasif olay dinleyicileri - performans için
-                window.addEventListener('scroll', () => {
-                    // Boş bırak - IntersectionObserver kullanıldığı için
-                }, { passive: true });
-                
-                window.addEventListener('touchstart', () => {
-                    // Boş bırak - dokunmatik olaylar için
-                }, { passive: true });
-                
-                window.addEventListener('touchmove', () => {
-                    // Boş bırak - dokunmatik olaylar için
-                }, { passive: true });
             });
-        </script>
-    </body>
+        }
+
+        // Arama ve filtreleme fonksiyonu - optimize edilmiş
+        function searchAndFilterArticles(searchTerm, category) {
+            // Arama ve filtreleme işlemini web worker ile yap
+            if ('Worker' in window) {
+                const workerCode = `
+                    self.onmessage = function(e) {
+                        const { articlesData, searchTerm, category } = e.data;
+                        let filteredArticles = [...articlesData];
+                        
+                        if (searchTerm && searchTerm.trim() !== '') {
+                            const searchTermLower = searchTerm.toLowerCase();
+                            filteredArticles = filteredArticles.filter(article => 
+                                article.title.toLowerCase().includes(searchTermLower) || 
+                                article.preview.toLowerCase().includes(searchTermLower)
+                            );
+                        }
+                        
+                        if (category && category.trim() !== '') {
+                            filteredArticles = filteredArticles.filter(article => 
+                                article.category === category
+                            );
+                        }
+                        
+                        self.postMessage(filteredArticles);
+                    };
+                `;
+                
+                const blob = new Blob([workerCode], { type: 'application/javascript' });
+                const worker = new Worker(URL.createObjectURL(blob));
+                
+                worker.onmessage = function(e) {
+                    displayArticles(e.data, searchTerm);
+                    worker.terminate();
+                };
+                
+                worker.postMessage({ articlesData, searchTerm, category });
+            } else {
+                // Web worker desteklenmiyorsa normal arama yap
+                let filteredArticles = [...articlesData];
+                
+                if (searchTerm && searchTerm.trim() !== '') {
+                    const searchTermLower = searchTerm.toLowerCase();
+                    filteredArticles = filteredArticles.filter(article => 
+                        article.title.toLowerCase().includes(searchTermLower) || 
+                        article.preview.toLowerCase().includes(searchTermLower)
+                    );
+                }
+                
+                if (category && category.trim() !== '') {
+                    filteredArticles = filteredArticles.filter(article => 
+                        article.category === category
+                    );
+                }
+                
+                displayArticles(filteredArticles, searchTerm);
+            }
+        }
+
+        // Favori ekleme/çıkarma fonksiyonu - optimize edilmiş
+        function toggleFavorite(title, button) {
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const isFavorite = favorites.some(f => f.title === title);
+            
+            if (isFavorite) {
+                favorites = favorites.filter(f => f.title !== title);
+                button.classList.remove('active');
+                button.querySelector('span').textContent = 'Favori';
+            } else {
+                const articleToAdd = articlesData.find(a => a.title === title);
+                if (articleToAdd) {
+                    favorites.push(articleToAdd);
+                    button.classList.add('active');
+                    button.querySelector('span').textContent = 'Favorilerde';
+                }
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // Favoriler paneli açıksa güncelle
+            if (document.getElementById('favorites-panel').classList.contains('show')) {
+                displayFavorites();
+            }
+        }
+
+        // Favorilerden çıkarma fonksiyonu - optimize edilmiş
+        function removeFromFavorites(title) {
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            favorites = favorites.filter(f => f.title !== title);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // Favoriler panelini güncelle
+            displayFavorites();
+            
+            // Favori butonlarını güncelle
+            document.querySelectorAll(`.favorite-btn[data-title="${title}"]`).forEach(button => {
+                button.classList.remove('active');
+                button.querySelector('span').textContent = 'Favori';
+            });
+        }
+
+        // Paylaşım fonksiyonu - optimize edilmiş
+        function shareArticle(title) {
+            const article = articlesData.find(a => a.title === title);
+            const text = `${article.title} - Sadece Kuran`;
+            
+            if (navigator.share) {
+                navigator.share({ 
+                    title: article.title, 
+                    text, 
+                    url: window.location.href 
+                }).catch(err => console.log('Paylaşım hatası:', err));
+            } else {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        // Kopyalandı bildirimi - performans için optimize edilmiş
+                        const notification = document.createElement('div');
+                        Object.assign(notification.style, {
+                            position: 'fixed',
+                            bottom: '20px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            background: 'rgba(142, 142, 142, 0.9)',
+                            color: 'white',
+                            padding: '10px 20px',
+                            borderRadius: '5px',
+                            zIndex: '1000'
+                        });
+                        notification.textContent = 'Metin kopyalandı';
+                        document.body.appendChild(notification);
+                        
+                        // Bildirimi kaldır
+                        setTimeout(() => {
+                            notification.style.opacity = '0';
+                            notification.style.transition = 'opacity 0.5s ease';
+                            setTimeout(() => {
+                                document.body.removeChild(notification);
+                            }, 500);
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Kopyalama hatası:', err);
+                        alert('Paylaşım desteklenmiyor, metni manuel kopyalayın: ' + text);
+                    });
+            }
+        }
+
+        // Debounce fonksiyonu - arama için
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        // Olay dinleyicileri kurulumu
+        function setupEventListeners() {
+            // Olay dinleyicileri için referanslar
+            const menuIcon = document.querySelector('.menu-icon');
+            const sidebar = document.querySelector('.sidebar');
+            const closeMenu = document.querySelector('.close-menu');
+            const articleDetail = document.getElementById('article-detail');
+            const favoritesPanel = document.getElementById('favorites-panel');
+            const articlesDiv = document.getElementById('articles');
+            const closeArticle = document.getElementById('close-article');
+            const showFavoritesBtn = document.getElementById('show-favorites');
+            const settingsLink = document.getElementById('settings-link');
+            const settingsPanel = document.getElementById('settings-panel');
+            const closeSettings = document.getElementById('close-settings');
+            const fontSizeInput = document.getElementById('font-size');
+            const fontSizeValue = document.getElementById('font-size-value');
+            const fontFamilySelect = document.getElementById('font-family');
+            const settingsOverlay = document.getElementById('settings-overlay');
+            const backToArticles = document.getElementById('back-to-articles');
+            const categoryFilter = document.getElementById('category-filter');
+            const searchInput = document.getElementById('search');
+            const themeToggle = document.getElementById('theme-toggle');
+
+            // Menü açma/kapama
+            menuIcon.addEventListener('click', e => {
+                e.stopPropagation();
+                sidebar.classList.toggle('show');
+            });
+
+            closeMenu.addEventListener('click', () => {
+                sidebar.classList.remove('show');
+            });
+
+            // Dışarı tıklandığında menüyü kapat - event delegation
+            document.addEventListener('click', e => {
+                if (!sidebar.contains(e.target) && !menuIcon.contains(e.target)) {
+                    sidebar.classList.remove('show');
+                }
+            });
+
+            // Makale detayını kapat
+            closeArticle.addEventListener('click', () => {
+                articleDetail.classList.remove('show');
+                articlesDiv.style.display = 'grid';
+            });
+
+            // Favorileri göster
+            showFavoritesBtn.addEventListener('click', () => {
+                displayFavorites();
+            });
+
+            // Makalelere dön
+            backToArticles.addEventListener('click', () => {
+                favoritesPanel.classList.remove('show');
+                articlesDiv.style.display = 'grid';
+            });
+
+            // Arama için debounce uygula
+            const debouncedSearch = debounce(() => {
+                searchAndFilterArticles(
+                    searchInput.value.trim(),
+                    categoryFilter.value
+                );
+            }, 300);
+
+            searchInput.addEventListener('input', debouncedSearch);
+            categoryFilter.addEventListener('change', debouncedSearch);
+
+            // Event delegation ile tıklama olaylarını yönet
+            document.addEventListener('click', e => {
+                // Makale önizleme tıklaması
+                const articlePreview = e.target.closest('.article-preview');
+                if (articlePreview && !e.target.closest('button')) {
+                    const title = articlePreview.querySelector('h2').textContent.replace(/<[^>]*>/g, ''); // HTML etiketlerini temizle
+                    const article = articlesData.find(a => a.title === title);
+                    if (article) {
+                        showArticleDetail(article);
+                    }
+                    return;
+                }
+                
+                // Favori butonu tıklaması
+                const favoriteBtn = e.target.closest('.favorite-btn');
+                if (favoriteBtn) {
+                    toggleFavorite(favoriteBtn.dataset.title, favoriteBtn);
+                    e.stopPropagation();
+                    return;
+                }
+                
+                // Paylaş butonu tıklaması
+                const shareBtn = e.target.closest('.share-btn');
+                if (shareBtn) {
+                    shareArticle(shareBtn.dataset.title);
+                    e.stopPropagation();
+                    return;
+                }
+                
+                // Favorilerden kaldır butonu tıklaması
+                const removeFromFavoritesBtn = e.target.closest('.remove-from-favorites');
+                if (removeFromFavoritesBtn) {
+                    removeFromFavorites(removeFromFavoritesBtn.dataset.title);
+                    e.stopPropagation();
+                    return;
+                }
+            });
+
+            // Tema değiştirme
+            function toggleTheme() {
+                document.body.classList.toggle('day-mode');
+                localStorage.setItem('theme', document.body.classList.contains('day-mode') ? 'day' : 'night');
+                
+                const themeIcon = themeToggle.querySelector('i');
+                themeIcon.className = document.body.classList.contains('day-mode') ? 'fas fa-sun' : 'fas fa-moon';
+            }
+
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Ayarlar paneli
+            settingsLink.addEventListener('click', e => {
+                e.preventDefault();
+                settingsPanel.classList.add('show');
+                settingsOverlay.classList.add('show');
+                sidebar.classList.remove('show');
+            });
+
+            closeSettings.addEventListener('click', () => {
+                settingsPanel.classList.remove('show');
+                settingsOverlay.classList.remove('show');
+            });
+            
+            settingsOverlay.addEventListener('click', () => {
+                settingsPanel.classList.remove('show');
+                settingsOverlay.classList.remove('show');
+            });
+
+            // Font boyutu ayarı
+            fontSizeInput.addEventListener('input', () => {
+                const size = fontSizeInput.value;
+                fontSizeValue.textContent = `${size}px`;
+                
+                // Performans için throttle
+                requestAnimationFrame(() => {
+                    document.querySelector('#article-detail .content').style.fontSize = `${size}px`;
+                    localStorage.setItem('fontSize', size);
+                });
+            });
+
+            // Font ailesi ayarı
+            fontFamilySelect.addEventListener('change', () => {
+                const font = fontFamilySelect.value;
+                
+                // Performans için throttle
+                requestAnimationFrame(() => {
+                    document.body.style.fontFamily = font;
+                    document.querySelector('#article-detail .content').style.fontFamily = font;
+                    localStorage.setItem('fontFamily', font);
+                });
+            });
+            
+            // Pasif olay dinleyicileri - performans için
+            window.addEventListener('scroll', () => {}, { passive: true });
+            window.addEventListener('touchstart', () => {}, { passive: true });
+            window.addEventListener('touchmove', () => {}, { passive: true });
+        }
+
+        // Kayıtlı ayarları uygula
+        function applyStoredSettings() {
+            // Kayıtlı temayı uygula
+            if (localStorage.getItem('theme') === 'day') {
+                document.body.classList.add('day-mode');
+                document.querySelector('#theme-toggle i').className = 'fas fa-sun';
+            }
+            
+            // Kayıtlı font boyutunu uygula
+            const savedFontSize = localStorage.getItem('fontSize') || '16';
+            const fontSizeInput = document.getElementById('font-size');
+            const fontSizeValue = document.getElementById('font-size-value');
+            
+            fontSizeInput.value = savedFontSize;
+            fontSizeValue.textContent = `${savedFontSize}px`;
+            
+            // Kayıtlı font ailesini uygula
+            const savedFontFamily = localStorage.getItem('fontFamily') || 'Poppins';
+            const fontFamilySelect = document.getElementById('font-family');
+            
+            fontFamilySelect.value = savedFontFamily;
+            document.body.style.fontFamily = savedFontFamily;
+        }
+    </script>
+</body>
 </html>
