@@ -40,23 +40,22 @@
             
             body {
                 font-family: 'Poppins', sans-serif;
-                background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark), var(--accent-dark));
-                background-size: 400% 400%;
-                animation: gradientBG 15s ease infinite;
+                background-color: var(--primary-dark);
                 color: var(--text-dark);
                 line-height: 1.6;
                 display: flex;
                 flex-direction: column;
                 min-height: 100vh;
-                transition: background 0.5s var(--transition-function), color 0.3s var(--transition-function);
+                transition: background-color 0.3s var(--transition-function), color 0.3s var(--transition-function);
                 scrollbar-width: thin;
                 scrollbar-color: var(--accent-dark) var(--primary-dark);
                 overflow-x: hidden;
-                will-change: background-color, color;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
             
             body.day-mode {
-                background: linear-gradient(135deg, var(--primary-light), var(--secondary-light), var(--accent-light));
+                background-color: var(--primary-light);
                 color: var(--text-light);
                 scrollbar-color: var(--accent-light) var(--primary-light);
             }
@@ -82,47 +81,6 @@
                 background-color: var(--accent-light);
             }
             
-            #splash-screen {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark), var(--accent-dark));
-                background-size: 400% 400%;
-                animation: gradientBG 15s ease infinite;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                z-index: 1000;
-                transition: opacity 0.8s ease, visibility 0.8s ease;
-            }
-            
-            #splash-screen.hide {
-                opacity: 0;
-                visibility: hidden;
-            }
-            
-            #splash-screen img {
-                width: 120px;
-                animation: pulseLogo 2s infinite alternate;
-                filter: drop-shadow(0 0 10px rgba(142, 142, 142, 0.5));
-                margin-bottom: 20px;
-                will-change: transform, filter;
-            }
-            
-            #splash-screen span {
-                font-size: 1rem;
-                letter-spacing: 3px;
-                color: var(--text-dark);
-                font-weight: 500;
-                opacity: 0;
-                transform: translateY(20px);
-                animation: fadeInText 1s ease-out forwards 0.5s;
-                text-shadow: 0 0 10px rgba(142, 142, 142, 0.5);
-            }
-            
             header {
                 background: rgba(30, 30, 36, 0.8);
                 backdrop-filter: blur(10px);
@@ -136,7 +94,7 @@
                 justify-content: space-between;
                 align-items: center;
                 transition: background 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function);
-                will-change: background, box-shadow;
+                will-change: transform;
             }
             
             body.day-mode header {
@@ -154,7 +112,6 @@
                 text-align: center;
                 transition: color 0.3s var(--transition-function), transform 0.3s var(--transition-function);
                 transform: translateY(0);
-                will-change: transform, color;
             }
             
             header h1:hover {
@@ -180,7 +137,7 @@
                 width: 40px;
                 height: 40px;
                 background: rgba(255, 255, 255, 0.1);
-                will-change: transform, background;
+                will-change: transform;
             }
             
             .menu-icon:hover {
@@ -207,12 +164,13 @@
                 backdrop-filter: blur(15px);
                 -webkit-backdrop-filter: blur(15px);
                 padding: 80px 20px 20px;
-                transition: all 0.4s var(--transition-function);
+                transition: transform 0.4s var(--transition-function);
                 z-index: 90;
                 box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
                 overflow-y: auto;
                 border-right: 1px solid rgba(255, 255, 255, 0.1);
                 will-change: transform;
+                transform: translateX(-300px);
             }
             
             body.day-mode .sidebar {
@@ -222,7 +180,7 @@
             }
             
             .sidebar.show {
-                left: 0;
+                transform: translateX(300px);
             }
             
             .sidebar ul {
@@ -264,7 +222,7 @@
                 border-radius: 12px;
                 transition: all var(--transition-speed) var(--transition-function);
                 background: rgba(255, 255, 255, 0.05);
-                will-change: transform, background;
+                will-change: transform;
             }
             
             body.day-mode .sidebar ul li a {
@@ -307,7 +265,7 @@
                 height: 40px;
                 border-radius: 50%;
                 background: rgba(255, 255, 255, 0.1);
-                will-change: transform, background;
+                will-change: transform;
             }
             
             .close-menu:hover {
@@ -352,7 +310,7 @@
                 gap: 15px;
                 transform: translateY(0);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                will-change: transform, box-shadow;
+                will-change: transform;
             }
             
             #controls:hover {
@@ -458,7 +416,7 @@
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
-                will-change: transform, background, box-shadow;
+                will-change: transform;
             }
             
             #show-favorites i {
@@ -507,17 +465,21 @@
                 cursor: pointer;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
                 transition: transform 0.3s var(--transition-function), box-shadow 0.3s var(--transition-function), background 0.3s var(--transition-function);
-                opacity: 0;
-                transform: translateY(30px);
-                animation: fadeInUp 0.6s var(--transition-function) forwards;
-                animation-delay: calc(0.05s * var(--index));
                 position: relative;
                 overflow: hidden;
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 display: flex;
                 flex-direction: column;
-                will-change: transform, opacity;
+                will-change: transform;
                 contain: layout style;
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            
+            .article-preview.visible {
+                opacity: 1;
+                transform: translateY(0);
+                transition: opacity 0.6s var(--transition-function), transform 0.6s var(--transition-function);
             }
             
             body.day-mode .article-preview {
@@ -548,7 +510,7 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                transition: all 0.5s var(--transition-function);
+                transition: transform 0.5s var(--transition-function);
                 will-change: transform;
             }
             
@@ -568,7 +530,7 @@
                 font-weight: 600;
                 color: var(--text-dark);
                 margin-bottom: 10px;
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: color var(--transition-speed) var(--transition-function);
                 line-height: 1.3;
             }
             
@@ -620,7 +582,7 @@
                 font-weight: 500;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
                 z-index: 2;
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: transform var(--transition-speed) var(--transition-function), box-shadow var(--transition-speed) var(--transition-function);
             }
             
             .article-preview:hover .category-tag {
@@ -672,7 +634,7 @@
                 gap: 5px;
                 padding: 8px 12px;
                 border-radius: 8px;
-                will-change: transform, background;
+                will-change: transform;
             }
             
             body.day-mode .article-actions button {
@@ -710,7 +672,7 @@
                 border-radius: 20px;
                 display: none;
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: opacity var(--transition-speed) var(--transition-function);
                 z-index: 5;
                 position: relative;
                 border: 1px solid rgba(255, 255, 255, 0.1);
@@ -748,7 +710,7 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                transition: all 0.5s var(--transition-function);
+                transition: transform 0.5s var(--transition-function);
             }
             
             #article-detail h2 {
@@ -804,7 +766,7 @@
                 margin: 25px auto;
                 display: block;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: all var(--transition-speed) var(--transition-function);
+                transition: transform var(--transition-speed) var(--transition-function), box-shadow var(--transition-speed) var(--transition-function);
             }
             
             body.day-mode #article-detail .content img {
@@ -840,7 +802,7 @@
                 left: 20px;
                 width: 40px;
                 height: 40px;
-                background: rgba(255, 255, 255, 0.55);
+                background: rgba(255, 255, 255, 0.1);
                 border: none;
                 border-radius: 50%;
                 color: var(--text-dark);
@@ -851,7 +813,7 @@
                 justify-content: center;
                 transition: all var(--transition-speed) var(--transition-function);
                 z-index: 10;
-                will-change: transform, background, color;
+                will-change: transform;
             }
             
             body.day-mode #close-article {
@@ -932,7 +894,7 @@
                 gap: 10px;
                 font-weight: 500;
                 font-family: 'Poppins', sans-serif;
-                will-change: transform, background, box-shadow;
+                will-change: transform;
             }
             
             body.day-mode #back-to-articles {
@@ -965,7 +927,7 @@
                 margin-top: 10px;
                 font-weight: 500;
                 font-family: 'Poppins', sans-serif;
-                will-change: transform, background, box-shadow;
+                will-change: transform;
             }
             
             .remove-from-favorites:hover {
@@ -995,7 +957,7 @@
                 gap: 8px;
                 font-weight: 500;
                 font-family: 'Poppins', sans-serif;
-                will-change: transform, background, box-shadow;
+                will-change: transform;
             }
             
             .whatsapp-btn {
@@ -1050,7 +1012,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                will-change: transform, background;
+                will-change: transform;
             }
             
             body.day-mode #theme-toggle {
@@ -1245,7 +1207,7 @@
                 align-items: center;
                 justify-content: center;
                 transition: all var(--transition-speed) var(--transition-function);
-                will-change: transform, background, color;
+                will-change: transform;
             }
             
             body.day-mode #close-settings {
@@ -1379,17 +1341,6 @@
                 }
             }
             
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
             @keyframes fadeInScale {
                 from {
                     opacity: 0;
@@ -1398,18 +1349,6 @@
                 to {
                     opacity: 1;
                     transform: scale(1);
-                }
-            }
-            
-            @keyframes gradientBG {
-                0% {
-                    background-position: 0% 50%;
-                }
-                50% {
-                    background-position: 100% 50%;
-                }
-                100% {
-                    background-position: 0% 50%;
                 }
             }
         </style>
@@ -1456,7 +1395,7 @@
             <div id="article-detail">
                 <button id="close-article"><i class="fas fa-arrow-left"></i></button>
                 <div class="image-container">
-                    <img id="detail-image" class="cover" src="kader2.jpg" alt="Kapak Resmi" />
+                    <img id="detail-image" class="cover" src="kader2.jpg" alt="Kapak Resmi" loading="lazy" />
                 </div>
                 <h2 id="detail-title"></h2>
                 <div id="detail-meta" class="meta"></div>
@@ -1592,7 +1531,7 @@
                     content: `
                     <p>Şefaat, İslam'da kıyamet günü birinin başka biri adına Allah'a yalvararak onun bağışlanmasını veya durumunun iyileştirilmesini istemesi olarak tanımlanır. Geleneksel İslam anlayışında, yalnızca Hz. Muhammed ve diğer peygamberler değil, aynı zamanda şeyhler, alimler ve kutsal addedilen kişiler de inananlar adına Şefaat edebileceği inancı yaygındır. Bu kişiler, cehennemden kurtarıcı ya da cennete geçişi kolaylaştırıcı birer aracı olarak görülür. Ancak, Kuran'a baktığımızda, Şefaat'in yalnızca Allah'a ait olduğunu, kimsenin -ne peygamberlerin ne de şeyh ve alimlerin- cehennemden kurtaramayacağını ve ancak cenneti hak edenlerin durumunun Allah'ın izniyle iyileşebileceğini görüyoruz. Bu makalede, Şefaat kavramını Kuran ayetleriyle inceleyerek, özellikle şeyh ve alimlerin Şefaat yetkisinin İslam'da olmadığını detaylı bir şekilde delillendireceğiz.</p>
                     <p>Kuran'da Şefaat'in genel olarak mümkün olmadığı açıkça belirtilir. <strong>Bakara Suresi 48</strong>'de şöyle buyrulur: "Ve korkun o günden ki, bir kimse kendi nefsine yeterli olmaz, ondan hiçbir fidye kabul edilmeyecek, hiçbir Şefaat onun lehine kabul edilmeyecek ve onlar yardıma kavuşamazlar." Bu ayet, kıyamet günü herkesin kendi amelleriyle yargılanacağını ve Şefaat'in -kimden gelirse gelsin- kimseyi kurtaramayacağını vurgular. Benzer şekilde, <strong>Bakara Suresi 254</strong>'te "O gün ticaret yok, dostluk yok, Şefaat yok" denilerek, Şefaat'in geçersizliği tekrarlanır. Bu ayetler, Şefaat'in şeyhler ya da alimler gibi kişilerce yapılabileceğine dair herhangi bir kapı bırakmaz.</p>
-                    <img src="sefaat2.png" alt="Şefaat İnancının Kültürel Kökenleri">
+                    <img src="sefaat2.png" alt="Şefaat İnancının Kültürel Kökenleri" loading="lazy">
                     <p>Bununla birlikte, Kuran'da Şefaat'in Allah'ın izniyle sınırlı bir şekilde gerçekleşebileceğine dair ayetler de bulunur. <strong>Necm Suresi 26</strong>'da şöyle denir: "Göklerde nice melekler var ki, onların Şefaatı hiçbir fayda vermez; ancak Allah dilediğine ve razı olduktan sonra izin verdiği zaman." Ayrıca, <strong>Zümer Suresi 44</strong>'te "Şefaat, hepsi Allah'ındır. Göklerin ve yerin hükümdarlığı O'nundur" buyrularak, Şefaat yetkisinin yalnızca Allah'a ait olduğu açıkça ifade edilir. Bu ayetler, Şefaat'in peygamberler dâhil herhangi bir insan tarafından değil, yalnızca Allah'ın izniyle ve O'nun belirlediği çerçevede gerçekleşebileceğini gösterir. Şeyh ve alimlerin Şefaat yetkisi ise bu ayetlerde tamamen dışlanır, çünkü Kuran'da böyle bir yetki insanlara değil, sadece Allah'a atfedilir.</p>
                     <p>Geleneksel İslamcılar, Şefaat'in Hz. Muhammed tarafından yapılacağını hadislere dayandırırken, bu yetkiyi zamanla şeyh ve alimlere de genişletmiştir. Özellikle tarikat ve cemaat yapılarında, şeyhlerin veya önde gelen alimlerin müritlerini cennete götüreceği, günahlarını affettireceği ya da cehennemden kurtaracağı inancı kökleşmiştir. Ancak Kuran, bu  günahlarını affettireceği ya da cehennemden kurtaracağı inancı kökleşmiştir. Ancak Kuran, bu tür bir inancın İslam'ın özüne aykırı olduğunu net bir şekilde ortaya koyar. <strong>Yunus Suresi 18</strong>'de "Allah'ı bırakıp, kendilerine ne zarar ne de fayda verebilecek şeylere tapıyorlar ve 'Bunlar Allah katında bizim Şefaatçilerimizdir' diyorlar. De ki: 'Allah'a, göklerde ve yerde bilmediği bir şeyi mi haber veriyorsunuz?'" denilerek, Allah dışında Şefaatçi kabul etmenin şirk olduğu vurgulanır. Şeyh ve alimlerin Şefaat yetkisine sahip olduğu iddiası, bu ayete göre açıkça bir sapmadır.</p>
                     <p>Kuran, İslam'ın tamamlanmış bir din olduğunu bildirir ve ek aracılara ihtiyaç olmadığını ifade eder. <strong>Maide Suresi 3</strong>'te "Bugün size dininizi tamamladım, size nimetimi tamamladım ve size İslam'ı din olarak beğendim" denilerek, Kuran'ın yeterli olduğu vurgulanır. Ayrıca, <strong>A'raf Suresi 53</strong>'te "Şefaat edenler var mı ki bizim için Şefaat etsinler?" diye soranların çaresizliği anlatılır ve bu, Şefaat'in kurtarıcı bir güç olmadığına işaret eder. Eğer şeyh ve alimlerin Şefaat yetkisi olsaydı, Kuran'da bu açıkça belirtilirdi; oysa Kuran, böyle bir yetkiyi yalnızca Allah'a verir ve insanlara herhangi bir aracı rol tanımaz.</p>
@@ -1606,341 +1545,341 @@
                 }
             ];
 
+            // Performans için IntersectionObserver kullanımı
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            // Görünürlük kontrolü için IntersectionObserver
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Metin vurgulama fonksiyonu - daha verimli
             function highlightText(text, searchTerm) {
-                if (!searchTerm) return text;
-                const regex = new RegExp(`(${searchTerm.replace(/[İI]/g, "[İIıi]")})`, "gi");
+                if (!searchTerm || searchTerm.trim() === '') return text;
+                
+                // Türkçe karakter desteği için
+                const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+                    .replace(/[İI]/g, '[İIıi]');
+                
+                const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
                 return text.replace(regex, '<span class="highlight">$1</span>');
             }
 
-            // Performans için DOM fragment kullanımı
-            function displayArticles(articles) {
-                const articlesDiv = document.getElementById("articles");
-                articlesDiv.innerHTML = "";
+            // DOM manipülasyonunu optimize eden fonksiyon
+            function createArticleElement(article, index, searchTerm = '') {
+                const articleDiv = document.createElement('div');
+                articleDiv.className = 'article-preview';
+                articleDiv.dataset.index = index;
+                
+                const isFavorite = JSON.parse(localStorage.getItem('favorites') || '[]')
+                    .some(f => f.title === article.title);
+                
+                // HTML içeriğini bir kerede oluştur
+                articleDiv.innerHTML = `
+                    <span class="category-tag category-${article.category}">${article.category.toUpperCase()}</span>
+                    <div class="image-container">
+                        <img src="${article.image}" class="cover" alt="Kapak Resmi" loading="lazy">
+                    </div>
+                    <div class="content">
+                        <h2>${searchTerm ? highlightText(article.title, searchTerm) : article.title}</h2>
+                        <div class="meta">
+                            <i class="fas fa-user"></i> ${article.author} 
+                            <i class="fas fa-calendar-alt"></i> ${article.date}
+                        </div>
+                        <p>${searchTerm ? highlightText(article.preview, searchTerm) : article.preview}</p>
+                        <div class="article-actions">
+                            <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-title="${article.title}">
+                                <i class="fas fa-star"></i>
+                                <span>${isFavorite ? 'Favorilerde' : 'Favori'}</span>
+                            </button>
+                            <button class="share-btn" data-title="${article.title}">
+                                <i class="fas fa-share-alt"></i>
+                                <span>Paylaş</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // IntersectionObserver ile görünürlük takibi
+                observer.observe(articleDiv);
+                
+                return articleDiv;
+            }
+
+            // Makaleleri gösterme fonksiyonu - optimize edilmiş
+            function displayArticles(articles, searchTerm = '') {
+                const articlesDiv = document.getElementById('articles');
+                
+                // DOM manipülasyonlarını azaltmak için fragment kullanımı
+                const fragment = document.createDocumentFragment();
+                
+                // Önce içeriği temizle
+                articlesDiv.innerHTML = '';
                 
                 if (articles.length === 0) {
-                    articlesDiv.innerHTML = "<p style='text-align: center; margin: 30px 0; font-size: 1.1rem;'>Sonuç bulunamadı.</p>";
+                    const noResultsMsg = document.createElement('p');
+                    noResultsMsg.style.textAlign = 'center';
+                    noResultsMsg.style.margin = '30px 0';
+                    noResultsMsg.style.fontSize = '1.1rem';
+                    noResultsMsg.textContent = 'Sonuç bulunamadı.';
+                    articlesDiv.appendChild(noResultsMsg);
                     return;
                 }
                 
+                // Makaleleri ekle
+                articles.forEach((article, index) => {
+                    const articleElement = createArticleElement(article, index, searchTerm);
+                    fragment.appendChild(articleElement);
+                });
+                
+                // Tüm değişiklikleri bir kerede DOM'a ekle
+                articlesDiv.appendChild(fragment);
+            }
+
+            // Favorileri gösterme fonksiyonu - optimize edilmiş
+            function displayFavorites() {
+                const favoritesPanel = document.getElementById('favorites-panel');
+                const favoritesList = document.getElementById('favorites-list');
+                const articlesDiv = document.getElementById('articles');
+                const articleDetail = document.getElementById('article-detail');
+                
+                // Favorileri al ve filtrele
+                let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                favorites = favorites.filter(fav => articlesData.some(article => article.title === fav.title));
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                
+                // DOM manipülasyonlarını azaltmak için fragment kullanımı
                 const fragment = document.createDocumentFragment();
                 
-                // Batch işleme için
-                const batchSize = 5;
-                let currentIndex = 0;
+                // Önce içeriği temizle
+                favoritesList.innerHTML = '';
                 
-                function processBatch() {
-                    const endIndex = Math.min(currentIndex + batchSize, articles.length);
-                    
-                    for (let i = currentIndex; i < endIndex; i++) {
-                        const article = articles[i];
-                        const articleDiv = document.createElement("div");
-                        articleDiv.style.setProperty("--index", i);
-                        articleDiv.className = "article-preview";
-                        const isFavorite = JSON.parse(localStorage.getItem("favorites") || "[]").some(
-                            (f) => f.title === article.title
-                        );
+                if (favorites.length === 0) {
+                    const noFavoritesMsg = document.createElement('p');
+                    noFavoritesMsg.style.textAlign = 'center';
+                    noFavoritesMsg.style.margin = '30px 0';
+                    noFavoritesMsg.style.fontSize = '1.1rem';
+                    noFavoritesMsg.textContent = 'Henüz favori makale eklenmemiş.';
+                    favoritesList.appendChild(noFavoritesMsg);
+                } else {
+                    // Favorileri ekle
+                    favorites.forEach((article, index) => {
+                        const articleElement = createArticleElement(article, index);
                         
-                        articleDiv.innerHTML = `
-                            <span class="category-tag category-${article.category}">${article.category.toUpperCase()}</span>
-                            <div class="image-container">
-                                <img src="${article.image}" class="cover" alt="Kapak Resmi" loading="lazy">
-                            </div>
-                            <div class="content">
-                                <h2>${article.title}</h2>
-                                <div class="meta">
-                                    <i class="fas fa-user"></i> ${article.author} 
-                                    <i class="fas fa-calendar-alt"></i> ${article.date}
-                                </div>
-                                <p>${article.preview}</p>
-                                <div class="article-actions">
-                                    <button class="favorite-btn ${isFavorite ? "active" : ""}" data-title="${article.title}">
-                                        <i class="fas fa-star"></i>
-                                        <span>${isFavorite ? "Favorilerde" : "Favori"}</span>
-                                    </button>
-                                    <button class="share-btn" data-title="${article.title}">
-                                        <i class="fas fa-share-alt"></i>
-                                        <span>Paylaş</span>
-                                    </button>
-                                </div>
-                            </div>
+                        // Favori butonunu kaldır ve yerine silme butonu ekle
+                        const actionDiv = articleElement.querySelector('.article-actions');
+                        actionDiv.innerHTML = `
+                            <button class="remove-from-favorites" data-title="${article.title}">
+                                <i class="fas fa-trash-alt"></i> Favorilerden Kaldır
+                            </button>
                         `;
                         
-                        fragment.appendChild(articleDiv);
-                    }
+                        fragment.appendChild(articleElement);
+                    });
                     
-                    articlesDiv.appendChild(fragment.cloneNode(true));
-                    
-                    currentIndex = endIndex;
-                    
-                    if (currentIndex < articles.length) {
-                        // Sonraki batch'i işlemek için requestAnimationFrame kullan
-                        requestAnimationFrame(processBatch);
-                    }
+                    // Tüm değişiklikleri bir kerede DOM'a ekle
+                    favoritesList.appendChild(fragment);
                 }
                 
-                // İlk batch'i başlat
-                processBatch();
-                
-                // Event delegation ile tıklama olaylarını yönet
-                articlesDiv.addEventListener("click", (e) => {
-                    const articleDiv = e.target.closest('.article-preview');
-                    const favoriteBtn = e.target.closest('.favorite-btn');
-                    const shareBtn = e.target.closest('.share-btn');
-                    
-                    if (favoriteBtn) {
-                        e.stopPropagation();
-                        toggleFavorite(favoriteBtn.dataset.title, favoriteBtn);
-                    } else if (shareBtn) {
-                        e.stopPropagation();
-                        shareArticle(shareBtn.dataset.title);
-                    } else if (articleDiv && !e.target.closest('button')) {
-                        const title = articleDiv.querySelector('h2').textContent;
-                        const article = articles.find(a => a.title === title);
-                        if (article) {
-                            showArticleDetail(article);
-                        }
-                    }
-                });
+                // Panelleri göster/gizle
+                articlesDiv.style.display = 'none';
+                articleDetail.classList.remove('show');
+                favoritesPanel.classList.add('show');
             }
 
-            // Performans için DOM fragment kullanımı
-            function displayFavorites() {
-                try {
-                    const favoritesPanel = document.getElementById("favorites-panel");
-                    const favoritesList = document.getElementById("favorites-list");
-                    const articlesDiv = document.getElementById("articles");
-                    const articleDetail = document.getElementById("article-detail");
-                    let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-
-                    favorites = favorites.filter((fav) => articlesData.some((article) => article.title === fav.title));
-                    localStorage.setItem("favorites", JSON.stringify(favorites));
-
-                    favoritesList.innerHTML = "";
-                    
-                    if (favorites.length === 0) {
-                        favoritesList.innerHTML = "<p style='text-align: center; margin: 30px 0; font-size: 1.1rem;'>Henüz favori makale eklenmemiş.</p>";
-                    } else {
-                        const fragment = document.createDocumentFragment();
-                        
-                        favorites.forEach((article, index) => {
-                            const category = article.category || "belirsiz";
-                            const articleDiv = document.createElement("div");
-                            articleDiv.style.setProperty("--index", index);
-                            articleDiv.className = "article-preview";
-                            
-                            articleDiv.innerHTML = `
-                                <span class="category-tag category-${category}">${category.toUpperCase()}</span>
-                                <div class="image-container">
-                                    <img src="${article.image}" class="cover" alt="Kapak Resmi" loading="lazy">
-                                </div>
-                                <div class="content">
-                                    <h2>${article.title}</h2>
-                                    <div class="meta">
-                                        <i class="fas fa-user"></i> ${article.author} 
-                                        <i class="fas fa-calendar-alt"></i> ${article.date}
-                                    </div>
-                                    <p>${article.preview}</p>
-                                    <button class="remove-from-favorites" data-title="${article.title}">
-                                        <i class="fas fa-trash-alt"></i> Favorilerden Kaldır
-                                    </button>
-                                </div>
-                            `;
-                            
-                            fragment.appendChild(articleDiv);
-                        });
-                        
-                        favoritesList.appendChild(fragment);
-                    }
-                    
-                    articlesDiv.style.display = "none";
-                    articleDetail.classList.remove("show");
-                    favoritesPanel.classList.add("show");
-                } catch (error) {
-                    console.error("Favoriler gösterilirken hata oluştu:", error);
-                }
-            }
-
+            // Makale detayını gösterme fonksiyonu - optimize edilmiş
             function showArticleDetail(article) {
-                const detail = document.getElementById("article-detail");
-                const detailImage = document.getElementById("detail-image");
-                const detailTitle = document.getElementById("detail-title");
-                const detailMeta = document.getElementById("detail-meta");
-                const detailContent = document.getElementById("detail-content");
+                const detail = document.getElementById('article-detail');
+                const detailImage = document.getElementById('detail-image');
+                const detailTitle = document.getElementById('detail-title');
+                const detailMeta = document.getElementById('detail-meta');
+                const detailContent = document.getElementById('detail-content');
                 
-                // Performans için önce DOM'u güncelle, sonra görünürlüğü değiştir
-                detailImage.src = article.image;
-                detailTitle.textContent = article.title;
-                detailMeta.innerHTML = `
-                    <i class="fas fa-user"></i> ${article.author} 
-                    <i class="fas fa-calendar-alt"></i> ${article.date}
-                    <i class="fas fa-tag"></i> ${article.category.toUpperCase()}
-                `;
-                detailContent.innerHTML = article.content;
-
-                const whatsappBtn = document.getElementById("whatsapp-share");
-                const twitterBtn = document.getElementById("twitter-share");
-                const facebookBtn = document.getElementById("facebook-share");
-                const url = encodeURIComponent(window.location.href);
-                const text = encodeURIComponent(`${article.title} - Sadece Kuran`);
-
-                whatsappBtn.onclick = () =>
-                    window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, "_blank");
-                twitterBtn.onclick = () =>
-                    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, "_blank");
-                facebookBtn.onclick = () =>
-                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, "_blank");
-
-                // Görünürlüğü değiştir
-                detail.classList.add("show");
-                document.getElementById("articles").style.display = "none";
-                document.getElementById("favorites-panel").classList.remove("show");
-
-                // Kayıtlı font boyutunu uygula
-                const savedFontSize = localStorage.getItem("fontSize");
-                if (savedFontSize) {
-                    detailContent.style.fontSize = `${savedFontSize}px`;
-                }
-                
-                // Sayfa başına kaydır
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+                // DOM güncellemelerini minimize et
+                requestAnimationFrame(() => {
+                    // Görüntüyü önce yükle
+                    if (detailImage.src !== article.image) {
+                        detailImage.src = article.image;
+                    }
+                    
+                    detailTitle.textContent = article.title;
+                    detailMeta.innerHTML = `
+                        <i class="fas fa-user"></i> ${article.author} 
+                        <i class="fas fa-calendar-alt"></i> ${article.date}
+                        <i class="fas fa-tag"></i> ${article.category.toUpperCase()}
+                    `;
+                    detailContent.innerHTML = article.content;
+                    
+                    // Paylaşım butonlarını ayarla
+                    const url = encodeURIComponent(window.location.href);
+                    const text = encodeURIComponent(`${article.title} - Sadece Kuran`);
+                    
+                    document.getElementById('whatsapp-share').onclick = () => 
+                        window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
+                    document.getElementById('twitter-share').onclick = () => 
+                        window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+                    document.getElementById('facebook-share').onclick = () => 
+                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+                    
+                    // Görünürlüğü değiştir
+                    detail.classList.add('show');
+                    document.getElementById('articles').style.display = 'none';
+                    document.getElementById('favorites-panel').classList.remove('show');
+                    
+                    // Kayıtlı font boyutunu uygula
+                    const savedFontSize = localStorage.getItem('fontSize');
+                    if (savedFontSize) {
+                        detailContent.style.fontSize = `${savedFontSize}px`;
+                    }
+                    
+                    // Sayfa başına kaydır - smooth scroll
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
                 });
             }
 
-            // Arama optimizasyonu
+            // Arama ve filtreleme fonksiyonu - optimize edilmiş
             function searchAndFilterArticles(searchTerm, category) {
-                if (window.Worker) {
-                    const searchWorker = new Worker(URL.createObjectURL(new Blob([`
+                // Arama ve filtreleme işlemini web worker ile yap
+                if ('Worker' in window) {
+                    const workerCode = `
                         self.onmessage = function(e) {
                             const { articlesData, searchTerm, category } = e.data;
-                            let filteredArticles = articlesData;
+                            let filteredArticles = [...articlesData];
                             
-                            if (searchTerm) {
-                                const searchTermLower = searchTerm.toLocaleLowerCase("tr-TR");
-                                filteredArticles = filteredArticles.filter(
-                                    (article) =>
-                                        article.title.toLocaleLowerCase("tr-TR").includes(searchTermLower) ||
-                                        article.preview.toLocaleLowerCase("tr-TR").includes(searchTermLower)
+                            if (searchTerm && searchTerm.trim() !== '') {
+                                const searchTermLower = searchTerm.toLowerCase();
+                                filteredArticles = filteredArticles.filter(article => 
+                                    article.title.toLowerCase().includes(searchTermLower) || 
+                                    article.preview.toLowerCase().includes(searchTermLower)
                                 );
                             }
                             
-                            if (category) {
-                                filteredArticles = filteredArticles.filter((article) => article.category === category);
+                            if (category && category.trim() !== '') {
+                                filteredArticles = filteredArticles.filter(article => 
+                                    article.category === category
+                                );
                             }
                             
                             self.postMessage(filteredArticles);
                         };
-                    `], { type: 'application/javascript' })));
+                    `;
                     
-                    searchWorker.onmessage = function(e) {
-                        const filteredArticles = e.data;
-                        
-                        // Arama terimini vurgula
-                        const highlightedArticles = filteredArticles.map((article) => ({
-                            ...article,
-                            title: searchTerm ? highlightText(article.title, searchTerm) : article.title,
-                            preview: searchTerm ? highlightText(article.preview, searchTerm) : article.preview
-                        }));
-                        
-                        displayArticles(highlightedArticles);
-                        
-                        // Worker'ı temizle
-                        searchWorker.terminate();
+                    const blob = new Blob([workerCode], { type: 'application/javascript' });
+                    const worker = new Worker(URL.createObjectURL(blob));
+                    
+                    worker.onmessage = function(e) {
+                        displayArticles(e.data, searchTerm);
+                        worker.terminate();
                     };
                     
-                    searchWorker.postMessage({ articlesData, searchTerm, category });
+                    worker.postMessage({ articlesData, searchTerm, category });
                 } else {
-                    // Web Worker desteklenmiyorsa normal arama yap
-                    let filteredArticles = articlesData;
+                    // Web worker desteklenmiyorsa normal arama yap
+                    let filteredArticles = [...articlesData];
                     
-                    if (searchTerm) {
-                        const searchTermLower = searchTerm.toLocaleLowerCase("tr-TR");
-                        filteredArticles = filteredArticles.filter(
-                            (article) =>
-                                article.title.toLocaleLowerCase("tr-TR").includes(searchTermLower) ||
-                                article.preview.toLocaleLowerCase("tr-TR").includes(searchTermLower)
+                    if (searchTerm && searchTerm.trim() !== '') {
+                        const searchTermLower = searchTerm.toLowerCase();
+                        filteredArticles = filteredArticles.filter(article => 
+                            article.title.toLowerCase().includes(searchTermLower) || 
+                            article.preview.toLowerCase().includes(searchTermLower)
                         );
                     }
                     
-                    if (category) {
-                        filteredArticles = filteredArticles.filter((article) => article.category === category);
+                    if (category && category.trim() !== '') {
+                        filteredArticles = filteredArticles.filter(article => 
+                            article.category === category
+                        );
                     }
                     
-                    // Arama terimini vurgula
-                    const highlightedArticles = filteredArticles.map((article) => ({
-                        ...article,
-                        title: searchTerm ? highlightText(article.title, searchTerm) : article.title,
-                        preview: searchTerm ? highlightText(article.preview, searchTerm) : article.preview
-                    }));
-                    
-                    displayArticles(highlightedArticles);
+                    displayArticles(filteredArticles, searchTerm);
                 }
             }
 
+            // Favori ekleme/çıkarma fonksiyonu - optimize edilmiş
             function toggleFavorite(title, button) {
-                let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-                const isFavorite = favorites.some((f) => f.title === title);
+                let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                const isFavorite = favorites.some(f => f.title === title);
                 
                 if (isFavorite) {
-                    favorites = favorites.filter((f) => f.title !== title);
-                    localStorage.setItem("favorites", JSON.stringify(favorites));
-                    button.classList.remove("active");
-                    button.querySelector('span').textContent = "Favori";
+                    favorites = favorites.filter(f => f.title !== title);
+                    button.classList.remove('active');
+                    button.querySelector('span').textContent = 'Favori';
                 } else {
-                    const articleToAdd = articlesData.find((a) => a.title === title);
+                    const articleToAdd = articlesData.find(a => a.title === title);
                     if (articleToAdd) {
                         favorites.push(articleToAdd);
-                        localStorage.setItem("favorites", JSON.stringify(favorites));
-                        button.classList.add("active");
-                        button.querySelector('span').textContent = "Favorilerde";
+                        button.classList.add('active');
+                        button.querySelector('span').textContent = 'Favorilerde';
                     }
                 }
                 
-                if (document.getElementById("favorites-panel").classList.contains("show")) {
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                
+                // Favoriler paneli açıksa güncelle
+                if (document.getElementById('favorites-panel').classList.contains('show')) {
                     displayFavorites();
                 }
             }
 
+            // Favorilerden çıkarma fonksiyonu - optimize edilmiş
             function removeFromFavorites(title) {
-                let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-                favorites = favorites.filter((f) => f.title !== title);
-                localStorage.setItem("favorites", JSON.stringify(favorites));
+                let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                favorites = favorites.filter(f => f.title !== title);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                
+                // Favoriler panelini güncelle
                 displayFavorites();
                 
                 // Favori butonlarını güncelle
-                const favoriteButtons = document.querySelectorAll(`.favorite-btn[data-title="${title}"]`);
-                favoriteButtons.forEach(button => {
-                    button.classList.remove("active");
-                    button.querySelector('span').textContent = "Favori";
+                document.querySelectorAll(`.favorite-btn[data-title="${title}"]`).forEach(button => {
+                    button.classList.remove('active');
+                    button.querySelector('span').textContent = 'Favori';
                 });
             }
 
+            // Paylaşım fonksiyonu - optimize edilmiş
             function shareArticle(title) {
-                const article = articlesData.find((a) => a.title === title);
+                const article = articlesData.find(a => a.title === title);
                 const text = `${article.title} - Sadece Kuran`;
                 
                 if (navigator.share) {
-                    navigator
-                        .share({ title: article.title, text, url: window.location.href })
-                        .catch((err) => console.log("Paylaşım hatası:", err));
+                    navigator.share({ 
+                        title: article.title, 
+                        text, 
+                        url: window.location.href 
+                    }).catch(err => console.log('Paylaşım hatası:', err));
                 } else {
                     navigator.clipboard.writeText(text)
                         .then(() => {
-                            // Kopyalandı bildirimi
+                            // Kopyalandı bildirimi - performans için optimize edilmiş
                             const notification = document.createElement('div');
-                            notification.style.position = 'fixed';
-                            notification.style.bottom = '20px';
-                            notification.style.left = '50%';
-                            notification.style.transform = 'translateX(-50%)';
-                            notification.style.background = 'rgba(142, 142, 142, 0.9)';
-                            notification.style.color = 'white';
-                            notification.style.padding = '10px 20px';
-                            notification.style.borderRadius = '5px';
-                            notification.style.zIndex = '1000';
+                            Object.assign(notification.style, {
+                                position: 'fixed',
+                                bottom: '20px',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                background: 'rgba(142, 142, 142, 0.9)',
+                                color: 'white',
+                                padding: '10px 20px',
+                                borderRadius: '5px',
+                                zIndex: '1000'
+                            });
                             notification.textContent = 'Metin kopyalandı';
                             document.body.appendChild(notification);
                             
+                            // Bildirimi kaldır
                             setTimeout(() => {
                                 notification.style.opacity = '0';
                                 notification.style.transition = 'opacity 0.5s ease';
@@ -1951,157 +1890,191 @@
                         })
                         .catch(err => {
                             console.error('Kopyalama hatası:', err);
-                            alert("Paylaşım desteklenmiyor, metni manuel kopyalayın: " + text);
+                            alert('Paylaşım desteklenmiyor, metni manuel kopyalayın: ' + text);
                         });
                 }
             }
 
-            // Performans için olay dinleyicilerini optimize et
-            document.addEventListener("DOMContentLoaded", () => {
-                // Event delegation kullanarak olay dinleyicilerini azalt
-                const menuIcon = document.querySelector(".menu-icon");
-                const sidebar = document.querySelector(".sidebar");
-                const closeMenu = document.querySelector(".close-menu");
-                const articleDetail = document.getElementById("article-detail");
-                const favoritesPanel = document.getElementById("favorites-panel");
-                const articlesDiv = document.getElementById("articles");
-                const closeArticle = document.getElementById("close-article");
-                const showFavoritesBtn = document.getElementById("show-favorites");
-                const settingsLink = document.getElementById("settings-link");
-                const settingsPanel = document.getElementById("settings-panel");
-                const closeSettings = document.getElementById("close-settings");
-                const fontSizeInput = document.getElementById("font-size");
-                const fontSizeValue = document.getElementById("font-size-value");
-                const fontFamilySelect = document.getElementById("font-family");
-                const settingsOverlay = document.getElementById("settings-overlay");
-                const backToArticles = document.getElementById("back-to-articles");
-                const categoryFilter = document.getElementById("category-filter");
-                const searchInput = document.getElementById("search");
-                const themeToggle = document.getElementById("theme-toggle");
+            // Debounce fonksiyonu - arama için
+            function debounce(func, wait) {
+                let timeout;
+                return function(...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), wait);
+                };
+            }
 
-                menuIcon.addEventListener("click", (e) => {
+            // Sayfa yüklendiğinde çalışacak kod
+            document.addEventListener('DOMContentLoaded', () => {
+                // Olay dinleyicileri için referanslar
+                const menuIcon = document.querySelector('.menu-icon');
+                const sidebar = document.querySelector('.sidebar');
+                const closeMenu = document.querySelector('.close-menu');
+                const articleDetail = document.getElementById('article-detail');
+                const favoritesPanel = document.getElementById('favorites-panel');
+                const articlesDiv = document.getElementById('articles');
+                const closeArticle = document.getElementById('close-article');
+                const showFavoritesBtn = document.getElementById('show-favorites');
+                const settingsLink = document.getElementById('settings-link');
+                const settingsPanel = document.getElementById('settings-panel');
+                const closeSettings = document.getElementById('close-settings');
+                const fontSizeInput = document.getElementById('font-size');
+                const fontSizeValue = document.getElementById('font-size-value');
+                const fontFamilySelect = document.getElementById('font-family');
+                const settingsOverlay = document.getElementById('settings-overlay');
+                const backToArticles = document.getElementById('back-to-articles');
+                const categoryFilter = document.getElementById('category-filter');
+                const searchInput = document.getElementById('search');
+                const themeToggle = document.getElementById('theme-toggle');
+
+                // Menü açma/kapama
+                menuIcon.addEventListener('click', e => {
                     e.stopPropagation();
-                    sidebar.classList.toggle("show");
+                    sidebar.classList.toggle('show');
                 });
 
-                closeMenu.addEventListener("click", () => {
-                    sidebar.classList.remove("show");
+                closeMenu.addEventListener('click', () => {
+                    sidebar.classList.remove('show');
                 });
 
-                document.addEventListener("click", (e) => {
+                // Dışarı tıklandığında menüyü kapat - event delegation
+                document.addEventListener('click', e => {
                     if (!sidebar.contains(e.target) && !menuIcon.contains(e.target)) {
-                        sidebar.classList.remove("show");
+                        sidebar.classList.remove('show');
                     }
                 });
 
-                closeArticle.addEventListener("click", () => {
-                    articleDetail.classList.remove("show");
-                    articlesDiv.style.display = "grid";
+                // Makale detayını kapat
+                closeArticle.addEventListener('click', () => {
+                    articleDetail.classList.remove('show');
+                    articlesDiv.style.display = 'grid';
                 });
 
-                showFavoritesBtn.addEventListener("click", () => {
+                // Favorileri göster
+                showFavoritesBtn.addEventListener('click', () => {
                     displayFavorites();
                 });
 
-                backToArticles.addEventListener("click", () => {
-                    favoritesPanel.classList.remove("show");
-                    articlesDiv.style.display = "grid";
+                // Makalelere dön
+                backToArticles.addEventListener('click', () => {
+                    favoritesPanel.classList.remove('show');
+                    articlesDiv.style.display = 'grid';
                 });
 
-                // Arama için debounce fonksiyonu
-                function debounce(func, wait) {
-                    let timeout;
-                    return function(...args) {
-                        clearTimeout(timeout);
-                        timeout = setTimeout(() => func.apply(this, args), wait);
-                    };
-                }
-
                 // Arama için debounce uygula
-                const debouncedSearch = debounce(function() {
+                const debouncedSearch = debounce(() => {
                     searchAndFilterArticles(
                         searchInput.value.trim(),
                         categoryFilter.value
                     );
                 }, 300);
 
-                searchInput.addEventListener("input", debouncedSearch);
-                categoryFilter.addEventListener("change", debouncedSearch);
+                searchInput.addEventListener('input', debouncedSearch);
+                categoryFilter.addEventListener('change', debouncedSearch);
 
-                // Event delegation ile favoriler ve paylaşım butonlarını yönet
-                document.addEventListener("click", (e) => {
-                    const favoriteBtn = e.target.closest('.favorite-btn');
-                    const shareBtn = e.target.closest('.share-btn');
-                    const removeFromFavoritesBtn = e.target.closest('.remove-from-favorites');
+                // Event delegation ile tıklama olaylarını yönet
+                document.addEventListener('click', e => {
+                    // Makale önizleme tıklaması
+                    const articlePreview = e.target.closest('.article-preview');
+                    if (articlePreview && !e.target.closest('button')) {
+                        const title = articlePreview.querySelector('h2').textContent.replace(/<[^>]*>/g, ''); // HTML etiketlerini temizle
+                        const article = articlesData.find(a => a.title === title);
+                        if (article) {
+                            showArticleDetail(article);
+                        }
+                        return;
+                    }
                     
+                    // Favori butonu tıklaması
+                    const favoriteBtn = e.target.closest('.favorite-btn');
                     if (favoriteBtn) {
                         toggleFavorite(favoriteBtn.dataset.title, favoriteBtn);
                         e.stopPropagation();
-                    } else if (shareBtn) {
+                        return;
+                    }
+                    
+                    // Paylaş butonu tıklaması
+                    const shareBtn = e.target.closest('.share-btn');
+                    if (shareBtn) {
                         shareArticle(shareBtn.dataset.title);
                         e.stopPropagation();
-                    } else if (removeFromFavoritesBtn) {
+                        return;
+                    }
+                    
+                    // Favorilerden kaldır butonu tıklaması
+                    const removeFromFavoritesBtn = e.target.closest('.remove-from-favorites');
+                    if (removeFromFavoritesBtn) {
                         removeFromFavorites(removeFromFavoritesBtn.dataset.title);
                         e.stopPropagation();
+                        return;
                     }
                 });
 
+                // İlk yüklemede makaleleri göster
                 displayArticles(articlesData);
 
+                // Tema değiştirme
                 function toggleTheme() {
-                    document.body.classList.toggle("day-mode");
-                    localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night");
+                    document.body.classList.toggle('day-mode');
+                    localStorage.setItem('theme', document.body.classList.contains('day-mode') ? 'day' : 'night');
                     
-                    const themeIcon = document.getElementById("theme-toggle").querySelector('i');
-                    if (document.body.classList.contains("day-mode")) {
-                        themeIcon.className = "fas fa-sun";
-                    } else {
-                        themeIcon.className = "fas fa-moon";
-                    }
+                    const themeIcon = themeToggle.querySelector('i');
+                    themeIcon.className = document.body.classList.contains('day-mode') ? 'fas fa-sun' : 'fas fa-moon';
                 }
 
-                themeToggle.addEventListener("click", toggleTheme);
+                themeToggle.addEventListener('click', toggleTheme);
                 
-                // Set initial theme based on localStorage
-                if (localStorage.getItem("theme") === "day") {
-                    document.body.classList.add("day-mode");
-                    themeToggle.querySelector('i').className = "fas fa-sun";
+                // Kayıtlı temayı uygula
+                if (localStorage.getItem('theme') === 'day') {
+                    document.body.classList.add('day-mode');
+                    themeToggle.querySelector('i').className = 'fas fa-sun';
                 }
 
-                settingsLink.addEventListener("click", (e) => {
+                // Ayarlar paneli
+                settingsLink.addEventListener('click', e => {
                     e.preventDefault();
-                    settingsPanel.classList.add("show");
-                    settingsOverlay.classList.add("show");
-                    sidebar.classList.remove("show");
+                    settingsPanel.classList.add('show');
+                    settingsOverlay.classList.add('show');
+                    sidebar.classList.remove('show');
                 });
 
-                closeSettings.addEventListener("click", () => {
-                    settingsPanel.classList.remove("show");
-                    settingsOverlay.classList.remove("show");
+                closeSettings.addEventListener('click', () => {
+                    settingsPanel.classList.remove('show');
+                    settingsOverlay.classList.remove('show');
                 });
                 
-                settingsOverlay.addEventListener("click", () => {
-                    settingsPanel.classList.remove("show");
-                    settingsOverlay.classList.remove("show");
+                settingsOverlay.addEventListener('click', () => {
+                    settingsPanel.classList.remove('show');
+                    settingsOverlay.classList.remove('show');
                 });
 
-                fontSizeInput.addEventListener("input", () => {
+                // Font boyutu ayarı
+                fontSizeInput.addEventListener('input', () => {
                     const size = fontSizeInput.value;
                     fontSizeValue.textContent = `${size}px`;
-                    document.querySelector("#article-detail .content").style.fontSize = `${size}px`;
-                    localStorage.setItem("fontSize", size);
+                    
+                    // Performans için throttle
+                    requestAnimationFrame(() => {
+                        document.querySelector('#article-detail .content').style.fontSize = `${size}px`;
+                        localStorage.setItem('fontSize', size);
+                    });
                 });
 
-                fontFamilySelect.addEventListener("change", () => {
+                // Font ailesi ayarı
+                fontFamilySelect.addEventListener('change', () => {
                     const font = fontFamilySelect.value;
-                    document.body.style.fontFamily = font;
-                    document.querySelector("#article-detail .content").style.fontFamily = font;
-                    localStorage.setItem("fontFamily", font);
+                    
+                    // Performans için throttle
+                    requestAnimationFrame(() => {
+                        document.body.style.fontFamily = font;
+                        document.querySelector('#article-detail .content').style.fontFamily = font;
+                        localStorage.setItem('fontFamily', font);
+                    });
                 });
 
-                // Apply saved settings
-                const savedFontSize = localStorage.getItem("fontSize") || "16";
-                const savedFontFamily = localStorage.getItem("fontFamily") || "Poppins";
+                // Kayıtlı ayarları uygula
+                const savedFontSize = localStorage.getItem('fontSize') || '16';
+                const savedFontFamily = localStorage.getItem('fontFamily') || 'Poppins';
                 
                 fontSizeInput.value = savedFontSize;
                 fontSizeValue.textContent = `${savedFontSize}px`;
@@ -2110,22 +2083,18 @@
                 fontFamilySelect.value = savedFontFamily;
                 document.body.style.fontFamily = savedFontFamily;
                 
-                // Add animation to articles on scroll
-                const animateOnScroll = () => {
-                    const articles = document.querySelectorAll('.article-preview');
-                    articles.forEach(article => {
-                        const articleTop = article.getBoundingClientRect().top;
-                        const windowHeight = window.innerHeight;
-                        if (articleTop < windowHeight * 0.9) {
-                            article.style.opacity = "1";
-                            article.style.transform = "translateY(0)";
-                        }
-                    });
-                };
+                // Pasif olay dinleyicileri - performans için
+                window.addEventListener('scroll', () => {
+                    // Boş bırak - IntersectionObserver kullanıldığı için
+                }, { passive: true });
                 
-                window.addEventListener('scroll', animateOnScroll);
-                // Initial check for visible articles
-                setTimeout(animateOnScroll, 100);
+                window.addEventListener('touchstart', () => {
+                    // Boş bırak - dokunmatik olaylar için
+                }, { passive: true });
+                
+                window.addEventListener('touchmove', () => {
+                    // Boş bırak - dokunmatik olaylar için
+                }, { passive: true });
             });
         </script>
     </body>
