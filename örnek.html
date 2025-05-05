@@ -692,6 +692,17 @@
                 border: 1px solid var(--accent-light);
             }
             
+            /* New style for author names in other translations */
+            #verse-detail-panel .other-translations .author-name {
+                font-weight: 700;
+                color: var(--highlight-dark);
+                margin-right: 5px;
+            }
+            
+            body.day-mode #verse-detail-panel .other-translations .author-name {
+                color: var(--highlight-light);
+            }
+            
             #verse-detail-panel .nav-btn {
                 background: var(--highlight-dark);
                 border: none;
@@ -2320,7 +2331,8 @@
                     .filter(t => t.author !== selectedAuthor)
                     .forEach((t, index) => {
                         const translationDiv = document.createElement("div");
-                        translationDiv.textContent = `${t.author}: ${verseData.verse_id}. ${t.text}`;
+                        // Yazar adını kalın ve tema renginde göster
+                        translationDiv.innerHTML = `<span class="author-name">${t.author}:</span> ${verseData.verse_id}. ${t.text}`;
                         fragment.appendChild(translationDiv);
                     });
                 
