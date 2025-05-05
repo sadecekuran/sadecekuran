@@ -24,6 +24,7 @@
                 
                 --transition-speed: 0.3s;
                 --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+                --verse-font-size: 100%;
             }
             
             * {
@@ -519,6 +520,7 @@
                 align-items: center;
                 cursor: pointer;
                 transition: all 0.2s var(--transition-function);
+                font-size: var(--verse-font-size);
             }
             
             body.day-mode .verse {
@@ -650,6 +652,7 @@
                 color: white;
                 font-weight: 500;
                 box-shadow: 0 4px 12px rgba(29, 161, 242, 0.2);
+                font-size: var(--verse-font-size);
             }
             
             body.day-mode #verse-detail-panel .selected-translation {
@@ -681,6 +684,7 @@
                 font-size: 0.95rem;
                 line-height: 1.6;
                 border: 1px solid var(--accent-dark);
+                font-size: var(--verse-font-size);
             }
             
             body.day-mode #verse-detail-panel .other-translations div {
@@ -994,68 +998,318 @@
             #podcasts h2 i {
                 color: var(--highlight-dark);
             }
-            
+
             .podcast-container {
+                margin-bottom: 30px;
+                width: 100%;
+            }
+
+            .podcast-container iframe {
+                width: 100%;
+                margin-bottom: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            body.day-mode .podcast-container iframe {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            }
+            
+            /* Settings Section */
+            #settings {
+                background-color: var(--secondary-dark);
+                border-radius: 12px;
+                padding: 20px;
+                margin-bottom: 20px;
+                display: none;
+                border: 1px solid var(--accent-dark);
+            }
+            
+            body.day-mode #settings {
+                background-color: var(--secondary-light);
+                border: 1px solid var(--accent-light);
+            }
+            
+            #settings h2 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--accent-dark);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            body.day-mode #settings h2 {
+                border-bottom: 1px solid var(--accent-light);
+            }
+            
+            #settings h2 i {
+                color: var(--highlight-dark);
+            }
+            
+            .settings-section {
                 margin-bottom: 30px;
             }
             
-            #podcast-embed-code {
-                width: 100%;
-                min-height: 120px;
-                padding: 15px;
-                border: 1px solid var(--accent-dark);
-                border-radius: 12px;
-                background-color: var(--secondary-dark);
-                color: var(--text-dark);
-                font-family: monospace;
-                font-size: 0.9rem;
-                resize: vertical;
+            .settings-section h3 {
+                font-size: 1.2rem;
                 margin-bottom: 15px;
+                font-weight: 500;
             }
             
-            body.day-mode #podcast-embed-code {
-                background-color: var(--secondary-light);
-                border: 1px solid var(--accent-light);
+            .setting-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px;
+                background-color: var(--accent-dark);
+                border-radius: 10px;
+                margin-bottom: 15px;
+                transition: all 0.2s var(--transition-function);
+            }
+            
+            body.day-mode .setting-item {
+                background-color: var(--accent-light);
+            }
+            
+            .setting-item:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            
+            body.day-mode .setting-item:hover {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            }
+            
+            .setting-label {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .setting-label span:first-child {
+                font-weight: 500;
+                margin-bottom: 5px;
+            }
+            
+            .setting-label span:last-child {
+                font-size: 0.85rem;
+                opacity: 0.7;
+            }
+            
+            /* Toggle Switch */
+            .toggle-switch {
+                position: relative;
+                display: inline-block;
+                width: 50px;
+                height: 24px;
+            }
+            
+            .toggle-switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            
+            .toggle-slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: var(--accent-dark);
+                transition: .4s;
+                border-radius: 24px;
+            }
+            
+            body.day-mode .toggle-slider {
+                background-color: #ccc;
+            }
+            
+            .toggle-slider:before {
+                position: absolute;
+                content: "";
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+            
+            input:checked + .toggle-slider {
+                background-color: var(--highlight-dark);
+            }
+            
+            input:checked + .toggle-slider:before {
+                transform: translateX(26px);
+            }
+            
+            /* Color Picker */
+            .color-options {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            
+            .color-option {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: transform 0.2s var(--transition-function);
+                position: relative;
+            }
+            
+            .color-option:hover {
+                transform: scale(1.1);
+            }
+            
+            .color-option.active::after {
+                content: '\f00c';
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 14px;
+                text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+            }
+            
+            /* Font Size Control */
+            .font-size-control {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .font-size-btn {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background-color: var(--accent-dark);
+                color: var(--text-dark);
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 1.2rem;
+                transition: all 0.2s var(--transition-function);
+            }
+            
+            body.day-mode .font-size-btn {
+                background-color: var(--accent-light);
                 color: var(--text-light);
             }
             
-            #podcast-embed-code:focus {
+            .font-size-btn:hover {
+                background-color: var(--highlight-dark);
+                color: white;
+            }
+            
+            .font-size-value {
+                font-weight: 500;
+                min-width: 30px;
+                text-align: center;
+            }
+            
+            /* Select Dropdown */
+            .custom-select {
+                position: relative;
+                width: 100%;
+            }
+            
+            .custom-select select {
+                width: 100%;
+                padding: 10px 15px;
+                border: 1px solid var(--accent-dark);
+                border-radius: 10px;
+                background-color: var(--secondary-dark);
+                color: var(--text-dark);
+                font-size: 0.95rem;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 15px center;
+                background-size: 16px;
+                transition: all 0.2s var(--transition-function);
+            }
+            
+            body.day-mode .custom-select select {
+                background-color: var(--secondary-light);
+                border: 1px solid var(--accent-light);
+                color: var(--text-light);
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230f1419' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            }
+            
+            .custom-select select:focus {
                 outline: none;
                 border-color: var(--highlight-dark);
                 box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
             }
             
-            #add-podcast-btn {
+            /* Range Slider */
+            .range-slider {
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .range-slider input {
+                width: 100%;
+                height: 5px;
+                border-radius: 5px;
+                background: var(--accent-dark);
+                outline: none;
+                -webkit-appearance: none;
+            }
+            
+            body.day-mode .range-slider input {
+                background: var(--accent-light);
+            }
+            
+            .range-slider input::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: var(--highlight-dark);
+                cursor: pointer;
+            }
+            
+            .range-slider input::-moz-range-thumb {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: var(--highlight-dark);
+                cursor: pointer;
+                border: none;
+            }
+            
+            /* Settings Button */
+            .settings-btn {
                 padding: 12px 20px;
                 border: none;
-                border-radius: 20px;
+                border-radius: 10px;
                 background-color: var(--highlight-dark);
                 color: white;
                 font-size: 0.95rem;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 gap: 8px;
                 transition: background-color 0.2s var(--transition-function);
+                width: 100%;
+                margin-top: 10px;
             }
             
-            #add-podcast-btn:hover {
+            .settings-btn:hover {
                 background-color: #1a91da;
-            }
-            
-            #podcast-preview {
-                margin-top: 20px;
-                border-top: 1px solid var(--accent-dark);
-                padding-top: 20px;
-            }
-            
-            body.day-mode #podcast-preview {
-                border-top: 1px solid var(--accent-light);
-            }
-            
-            #podcast-preview h3 {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
             }
             
             /* Footer */
@@ -1134,6 +1388,20 @@
                 .verse-navigation-buttons {
                     margin-top: -10px;
                 }
+                
+                .setting-item {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 15px;
+                }
+                
+                .setting-item .setting-label {
+                    margin-bottom: 10px;
+                }
+                
+                .color-options {
+                    justify-content: center;
+                }
             }
             
             @media (max-width: 480px) {
@@ -1154,7 +1422,7 @@
                     font-size: 1rem;
                 }
                 
-                #verse-panel h3, #favorites h2, #verse-detail-panel h3, #podcasts h2 {
+                #verse-panel h3, #favorites h2, #verse-detail-panel h3, #podcasts h2, #settings h2 {
                     font-size: 1.3rem;
                 }
                 
@@ -1175,6 +1443,10 @@
                 .mobile-nav-item {
                     font-size: 1rem;
                 }
+                
+                .settings-section h3 {
+                    font-size: 1.1rem;
+                }
             }
 
             /* Responsive adjustment for mobile */
@@ -1191,7 +1463,7 @@
         
         <!-- Desktop Sidebar -->
         <div class="sidebar">
-            <img src="logokuran2.jpg" alt="Logo" class="sidebar-logo" />
+            <img src="logo.PNG" alt="Logo" class="sidebar-logo" />
             <nav class="sidebar-nav">
                 <div class="nav-item active" id="home-nav-desktop">
                     <i class="fas fa-home"></i>
@@ -1229,6 +1501,10 @@
                 <div class="mobile-nav-item" id="podcasts-nav-mobile">
                     <i class="fas fa-podcast"></i>
                     <span>Podcastler</span>
+                </div>
+                <div class="mobile-nav-item" id="settings-nav-mobile">
+                    <i class="fas fa-cog"></i>
+                    <span>Ayarlar</span>
                 </div>
             </div>
         </div>
@@ -1292,13 +1568,170 @@
                     <h2><i class="fas fa-podcast"></i> Podcastler</h2>
                     
                     <div class="podcast-container">
-                        <textarea id="podcast-embed-code" placeholder="Spotify podcast gömülü kodunu buraya yapıştırın..."></textarea>
-                        <button id="add-podcast-btn"><i class="fas fa-plus"></i> Podcast Ekle</button>
+                        <iframe style="border-radius:12px; border: none;" src="https://open.spotify.com/embed/show/1g3XuO31nyfA88ZdD8yWBP?utm_source=generator" width="100%" height="152" title="Sadece Kuran Podcast" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    </div>
+                </div>
+                
+                <!-- Settings Section -->
+                <div id="settings">
+                    <h2><i class="fas fa-cog"></i> Ayarlar</h2>
+                    
+                    <div class="settings-section">
+                        <h3>Görünüm</h3>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Tema Modu</span>
+                                <span>Koyu veya açık tema seçin</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="theme-mode-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Tema Rengi</span>
+                                <span>Uygulamanın vurgu rengini seçin</span>
+                            </div>
+                            <div class="color-options">
+                                <div class="color-option active" style="background-color: #1da1f2;" data-color="#1da1f2"></div>
+                                <div class="color-option" style="background-color: #4caf50;" data-color="#4caf50"></div>
+                                <div class="color-option" style="background-color: #f44336;" data-color="#f44336"></div>
+                                <div class="color-option" style="background-color: #9c27b0;" data-color="#9c27b0"></div>
+                                <div class="color-option" style="background-color: #ff9800;" data-color="#ff9800"></div>
+                                <div class="color-option" style="background-color: #795548;" data-color="#795548"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Yazı Boyutu</span>
+                                <span>Ayet metinlerinin boyutunu ayarlayın</span>
+                            </div>
+                            <div class="font-size-control">
+                                <button class="font-size-btn" id="decrease-font"><i class="fas fa-minus"></i></button>
+                                <span class="font-size-value" id="font-size-value">100%</span>
+                                <button class="font-size-btn" id="increase-font"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div id="podcast-preview">
-                        <h3>Podcast Önizleme</h3>
-                        <div id="podcast-content"></div>
+                    <div class="settings-section">
+                        <h3>Okuma Ayarları</h3>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Varsayılan Meal</span>
+                                <span>Tercih ettiğiniz meali seçin</span>
+                            </div>
+                            <div class="custom-select">
+                                <select id="default-author">
+                                    <option value="Mehmet Okuyan">Mehmet Okuyan</option>
+                                    <option value="Mustafa İslamoğlu">Mustafa İslamoğlu</option>
+                                    <option value="Yaşar Nuri Öztürk">Yaşar Nuri Öztürk</option>
+                                    <option value="Edip Yüksel">Edip Yüksel</option>
+                                    <option value="Diyanet Vakfı">Diyanet Vakfı</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Otomatik Kaydırma</span>
+                                <span>Uzun surelerde otomatik kaydırma</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="auto-scroll-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Kaydırma Hızı</span>
+                                <span>Otomatik kaydırma hızını ayarlayın</span>
+                            </div>
+                            <div class="range-slider">
+                                <input type="range" min="1" max="10" value="5" id="scroll-speed">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>Bildirimler</h3>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Günlük Ayet Bildirimleri</span>
+                                <span>Her gün rastgele bir ayet bildirimi alın</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="daily-verse-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Bildirim Zamanı</span>
+                                <span>Günlük ayet bildiriminin zamanını seçin</span>
+                            </div>
+                            <div class="custom-select">
+                                <select id="notification-time">
+                                    <option value="morning">Sabah (08:00)</option>
+                                    <option value="noon">Öğle (12:00)</option>
+                                    <option value="evening">Akşam (18:00)</option>
+                                    <option value="night">Gece (21:00)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>Veri ve Gizlilik</h3>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Çevrimdışı Kullanım</span>
+                                <span>İnternetsiz kullanım için verileri kaydet</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="offline-toggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Arama Geçmişi</span>
+                                <span>Arama geçmişinizi kaydet</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="search-history-toggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <button class="settings-btn" id="clear-data-btn">
+                            <i class="fas fa-trash-alt"></i> Tüm Verileri Temizle
+                        </button>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h3>Hakkında</h3>
+                        
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Uygulama Versiyonu</span>
+                                <span>v1.2.0</span>
+                            </div>
+                        </div>
+                        
+                        <button class="settings-btn" id="feedback-btn">
+                            <i class="fas fa-comment-alt"></i> Geri Bildirim Gönder
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1462,6 +1895,18 @@
                 113: "Felak",
                 114: "Nas"
             };
+
+            // Tema ve ayarlar değişkenleri
+            let isDayMode = localStorage.getItem("theme") === "day";
+            let highlightColor = localStorage.getItem("highlightColor") || "#1da1f2";
+            let fontSize = parseInt(localStorage.getItem("fontSize") || "100");
+            let defaultAuthor = localStorage.getItem("defaultAuthor") || "Mehmet Okuyan";
+            let autoScroll = localStorage.getItem("autoScroll") === "true";
+            let scrollSpeed = parseInt(localStorage.getItem("scrollSpeed") || "5");
+            let dailyVerse = localStorage.getItem("dailyVerse") === "true";
+            let notificationTime = localStorage.getItem("notificationTime") || "morning";
+            let offlineMode = localStorage.getItem("offlineMode") !== "false";
+            let searchHistory = localStorage.getItem("searchHistory") !== "false";
 
             function getSurahName(id) {
                 return surahNames[id] || `Sure ${id}`;
@@ -1886,6 +2331,7 @@
                 document.getElementById("surahs").style.display = "none";
                 document.getElementById("favorites").style.display = "none";
                 document.getElementById("podcasts").style.display = "none";
+                document.getElementById("settings").style.display = "none";
 
                 const prevBtn = document.getElementById("prev-verse-btn");
                 const nextBtn = document.getElementById("next-verse-btn");
@@ -2018,18 +2464,6 @@
                 }
             }
 
-            // Podcast işlevleri
-            function addPodcast() {
-                const embedCode = document.getElementById("podcast-embed-code").value.trim();
-                if (!embedCode) {
-                    showNotification('Lütfen bir podcast gömülü kodu girin', 'error');
-                    return;
-                }
-                
-                document.getElementById("podcast-content").innerHTML = embedCode;
-                showNotification('Podcast başarıyla eklendi');
-            }
-
             function showNotification(message, type = 'success') {
                 const notification = document.createElement('div');
                 notification.style.position = 'fixed';
@@ -2084,6 +2518,7 @@
                     loadAuthors(jsonData);
                     await loadQuranData(selectedAuthor);
                     loadTheme();
+                    applySettings();
                 } catch (error) {
                     console.error("Başlangıçta hata:", error);
                     alert("Uygulama başlatılırken bir hata oluştu: " + error.message);
@@ -2099,6 +2534,7 @@
                         document.getElementById("verse-detail-panel").classList.remove("active");
                         document.getElementById("favorites").style.display = "none";
                         document.getElementById("podcasts").style.display = "none";
+                        document.getElementById("settings").style.display = "none";
                     }
                 });
 
@@ -2174,9 +2610,13 @@
                     showPodcasts();
                 });
                 
-                // Podcast ekleme
-                document.getElementById("add-podcast-btn").addEventListener("click", () => {
-                    addPodcast();
+                // Ayarlar sayfası
+                document.getElementById("settings-nav-desktop").addEventListener("click", () => {
+                    showSettings();
+                });
+                
+                document.getElementById("settings-nav-mobile").addEventListener("click", () => {
+                    showSettings();
                 });
                 
                 // Ana sayfa
@@ -2187,6 +2627,9 @@
                 document.getElementById("home-nav-mobile").addEventListener("click", () => {
                     showHome();
                 });
+                
+                // Ayarlar için event listener'ları
+                setupSettingsEventListeners();
             });
 
             function showHome() {
@@ -2195,6 +2638,7 @@
                 document.getElementById("verse-detail-panel").classList.remove("active");
                 document.getElementById("favorites").style.display = "none";
                 document.getElementById("podcasts").style.display = "none";
+                document.getElementById("settings").style.display = "none";
                 document.getElementById("search-page").classList.remove("active");
                 updateActiveTab('home');
             }
@@ -2211,6 +2655,7 @@
                 document.getElementById("verse-detail-panel").classList.remove("active");
                 document.getElementById("favorites").style.display = "block";
                 document.getElementById("podcasts").style.display = "none";
+                document.getElementById("settings").style.display = "none";
                 displayFavorites();
                 updateActiveTab('favorites');
             }
@@ -2221,7 +2666,18 @@
                 document.getElementById("verse-detail-panel").classList.remove("active");
                 document.getElementById("favorites").style.display = "none";
                 document.getElementById("podcasts").style.display = "block";
+                document.getElementById("settings").style.display = "none";
                 updateActiveTab('podcasts');
+            }
+            
+            function showSettings() {
+                document.getElementById("surahs").style.display = "none";
+                document.getElementById("verse-panel").classList.remove("active");
+                document.getElementById("verse-detail-panel").classList.remove("active");
+                document.getElementById("favorites").style.display = "none";
+                document.getElementById("podcasts").style.display = "none";
+                document.getElementById("settings").style.display = "block";
+                updateActiveTab('settings');
             }
 
             // Arama için debounce fonksiyonu
@@ -2263,6 +2719,12 @@
                 document.body.classList.toggle("day-mode");
                 localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night");
                 updateThemeButton();
+                
+                // Tema modu değişkenini güncelle
+                isDayMode = document.body.classList.contains("day-mode");
+                
+                // Tema modu toggle'ını güncelle
+                document.getElementById("theme-mode-toggle").checked = isDayMode;
             }
 
             function loadTheme() {
@@ -2281,8 +2743,172 @@
                     themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
                 }
             }
-
-            document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+            
+            // Ayarları uygula
+            function applySettings() {
+                // Tema rengi ayarı
+                applyHighlightColor(highlightColor);
+                
+                // Yazı boyutu ayarı
+                updateFontSize();
+                
+                // Varsayılan meal ayarı
+                if (defaultAuthor && defaultAuthor !== selectedAuthor) {
+                    selectedAuthor = defaultAuthor;
+                    const authorSelect = document.getElementById("author-select");
+                    if (authorSelect.querySelector(`option[value="${defaultAuthor}"]`)) {
+                        authorSelect.value = defaultAuthor;
+                        loadQuranData(defaultAuthor);
+                    }
+                }
+            }
+            
+            function applyHighlightColor(color) {
+                document.documentElement.style.setProperty('--highlight-dark', color);
+                document.documentElement.style.setProperty('--highlight-light', color);
+            }
+            
+            function updateFontSize() {
+                document.getElementById("font-size-value").textContent = fontSize + "%";
+                document.documentElement.style.setProperty('--verse-font-size', fontSize + "%");
+            }
+            
+            function setupSettingsEventListeners() {
+                // Tema modu değiştirme
+                document.getElementById("theme-mode-toggle").addEventListener("change", function(e) {
+                    isDayMode = e.target.checked;
+                    localStorage.setItem("theme", isDayMode ? "day" : "night");
+                    document.body.classList.toggle("day-mode", isDayMode);
+                    document.getElementById("theme-toggle").innerHTML = isDayMode ? 
+                        '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                });
+                
+                // Tema rengi değiştirme
+                document.querySelectorAll(".color-option").forEach(option => {
+                    option.addEventListener("click", function() {
+                        document.querySelectorAll(".color-option").forEach(opt => opt.classList.remove("active"));
+                        this.classList.add("active");
+                        highlightColor = this.dataset.color;
+                        localStorage.setItem("highlightColor", highlightColor);
+                        applyHighlightColor(highlightColor);
+                    });
+                });
+                
+                // Yazı boyutu değiştirme
+                document.getElementById("decrease-font").addEventListener("click", function() {
+                    if (fontSize > 70) {
+                        fontSize -= 10;
+                        updateFontSize();
+                        localStorage.setItem("fontSize", fontSize);
+                    }
+                });
+                
+                document.getElementById("increase-font").addEventListener("click", function() {
+                    if (fontSize < 150) {
+                        fontSize += 10;
+                        updateFontSize();
+                        localStorage.setItem("fontSize", fontSize);
+                    }
+                });
+                
+                // Varsayılan meal değiştirme
+                document.getElementById("default-author").addEventListener("change", function(e) {
+                    defaultAuthor = e.target.value;
+                    localStorage.setItem("defaultAuthor", defaultAuthor);
+                    showNotification("Varsayılan meal değiştirildi: " + defaultAuthor);
+                    
+                    // Mevcut meali değiştir
+                    if (defaultAuthor !== selectedAuthor) {
+                        selectedAuthor = defaultAuthor;
+                        document.getElementById("author-select").value = defaultAuthor;
+                        loadQuranData(defaultAuthor);
+                    }
+                });
+                
+                // Otomatik kaydırma ayarı
+                document.getElementById("auto-scroll-toggle").addEventListener("change", function(e) {
+                    autoScroll = e.target.checked;
+                    localStorage.setItem("autoScroll", autoScroll);
+                });
+                
+                // Kaydırma hızı ayarı
+                document.getElementById("scroll-speed").addEventListener("input", function(e) {
+                    scrollSpeed = e.target.value;
+                    localStorage.setItem("scrollSpeed", scrollSpeed);
+                });
+                
+                // Günlük ayet bildirimi ayarı
+                document.getElementById("daily-verse-toggle").addEventListener("change", function(e) {
+                    dailyVerse = e.target.checked;
+                    localStorage.setItem("dailyVerse", dailyVerse);
+                    if (dailyVerse) {
+                        requestNotificationPermission();
+                    }
+                });
+                
+                // Bildirim zamanı ayarı
+                document.getElementById("notification-time").addEventListener("change", function(e) {
+                    notificationTime = e.target.value;
+                    localStorage.setItem("notificationTime", notificationTime);
+                });
+                
+                // Çevrimdışı kullanım ayarı
+                document.getElementById("offline-toggle").addEventListener("change", function(e) {
+                    offlineMode = e.target.checked;
+                    localStorage.setItem("offlineMode", offlineMode);
+                });
+                
+                // Arama geçmişi ayarı
+                document.getElementById("search-history-toggle").addEventListener("change", function(e) {
+                    searchHistory = e.target.checked;
+                    localStorage.setItem("searchHistory", searchHistory);
+                    if (!searchHistory) {
+                        // Arama geçmişini temizle
+                        localStorage.removeItem("searchHistoryData");
+                    }
+                });
+                
+                // Tüm verileri temizleme
+                document.getElementById("clear-data-btn").addEventListener("click", function() {
+                    if (confirm("Tüm uygulama verilerini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.")) {
+                        clearAllData();
+                    }
+                });
+                
+                // Geri bildirim gönderme
+                document.getElementById("feedback-btn").addEventListener("click", function() {
+                    window.location.href = "mailto:info@sadecekuran.com?subject=Sadece Kuran Uygulama Geri Bildirimi";
+                });
+                
+                // Tema değiştirme butonu
+                document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+            }
+            
+            function requestNotificationPermission() {
+                if (Notification && Notification.permission !== "granted") {
+                    Notification.requestPermission().then(function(permission) {
+                        if (permission === "granted") {
+                            showNotification("Bildirimler etkinleştirildi!");
+                        }
+                    });
+                }
+            }
+            
+            function clearAllData() {
+                // Favorileri ve diğer verileri temizle
+                const themeValue = localStorage.getItem("theme");
+                const highlightValue = localStorage.getItem("highlightColor");
+                localStorage.clear();
+                localStorage.setItem("theme", themeValue); // Tema ayarını koru
+                localStorage.setItem("highlightColor", highlightValue); // Tema rengi ayarını koru
+                
+                showNotification("Tüm veriler temizlendi");
+                
+                // Sayfayı yenile
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            }
         </script>
     </body>
 </html>
