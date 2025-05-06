@@ -1474,7 +1474,7 @@
         
         <!-- Desktop Sidebar -->
         <div class="sidebar">
-            <img src="logo.PNG" alt="Logo" class="sidebar-logo" />
+            <img src="sdc1.PNG" alt="Logo" class="sidebar-logo" />
             <nav class="sidebar-nav">
                 <div class="nav-item active" id="home-nav-desktop">
                     <i class="fas fa-home"></i>
@@ -2728,17 +2728,35 @@
             
             document.getElementById("search-page-input").addEventListener("input", debouncedPageSearch);
 
-            function toggleTheme() {
-                document.body.classList.toggle("day-mode");
-                localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night");
-                updateThemeButton();
-                
-                // Tema modu değişkenini güncelle
-                isDayMode = document.body.classList.contains("day-mode");
-                
-                // Tema modu toggle'ını güncelle
-                document.getElementById("theme-mode-toggle").checked = isDayMode;
+           function toggleTheme() {
+              document.body.classList.toggle("day-mode")
+              localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night")
+              updateThemeButton()
+
+              // Update logo based on theme
+              const logo = document.querySelector(".sidebar-logo")
+              if (document.body.classList.contains("day-mode")) {
+                logo.src = "sdc3.PNG"
+              } else {
+                logo.src = "sdc1.PNG"
+              }
+
+              // Tema modu değişkenini güncelle
+              isDayMode = document.body.classList.contains("day-mode")
+
+              // Tema modu toggle'ını güncelle
+              document.getElementById("theme-mode-toggle").checked = isDayMode
             }
+
+            function loadTheme() {
+              const theme = localStorage.getItem("theme") || "night"
+              if (theme === "day") {
+                document.body.classList.add("day-mode")
+                document.querySelector(".sidebar-logo").src = "sdc2.PNG"
+              }
+              updateThemeButton()
+            }
+
 
             function loadTheme() {
                 const theme = localStorage.getItem("theme") || "night";
