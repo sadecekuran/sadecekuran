@@ -1467,6 +1467,28 @@
                     width: 100%;
                 }
             }
+            
+            /* Soluk Arka Plan Blok Stili - Ayet Numaraları İçin */
+            .verse-number-bg {
+                display: inline-block;
+                background-color: rgba(29, 161, 242, 0.15);
+                color: var(--highlight-dark);
+                font-weight: bold;
+                padding: 2px 6px;
+                border-radius: 4px;
+                margin-right: 8px;
+                min-width: 30px;
+                text-align: center;
+            }
+            
+            body.day-mode .verse-number-bg {
+                background-color: rgba(29, 161, 242, 0.1);
+            }
+            
+            /* Ayet numarası ayarı için ayarlar menüsüne ekleme */
+            .setting-item {
+                margin-bottom: 15px;
+            }
         </style>
     </head>
     <body>
@@ -1626,6 +1648,22 @@
                                 <button class="font-size-btn" id="decrease-font"><i class="fas fa-minus"></i></button>
                                 <span class="font-size-value" id="font-size-value">100%</span>
                                 <button class="font-size-btn" id="increase-font"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Ayet Numarası Stili Ayarı -->
+                        <div class="setting-item">
+                            <div class="setting-label">
+                                <span>Ayet Numarası Stili</span>
+                                <span>Ayet numaralarının görünümünü seçin</span>
+                            </div>
+                            <div class="custom-select">
+                                <select id="verse-number-style">
+                                    <option value="default">Varsayılan</option>
+                                    <option value="bg" selected>Soluk Arka Plan</option>
+                                    <option value="bold">Kalın ve Renkli</option>
+                                    <option value="underline">Altı Çizgili</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -1789,6 +1827,8 @@
             let jsonData = {};
             let selectedAuthor = "Mehmet Okuyan";
             const totalSurahs = 114;
+            // Ayet numarası stili
+            let verseNumberStyle = localStorage.getItem("verseNumberStyle") || "bg";
 
             // Sure isimleri haritası (şapkasız harflerle)
             const surahNames = {
@@ -2231,6 +2271,32 @@
                 });
             }
 
+            // Ayet numarasını formatla
+            function formatVerseNumber(verseText) {
+                // Ayet numarasını ve metni ayır (örn: "1. Elif. Lâm. Mîm. Sâd.")
+                const verseMatch = verseText.match(/^(\d+\.)\s(.+)$/);
+                
+                if (verseMatch) {
+                    const verseNumber = verseMatch[1].replace('.', ''); // Noktayı kaldır
+                    const verseContent = verseMatch[2];
+                    
+                    // Seçilen stile göre HTML oluştur
+                    switch(verseNumberStyle) {
+                        case 'bg':
+                            return `<span class="verse-number-bg">${verseNumber}</span> ${verseContent}`;
+                        case 'bold':
+                            return `<span style="color: var(--highlight-dark); font-weight: bold; margin-right: 5px;">${verseNumber}.</span> ${verseContent}`;
+                        case 'underline':
+                            return `<span style="color: var(--highlight-dark); font-weight: bold; border-bottom: 2px solid var(--highlight-dark); padding-bottom: 2px; margin-right: 5px;">${verseNumber}.</span> ${verseContent}`;
+                        default:
+                            return verseText;
+                    }
+                }
+                
+                // Eğer ayet numarası ayrıştırılamazsa, orijinal metni döndür
+                return verseText;
+            }
+
             // Performans optimizasyonu için DOM fragment kullanımı
             function displayVerses(sureName, ayetler) {
                 const panel = document.getElementById("verse-panel");
@@ -2259,8 +2325,11 @@
                         verseElement.dataset.surah = sureName;
                         verseElement.dataset.index = i;
                         
+                        // Ayet numarasını formatla
+                        const formattedVerse = formatVerseNumber(ayet);
+                        
                         verseElement.innerHTML = `
-                            <span>${ayet}</span>
+                            <span>${formattedVerse}</span>
                             <span class="verse-actions">
                                 <button class="favorite-btn ${isFavorite ? "active" : ""}" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-star"></i></button>
                                 <button class="share-btn" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-share-alt"></i></button>
@@ -2313,6 +2382,7 @@
                 });
             }
 
+            // Ayet detay panelinde ayet numaralarını göstermeyen fonksiyon
             function displayVerseDetail(sureName, selectedVerse, verseIndex) {
                 const panel = document.getElementById("verse-detail-panel");
                 const title = document.getElementById("verse-detail-title");
@@ -2323,20 +2393,25 @@
                 const allTranslations = verseData.translations;
 
                 title.textContent = `${sureName} - Ayet ${verseData.verse_id}`;
-                selectedTranslation.textContent = selectedVerse;
+
+                // Ayet numarasını kaldır ve sadece içeriği göster
+                const verseContent = selectedVerse.replace(/^\d+\.\s+/, '');
+                selectedTranslation.innerHTML = verseContent;
+
                 otherTranslations.innerHTML = "";
-                
+
                 const fragment = document.createDocumentFragment();
-                
+
                 allTranslations
                     .filter(t => t.author !== selectedAuthor)
                     .forEach((t, index) => {
                         const translationDiv = document.createElement("div");
-                        // Yazar adını kalın ve tema renginde göster
-                        translationDiv.innerHTML = `<span class="author-name">${t.author}:</span> ${verseData.verse_id}. ${t.text}`;
+                        // Yazar adını kalın ve tema renginde göster, ayet numarasını kaldır
+                        const textWithoutNumber = t.text.replace(/^\d+\.\s+/, '');
+                        translationDiv.innerHTML = `<span class="author-name">${t.author}:</span> ${textWithoutNumber}`;
                         fragment.appendChild(translationDiv);
                     });
-                
+
                 otherTranslations.appendChild(fragment);
 
                 panel.classList.add("active");
@@ -2348,14 +2423,14 @@
 
                 const prevBtn = document.getElementById("prev-verse-btn");
                 const nextBtn = document.getElementById("next-verse-btn");
-                
+
                 // Performans için event listener'ları temizle ve yeniden ekle
                 const oldPrevClick = prevBtn.onclick;
                 const oldNextClick = nextBtn.onclick;
-                
+
                 if (oldPrevClick) prevBtn.removeEventListener("click", oldPrevClick);
                 if (oldNextClick) nextBtn.removeEventListener("click", oldNextClick);
-                
+
                 prevBtn.onclick = () => navigateVerse(surahIndex, verseIndex, -1);
                 nextBtn.onclick = () => navigateVerse(surahIndex, verseIndex, 1);
             }
@@ -2420,8 +2495,12 @@
                         verseElement.className = "verse";
                         verseElement.dataset.surah = f.surah;
                         verseElement.dataset.verse = f.verse;
+                        
+                        // Ayet numarasını formatla
+                        const formattedVerse = formatVerseNumber(f.verse);
+                        
                         verseElement.innerHTML = `
-                            <span>${f.surah}: ${f.verse}</span>
+                            <span>${f.surah}: ${formattedVerse}</span>
                             <span class="verse-actions">
                                 <button class="favorite-btn active" data-verse="${f.verse}" data-surah="${f.surah}"><i class="fas fa-trash-alt"></i></button>
                             </span>
@@ -2792,6 +2871,9 @@
                         loadQuranData(defaultAuthor);
                     }
                 }
+                
+                // Ayet numarası stili ayarı
+                document.getElementById("verse-number-style").value = verseNumberStyle;
             }
             
             function applyHighlightColor(color) {
@@ -2839,6 +2921,38 @@
                         fontSize += 10;
                         updateFontSize();
                         localStorage.setItem("fontSize", fontSize);
+                    }
+                });
+                
+                // Ayet numarası stili değiştirme
+                document.getElementById("verse-number-style").addEventListener("change", function(e) {
+                    verseNumberStyle = e.target.value;
+                    localStorage.setItem("verseNumberStyle", verseNumberStyle);
+                    showNotification("Ayet numarası stili değiştirildi");
+                    
+                    // Mevcut görünümü güncelle
+                    if (document.getElementById("verse-panel").classList.contains("active")) {
+                        const sureName = document.getElementById("panel-title").textContent;
+                        const surahIndex = quranData.findIndex(s => s.sure === sureName);
+                        if (surahIndex >= 0) {
+                            displayVerses(sureName, quranData[surahIndex].ayetler);
+                        }
+                    }
+                    
+                    // Detay panelini güncelle
+                    if (document.getElementById("verse-detail-panel").classList.contains("active")) {
+                        const title = document.getElementById("verse-detail-title").textContent;
+                        const parts = title.split(" - Ayet ");
+                        if (parts.length === 2) {
+                            const sureName = parts[0];
+                            const verseId = parseInt(parts[1]);
+                            const surahIndex = quranData.findIndex(s => s.sure === sureName);
+                            if (surahIndex >= 0 && verseId > 0) {
+                                const verseIndex = verseId - 1;
+                                const verse = quranData[surahIndex].ayetler[verseIndex];
+                                displayVerseDetail(sureName, verse, verseIndex);
+                            }
+                        }
                     }
                 });
                 
@@ -2929,9 +3043,11 @@
                 // Favorileri ve diğer verileri temizle
                 const themeValue = localStorage.getItem("theme");
                 const highlightValue = localStorage.getItem("highlightColor");
+                const verseNumberStyleValue = localStorage.getItem("verseNumberStyle");
                 localStorage.clear();
                 localStorage.setItem("theme", themeValue); // Tema ayarını koru
                 localStorage.setItem("highlightColor", highlightValue); // Tema rengi ayarını koru
+                localStorage.setItem("verseNumberStyle", verseNumberStyleValue); // Ayet numarası stili ayarını koru
                 
                 showNotification("Tüm veriler temizlendi");
                 
