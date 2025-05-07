@@ -2382,6 +2382,7 @@
                 });
             }
 
+            // Ayet detay panelinde ayet numaralarını göstermeyen fonksiyon
             function displayVerseDetail(sureName, selectedVerse, verseIndex) {
                 const panel = document.getElementById("verse-detail-panel");
                 const title = document.getElementById("verse-detail-title");
@@ -2392,25 +2393,25 @@
                 const allTranslations = verseData.translations;
 
                 title.textContent = `${sureName} - Ayet ${verseData.verse_id}`;
-                
-                // Ayet numarasını formatla
-                const formattedVerse = formatVerseNumber(selectedVerse);
-                selectedTranslation.innerHTML = formattedVerse;
-                
+
+                // Ayet numarasını kaldır ve sadece içeriği göster
+                const verseContent = selectedVerse.replace(/^\d+\.\s+/, '');
+                selectedTranslation.innerHTML = verseContent;
+
                 otherTranslations.innerHTML = "";
-                
+
                 const fragment = document.createDocumentFragment();
-                
+
                 allTranslations
                     .filter(t => t.author !== selectedAuthor)
                     .forEach((t, index) => {
                         const translationDiv = document.createElement("div");
-                        // Yazar adını kalın ve tema renginde göster
-                        const formattedText = formatVerseNumber(`${verseData.verse_id}. ${t.text}`);
-                        translationDiv.innerHTML = `<span class="author-name">${t.author}:</span> ${formattedText}`;
+                        // Yazar adını kalın ve tema renginde göster, ayet numarasını kaldır
+                        const textWithoutNumber = t.text.replace(/^\d+\.\s+/, '');
+                        translationDiv.innerHTML = `<span class="author-name">${t.author}:</span> ${textWithoutNumber}`;
                         fragment.appendChild(translationDiv);
                     });
-                
+
                 otherTranslations.appendChild(fragment);
 
                 panel.classList.add("active");
@@ -2422,14 +2423,14 @@
 
                 const prevBtn = document.getElementById("prev-verse-btn");
                 const nextBtn = document.getElementById("next-verse-btn");
-                
+
                 // Performans için event listener'ları temizle ve yeniden ekle
                 const oldPrevClick = prevBtn.onclick;
                 const oldNextClick = nextBtn.onclick;
-                
+
                 if (oldPrevClick) prevBtn.removeEventListener("click", oldPrevClick);
                 if (oldNextClick) nextBtn.removeEventListener("click", oldNextClick);
-                
+
                 prevBtn.onclick = () => navigateVerse(surahIndex, verseIndex, -1);
                 nextBtn.onclick = () => navigateVerse(surahIndex, verseIndex, 1);
             }
