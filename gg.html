@@ -149,49 +149,6 @@
             /* Mobile Navigation */
             .mobile-nav {
                 display: none;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                background-color: var(--secondary-dark);
-                z-index: 100;
-                border-top: 1px solid var(--accent-dark);
-                padding: 10px 0;
-            }
-            
-            body.day-mode .mobile-nav {
-                background-color: var(--secondary-light);
-                border-top: 1px solid var(--accent-light);
-            }
-            
-            .mobile-nav-items {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-            }
-            
-            .mobile-nav-item {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                color: var(--text-dark);
-                font-size: 1.1rem;
-                padding: 8px 0;
-                cursor: pointer;
-                transition: color 0.2s var(--transition-function);
-            }
-            
-            body.day-mode .mobile-nav-item {
-                color: var(--text-light);
-            }
-            
-            .mobile-nav-item.active {
-                color: var(--highlight-dark);
-            }
-            
-            .mobile-nav-item span {
-                font-size: 0.7rem;
-                margin-top: 4px;
             }
             
             /* Main Content */
@@ -1364,10 +1321,6 @@
                     width: calc(100% - 50px);
                 }
                 
-                .mobile-nav {
-                    display: block;
-                }
-                
                 .main-content {
                     margin-left: 0;
                 }
@@ -1451,10 +1404,6 @@
                     padding: 12px;
                 }
                 
-                .mobile-nav-item {
-                    font-size: 1rem;
-                }
-                
                 .settings-section h3 {
                     font-size: 1.1rem;
                 }
@@ -1489,6 +1438,282 @@
             .setting-item {
                 margin-bottom: 15px;
             }
+            
+            /* Drawer Menu Styles */
+            .drawer-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 90;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .drawer-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .drawer-menu {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: var(--secondary-dark);
+                z-index: 100;
+                border-radius: 20px 20px 0 0;
+                transform: translateY(100%);
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            .drawer-menu.active {
+                transform: translateY(0);
+            }
+            
+            body.day-mode .drawer-menu {
+                background-color: var(--secondary-light);
+                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .drawer-handle {
+                width: 40px;
+                height: 5px;
+                background-color: var(--accent-dark);
+                border-radius: 3px;
+                margin: 15px auto;
+                cursor: pointer;
+            }
+            
+            body.day-mode .drawer-handle {
+                background-color: var(--accent-light);
+            }
+            
+            .drawer-header {
+                display: flex;
+                align-items: center;
+                padding: 0 20px 15px;
+                border-bottom: 1px solid var(--accent-dark);
+            }
+            
+            body.day-mode .drawer-header {
+                border-bottom: 1px solid var(--accent-light);
+            }
+            
+            .drawer-title {
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+            
+            .drawer-close {
+                margin-left: auto;
+                background: none;
+                border: none;
+                color: var(--text-dark);
+                font-size: 1.2rem;
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: all 0.3s ease;
+            }
+            
+            body.day-mode .drawer-close {
+                color: var(--text-light);
+            }
+            
+            .drawer-close:hover {
+                background-color: var(--accent-dark);
+            }
+            
+            body.day-mode .drawer-close:hover {
+                background-color: var(--accent-light);
+            }
+            
+            .drawer-content {
+                padding: 15px 20px;
+            }
+            
+            .drawer-nav {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .drawer-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 15px 10px;
+                background-color: var(--accent-dark);
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+            }
+            
+            body.day-mode .drawer-item {
+                background-color: var(--accent-light);
+            }
+            
+            .drawer-item:hover, .drawer-item.active {
+                background-color: rgba(29, 161, 242, 0.2);
+                transform: translateY(-5px);
+            }
+            
+            .drawer-item i {
+                font-size: 1.5rem;
+                margin-bottom: 8px;
+                color: var(--highlight-dark);
+            }
+            
+            .drawer-item span {
+                font-size: 0.8rem;
+                font-weight: 500;
+            }
+            
+            .drawer-section {
+                margin-bottom: 20px;
+            }
+            
+            .drawer-section-title {
+                font-size: 1rem;
+                font-weight: 600;
+                margin-bottom: 10px;
+                padding-bottom: 5px;
+                border-bottom: 1px solid var(--accent-dark);
+            }
+            
+            body.day-mode .drawer-section-title {
+                border-bottom: 1px solid var(--accent-light);
+            }
+            
+            .drawer-list {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .drawer-list-item {
+                display: flex;
+                align-items: center;
+                padding: 12px 15px;
+                background-color: var(--accent-dark);
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            body.day-mode .drawer-list-item {
+                background-color: var(--accent-light);
+            }
+            
+            .drawer-list-item:hover {
+                background-color: rgba(29, 161, 242, 0.2);
+            }
+            
+            .drawer-list-item i {
+                font-size: 1.2rem;
+                margin-right: 15px;
+                color: var(--highlight-dark);
+                width: 20px;
+                text-align: center;
+            }
+            
+            /* Bottom Navigation */
+            .bottom-nav {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: var(--secondary-dark);
+                border-radius: 30px;
+                padding: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                z-index: 50;
+                display: none;
+            }
+            
+            body.day-mode .bottom-nav {
+                background-color: var(--secondary-light);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .bottom-nav-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                height: 50px;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .bottom-nav-item:hover {
+                background-color: var(--accent-dark);
+            }
+            
+            body.day-mode .bottom-nav-item:hover {
+                background-color: var(--accent-light);
+            }
+            
+            .bottom-nav-item.active {
+                background-color: var(--highlight-dark);
+                color: white;
+            }
+            
+            .bottom-nav-item i {
+                font-size: 1.2rem;
+            }
+            
+            .menu-btn {
+                width: 60px;
+                height: 60px;
+                border-radius: 30px;
+                background-color: var(--highlight-dark);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                margin: 0 5px;
+                box-shadow: 0 5px 15px rgba(29, 161, 242, 0.3);
+                transition: all 0.3s ease;
+            }
+            
+            .menu-btn:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
+            }
+            
+            /* Hide drawer menu and bottom nav on desktop */
+            @media (min-width: 769px) {
+                .drawer-menu, .drawer-overlay, .bottom-nav {
+                    display: none;
+                }
+            }
+            
+            /* Show drawer menu and bottom nav on mobile */
+            @media (max-width: 768px) {
+                .bottom-nav {
+                    display: flex;
+                }
+            }
         </style>
     </head>
     <body>
@@ -1514,32 +1739,6 @@
                     <i class="fas fa-cog"></i>
                 </div>
             </nav>
-        </div>
-        
-        <!-- Mobile Navigation -->
-        <div class="mobile-nav">
-            <div class="mobile-nav-items">
-                <div class="mobile-nav-item active" id="home-nav-mobile">
-                    <i class="fas fa-home"></i>
-                    <span>Ana Sayfa</span>
-                </div>
-                <div class="mobile-nav-item" id="search-nav-mobile">
-                    <i class="fas fa-search"></i>
-                    <span>Ara</span>
-                </div>
-                <div class="mobile-nav-item" id="favorites-nav-mobile">
-                    <i class="fas fa-star"></i>
-                    <span>Favoriler</span>
-                </div>
-                <div class="mobile-nav-item" id="podcasts-nav-mobile">
-                    <i class="fas fa-podcast"></i>
-                    <span>Podcastler</span>
-                </div>
-                <div class="mobile-nav-item" id="settings-nav-mobile">
-                    <i class="fas fa-cog"></i>
-                    <span>Ayarlar</span>
-                </div>
-            </div>
         </div>
         
         <div class="main-content">
@@ -1819,6 +2018,103 @@
                         <div class="example-search"><i class="fas fa-hashtag"></i> namaz</div>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Drawer Overlay -->
+        <div class="drawer-overlay"></div>
+        
+        <!-- Drawer Menu -->
+        <div class="drawer-menu">
+            <div class="drawer-handle"></div>
+            
+            <div class="drawer-header">
+                <div class="drawer-title">Menü</div>
+                <button class="drawer-close"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="drawer-content">
+                <div class="drawer-nav">
+                    <div class="drawer-item active" id="home-drawer">
+                        <i class="fas fa-home"></i>
+                        <span>Ana Sayfa</span>
+                    </div>
+                    <div class="drawer-item" id="search-drawer">
+                        <i class="fas fa-search"></i>
+                        <span>Ara</span>
+                    </div>
+                    <div class="drawer-item" id="favorites-drawer">
+                        <i class="fas fa-star"></i>
+                        <span>Favoriler</span>
+                    </div>
+                    <div class="drawer-item" id="podcasts-drawer">
+                        <i class="fas fa-podcast"></i>
+                        <span>Podcastler</span>
+                    </div>
+                    <div class="drawer-item" id="surahs-drawer">
+                        <i class="fas fa-book"></i>
+                        <span>Sureler</span>
+                    </div>
+                    <div class="drawer-item" id="settings-drawer">
+                        <i class="fas fa-cog"></i>
+                        <span>Ayarlar</span>
+                    </div>
+                </div>
+                
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Son Okunanlar</div>
+                    <div class="drawer-list">
+                        <div class="drawer-list-item">
+                            <i class="fas fa-book-open"></i>
+                            <span>Fatiha Suresi</span>
+                        </div>
+                        <div class="drawer-list-item">
+                            <i class="fas fa-book-open"></i>
+                            <span>Bakara Suresi</span>
+                        </div>
+                        <div class="drawer-list-item">
+                            <i class="fas fa-book-open"></i>
+                            <span>İhlas Suresi</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Ayarlar</div>
+                    <div class="drawer-list">
+                        <div class="drawer-list-item" id="app-settings-drawer">
+                            <i class="fas fa-cog"></i>
+                            <span>Uygulama Ayarları</span>
+                        </div>
+                        <div class="drawer-list-item" id="profile-drawer">
+                            <i class="fas fa-user"></i>
+                            <span>Profil</span>
+                        </div>
+                        <div class="drawer-list-item" id="help-drawer">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Yardım</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="bottom-nav-item active" id="home-nav">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="bottom-nav-item" id="search-nav">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="bottom-nav-item" id="favorites-nav">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="bottom-nav-item" id="settings-nav">
+                <i class="fas fa-cog"></i>
             </div>
         </div>
         
@@ -2589,13 +2885,29 @@
                     document.getElementById(`${id}-nav-desktop`).classList.add('active');
                 }
                 
-                // Mobile navigation
-                document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                // Mobile navigation - Bottom Nav
+                document.querySelectorAll('.bottom-nav-item').forEach(item => {
                     item.classList.remove('active');
                 });
-                if (document.getElementById(`${id}-nav-mobile`)) {
-                    document.getElementById(`${id}-nav-mobile`).classList.add('active');
+                if (document.getElementById(`${id}-nav`)) {
+                    document.getElementById(`${id}-nav`).classList.add('active');
                 }
+                
+                // Drawer Menu
+                document.querySelectorAll('.drawer-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                if (document.getElementById(`${id}-drawer`)) {
+                    document.getElementById(`${id}-drawer`).classList.add('active');
+                }
+            }
+
+            // Drawer Menu Functions
+            function toggleDrawer() {
+                const drawerMenu = document.querySelector('.drawer-menu');
+                const drawerOverlay = document.querySelector('.drawer-overlay');
+                drawerMenu.classList.toggle('active');
+                drawerOverlay.classList.toggle('active');
             }
 
             // Performans için olay dinleyicilerini optimize et
@@ -2667,7 +2979,11 @@
                     showSearch();
                 });
                 
-                document.getElementById("search-nav-mobile").addEventListener("click", () => {
+                document.getElementById("search-nav").addEventListener("click", () => {
+                    showSearch();
+                });
+                
+                document.getElementById("search-drawer").addEventListener("click", () => {
                     showSearch();
                 });
                 
@@ -2689,7 +3005,11 @@
                     showFavorites();
                 });
                 
-                document.getElementById("favorites-nav-mobile").addEventListener("click", () => {
+                document.getElementById("favorites-nav").addEventListener("click", () => {
+                    showFavorites();
+                });
+                
+                document.getElementById("favorites-drawer").addEventListener("click", () => {
                     showFavorites();
                 });
                 
@@ -2698,7 +3018,7 @@
                     showPodcasts();
                 });
                 
-                document.getElementById("podcasts-nav-mobile").addEventListener("click", () => {
+                document.getElementById("podcasts-drawer").addEventListener("click", () => {
                     showPodcasts();
                 });
                 
@@ -2707,7 +3027,11 @@
                     showSettings();
                 });
                 
-                document.getElementById("settings-nav-mobile").addEventListener("click", () => {
+                document.getElementById("settings-nav").addEventListener("click", () => {
+                    showSettings();
+                });
+                
+                document.getElementById("settings-drawer").addEventListener("click", () => {
                     showSettings();
                 });
                 
@@ -2716,9 +3040,72 @@
                     showHome();
                 });
                 
-                document.getElementById("home-nav-mobile").addEventListener("click", () => {
+                document.getElementById("home-nav").addEventListener("click", () => {
                     showHome();
                 });
+                
+                document.getElementById("home-drawer").addEventListener("click", () => {
+                    showHome();
+                });
+                
+                document.getElementById("surahs-drawer").addEventListener("click", () => {
+                    showHome();
+                });
+                
+                // Drawer Menu Event Listeners
+                const drawerMenu = document.querySelector('.drawer-menu');
+                const drawerOverlay = document.querySelector('.drawer-overlay');
+                const drawerClose = document.querySelector('.drawer-close');
+                const drawerHandle = document.querySelector('.drawer-handle');
+                const menuBtn = document.querySelector('.menu-btn');
+                
+                menuBtn.addEventListener('click', toggleDrawer);
+                drawerClose.addEventListener('click', toggleDrawer);
+                drawerOverlay.addEventListener('click', toggleDrawer);
+                drawerHandle.addEventListener('click', toggleDrawer);
+                
+                // Drawer list items
+                document.querySelectorAll('.drawer-list-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        // Handle specific actions for list items
+                        const itemId = this.id;
+                        if (itemId === 'app-settings-drawer') {
+                            showSettings();
+                        }
+                        
+                        // Close drawer after selecting an item
+                        setTimeout(() => {
+                            toggleDrawer();
+                        }, 300);
+                    });
+                });
+                
+                // Swipe to open drawer
+                let touchStartY = 0;
+                let touchEndY = 0;
+                
+                document.addEventListener('touchstart', function(e) {
+                    touchStartY = e.changedTouches[0].screenY;
+                }, false);
+                
+                document.addEventListener('touchend', function(e) {
+                    touchEndY = e.changedTouches[0].screenY;
+                    handleSwipe();
+                }, false);
+                
+                function handleSwipe() {
+                    if (touchEndY < touchStartY && (touchStartY - touchEndY) > 50) {
+                        // Swipe up - open drawer if it's closed
+                        if (!drawerMenu.classList.contains('active')) {
+                            toggleDrawer();
+                        }
+                    } else if (touchEndY > touchStartY && (touchEndY - touchStartY) > 50) {
+                        // Swipe down - close drawer if it's open
+                        if (drawerMenu.classList.contains('active')) {
+                            toggleDrawer();
+                        }
+                    }
+                }
                 
                 // Ayarlar için event listener'ları
                 setupSettingsEventListeners();
