@@ -2781,16 +2781,26 @@
             });
 
             function showHome() {
+                // Reset search input
+                document.getElementById("search").value = "";
+                
+                // Show surahs and controls
                 document.getElementById("surahs").style.display = "block";
+                document.querySelector('.controls').style.display = "flex";
+                
+                // Hide all other panels
                 document.getElementById("verse-panel").classList.remove("active");
                 document.getElementById("verse-detail-panel").classList.remove("active");
                 document.getElementById("favorites").style.display = "none";
                 document.getElementById("podcasts").style.display = "none";
                 document.getElementById("settings").style.display = "none";
                 document.getElementById("search-page").classList.remove("active");
+                
+                // Update active tab
                 updateActiveTab('home');
-                // Controls bölümünü göster
-                document.querySelector('.controls').style.display = "flex";
+                
+                // Reload the full list of surahs (this clears any previous search results)
+                displaySurahs(quranData);
             }
 
             function showSearch() {
