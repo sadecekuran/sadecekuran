@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+    <title>Sayfa Bulunamadı - SADECE KURAN</title>
+    <link rel="icon" type="image/png" href="/logokuran2.jpg"/>
+    <link rel="apple-touch-icon" href="/logokuran2.jpg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #15202b;
+            --secondary-dark: #192734;
+            --accent-dark: #22303c;
+            --text-dark: #ffffff;
+            --highlight-dark: #1da1f2;
+            
+            --primary-light: #ffffff;
+            --secondary-light: #f7f9fa;
+            --accent-light: #ebeef0;
+            --text-light: #0f1419;
+            --highlight-light: #1da1f2;
+            
+            --transition-speed: 0.3s;
+            --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-dark);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background 0.3s var(--transition-function), color 0.3s var(--transition-function);
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-dark) var(--primary-dark);
+            overflow-x: hidden;
+        }
+        
+        body.day-mode {
+            background-color: var(--primary-light);
+            color: var(--text-light);
+            scrollbar-color: var(--accent-light) var(--primary-light);
+        }
+        
+        /* Header */
+        .header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--accent-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-dark);
+            z-index: 5;
+            transition: background-color 0.3s var(--transition-function);
+        }
+        
+        body.day-mode .header {
+            background-color: var(--primary-light);
+            border-bottom: 1px solid var(--accent-light);
+        }
+        
+        .header h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        #theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s var(--transition-function);
+        }
+        
+        body.day-mode #theme-toggle {
+            color: var(--text-light);
+        }
+        
+        #theme-toggle:hover {
+            background-color: var(--accent-dark);
+        }
+        
+        body.day-mode #theme-toggle:hover {
+            background-color: var(--accent-light);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* 404 Container */
+        .error-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--highlight-dark);
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.day-mode .error-code {
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .error-message {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            color: var(--text-dark);
+            opacity: 0.9;
+        }
+        
+        body.day-mode .error-message {
+            color: var(--text-light);
+        }
+        
+        .error-image {
+            width: 250px;
+            height: 250px;
+            margin-bottom: 30px;
+            object-fit: contain;
+        }
+        
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+        
+        #search {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--accent-dark);
+            border-radius: 20px;
+            background-color: var(--secondary-dark);
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            transition: all 0.2s var(--transition-function);
+            padding-right: 40px;
+        }
+        
+        body.day-mode #search {
+            background-color: var(--secondary-light);
+            border: 1px solid var(--accent-light);
+            color: var(--text-light);
+        }
+        
+        #search:focus {
+            outline: none;
+            border-color: var(--highlight-dark);
+            box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dark);
+            opacity: 0.6;
+            cursor: pointer;
+        }
+        
+        body.day-mode .search-icon {
+            color: var(--text-light);
+        }
+        
+        .navigation-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .nav-link {
+            padding: 10px 20px;
+            background-color: var(--secondary-dark);
+            border-radius: 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s var(--transition-function);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        body.day-mode .nav-link {
+            background-color: var(--secondary-light);
+            color: var(--text-light);
+        }
+        
+        .nav-link:hover {
+            background-color: var(--highlight-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .home-button {
+            padding: 12px 25px;
+            background-color: var(--highlight-dark);
+            border-radius: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s var(--transition-function);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .home-button:hover {
+            background-color: #1a91da;
+            transform: translateY(-2px);
+        }
+        
+        .quran-quote {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--secondary-dark);
+            border-radius: 12px;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        body.day-mode .quran-quote {
+            background-color: var(--secondary-light);
+        }
+        
+        .quran-quote::before {
+            content: '\f10d';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 1.5rem;
+            color: var(--highlight-dark);
+            background-color: var(--primary-dark);
+            padding: 5px;
+            border-radius: 50%;
+        }
+        
+        body.day-mode .quran-quote::before {
+            background-color: var(--primary-light);
+        }
+        
+        .quote-text {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .quote-source {
+            text-align: right;
+            font-weight: 500;
+            color: var(--highlight-dark);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+            border-top: 1px solid var(--accent-dark);
+            transition: all 0.3s var(--transition-function);
+        }
+        
+        body.day-mode footer {
+            color: var(--text-light);
+            border-top: 1px solid var(--accent-light);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
+            
+            .error-message {
+                font-size: 1rem;
+            }
+            
+            .error-image {
+                width: 200px;
+                height: 200px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 4rem;
+            }
+            
+            .error-title {
+                font-size: 1.2rem;
+            }
+            
+            .navigation-links {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-link {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .home-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <header class="header">
+            <h1>SADECE KURAN</h1> 
+            <div class="header-actions">
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+        
+        <div class="error-container">
+            <div class="error-code">APP</div>
+            <h1 class="error-title"></h1>
+            <p class="error-message">EĞER İNMEDİYSE ALTTAKİ BUTONA TIKLAYINIZ</p>
+            
+            <a href="/app.apk" class="home-button">
+                <i class="fas fa-arrow-left"></i> İNDİR
+            </a>
+            
+           <div class="quran-quote">
+                <p class="quote-text">"Şüphesiz zorlukla beraber bir kolaylık vardır. Gerçekten, zorlukla beraber bir kolaylık vardır."</p>
+                <p class="quote-source">İnşirah Suresi, 5-6</p>
+            </div>
+            
+        </div>
+        
+        <footer>
+            <p>© 2025 SADECE KURAN</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'day') {
+                body.classList.add('day-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('day-mode');
+                
+                if (body.classList.contains('day-mode')) {
+                    localStorage.setItem('theme', 'day');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    localStorage.setItem('theme', 'night');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('search');
+            const searchIcon = document.querySelector('.search-icon');
+            
+            function performSearch() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                }
+            }
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            searchIcon.addEventListener('click', performSearch);
+        });
+    </script>
+</body>
+</html>
