@@ -1681,7 +1681,7 @@
                 font-size: 1.2rem;
             }
             
-            .menu-btn {
+            .home-btn {
                 width: 60px;
                 height: 60px;
                 border-radius: 30px;
@@ -1696,7 +1696,7 @@
                 transition: all 0.3s ease;
             }
             
-            .menu-btn:hover {
+            .home-btn:hover {
                 transform: translateY(-5px);
                 box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
             }
@@ -2107,8 +2107,8 @@
             <div class="bottom-nav-item" id="search-nav">
                 <i class="fas fa-search"></i>
             </div>
-            <div class="menu-btn" id="menu-btn">
-                <i class="fas fa-bars"></i>
+            <div class="home-btn" id="home-btn">
+                <i class="fas fa-book-open"></i>
             </div>
             <div class="bottom-nav-item" id="favorites-nav">
                 <i class="fas fa-star"></i>
@@ -3052,14 +3052,17 @@
                     showHome();
                 });
                 
+                // Ana sayfa butonu (eski menü butonu yerine)
+                document.getElementById("home-btn").addEventListener("click", () => {
+                    window.location.href = "index.html";
+                });
+                
                 // Drawer Menu Event Listeners
                 const drawerMenu = document.querySelector('.drawer-menu');
                 const drawerOverlay = document.querySelector('.drawer-overlay');
                 const drawerClose = document.querySelector('.drawer-close');
                 const drawerHandle = document.querySelector('.drawer-handle');
-                const menuBtn = document.querySelector('.menu-btn');
                 
-                menuBtn.addEventListener('click', toggleDrawer);
                 drawerClose.addEventListener('click', toggleDrawer);
                 drawerOverlay.addEventListener('click', toggleDrawer);
                 drawerHandle.addEventListener('click', toggleDrawer);
