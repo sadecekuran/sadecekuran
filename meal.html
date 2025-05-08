@@ -149,49 +149,6 @@
             /* Mobile Navigation */
             .mobile-nav {
                 display: none;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                background-color: var(--secondary-dark);
-                z-index: 100;
-                border-top: 1px solid var(--accent-dark);
-                padding: 10px 0;
-            }
-            
-            body.day-mode .mobile-nav {
-                background-color: var(--secondary-light);
-                border-top: 1px solid var(--accent-light);
-            }
-            
-            .mobile-nav-items {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-            }
-            
-            .mobile-nav-item {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                color: var(--text-dark);
-                font-size: 1.1rem;
-                padding: 8px 0;
-                cursor: pointer;
-                transition: color 0.2s var(--transition-function);
-            }
-            
-            body.day-mode .mobile-nav-item {
-                color: var(--text-light);
-            }
-            
-            .mobile-nav-item.active {
-                color: var(--highlight-dark);
-            }
-            
-            .mobile-nav-item span {
-                font-size: 0.7rem;
-                margin-top: 4px;
             }
             
             /* Main Content */
@@ -1364,10 +1321,6 @@
                     width: calc(100% - 50px);
                 }
                 
-                .mobile-nav {
-                    display: block;
-                }
-                
                 .main-content {
                     margin-left: 0;
                 }
@@ -1451,10 +1404,6 @@
                     padding: 12px;
                 }
                 
-                .mobile-nav-item {
-                    font-size: 1rem;
-                }
-                
                 .settings-section h3 {
                     font-size: 1.1rem;
                 }
@@ -1489,6 +1438,90 @@
             .setting-item {
                 margin-bottom: 15px;
             }
+            
+            /* Bottom Navigation */
+            .bottom-nav {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: var(--secondary-dark);
+                border-radius: 30px;
+                padding: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                z-index: 50;
+                display: none;
+            }
+            
+            body.day-mode .bottom-nav {
+                background-color: var(--secondary-light);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .bottom-nav-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                height: 50px;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .bottom-nav-item:hover {
+                background-color: var(--accent-dark);
+            }
+            
+            body.day-mode .bottom-nav-item:hover {
+                background-color: var(--accent-light);
+            }
+            
+            .bottom-nav-item.active {
+                background-color: var(--highlight-dark);
+                color: white;
+            }
+            
+            .bottom-nav-item i {
+                font-size: 1.2rem;
+            }
+            
+            .home-btn {
+                width: 60px;
+                height: 60px;
+                border-radius: 30px;
+                background-color: var(--highlight-dark);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                margin: 0 5px;
+                box-shadow: 0 5px 15px rgba(29, 161, 242, 0.3);
+                transition: all 0.3s ease;
+            }
+            
+            .home-btn:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
+            }
+            
+            /* Hide bottom nav on desktop */
+            @media (min-width: 769px) {
+                .bottom-nav {
+                    display: none;
+                }
+            }
+            
+            /* Show bottom nav on mobile */
+            @media (max-width: 768px) {
+                .bottom-nav {
+                    display: flex;
+                }
+            }
         </style>
     </head>
     <body>
@@ -1514,32 +1547,6 @@
                     <i class="fas fa-cog"></i>
                 </div>
             </nav>
-        </div>
-        
-        <!-- Mobile Navigation -->
-        <div class="mobile-nav">
-            <div class="mobile-nav-items">
-                <div class="mobile-nav-item active" id="home-nav-mobile">
-                    <i class="fas fa-home"></i>
-                    <span>Ana Sayfa</span>
-                </div>
-                <div class="mobile-nav-item" id="search-nav-mobile">
-                    <i class="fas fa-search"></i>
-                    <span>Ara</span>
-                </div>
-                <div class="mobile-nav-item" id="favorites-nav-mobile">
-                    <i class="fas fa-star"></i>
-                    <span>Favoriler</span>
-                </div>
-                <div class="mobile-nav-item" id="podcasts-nav-mobile">
-                    <i class="fas fa-podcast"></i>
-                    <span>Podcastler</span>
-                </div>
-                <div class="mobile-nav-item" id="settings-nav-mobile">
-                    <i class="fas fa-cog"></i>
-                    <span>Ayarlar</span>
-                </div>
-            </div>
         </div>
         
         <div class="main-content">
@@ -1819,6 +1826,25 @@
                         <div class="example-search"><i class="fas fa-hashtag"></i> namaz</div>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="bottom-nav-item active" id="home-nav">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="bottom-nav-item" id="search-nav">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="home-btn" id="home-btn">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="bottom-nav-item" id="favorites-nav">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="bottom-nav-item" id="settings-nav">
+                <i class="fas fa-cog"></i>
             </div>
         </div>
         
@@ -2154,6 +2180,8 @@
                         const sure = data[index];
                         displayVerses(sure.sure, sure.ayetler);
                         surahsDiv.style.display = "none";
+                        // Controls bölümünü gizle
+                        document.querySelector('.controls').style.display = "none";
                     }
                 });
             }
@@ -2258,6 +2286,8 @@
                             displayVerses(sure.sure, sure.ayetler);
                             document.getElementById("search-page").classList.remove("active");
                             document.getElementById("surahs").style.display = "none";
+                            // Controls bölümünü gizle
+                            document.querySelector('.controls').style.display = "none";
                         } else {
                             // Ayet sonucu
                             const surah = verseResult.dataset.surah;
@@ -2266,6 +2296,8 @@
                             const ayet = quranData[surahIndex].ayetler[verseIndex];
                             displayVerseDetail(surah, ayet, verseIndex);
                             document.getElementById("search-page").classList.remove("active");
+                            // Controls bölümünü gizle
+                            document.querySelector('.controls').style.display = "none";
                         }
                     }
                 });
@@ -2589,12 +2621,12 @@
                     document.getElementById(`${id}-nav-desktop`).classList.add('active');
                 }
                 
-                // Mobile navigation
-                document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                // Mobile navigation - Bottom Nav
+                document.querySelectorAll('.bottom-nav-item').forEach(item => {
                     item.classList.remove('active');
                 });
-                if (document.getElementById(`${id}-nav-mobile`)) {
-                    document.getElementById(`${id}-nav-mobile`).classList.add('active');
+                if (document.getElementById(`${id}-nav`)) {
+                    document.getElementById(`${id}-nav`).classList.add('active');
                 }
             }
 
@@ -2627,6 +2659,8 @@
                         document.getElementById("favorites").style.display = "none";
                         document.getElementById("podcasts").style.display = "none";
                         document.getElementById("settings").style.display = "none";
+                        // Controls bölümünü göster
+                        document.querySelector('.controls').style.display = "flex";
                     }
                 });
 
@@ -2635,6 +2669,8 @@
                     const surahsDiv = document.getElementById("surahs");
                     panel.classList.remove("active");
                     surahsDiv.style.display = "block";
+                    // Controls bölümünü göster
+                    document.querySelector('.controls').style.display = "flex";
                 });
 
                 document.getElementById("back-btn").addEventListener("click", () => {
@@ -2660,6 +2696,8 @@
                     document.getElementById("surahs").style.display = "block";
                     displaySurahs(quranData);
                     updateActiveTab('home');
+                    // Controls bölümünü göster
+                    document.querySelector('.controls').style.display = "flex";
                 });
                 
                 // Arama sayfası
@@ -2667,7 +2705,7 @@
                     showSearch();
                 });
                 
-                document.getElementById("search-nav-mobile").addEventListener("click", () => {
+                document.getElementById("search-nav").addEventListener("click", () => {
                     showSearch();
                 });
                 
@@ -2689,7 +2727,7 @@
                     showFavorites();
                 });
                 
-                document.getElementById("favorites-nav-mobile").addEventListener("click", () => {
+                document.getElementById("favorites-nav").addEventListener("click", () => {
                     showFavorites();
                 });
                 
@@ -2698,16 +2736,12 @@
                     showPodcasts();
                 });
                 
-                document.getElementById("podcasts-nav-mobile").addEventListener("click", () => {
-                    showPodcasts();
-                });
-                
                 // Ayarlar sayfası
                 document.getElementById("settings-nav-desktop").addEventListener("click", () => {
                     showSettings();
                 });
                 
-                document.getElementById("settings-nav-mobile").addEventListener("click", () => {
+                document.getElementById("settings-nav").addEventListener("click", () => {
                     showSettings();
                 });
                 
@@ -2716,29 +2750,65 @@
                     showHome();
                 });
                 
-                document.getElementById("home-nav-mobile").addEventListener("click", () => {
+                document.getElementById("home-nav").addEventListener("click", () => {
                     showHome();
                 });
+                
+                // Ana sayfa butonu (eski menü butonu yerine)
+                document.getElementById("home-btn").addEventListener("click", () => {
+                    window.location.href = "index.html";
+                });
+                
+                // Swipe to open drawer
+                let touchStartY = 0;
+                let touchEndY = 0;
+                
+                document.addEventListener('touchstart', function(e) {
+                    touchStartY = e.changedTouches[0].screenY;
+                }, false);
+                
+                document.addEventListener('touchend', function(e) {
+                    touchEndY = e.changedTouches[0].screenY;
+                    handleSwipe();
+                }, false);
+                
+                function handleSwipe() {
+                    // Drawer menü kaldırıldığı için swipe işlemi artık gerekli değil
+                }
                 
                 // Ayarlar için event listener'ları
                 setupSettingsEventListeners();
             });
 
             function showHome() {
+                // Reset search input
+                document.getElementById("search").value = "";
+                
+                // Show surahs and controls
                 document.getElementById("surahs").style.display = "block";
+                document.querySelector('.controls').style.display = "flex";
+                
+                // Hide all other panels
                 document.getElementById("verse-panel").classList.remove("active");
                 document.getElementById("verse-detail-panel").classList.remove("active");
                 document.getElementById("favorites").style.display = "none";
                 document.getElementById("podcasts").style.display = "none";
                 document.getElementById("settings").style.display = "none";
                 document.getElementById("search-page").classList.remove("active");
+                
+                // Update active tab
                 updateActiveTab('home');
+                
+                // Reload the full list of surahs (this clears any previous search results)
+                displaySurahs(quranData);
             }
 
             function showSearch() {
                 document.getElementById("search-page").classList.add("active");
                 document.getElementById("search-page-input").focus();
                 updateActiveTab('search');
+                // Controls bölümünü gizle
+                document.querySelector('.controls').style.display = "none";
             }
 
             function showFavorites() {
@@ -2750,6 +2820,8 @@
                 document.getElementById("settings").style.display = "none";
                 displayFavorites();
                 updateActiveTab('favorites');
+                // Controls bölümünü gizle
+                document.querySelector('.controls').style.display = "none";
             }
 
             function showPodcasts() {
@@ -2760,6 +2832,8 @@
                 document.getElementById("podcasts").style.display = "block";
                 document.getElementById("settings").style.display = "none";
                 updateActiveTab('podcasts');
+                // Controls bölümünü gizle
+                document.querySelector('.controls').style.display = "none";
             }
             
             function showSettings() {
@@ -2770,6 +2844,8 @@
                 document.getElementById("podcasts").style.display = "none";
                 document.getElementById("settings").style.display = "block";
                 updateActiveTab('settings');
+                // Controls bölümünü gizle
+                document.querySelector('.controls').style.display = "none";
             }
 
             // Arama için debounce fonksiyonu
