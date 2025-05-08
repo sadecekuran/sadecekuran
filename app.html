@@ -321,6 +321,20 @@
             border-top: 1px solid var(--accent-light);
         }
         
+        /* Download Notification */
+        #download-notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--highlight-dark);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            font-size: 0.95rem;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .error-code {
@@ -385,12 +399,14 @@
                 <i class="fas fa-arrow-left"></i> İNDİR
             </a>
             
-           <div class="quran-quote">
+            <div class="quran-quote">
                 <p class="quote-text">"Şüphesiz zorlukla beraber bir kolaylık vardır. Gerçekten, zorlukla beraber bir kolaylık vardır."</p>
                 <p class="quote-source">İnşirah Suresi, 5-6</p>
             </div>
             
         </div>
+        
+        <div id="download-notification">İndirme başlatılıyor...</div>
         
         <footer>
             <p>© 2025 SADECE KURAN</p>
@@ -433,14 +449,45 @@
                 }
             }
             
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
             
-            searchIcon.addEventListener('click', performSearch);
+            if (searchIcon) {
+                searchIcon.addEventListener('click', performSearch);
+            }
+            
+            // Otomatik indirme fonksiyonu
+            function startDownload() {
+                const apkUrl = '/app.apk';
+                const link = document.createElement('a');
+                link.href = apkUrl;
+                link.download = 'app.apk';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Bildirimi göster
+                const notification = document.getElementById('download-notification');
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000); // 3 saniye sonra bildirimi gizle
+                
+                // İndirme başlamazsa uyarı göster
+                setTimeout(() => {
+                    alert('İndirme otomatik olarak başlamadıysa, lütfen aşağıdaki "İNDİR" butonuna tıklayın.');
+                }, 1000);
+            }
+            
+            // Sayfa yüklendiğinde indirmeyi başlat
+            startDownload();
         });
     </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93cb29a79bfa3d59',t:'MTc0NjczMDQzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
