@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="/sdc5.PNG"/>
     <link rel="apple-touch-icon" href="/logokuran2.jpg">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -193,20 +194,7 @@
         }
         @media (max-width: 767px) {
             .sidebar {
-                bottom: 0;
-                top: auto;
-                left: 0;
-                right: 0;
-                height: auto;
-                width: 100%;
-                flex-direction: row;
-                justify-content: space-around;
-                padding: 8px 0;
-                border-right: none;
-                border-top: 1px solid var(--border-color);
-            }
-            .sidebar a {
-                margin: 0 8px;
+                display: none;
             }
             .authors-sidebar, .author-sidebar, .search-suggestions {
                 display: none;
@@ -756,6 +744,84 @@
             color: var(--text-color);
             opacity: 0.7;
         }
+
+        /* Mobile Bottom Navigation - Integrated from meal.html */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--card-bg);
+            border-radius: 30px;
+            padding: 5px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 50;
+            border: 1px solid var(--border-color);
+        }
+        
+        [data-theme="dark"] .bottom-nav {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+        
+        .bottom-nav-item:hover {
+            background-color: var(--border-color);
+        }
+        
+        .bottom-nav-item.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .bottom-nav-item i {
+            font-size: 1.2rem;
+        }
+        
+        .home-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 5px;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Show bottom nav on mobile */
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: flex;
+            }
+            
+            /* Add padding to the bottom of the content to prevent overlap with bottom nav */
+            .feed, .article-page, .author-page, .favorites-page, .settings-page, .article-creator-page, .search-page {
+                padding-bottom: 90px;
+            }
+        }
     </style>
 </head>
     
@@ -1038,6 +1104,25 @@
         </div>
     </div>
 
+    <!-- Mobile Bottom Navigation (from meal.html) -->
+    <div class="bottom-nav">
+        <div class="bottom-nav-item active" id="home-nav" onclick="showMainFeed()">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="bottom-nav-item" id="search-nav" onclick="showSearchPage()">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="home-btn" id="home-btn" onclick="window.location.href='meal.html'">
+            <i class="fas fa-book-open"></i>
+        </div>
+        <a href="#profile" tabindex="0" aria-label="Profil" title="Profil" onclick="showAuthorsPanel()" class="bottom-nav-item" id="profile-nav">
+            <i class="fas fa-user"></i>
+        </a>
+        <div class="bottom-nav-item" id="settings-nav" onclick="showSettings()">
+            <i class="fas fa-cog"></i>
+        </div>
+    </div>
+
     <script>
         // Arama fonksiyonu
         function searchArticles() {
@@ -1276,11 +1361,9 @@
                         <p>Kuran'da yalnızca Kadir Gecesi özel bir gece olarak belirtilir. <strong>Kadir Suresi 1-5</strong>'te şöyle buyrulur: "Şüphesiz, Biz onu Kadir Gecesi'nde indirdik. Sen Kadir Gecesi'nin ne olduğunu bilir misin? Kadir Gecesi bin aydan hayırlıdır. Melekler ve Ruh, Rablerinin izniyle, her emir için o gece inerler. O gece tan yeri ağarıncaya kadar selâmdır." Bu ayetler, Kadir Gecesi'nin Kuran'ın indirildiği gece olduğunu ve bin aydan daha hayırlı olduğunu açıkça ortaya koyar. Ancak, bu gecenin kesin tarihi Kuran'da belirtilmez; geleneksel olarak Ramazan'ın 27. gecesi kabul edilse de, bu bilgi hadislere dayanır.</p>
                         <img src="kandiller1.png" alt="Kandillerin Kültürel Kutlaması">
                         <p>Diğer kandil gecelerine baktığımızda ise Kuran'da herhangi bir iz göremeyiz. Örneğin, <strong>Mevlid Kandili</strong>, Hz. Muhammed'in doğumunu kutlamak için düzenlenir, ancak Kuran'da bu konuda ne bir ayet ne de kutlama emri vardır. Aynı şekilde, <strong>Regaib Kandili</strong> ve <strong>Berat Kandili</strong> için de Kuran'da hiçbir atıf bulunmaz. <strong>Mirac Kandili</strong> için ise <strong>İsra Suresi 1</strong>'de şöyle denir: "O, kulunu bir gece, Mescid-i Haram'dan, çevresini mübarek kıldığımız Mescid-i Aksa'ya götüren Allah'ı tenzih ederiz." Bu ayet, Mirac olayını anlatır, fakat bu gecenin kutlanması gerektiğine dair bir emir vermez.</p>
-                        <p>Kuran, İslam'ın tamamlanmış bir din olduğunu açıkça ifade eder. <strong>Maide Suresi 3</strong>'te Allah şöyle buyurur: "Bugün size dininizi tamamladım, size nimetimi tamamladım ve size İslam'ı din olarak beğendim." This ayet, İslam'ın Kuran ile tamamlandığını ve ek kutlamalara ya da özel gecelere ihtiyaç olmadığını gösterir. Ayrıca, <strong>A'raf Suresi 203</strong>'te "De ki: 'Ben, Rabbimden bana vahyolunana uymaktan başka bir güce sahip değilim'" denilerek, Peygamber'in bile yalnızca Kuran'a uymakla yükümlü olduğu vurgulanır. Bu, kandiller gibi sonradan eklenen uygulamaların İslam'ın özünde yer almadığını destekler.</p>
+                        <p>Kuran, İslam'ın tamamlanmış bir din olduğunu açıkça ifade eder. <strong>Maide Suresi 3</strong>'te Allah şöyle buyurur: "Bugün size dininizi tamamladım, size nimetimi tamamladım ve size İslam'ı din olarak beğendim." This ayet, İslam'ın Kuran ile tamamlandığını ve ek kutlamalara ya da özel gecelere ihtiyaç olmadığını gösterir. Ayrıca, <strong>A'raf Suresi 203</strong>'te "De ki: 'Ben, Rabbimden bana vahyolunana uymaktan başka bir güce sahip değilim'" denilerek, Peygamber'in bile yalnızca Kuran'a uymakla yükümlü olduğu vurgulanır. Bu, kandiller gibi sonradan eklenen uygulamaların İslam'ın özünde yer almadığını gösterir.</p>
                         <p>Tarihsel olarak, kandillerin kökeni Hz. Muhammed'in yaşadığı dönemden çok sonrasına dayanır. Örneğin, Mevlid Kandili 13. yüzyılda Erbil Atabegi Muzafferüddin Kökböri tarafından başlatılmış, Osmanlı'da ise yaygınlaşmıştır. Regaib, Mirac ve Berat kandilleri de 10. yüzyıldan itibaren bazı bölgelerde kutlanmaya başlanmış, ancak bu uygulamalar Kuran'da değil, kültürel geleneklerde kök salmıştır. "Kandil" kelimesi bile, Osmanlı'da camilerin kandillerle aydınlatılmasından gelir ve dini bir terimden çok kültürel bir anlam taşır.</p>
-                        <p>Sonuç olarak, Kuran'da Kadir Gecesi dışında kandillerin bir temeli yoktur. Bu geceler, İslam'ın ilk dönemlerinde değil, yüzyıllar sonra ortaya çıkmış ve kültürel geleneklerle şekillenmiştir. <strong>Nahl Suresi 116</strong>'da "Kendi dillerinizle, 'Bu helal, bu haram' diyerek Allah'a yalan uydurmayın" denilerek, dinde olmayan şeyleri eklemenin sakıncalı olduğu uyarısı yapılır. Kandiller, ne Kuran'da ne de İslam'ın temel
-
-            System: inde yer alır; bu nedenle, bunların İslam'da kutsal geceler olarak değil, sonradan eklenmiş gelenekler olarak görülmesi gerekir.</p>
+                        <p>Sonuç olarak, Kuran'da Kadir Gecesi dışında kandillerin bir temeli yoktur. Bu geceler, İslam'ın ilk dönemlerinde değil, yüzyıllar sonra ortaya çıkmış ve kültürel geleneklerle şekillenmiştir. <strong>Nahl Suresi 116</strong>'da "Kendi dillerinizle, 'Bu helal, bu haram' diyerek Allah'a yalan uydurmayın" denilerek, dinde olmayan şeyleri eklemenin sakıncalı olduğu uyarısı yapılır. Kandiller, ne Kuran'da ne de İslam'ın temelinde yer alır; bu nedenle, bunların İslam'da kutsal geceler olarak değil, sonradan eklenmiş gelenekler olarak görülmesi gerekir.</p>
                     </div>
                 `,
                 category: "kavram",
@@ -1335,9 +1418,7 @@
                         <p>Geleneksel İslamcılar, Şefaat'in Hz. Muhammed tarafından yapılacağını hadislere dayandırırken, bu yetkiyi zamanla şeyh ve alimlere de genişletmiştir. Özellikle tarikat ve cemaat yapılarında, şeyhlerin veya önde gelen alimlerin müritlerini cennete götüreceği, günahlarını affettireceği ya da cehennemden kurtaracağı inancı kökleşmiştir. Ancak Kuran, bu tür bir inancın İslam'ın özüne aykırı olduğunu net bir şekilde ortaya koyar. <strong>Yunus Suresi 18</strong>'te "Allah'ı bırakıp, kendilerine ne zarar ne de fayda verebilecek şeylere tapıyorlar ve 'Bunlar Allah katında bizim Şefaatçilerimizdir' diyorlar. De ki: 'Allah'a, göklerde ve yerde bilmediği bir şeyi mi haber veriyorsunuz?'" denilerek, Allah dışında Şefaatçi kabul etmenin şirk olduğu vurgulanır. Şeyh ve alimlerin Şefaat yetkisine sahip olduğu iddiası, bu ayete göre açıkça bir sapmadır.</p>
                         <p>Kuran, İslam'ın tamamlanmış bir din olduğunu bildirir ve ek aracılara ihtiyaç olmadığını ifade eder. <strong>Maide Suresi 3</strong>'te "Bugün size dininizi tamamladım, size nimetimi tamamladım ve size İslam'ı din olarak beğendim" denilerek, Kuran'ın yeterli olduğu vurgulanır. Ayrıca, <strong>A'raf Suresi 53</strong>'te "Şefaat edenler var mı ki bizim için Şefaat etsinler?" diye soranların çaresizliği anlatılır ve bu, Şefaat'in kurtarıcı bir güç olmadığına işaret eder. Eğer şeyh ve alimlerin Şefaat yetkisi olsaydı, Kuran'da bu açıkça belirtilirdi; oysa Kuran, böyle bir yetkiyi yalnızca Allah'a verir ve insanlara herhangi bir aracı rol tanımaz.</p>
                         <p>Şeyh ve alimlerin Şefaat edeceğine dair inanç, İslam'ın ilk dönemlerinde değil, sonraki yüzyıllarda tasavvufun etkisiyle ortaya çıkmıştır. Örneğin, tarikat liderlerinin "keramet" sahibi olduğu ve müritlerini kurtarabileceği fikri, hadislerin yorumlanması ve kültürel geleneklerin dini anlayışla harmanlanmasıyla şekillenmiştir. Ancak Kuran, her bireyin kendi amelleriyle yargılanacağını net bir şekilde ortaya koyar. <strong>Zümer Suresi 7</strong>'te "Eğer küfrederlerse, şüphesiz Allah onlara muhtaç değildir. Kulları için O, şükredenleri sever" denilerek, kurtuluşun Şefaat'e değil, amellere bağlı olduğu belirtilir. Şefaat, kimseyi cehennemden kurtarmaz; olsa olsa cenneti hak edenlerin durumunu Allah'ın izniyle iyileştirebilir. Bu da şeyh ve alimlerin Şefaat iddiasını geçersiz kılar.</p>
-                        <p>Tarihsel olarak, Şefaat inancının genişletilmesi İslam'dan önceki dinlerden ve kültürel geleneklerden etkilenmiştir. Örneğin, Hıristiyanlıkta İsa'nın inananlar için Şefaat etmesi ya da pagan toplumlarda kutsal kişilerin aracı kabul edilmesi, benzer bir inanç yapısını yansı
-
-            System: tır. İslam'a bu anlayış, hadisler ve tasavvufi yorumlarla sızmıştır. Özellikle şeyh ve alimlerin Şefaat edeceğine dair inanç, dinin monoteistik özünü zedeler ve Allah ile kul arasına aracı koyma eğilimini güçlendirir. <strong>Şura Suresi 46</strong>'da "Onların Allah'tan başka kendilerine yardım edecek dostları yoktur. Allah kimi saptırırsa, artık onun için bir yol yoktur" denilerek, Allah dışında kimsenin kurtarıcı olamayacağı vurgulanır. Bu ayet, şeyh ve alimlerin Şefaat yetkisi iddiasını açıkça reddeder.</p>
+                        <p>Tarihsel olarak, Şefaat inancının genişletilmesi İslam'dan önceki dinlerden ve kültürel geleneklerden etkilenmiştir. Örneğin, Hıristiyanlıkta İsa'nın inananlar için Şefaat etmesi ya da pagan toplumlarda kutsal kişilerin aracı kabul edilmesi, benzer bir inanç yapısını yansıtır. İslam'a bu anlayış, hadisler ve tasavvufi yorumlarla sızmıştır. Özellikle şeyh ve alimlerin Şefaat edeceğine dair inanç, dinin monoteistik özünü zedeler ve Allah ile kul arasına aracı koyma eğilimini güçlendirir. <strong>Şura Suresi 46</strong>'da "Onların Allah'tan başka kendilerine yardım edecek dostları yoktur. Allah kimi saptırırsa, artık onun için bir yol yoktur" denilerek, Allah dışında kimsenin kurtarıcı olamayacağı vurgulanır. Bu ayet, şeyh ve alimlerin Şefaat yetkisi iddiasını açıkça reddeder.</p>
                         <p>Ek olarak, <strong>Ankebut Suresi 12</strong>'de "Kâfirler, iman edenlere dediler ki: 'Bizim yolumuza uyun, sizin günahlarınızı biz taşıyalım.' Oysa onlar, onların günahlarından hiçbir şey taşıyamazlar" denilerek, kimsenin bir başkasının günahını üstlenemeyeceği belirtilir. Eğer şeyh ve alimler Şefaat ederek müritlerini kurtarabilseydi, bu ayet böyle bir yetkiyi tanırdı; ancak Kuran, böyle bir yetkiyi yalnızca Allah'a verir. <strong>Nahl Suresi 116</strong>'da ise "Kendi dillerinizle, 'Bu helal, bu haram' diyerek Allah'a yalan uydurmayın" denilerek, dinde olmayan şeyleri eklemenin sakıncalı olduğu uyarısı yapılır. Şeyh ve alimlerin Şefaat yetkisi, bu bağlamda Kuran'a aykırı bir uydurmadır.</p>
                         <p>Sonuç olarak, Kuran'da Şefaat yalnızca Allah'a aittir ve ne peygamberler, ne şeyhler, ne de alimler kimseyi cehennemden kurtaramaz. Cenneti hak edenlerin durumu Allah'ın izniyle iyileşebilir, ancak bu, amellerin yerine geçmez ve insanlara böyle bir yetki verilmez. Geleneksel Şefaat inancı, özellikle şeyh ve alimlerin Şefaat edeceğine dair iddia, hadisler ve tasavvufi geleneklerle sonradan eklenmiş bir sapmadır ve İslam'ın özünde yer almaz. Kuran, inananları Şefaat umuduna değil, kendi amellerine ve Allah'la doğrudan bağa yöneltir. Şeyh ve alimlerin Şefaat yetkisi, Kuran'ın monoteistik ruhuna aykırı bir inançtır ve İslam'da hiçbir dayanağı yoktur.</p>
                     </div>
@@ -2084,6 +2165,20 @@
             searchInput.value = term;
             searchPageArticles();
         }
+
+// Make sure showAuthorsPanel is accessible globally
+window.showAuthorsPanel = showAuthorsPanel;
+
+// Add a direct click handler for the profile nav
+document.addEventListener('DOMContentLoaded', function() {
+    const profileNav = document.getElementById('profile-nav');
+    if (profileNav) {
+        profileNav.onclick = function() {
+            showAuthorsPanel();
+            return false;
+        };
+    }
+});
     </script>
 </body>
 </html>
