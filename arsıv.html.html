@@ -1,62 +1,36 @@
 <!DOCTYPE html>
-<html lang="tr" class="dark">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SİYASİ ARŞİV SİSTEMİ</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap');
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         :root {
             --primary-red: #e53935;
             --dark-red: #c62828;
             --light-red: #ef5350;
-            
-            /* Light mode colors */
-            --light-bg: #f5f5f5;
-            --light-card-bg: #ffffff;
-            --light-text: #333333;
-            --light-secondary-text: #666666;
-            --light-border: #e0e0e0;
-            --light-hover: #f0f0f0;
-            
-            /* Dark mode colors */
-            --dark-bg: #121212;
-            --dark-card-bg: #1e1e1e;
-            --dark-text: #e0e0e0;
-            --dark-secondary-text: #aaaaaa;
-            --dark-border: #333333;
-            --dark-hover: #2a2a2a;
-            
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --secondary-text: #666666;
+            --border-color: #e0e0e0;
+            --hover-color: #f5f5f5;
+            --shadow-color: rgba(0, 0, 0, 0.1);
             --sidebar-width: 60px;
             --sidebar-expanded-width: 180px;
             --transition-speed: 0.3s;
-        }
-        
-        .light {
-            --bg-color: var(--light-bg);
-            --card-bg: var(--light-card-bg);
-            --text-color: var(--light-text);
-            --secondary-text: var(--light-secondary-text);
-            --border-color: var(--light-border);
-            --hover-color: var(--light-hover);
-        }
-        
-        .dark {
-            --bg-color: var(--dark-bg);
-            --card-bg: var(--dark-card-bg);
-            --text-color: var(--dark-text);
-            --secondary-text: var(--dark-secondary-text);
-            --border-color: var(--dark-border);
-            --hover-color: var(--dark-hover);
+            --max-content-width: 1200px;
         }
         
         body {
@@ -64,6 +38,12 @@
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
         /* Sidebar Styles */
@@ -78,7 +58,7 @@
             z-index: 1000;
             display: flex;
             justify-content: center;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 -2px 10px var(--shadow-color);
         }
         
         .sidebar-menu {
@@ -121,33 +101,8 @@
         
         /* Main Content */
         .main-content {
-            padding: 20px;
+            padding: 20px 0;
             padding-bottom: 80px; /* Space for bottom sidebar */
-        }
-        
-        /* Theme Toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .theme-toggle:hover {
-            background-color: var(--hover-color);
         }
         
         /* Hero Section */
@@ -158,7 +113,7 @@
             border-radius: 10px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px var(--shadow-color);
             transition: all 0.5s ease;
             max-height: 500px;
             border: 1px solid var(--border-color);
@@ -269,6 +224,40 @@
             margin-bottom: -10px;
         }
         
+        /* Filter Controls */
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+        
+        .hero-section.collapsed .filter-controls {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background-color: var(--hover-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            color: var(--text-color);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+        }
+        
         /* Search Bar */
         .search-container {
             margin: 20px 0;
@@ -283,13 +272,13 @@
             background-color: var(--card-bg);
             color: var(--text-color);
             font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px var(--shadow-color);
             transition: all 0.3s ease;
         }
         
         .search-bar:focus {
             outline: none;
-            box-shadow: 0 0 0 2px var(--primary-red), 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 0 2px var(--primary-red), 0 4px 10px var(--shadow-color);
             border-color: var(--primary-red);
         }
         
@@ -359,7 +348,7 @@
             flex-direction: column;
             align-items: center;
             border-left: 4px solid var(--primary-red);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px var(--shadow-color);
             position: relative;
             overflow: hidden;
         }
@@ -379,7 +368,7 @@
         
         .folder:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 16px var(--shadow-color);
             background-color: var(--hover-color);
         }
         
@@ -428,7 +417,7 @@
             flex-direction: column;
             align-items: center;
             border-left: 4px solid var(--primary-red);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px var(--shadow-color);
             position: relative;
             overflow: hidden;
             min-height: 180px;
@@ -453,7 +442,7 @@
 
         .document:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 16px var(--shadow-color);
             background-color: var(--hover-color);
         }
 
@@ -477,7 +466,7 @@
 
         .document-preview-icon {
             font-size: 2rem;
-            color: var(--text-color);
+            color: var(--card-bg);
         }
         
         .document-list .document {
@@ -541,7 +530,7 @@
             border-left: 5px solid var(--primary-red);
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
         
         .breadcrumb a {
@@ -575,7 +564,7 @@
             border-radius: 50%;
             cursor: pointer;
             display: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px var(--shadow-color);
             z-index: 99;
             font-size: 1.5rem;
             transition: all 0.3s;
@@ -584,7 +573,7 @@
         .back-to-top:hover {
             background-color: var(--dark-red);
             transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 12px var(--shadow-color);
         }
         
         /* Footer */
@@ -621,7 +610,7 @@
             border-radius: 10px;
             width: 80%;
             max-width: 900px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px var(--shadow-color);
             position: relative;
             max-height: 80vh;
             overflow-y: auto;
@@ -675,7 +664,7 @@
             max-width: 100%;
             margin: 15px 0;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
         
         .modal-body p {
@@ -750,73 +739,98 @@
             background-color: var(--dark-red);
         }
         
-        /* Recent Documents */
-        .recent-documents {
+        /* History Section */
+        .history-page {
+            display: none;
+            padding: 20px 0;
+            animation: fadeIn 0.3s ease;
+            min-height: 100vh;
+        }
+        
+        .history-page.active {
+            display: block;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .history-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--text-color);
+        }
+        
+        .history-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .history-item {
             background-color: var(--card-bg);
             border-radius: 10px;
             padding: 20px;
-            margin-bottom: 30px;
-            border-left: 5px solid var(--primary-red);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .recent-documents h3 {
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            color: var(--text-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .recent-list {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-red) var(--card-bg);
-        }
-        
-        .recent-list::-webkit-scrollbar {
-            height: 8px;
-        }
-        
-        .recent-list::-webkit-scrollbar-track {
-            background: var(--card-bg);
-        }
-        
-        .recent-list::-webkit-scrollbar-thumb {
-            background-color: var(--primary-red);
-            border-radius: 10px;
-        }
-        
-        .recent-item {
-            min-width: 150px;
-            padding: 15px;
-            background-color: var(--hover-color);
-            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.2s;
-            border-left: 3px solid var(--primary-red);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-left: 4px solid var(--primary-red);
+            box-shadow: 0 4px 8px var(--shadow-color);
         }
         
-        .recent-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .history-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-color);
+            background-color: var(--hover-color);
         }
         
-        .recent-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
+        .history-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
             color: var(--primary-red);
         }
         
-        .recent-name {
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .history-name {
+            font-weight: 600;
+            text-align: center;
             color: var(--text-color);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .history-date {
+            font-size: 0.8rem;
+            color: var(--secondary-text);
+        }
+        
+        .no-history {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--secondary-text);
+        }
+        
+        .clear-history {
+            padding: 10px 20px;
+            background-color: var(--hover-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        
+        .clear-history:hover {
+            background-color: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
         }
         
         /* Loading Animation */
@@ -854,7 +868,7 @@
         /* Search Page */
         .search-page {
             display: none;
-            padding: 20px;
+            padding: 20px 0;
             animation: fadeIn 0.3s ease;
             min-height: 100vh;
         }
@@ -890,12 +904,12 @@
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px var(--shadow-color);
         }
         
         .search-result-item:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px var(--shadow-color);
             background-color: var(--hover-color);
         }
         
@@ -932,6 +946,79 @@
             padding: 30px;
             color: var(--secondary-text);
             font-size: 1.2rem;
+        }
+        
+        /* Quick Stats */
+        .quick-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            text-align: center;
+            border-top: 4px solid var(--primary-red);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-color);
+        }
+        
+        .stat-card-icon {
+            font-size: 2rem;
+            color: var(--primary-red);
+            margin-bottom: 10px;
+        }
+        
+        .stat-card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-card-label {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: flex-end;
+        }
+        
+        .view-btn {
+            padding: 8px 15px;
+            background-color: var(--hover-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+            color: var(--text-color);
+        }
+        
+        .view-btn:hover, .view-btn.active {
+            background-color: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
         }
         
         /* Responsive Styles */
@@ -1000,6 +1087,18 @@
             .modal-actions {
                 flex-wrap: wrap;
             }
+            
+            .quick-stats {
+                flex-direction: column;
+            }
+            
+            .stat-card {
+                min-width: 100%;
+            }
+            
+            .history-list {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
         }
         
         @media (max-width: 480px) {
@@ -1044,28 +1143,33 @@
             .sidebar-menu .text {
                 font-size: 0.6rem;
             }
+            
+            .history-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="theme-toggle" aria-label="Tema Değiştir">
-        <span id="theme-icon">🌙</span>
-    </button>
-
     <!-- Sidebar -->
     <div class="sidebar">
         <ul class="sidebar-menu">
             <li>
                 <a href="#" id="home-link" class="active" onclick="showMainContent()">
-                    <span class="icon">🏠︎</span> 
-                    <span class="text">Ana Sayfa</span>
+                    <i class="icon fas fa-home"></i>
+                    <span class="text"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="history-link" onclick="showHistoryPage()">
+                    <i class="icon fas fa-history"></i>
+                    <span class="text"></span>
                 </a>
             </li>
             <li>
                 <a href="#" id="search-link" onclick="showSearchPage()">
-                    <span class="icon">⚲</span>
-                    <span class="text">Arama</span>
+                    <i class="icon fas fa-search"></i>
+                    <span class="text"></span>
                 </a>
             </li>
         </ul>
@@ -1086,34 +1190,73 @@
                             <div class="loading-spinner"></div>
                         </div>
                     </div>
+                    
+                    <!-- Filter Controls -->
+                    <div class="filter-controls" id="filterControls">
+                        <button class="filter-btn active" data-filter="all">Tümü</button>
+                        <button class="filter-btn" data-filter="usulsuzluk">Usulsüzlükler</button>
+                        <button class="filter-btn" data-filter="vaat">Tutulmayan Vaatler</button>
+                        <button class="filter-btn" data-filter="soylem">Tartışmalı Söylemler</button>
+                    </div>
                 </div>
-                <button class="hero-toggle" id="hero-toggle">▲</button>
+                <button class="hero-toggle" id="hero-toggle">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
             </div>
+            
+            <!-- Quick Stats -->
+            <!-- <div class="quick-stats" id="quickStats">
+                <!-- JavaScript ile doldurulacak -->
+            <!-- </div> -->
             
             <!-- Search Bar -->
             <div class="search-container">
-                <span class="search-icon">⚲</span>
+                <i class="search-icon fas fa-search"></i>
                 <input type="text" class="search-bar" id="searchBar" placeholder="Arşivde detaylı arama yap...">
-            </div>
-            
-            <!-- Recent Documents -->
-            <div class="recent-documents" id="recentDocuments" style="display: none;">
-                <h3>SON GÖRÜNTÜLENEN BELGELER</h3>
-                <div class="recent-list" id="recentList">
-                    <!-- JavaScript ile doldurulacak -->
-                </div>
             </div>
             
             <!-- Main Content (Parties) -->
             <div class="content-area active" id="main-content">
                 <div class="category-section">
                     <h2 class="section-title">SİYASİ PARTİLER</h2>
+                    
+                    <!-- View Toggle -->
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="gridViewBtn">
+                            <i class="fas fa-th-large"></i> Grid
+                        </button>
+                        <button class="view-btn" id="listViewBtn">
+                            <i class="fas fa-list"></i> Liste
+                        </button>
+                    </div>
+                    
                     <div class="folder-grid" id="contentView">
                         <!-- Partiler JSON'dan yüklenecek -->
                         <div class="loading">
                             <div class="loading-spinner"></div>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <!-- History Page -->
+            <div class="history-page" id="history-page">
+                <div class="history-header">
+                    <h2 class="history-title">GEÇMİŞ</h2>
+                </div>
+                
+                <div class="history-list" id="historyList">
+                    <!-- JavaScript ile doldurulacak -->
+                </div>
+                
+                <div class="no-history" id="noHistory" style="display: none;">
+                    <p>Henüz görüntülenen belge bulunmamaktadır.</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="clear-history" id="clearHistory" onclick="gecmisiTemizle()">
+                        <i class="fas fa-trash"></i> Geçmişi Temizle
+                    </button>
                 </div>
             </div>
             
@@ -1124,7 +1267,7 @@
                 </div>
                 
                 <div class="search-container">
-                    <span class="search-icon">⚲</span>
+                    <i class="search-icon fas fa-search"></i>
                     <input type="text" class="search-bar" id="searchPageBar" placeholder="Tüm arşivde detaylı arama yap...">
                 </div>
                 
@@ -1141,7 +1284,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 class="modal-title" id="modalBaslik">Belge Başlığı</h2>
-                        <button class="modal-close" onclick="modalKapat()">&times;</button>
+                        <button class="modal-close" onclick="modalKapat()">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                     <div class="modal-body" id="modalIcerik">
                         <!-- İçerik JavaScript ile doldurulacak -->
@@ -1152,34 +1297,33 @@
                         </div>
                         <div class="modal-actions">
                             <button class="modal-btn" onclick="belgeYazdir()">
-                                <span>🖨️</span> Yazdır
+                                <i class="fas fa-print"></i> Yazdır
                             </button>
                             <button class="modal-btn" onclick="belgeIndir()">
-                                <span>💾</span> İndir
+                                <i class="fas fa-download"></i> İndir
                             </button>
                             <button class="modal-btn" onclick="belgePaylasim()">
-                                <span>🔗</span> Paylaş
+                                <i class="fas fa-share-alt"></i> Paylaş
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="back-to-top" onclick="sayfaBasinaGit()">↑</div>
+            <div class="back-to-top" onclick="sayfaBasinaGit()">
+                <i class="fas fa-arrow-up"></i>
+            </div>
         </div>
     </div>
-    
-   
+
     <script>
         // Global değişkenler
         let arsivVerileri = null;
         let sonGorulenBelgeler = [];
+        let currentView = 'grid'; // grid, list
         
         // Sayfa yüklendiğinde verileri çek
         document.addEventListener('DOMContentLoaded', function() {
-            // Tema kontrolü
-            setupThemeToggle();
-            
             // Hero section'ı otomatik olarak gizle
             setTimeout(function() {
                 collapseHeroSection();
@@ -1200,6 +1344,9 @@
                     // İstatistikleri güncelle
                     istatistikleriGuncelle();
                     
+                    // Hızlı istatistikleri güncelle
+                    // hizliIstatistikleriGuncelle();
+                    
                     // Partileri yükle
                     partileriYukle();
                     
@@ -1210,7 +1357,7 @@
                     const kaydedilenBelgeler = localStorage.getItem('sonGorulenBelgeler');
                     if (kaydedilenBelgeler) {
                         sonGorulenBelgeler = JSON.parse(kaydedilenBelgeler);
-                        sonBelgeleriGuncelle();
+                        gecmisiGuncelle();
                     }
                     
                     // URL hash'e göre içeriği göster
@@ -1224,6 +1371,12 @@
                             }
                         }
                     }
+                    
+                    // Filtreleme olaylarını ekle
+                    setupFilterEvents();
+                    
+                    // Görünüm değiştirme olaylarını ekle
+                    setupViewToggleEvents();
                 })
                 .catch(error => {
                     console.error('Veri yükleme hatası:', error);
@@ -1262,36 +1415,101 @@
             });
         });
         
-        // Tema değiştirme
-        function setupThemeToggle() {
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIcon = document.getElementById('theme-icon');
-            const htmlElement = document.documentElement;
+        // Filtreleme olaylarını ayarla
+        function setupFilterEvents() {
+            // Hero section filtreleri
+            const filterButtons = document.querySelectorAll('#filterControls .filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Aktif sınıfı kaldır
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Tıklanan butona aktif sınıfı ekle
+                    this.classList.add('active');
+                    
+                    // Filtreleme yap
+                    const filter = this.getAttribute('data-filter');
+                    filterContent(filter);
+                });
+            });
+        }
+        
+        // İçeriği filtrele
+        function filterContent(filter) {
+            const items = document.querySelectorAll('#contentView .folder, #contentView .document');
             
-            // Kaydedilmiş tema varsa onu kullan
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                htmlElement.className = savedTheme;
-                updateThemeIcon(savedTheme);
-            }
-            
-            themeToggle.addEventListener('click', function() {
-                if (htmlElement.classList.contains('dark')) {
-                    htmlElement.classList.remove('dark');
-                    htmlElement.classList.add('light');
-                    localStorage.setItem('theme', 'light');
-                    updateThemeIcon('light');
+            items.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = '';
                 } else {
-                    htmlElement.classList.remove('light');
-                    htmlElement.classList.add('dark');
-                    localStorage.setItem('theme', 'dark');
-                    updateThemeIcon('dark');
+                    item.style.display = 'none';
                 }
             });
+        }
+        
+        // Görünüm değiştirme olaylarını ayarla
+        function setupViewToggleEvents() {
+            // Grid görünümü
+            document.getElementById('gridViewBtn').addEventListener('click', function() {
+                setActiveViewButton(this);
+                changeView('grid');
+            });
             
-            function updateThemeIcon(theme) {
-                themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            // Liste görünümü
+            document.getElementById('listViewBtn').addEventListener('click', function() {
+                setActiveViewButton(this);
+                changeView('list');
+            });
+        }
+        
+        // Aktif görünüm butonunu ayarla
+        function setActiveViewButton(button) {
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
+        }
+        
+        // Görünümü değiştir
+        function changeView(view) {
+            currentView = view;
+            
+            // Grid görünümünü liste veya grid olarak ayarla
+            if (view === 'grid') {
+                document.getElementById('contentView').classList.remove('folder-list');
+                document.getElementById('contentView').classList.add('folder-grid');
+            } else if (view === 'list') {
+                document.getElementById('contentView').classList.remove('folder-grid');
+                document.getElementById('contentView').classList.add('folder-list');
             }
+        }
+        
+        // Hızlı istatistikleri güncelle
+        function hizliIstatistikleriGuncelle() {
+            const statsContainer = document.getElementById('quickStats');
+            const stats = arsivVerileri.istatistikler;
+            
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-card-icon"><i class="fas fa-landmark"></i></div>
+                    <div class="stat-card-value">${stats.parti_sayisi}</div>
+                    <div class="stat-card-label">Siyasi Parti</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-card-value">${stats.usulsuzluk_sayisi}</div>
+                    <div class="stat-card-label">Usulsüzlük</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon"><i class="fas fa-times-circle"></i></div>
+                    <div class="stat-card-value">${stats.vaat_sayisi}</div>
+                    <div class="stat-card-label">Tutulmayan Vaat</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon"><i class="fas fa-comment-dots"></i></div>
+                    <div class="stat-card-value">${stats.soylem_sayisi}</div>
+                    <div class="stat-card-label">Tartışmalı Söylem</div>
+                </div>
+            `;
         }
         
         // Hero section fonksiyonları
@@ -1349,7 +1567,7 @@
             partiler.forEach(parti => {
                 html += `
                     <div class="folder" onclick="showPartyContent('${parti.id}')" data-category="all">
-                        <div class="folder-icon">📁</div>
+                        <div class="folder-icon"><i class="fas fa-folder"></i></div>
                         <div class="folder-name">${parti.ad}</div>
                     </div>
                 `;
@@ -1368,7 +1586,9 @@
                 let partiHTML = `
                     <div class="content-area" id="${parti.id}">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showMainContent()">Ana Sayfa</a>
+                            <a href="#" onclick="showMainContent()">
+                                <i class="fas fa-home"></i> Ana Sayfa
+                            </a>
                             <span class="breadcrumb-separator">&gt;</span>
                             <span>${parti.ad}</span>
                         </div>
@@ -1380,7 +1600,9 @@
                 parti.olaylar.forEach(olay => {
                     partiHTML += `
                         <div class="folder" onclick="showEventContent('${olay.id}')" data-category="${olay.kategori}" data-date="${olay.tarih}">
-                            <div class="folder-icon">📁</div>
+                            <div class="folder-icon">
+                                ${getKategoriIkonu(olay.kategori)}
+                            </div>
                             <div class="folder-name">${olay.ad}</div>
                         </div>
                     `;
@@ -1398,7 +1620,9 @@
                     let olayHTML = `
                         <div class="content-area" id="${olay.id}">
                             <div class="breadcrumb">
-                                <a href="#" onclick="showMainContent()">Ana Sayfa</a>
+                                <a href="#" onclick="showMainContent()">
+                                    <i class="fas fa-home"></i> Ana Sayfa
+                                </a>
                                 <span class="breadcrumb-separator">&gt;</span>
                                 <a href="#" onclick="showPartyContent('${parti.id}')">${parti.ad}</a>
                                 <span class="breadcrumb-separator">&gt;</span>
@@ -1412,26 +1636,26 @@
                     if (olay.belgeler && olay.belgeler.length > 0) {
                         olay.belgeler.forEach(belge => {
                             let iconClass = 'text';
-                            let iconSymbol = '📄';
+                            let iconHTML = '<i class="fas fa-file-alt"></i>';
                             
                             if (belge.tip === 'image') {
                                 iconClass = 'image';
-                                iconSymbol = '🖼️';
+                                iconHTML = '<i class="fas fa-file-image"></i>';
                             } else if (belge.tip === 'audio') {
                                 iconClass = 'audio';
-                                iconSymbol = '🔊';
+                                iconHTML = '<i class="fas fa-file-audio"></i>';
                             } else if (belge.tip === 'video') {
                                 iconClass = 'video';
-                                iconSymbol = '🎬';
+                                iconHTML = '<i class="fas fa-file-video"></i>';
                             }
                             
                             olayHTML += `
                                 <div class="document" onclick="belgeGoster('${olay.id}', '${belge.id}')" data-category="${olay.kategori}" data-date="${belge.tarih}">
-                                    <div class="document-icon ${iconClass}">${iconSymbol}</div>
+                                    <div class="document-icon ${iconClass}">${iconHTML}</div>
                                     <div class="document-name">${belge.baslik}</div>
                                     <div class="document-info">${belge.tarih}</div>
                                     <div class="document-preview">
-                                        <div class="document-preview-icon">👁️</div>
+                                        <div class="document-preview-icon"><i class="fas fa-eye"></i></div>
                                     </div>
                                 </div>
                             `;
@@ -1454,13 +1678,28 @@
             });
         }
         
+        // Kategori ikonunu getir
+        function getKategoriIkonu(kategori) {
+            switch(kategori) {
+                case 'usulsuzluk':
+                    return '<i class="fas fa-exclamation-triangle"></i>';
+                case 'vaat':
+                    return '<i class="fas fa-times-circle"></i>';
+                case 'soylem':
+                    return '<i class="fas fa-comment-dots"></i>';
+                default:
+                    return '<i class="fas fa-folder"></i>';
+            }
+        }
+        
         // Ana içerik ve parti içeriklerini gösterme fonksiyonları
         function showMainContent() {
             hideAllContent();
             document.getElementById('main-content').classList.add('active');
             document.getElementById('search-page').classList.remove('active');
+            document.getElementById('history-page').classList.remove('active');
             document.getElementById('hero-section').style.display = 'block';
-            document.getElementById('recentDocuments').style.display = sonGorulenBelgeler.length > 0 ? 'block' : 'none';
+            // document.getElementById('quickStats').style.display = 'flex';
             
             // Sidebar menü aktifliğini güncelle
             updateSidebarActiveLink('home-link');
@@ -1496,8 +1735,21 @@
                 area.classList.remove('active');
             });
             document.getElementById('search-page').classList.remove('active');
+            document.getElementById('history-page').classList.remove('active');
             document.getElementById('hero-section').style.display = 'none';
-            document.getElementById('recentDocuments').style.display = 'none';
+            // document.getElementById('quickStats').style.display = 'none';
+        }
+        
+        // Geçmiş sayfasını göster
+        function showHistoryPage() {
+            hideAllContent();
+            document.getElementById('history-page').classList.add('active');
+            
+            // Sidebar menü aktifliğini güncelle
+            updateSidebarActiveLink('history-link');
+            
+            // Geçmişi güncelle
+            gecmisiGuncelle();
         }
         
         // Arama sayfasını göster
@@ -1546,7 +1798,7 @@
                         id: parti.id,
                         title: parti.ad,
                         path: 'Ana Sayfa > ' + parti.ad,
-                        icon: '📁'
+                        icon: '<i class="fas fa-landmark"></i>'
                     });
                 }
                 
@@ -1560,7 +1812,7 @@
                             id: olay.id,
                             title: olay.ad,
                             path: 'Ana Sayfa > ' + parti.ad + ' > ' + olay.ad,
-                            icon: '📁'
+                            icon: getKategoriIkonu(olay.kategori)
                         });
                     }
                     
@@ -1573,10 +1825,10 @@
                                 belge.tarih.toLowerCase().includes(searchTerm) || 
                                 belge.kaynak.toLowerCase().includes(searchTerm)) {
                                 
-                                let icon = '📄';
-                                if (belge.tip === 'image') icon = '🖼️';
-                                else if (belge.tip === 'audio') icon = '🔊';
-                                else if (belge.tip === 'video') icon = '🎬';
+                                let icon = '<i class="fas fa-file-alt"></i>';
+                                if (belge.tip === 'image') icon = '<i class="fas fa-file-image"></i>';
+                                else if (belge.tip === 'audio') icon = '<i class="fas fa-file-audio"></i>';
+                                else if (belge.tip === 'video') icon = '<i class="fas fa-file-video"></i>';
                                 
                                 results.push({
                                     type: 'belge',
@@ -1614,7 +1866,7 @@
                     );
                     
                     html += `
-                        <div class="search-result-item" ${onClick}>
+                        <div class="search-result-item" ${onClick} data-type="${result.type}">
                             <div class="search-result-icon">${result.icon}</div>
                             <div class="search-result-content">
                                 <div class="search-result-title">${highlightedTitle}</div>
@@ -1655,9 +1907,9 @@
             document.getElementById('modalBaslik').textContent = belge.baslik;
             document.getElementById('modalIcerik').innerHTML = belge.icerik;
             document.getElementById('modalBilgi').innerHTML = `
-                <div>Tarih: ${belge.tarih}</div>
-                <div>Kategori: ${belge.kategori}</div>
-                <div>Kaynak: ${belge.kaynak}</div>
+                <div><i class="fas fa-calendar-alt"></i> Tarih: ${belge.tarih}</div>
+                <div><i class="fas fa-tag"></i> Kategori: ${belge.kategori}</div>
+                <div><i class="fas fa-link"></i> Kaynak: ${belge.kaynak}</div>
             `;
             
             // Modalı göster
@@ -1665,7 +1917,7 @@
             document.body.style.overflow = 'hidden'; // Sayfanın kaydırılmasını engelle
             
             // Son görüntülenen belgelere ekle
-            sonGorulenBelgelereEkle(olayId, belgeId, belge.baslik, belge.tip);
+            sonGorulenBelgelereEkle(olayId, belgeId, belge.baslik, belge.tip, parti.ad, olay.ad);
         }
         
         // Modalı kapat
@@ -1675,7 +1927,11 @@
         }
         
         // Son görüntülenen belgelere ekle
-        function sonGorulenBelgelereEkle(olayId, belgeId, baslik, tip) {
+        function sonGorulenBelgelereEkle(olayId, belgeId, baslik, tip, partiAd, olayAd) {
+            // Şu anki tarihi al
+            const now = new Date();
+            const tarih = `${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`;
+            
             // Zaten listede varsa çıkar
             sonGorulenBelgeler = sonGorulenBelgeler.filter(belge => belge.belgeId !== belgeId);
             
@@ -1684,58 +1940,78 @@
                 olayId: olayId,
                 belgeId: belgeId,
                 baslik: baslik,
-                tip: tip
+                tip: tip,
+                partiAd: partiAd,
+                olayAd: olayAd,
+                tarih: tarih
             });
             
-            // Maksimum 5 belge tut
-            if (sonGorulenBelgeler.length > 5) {
+            // Maksimum 10 belge tut
+            if (sonGorulenBelgeler.length > 10) {
                 sonGorulenBelgeler.pop();
             }
             
             // localStorage'a kaydet
             localStorage.setItem('sonGorulenBelgeler', JSON.stringify(sonGorulenBelgeler));
             
-            // Listeyi güncelle
-            sonBelgeleriGuncelle();
+            // Geçmiş sayfası açıksa güncelle
+            if (document.getElementById('history-page').classList.contains('active')) {
+                gecmisiGuncelle();
+            }
         }
         
-        // Son görüntülenen belgeleri güncelle
-        function sonBelgeleriGuncelle() {
-            const recentList = document.getElementById('recentList');
-            recentList.innerHTML = '';
+        // Geçmişi güncelle
+        function gecmisiGuncelle() {
+            const historyList = document.getElementById('historyList');
+            const noHistory = document.getElementById('noHistory');
+            const clearHistory = document.getElementById('clearHistory');
             
             if (sonGorulenBelgeler.length === 0) {
-                document.getElementById('recentDocuments').style.display = 'none';
+                historyList.innerHTML = '';
+                noHistory.style.display = 'block';
+                clearHistory.style.display = 'none';
                 return;
             }
             
-            document.getElementById('recentDocuments').style.display = 'block';
+            noHistory.style.display = 'none';
+            clearHistory.style.display = 'inline-block';
+            
+            let html = '';
             
             sonGorulenBelgeler.forEach(belge => {
-                let iconClass = 'text';
-                let iconSymbol = '📄';
+                let iconHTML = '<i class="fas fa-file-alt"></i>';
                 
                 if (belge.tip === 'image') {
-                    iconClass = 'image';
-                    iconSymbol = '🖼️';
+                    iconHTML = '<i class="fas fa-file-image"></i>';
                 } else if (belge.tip === 'audio') {
-                    iconClass = 'audio';
-                    iconSymbol = '🔊';
+                    iconHTML = '<i class="fas fa-file-audio"></i>';
                 } else if (belge.tip === 'video') {
-                    iconClass = 'video';
-                    iconSymbol = '🎬';
+                    iconHTML = '<i class="fas fa-file-video"></i>';
                 }
                 
-                const item = document.createElement('div');
-                item.className = 'recent-item';
-                item.onclick = function() { belgeGoster(belge.olayId, belge.belgeId); };
-                item.innerHTML = `
-                    <div class="recent-icon ${iconClass}">${iconSymbol}</div>
-                    <div class="recent-name">${belge.baslik}</div>
+                html += `
+                    <div class="history-item" onclick="belgeGoster('${belge.olayId}', '${belge.belgeId}')">
+                        <div class="history-icon">${iconHTML}</div>
+                        <div class="history-name">${belge.baslik}</div>
+                        <div class="history-date">
+                            <div><i class="fas fa-landmark"></i> ${belge.partiAd || ''}</div>
+                            <div><i class="fas fa-folder"></i> ${belge.olayAd || ''}</div>
+                            <div><i class="fas fa-clock"></i> ${belge.tarih || ''}</div>
+                        </div>
+                    </div>
                 `;
-                
-                recentList.appendChild(item);
             });
+            
+            historyList.innerHTML = html;
+        }
+        
+        // Geçmişi temizle
+        function gecmisiTemizle() {
+            if (confirm('Geçmiş tamamen temizlenecek. Emin misiniz?')) {
+                sonGorulenBelgeler = [];
+                localStorage.removeItem('sonGorulenBelgeler');
+                gecmisiGuncelle();
+            }
         }
         
         // Belge yazdırma fonksiyonu
