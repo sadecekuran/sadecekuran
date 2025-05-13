@@ -1,0 +1,2895 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
+    <title>SADECE KURAN</title>
+    <link rel="icon" type="image/png" href="/logokuran2.jpg"/>
+    <link rel="apple-touch-icon" href="/logokuran2.jpg">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e293b">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Ana renkler */
+            --primary: #1e293b;
+            --secondary: #334155;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --text: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border: #475569;
+            --card: #334155;
+            --card-hover: #475569;
+            
+            /* Gölgeler */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            
+            /* Geçişler */
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Yazı boyutu */
+            --font-size: 100%;
+            
+            /* Köşe yuvarlaklığı */
+            --radius-sm: 0.375rem;
+            --radius: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-full: 9999px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: var(--radius-full);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 50;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .icon-btn:hover, .icon-btn:focus {
+            background-color: var(--secondary);
+        }
+        
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-top: 60px;
+            margin-bottom: 70px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        
+        .search-input {
+            width: 100%;
+            height: 50px;
+            background-color: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0 16px 0 48px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+        
+        /* Meal Seçici */
+        .meal-selector {
+            margin-bottom: 16px;
+        }
+        
+        .meal-selector select {
+            width: 100%;
+            height: 50px;
+            background-color: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0 16px;
+            color: var(--text);
+            font-size: 1rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .meal-selector select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+        
+        .filters::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .filter-btn {
+            background-color: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            padding: 8px 16px;
+            color: var(--text);
+            font-size: 0.875rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover, .filter-btn:focus {
+            background-color: var(--card-hover);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        /* Surah Grid */
+        .surah-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .surah-card {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .surah-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .surah-card:hover::before, .surah-card:focus::before {
+            opacity: 1;
+        }
+        
+        .surah-card:hover, .surah-card:focus {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            background-color: var(--card-hover);
+        }
+        
+        .surah-number {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--accent);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .surah-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            margin-right: 28px;
+        }
+        
+        .surah-info {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: auto;
+        }
+        
+        /* Verse Panel */
+        .verse-panel {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            display: none;
+        }
+        
+        .verse-panel.active {
+            display: block;
+        }
+        
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .panel-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .verse-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .verse-item {
+            background-color: var(--secondary);
+            border-radius: var(--radius);
+            padding: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            touch-action: pan-y;
+        }
+        
+        .verse-item:hover, .verse-item:focus {
+            background-color: var(--card-hover);
+        }
+        
+        .verse-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent);
+            color: white;
+            min-width: 28px;
+            height: 28px;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-right: 8px;
+            padding: 0 8px;
+        }
+        
+        .verse-text {
+            display: inline;
+        }
+        
+        /* Kaydırma İşlemleri */
+        .verse-item-inner {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .verse-item-actions {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            width: 80px;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .verse-item-actions.left {
+            left: -80px;
+            background: linear-gradient(90deg, #ef4444, #f87171);
+            color: white;
+        }
+        
+        .verse-item-actions.right {
+            right: -80px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            color: white;
+        }
+        
+        .verse-item.swiping-left .verse-item-inner {
+            transform: translateX(-80px);
+        }
+        
+        .verse-item.swiping-right .verse-item-inner {
+            transform: translateX(80px);
+        }
+        
+        /* Verse Detail Panel */
+        .verse-detail {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            padding-bottom: 80px; /* Navigasyon butonları için alan bırak */
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            display: none;
+        }
+        
+        .verse-detail.active {
+            display: block;
+        }
+        
+        .detail-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .detail-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .selected-translation {
+            background: linear-gradient(135deg, var(--accent), #60a5fa);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: white;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+        
+        .translations-heading {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .other-translations {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .translation-item {
+            background-color: var(--secondary);
+            border-radius: var(--radius);
+            padding: 16px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        
+        .translation-item:hover, .translation-item:focus {
+            background-color: var(--card-hover);
+        }
+        
+        .author-name {
+            font-weight: 700;
+            color: var(--accent);
+            margin-right: 5px;
+        }
+        
+        /* Verse Navigation */
+        .verse-navigation {
+            position: fixed;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background-color: var(--primary);
+            border-top: 1px solid var(--border);
+            z-index: 45;
+        }
+        
+        .verse-nav-btn {
+            background: linear-gradient(135deg, var(--accent), #60a5fa);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .verse-nav-btn:hover, .verse-nav-btn:focus {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .verse-nav-btn:active {
+            transform: translateY(0);
+        }
+        
+        .verse-nav-btn:disabled {
+            background: var(--secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+        
+        /* Verse Actions */
+        .verse-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        
+        .verse-action-btn {
+            background-color: var(--secondary);
+            border: none;
+            border-radius: var(--radius);
+            padding: 12px 20px;
+            color: var(--text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .verse-action-btn:hover, .verse-action-btn:focus {
+            background-color: var(--card-hover);
+            transform: translateY(-2px);
+        }
+        
+        .verse-action-btn.favorite {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: #1e293b;
+            font-weight: 500;
+        }
+        
+        .verse-action-btn.favorite.active {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+        }
+        
+        .verse-action-btn.share {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+            font-weight: 500;
+        }
+        
+        /* Favorites Panel */
+        .favorites-panel {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            display: none;
+        }
+        
+        .favorites-panel.active {
+            display: block;
+        }
+        
+        .favorites-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .favorites-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .favorites-title i {
+            color: #fbbf24;
+        }
+        
+        .favorites-empty {
+            text-align: center;
+            padding: 32px 16px;
+            color: var(--text-secondary);
+        }
+        
+        /* Settings Panel */
+        .settings-panel {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            display: none;
+        }
+        
+        .settings-panel.active {
+            display: block;
+        }
+        
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .settings-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .settings-section {
+            margin-bottom: 24px;
+        }
+        
+        .settings-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+        
+        .setting-item {
+            background-color: var(--secondary);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .setting-label {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .setting-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .setting-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Toggle Switch */
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+        
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+            border-radius: var(--radius-full);
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--accent);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+        
+        /* Color Picker */
+        .color-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .color-option {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid var(--border);
+        }
+        
+        .color-option:hover, .color-option:focus {
+            transform: scale(1.1);
+        }
+        
+        .color-option.active {
+            border-color: white;
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        
+        /* Font Size Controls */
+        .font-size-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .font-size-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            background-color: var(--primary);
+            border: none;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .font-size-btn:hover, .font-size-btn:focus {
+            background-color: var(--card-hover);
+        }
+        
+        .font-size-value {
+            font-weight: 500;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        /* Button */
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+        
+        .btn:hover, .btn:focus {
+            background-color: var(--accent-hover);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--text);
+        }
+        
+        .btn-secondary:hover, .btn-secondary:focus {
+            background-color: var(--card-hover);
+        }
+        
+        .btn-danger {
+            background-color: #ef4444;
+        }
+        
+        .btn-danger:hover, .btn-danger:focus {
+            background-color: #dc2626;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 50;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid var(--border);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-item:hover, .nav-item:focus {
+            color: var(--text);
+        }
+        
+        .nav-item.active {
+            color: var(--accent);
+        }
+        
+        .nav-icon {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+        }
+        
+        .nav-label {
+            font-size: 0.75rem;
+        }
+        
+        /* Dynamic Bottom Bar */
+        .dynamic-bar {
+            position: fixed;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            background-color: var(--secondary);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 40;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid var(--border);
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+        
+        .dynamic-bar.active {
+            transform: translateY(0);
+        }
+        
+        .dynamic-bar-verse {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .dynamic-bar-btn {
+            background-color: var(--primary);
+            border: none;
+            border-radius: var(--radius-full);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .dynamic-bar-btn:hover, .dynamic-bar-btn:focus {
+            background-color: var(--card-hover);
+        }
+        
+        .dynamic-bar-btn.favorite {
+            color: #fbbf24;
+        }
+        
+        .dynamic-bar-btn.favorite.active {
+            background-color: #854d0e;
+        }
+        
+        /* Search Page */
+        .search-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--primary);
+            z-index: 100;
+            padding: 16px;
+            padding-top: 76px;
+            display: none;
+            overflow-y: auto;
+        }
+        
+        .search-page.active {
+            display: block;
+        }
+        
+        .search-page-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 101;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .search-page-input {
+            flex: 1;
+            height: 40px;
+            background-color: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            padding: 0 16px;
+            color: var(--text);
+            font-size: 1rem;
+            margin: 0 12px;
+        }
+        
+        .search-page-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .search-results {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .search-result {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        
+        .search-result:hover, .search-result:focus {
+            background-color: var(--card-hover);
+            transform: translateY(-2px);
+        }
+        
+        .search-result-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+        
+        .search-result-text {
+            font-size: 0.875rem;
+        }
+        
+        .search-highlight {
+            background-color: rgba(59, 130, 246, 0.2);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .search-tag {
+            background-color: var(--secondary);
+            border-radius: var(--radius-full);
+            padding: 6px 12px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .search-tag:hover, .search-tag:focus {
+            background-color: var(--card-hover);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--card);
+            border-radius: var(--radius-full);
+            padding: 12px 20px;
+            color: var(--text);
+            font-size: 0.875rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 200;
+            opacity: 0;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+        }
+        
+        .notification.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        .notification.success {
+            border-left: 4px solid #10b981;
+        }
+        
+        .notification.error {
+            border-left: 4px solid #ef4444;
+        }
+        
+        .notification.info {
+            border-left: 4px solid var(--accent);
+        }
+        
+        .notification i {
+            font-size: 1.25rem;
+        }
+        
+        .notification.success i {
+            color: #10b981;
+        }
+        
+        .notification.error i {
+            color: #ef4444;
+        }
+        
+        .notification.info i {
+            color: var(--accent);
+        }
+        
+        /* Loading Indicator */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary);
+            z-index: 300;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .loading-bar {
+            height: 100%;
+            width: 50%;
+            background-color: var(--accent);
+            position: absolute;
+            animation: loading 1.5s infinite ease-in-out;
+        }
+        
+        @keyframes loading {
+            0% {
+                left: -50%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        /* Splash Screen */
+        .splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1e293b;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+        
+        .splash.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        
+        .splash-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            animation: pulse 2s infinite;
+        }
+        
+        .splash-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .splash-loading {
+            width: 200px;
+            height: 4px;
+            background-color: #334155;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-top: 24px;
+            position: relative;
+        }
+        
+        .splash-loading-bar {
+            height: 100%;
+            width: 30%;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border-radius: 9999px;
+            position: absolute;
+            left: -30%;
+            animation: loading-animation 1.5s infinite ease-in-out;
+        }
+        
+        @keyframes loading-animation {
+            0% {
+                left: -30%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Install Banner */
+        .install-banner {
+            position: fixed;
+            bottom: 90px;
+            left: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, var(--accent), #60a5fa);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-lg);
+            z-index: 90;
+            display: none;
+            animation: slideUp 0.5s ease-in-out;
+        }
+        
+        .install-banner.active {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .install-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .install-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius);
+            object-fit: cover;
+        }
+        
+        .install-text h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .install-text p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        
+        .install-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .install-btn {
+            background-color: white;
+            color: var(--accent);
+            border: none;
+            border-radius: var(--radius-full);
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .install-btn:hover, .install-btn:focus {
+            background-color: #f8fafc;
+            transform: translateY(-2px);
+        }
+        
+        .install-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .install-close:hover, .install-close:focus {
+            opacity: 1;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive Adjustments */
+        @media (min-width: 768px) {
+            .main-content {
+                max-width: 768px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .surah-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash" id="splash">
+        <img src="logokuran2.jpg" alt="Logo" class="splash-logo">
+        <h1 class="splash-title">SADECE KURAN</h1>
+        <div class="splash-loading">
+            <div class="splash-loading-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Loading Indicator -->
+    <div class="loading" id="loading">
+        <div class="loading-bar"></div>
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <h1 class="header-title">SADECE KURAN</h1>
+        <div class="header-actions">
+            <button class="icon-btn" id="search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="icon-btn" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Screen -->
+        <div id="home-screen">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="main-search" placeholder="Sure, ayet veya kelime ara...">
+            </div>
+            
+            <!-- Meal Seçici -->
+            <div class="meal-selector">
+                <select id="meal-select">
+                    <option value="">Meal Seçin</option>
+                    <!-- Meal seçenekleri JavaScript ile doldurulacak -->
+                </select>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Tümü</button>
+                <button class="filter-btn" data-filter="mekki">Mekki</button>
+                <button class="filter-btn" data-filter="medeni">Medeni</button>
+                <button class="filter-btn" data-filter="short">Kısa Sureler</button>
+                <button class="filter-btn" data-filter="medium">Orta Sureler</button>
+                <button class="filter-btn" data-filter="long">Uzun Sureler</button>
+            </div>
+            
+            <!-- Surah Grid -->
+            <div class="surah-grid" id="surah-grid"></div>
+        </div>
+        
+        <!-- Verse Panel -->
+        <div class="verse-panel" id="verse-panel">
+            <div class="panel-header">
+                <button class="icon-btn" id="back-to-surahs">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 class="panel-title" id="verse-panel-title">Fatiha Suresi</h2>
+                <button class="icon-btn" id="verse-panel-options">
+                    <i class="fas fa-ellipsis-vertical"></i>
+                </button>
+            </div>
+            <div class="verse-list" id="verse-list"></div>
+        </div>
+        
+        <!-- Verse Detail -->
+        <div class="verse-detail" id="verse-detail">
+            <div class="detail-header">
+                <button class="icon-btn" id="back-to-verses">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 class="detail-title" id="verse-detail-title">Fatiha 1</h2>
+                <button class="icon-btn" id="verse-detail-options">
+                    <i class="fas fa-ellipsis-vertical"></i>
+                </button>
+            </div>
+            <div class="selected-translation" id="selected-translation"></div>
+            
+            <!-- Verse Navigation -->
+            <div class="verse-navigation">
+                <button class="verse-nav-btn" id="prev-verse-btn">
+                    <i class="fas fa-chevron-left"></i> Önceki Ayet
+                </button>
+                <button class="verse-nav-btn" id="next-verse-btn">
+                    Sonraki Ayet <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <!-- Verse Actions -->
+            <div class="verse-actions">
+                <button class="verse-action-btn favorite" id="favorite-verse-btn">
+                    <i class="fas fa-star"></i> Favorilere Ekle
+                </button>
+                <button class="verse-action-btn share" id="share-verse-btn">
+                    <i class="fas fa-share-alt"></i> Paylaş
+                </button>
+            </div>
+            
+            <h3 class="translations-heading">DİĞER MEALLER</h3>
+            <div class="other-translations" id="other-translations"></div>
+        </div>
+        
+        <!-- Favorites Panel -->
+        <div class="favorites-panel" id="favorites-panel">
+            <div class="favorites-header">
+                <h2 class="favorites-title"><i class="fas fa-star"></i> Favori Ayetler</h2>
+                <button class="icon-btn" id="favorites-options">
+                    <i class="fas fa-ellipsis-vertical"></i>
+                </button>
+            </div>
+            <div class="favorites-list" id="favorites-list"></div>
+        </div>
+        
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settings-panel">
+            <div class="settings-header">
+                <h2 class="settings-title"><i class="fas fa-cog"></i> Ayarlar</h2>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="settings-section-title">Görünüm</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Karanlık Mod</span>
+                        <span class="setting-description">Karanlık temayı etkinleştir</span>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="dark-mode-toggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Tema Rengi</span>
+                        <span class="setting-description">Uygulamanın ana rengini değiştir</span>
+                    </div>
+                    <div class="color-options">
+                        <div class="color-option active" style="background-color: #3b82f6;" data-color="#3b82f6"></div>
+                        <div class="color-option" style="background-color: #10b981;" data-color="#10b981"></div>
+                        <div class="color-option" style="background-color: #ef4444;" data-color="#ef4444"></div>
+                        <div class="color-option" style="background-color: #8b5cf6;" data-color="#8b5cf6"></div>
+                        <div class="color-option" style="background-color: #f59e0b;" data-color="#f59e0b"></div>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Yazı Boyutu</span>
+                        <span class="setting-description">Ayet metinlerinin boyutunu ayarla</span>
+                    </div>
+                    <div class="font-size-controls">
+                        <button class="font-size-btn" id="decrease-font">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <span class="font-size-value" id="font-size-value">100%</span>
+                        <button class="font-size-btn" id="increase-font">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="settings-section-title">Okuma</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Varsayılan Meal</span>
+                        <span class="setting-description">Tercih ettiğiniz meali seçin</span>
+                    </div>
+                    <select class="search-input" id="default-translation">
+                        <!-- Meal seçenekleri JavaScript ile doldurulacak -->
+                    </select>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Otomatik Kaydırma</span>
+                        <span class="setting-description">Uzun surelerde otomatik kaydırma</span>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="auto-scroll-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="settings-section-title">Bildirimler</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Günlük Ayet</span>
+                        <span class="setting-description">Her gün rastgele bir ayet bildirimi al</span>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="daily-verse-toggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Bildirim Zamanı</span>
+                        <span class="setting-description">Günlük ayet bildiriminin zamanı</span>
+                    </div>
+                    <select class="search-input" id="notification-time">
+                        <option value="morning">Sabah (08:00)</option>
+                        <option value="noon">Öğle (12:00)</option>
+                        <option value="evening">Akşam (18:00)</option>
+                        <option value="night">Gece (21:00)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="settings-section-title">Veri ve Gizlilik</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Çevrimdışı Kullanım</span>
+                        <span class="setting-description">İnternetsiz kullanım için verileri kaydet</span>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="offline-toggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <button class="btn btn-danger" id="clear-data-btn">
+                    <i class="fas fa-trash-alt"></i> Tüm Verileri Temizle
+                </button>
+            </div>
+            
+            <div class="settings-section">
+                <h3 class="settings-section-title">Hakkında</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Uygulama Versiyonu</span>
+                        <span class="setting-description">v2.0.0</span>
+                    </div>
+                </div>
+                
+                <button class="btn" id="feedback-btn">
+                    <i class="fas fa-comment-alt"></i> Geri Bildirim Gönder
+                </button>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" id="home-nav">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-label">Ana Sayfa</span>
+        </div>
+        <div class="nav-item" id="favorites-nav">
+            <i class="fas fa-star nav-icon"></i>
+            <span class="nav-label">Favoriler</span>
+        </div>
+        <div class="nav-item" id="settings-nav">
+            <i class="fas fa-cog nav-icon"></i>
+            <span class="nav-label">Ayarlar</span>
+        </div>
+    </nav>
+    
+    <!-- Search Page -->
+    <div class="search-page" id="search-page">
+        <div class="search-page-header">
+            <button class="icon-btn" id="close-search">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <input type="text" class="search-page-input" id="search-page-input" placeholder="Sure, ayet veya kelime ara...">
+            <button class="icon-btn" id="clear-search">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="search-tags">
+            <div class="search-tag"><i class="fas fa-hashtag"></i> iman</div>
+            <div class="search-tag"><i class="fas fa-hashtag"></i> rahmet</div>
+            <div class="search-tag"><i class="fas fa-hashtag"></i> sabır</div>
+            <div class="search-tag"><i class="fas fa-hashtag"></i> şükür</div>
+            <div class="search-tag"><i class="fas fa-hashtag"></i> tevhid</div>
+            <div class="search-tag"><i class="fas fa-hashtag"></i> dua</div>
+        </div>
+        
+        <div class="search-results" id="search-results"></div>
+    </div>
+    
+    <!-- Install Banner -->
+    <div class="install-banner" id="install-banner">
+        <div class="install-content">
+            <img src="logokuran2.jpg" alt="App Icon" class="install-icon">
+            <div class="install-text">
+                <h3>SADECE KURAN</h3>
+                <p>Uygulamayı ana ekrana ekleyin</p>
+            </div>
+        </div>
+        <div class="install-actions">
+            <button class="install-btn" id="install-btn">Yükle</button>
+            <button class="install-close" id="close-install">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-info-circle"></i>
+        <span id="notification-text">Bildirim mesajı</span>
+    </div>
+    
+    <script>
+        // Uygulama Verileri
+        let quranData = {};
+        let currentSurah = null;
+        let currentVerse = null;
+        let currentVerseIndex = 0;
+        let currentSurahIndex = 0;
+        let defaultTranslation = "Diyanet Vakfı";
+        let fontSize = 100;
+        let darkMode = true;
+        let accentColor = "#3b82f6";
+        let autoScroll = false;
+        let dailyVerse = true;
+        let notificationTime = "morning";
+        let offlineMode = true;
+        let availableTranslations = [];
+        
+        // Sure bilgileri
+        const surahInfo = {
+            1: { name: "Fatiha", type: "mekki", verses: 7, category: "short" },
+            2: { name: "Bakara", type: "medeni", verses: 286, category: "long" },
+            3: { name: "Âl-i İmrân", type: "medeni", verses: 200, category: "long" },
+            4: { name: "Nisâ", type: "medeni", verses: 176, category: "long" },
+            5: { name: "Mâide", type: "medeni", verses: 120, category: "long" },
+            6: { name: "En'âm", type: "mekki", verses: 165, category: "long" },
+            7: { name: "A'râf", type: "mekki", verses: 206, category: "long" },
+            8: { name: "Enfâl", type: "medeni", verses: 75, category: "medium" },
+            9: { name: "Tevbe", type: "medeni", verses: 129, category: "long" },
+            10: { name: "Yûnus", type: "mekki", verses: 109, category: "medium" },
+            11: { name: "Hûd", type: "mekki", verses: 123, category: "long" },
+            12: { name: "Yûsuf", type: "mekki", verses: 111, category: "medium" },
+            13: { name: "Ra'd", type: "medeni", verses: 43, category: "medium" },
+            14: { name: "İbrâhîm", type: "mekki", verses: 52, category: "medium" },
+            15: { name: "Hicr", type: "mekki", verses: 99, category: "medium" },
+            16: { name: "Nahl", type: "mekki", verses: 128, category: "long" },
+            17: { name: "İsrâ", type: "mekki", verses: 111, category: "medium" },
+            18: { name: "Kehf", type: "mekki", verses: 110, category: "medium" },
+            19: { name: "Meryem", type: "mekki", verses: 98, category: "medium" },
+            20: { name: "Tâ-Hâ", type: "mekki", verses: 135, category: "long" },
+            21: { name: "Enbiyâ", type: "mekki", verses: 112, category: "medium" },
+            22: { name: "Hac", type: "medeni", verses: 78, category: "medium" },
+            23: { name: "Mü'minûn", type: "mekki", verses: 118, category: "medium" },
+            24: { name: "Nûr", type: "medeni", verses: 64, category: "medium" },
+            25: { name: "Furkân", type: "mekki", verses: 77, category: "medium" },
+            26: { name: "Şuarâ", type: "mekki", verses: 227, category: "long" },
+            27: { name: "Neml", type: "mekki", verses: 93, category: "medium" },
+            28: { name: "Kasas", type: "mekki", verses: 88, category: "medium" },
+            29: { name: "Ankebût", type: "mekki", verses: 69, category: "medium" },
+            30: { name: "Rûm", type: "mekki", verses: 60, category: "medium" },
+            31: { name: "Lokmân", type: "mekki", verses: 34, category: "medium" },
+            32: { name: "Secde", type: "mekki", verses: 30, category: "short" },
+            33: { name: "Ahzâb", type: "medeni", verses: 73, category: "medium" },
+            34: { name: "Sebe'", type: "mekki", verses: 54, category: "medium" },
+            35: { name: "Fâtır", type: "mekki", verses: 45, category: "medium" },
+            36: { name: "Yâsîn", type: "mekki", verses: 83, category: "medium" },
+            37: { name: "Sâffât", type: "mekki", verses: 182, category: "long" },
+            38: { name: "Sâd", type: "mekki", verses: 88, category: "medium" },
+            39: { name: "Zümer", type: "mekki", verses: 75, category: "medium" },
+            40: { name: "Mü'min", type: "mekki", verses: 85, category: "medium" },
+            41: { name: "Fussilet", type: "mekki", verses: 54, category: "medium" },
+            42: { name: "Şûrâ", type: "mekki", verses: 53, category: "medium" },
+            43: { name: "Zuhruf", type: "mekki", verses: 89, category: "medium" },
+            44: { name: "Duhân", type: "mekki", verses: 59, category: "medium" },
+            45: { name: "Câsiye", type: "mekki", verses: 37, category: "medium" },
+            46: { name: "Ahkâf", type: "mekki", verses: 35, category: "medium" },
+            47: { name: "Muhammed", type: "medeni", verses: 38, category: "medium" },
+            48: { name: "Fetih", type: "medeni", verses: 29, category: "short" },
+            49: { name: "Hucurât", type: "medeni", verses: 18, category: "short" },
+            50: { name: "Kâf", type: "mekki", verses: 45, category: "medium" },
+            51: { name: "Zâriyât", type: "mekki", verses: 60, category: "medium" },
+            52: { name: "Tûr", type: "mekki", verses: 49, category: "medium" },
+            53: { name: "Necm", type: "mekki", verses: 62, category: "medium" },
+            54: { name: "Kamer", type: "mekki", verses: 55, category: "medium" },
+            55: { name: "Rahmân", type: "medeni", verses: 78, category: "medium" },
+            56: { name: "Vâkıa", type: "mekki", verses: 96, category: "medium" },
+            57: { name: "Hadîd", type: "medeni", verses: 29, category: "short" },
+            58: { name: "Mücâdele", type: "medeni", verses: 22, category: "short" },
+            59: { name: "Haşr", type: "medeni", verses: 24, category: "short" },
+            60: { name: "Mümtehine", type: "medeni", verses: 13, category: "short" },
+            61: { name: "Saff", type: "medeni", verses: 14, category: "short" },
+            62: { name: "Cuma", type: "medeni", verses: 11, category: "short" },
+            63: { name: "Münâfikûn", type: "medeni", verses: 11, category: "short" },
+            64: { name: "Tegâbün", type: "medeni", verses: 18, category: "short" },
+            65: { name: "Talâk", type: "medeni", verses: 12, category: "short" },
+            66: { name: "Tahrîm", type: "medeni", verses: 12, category: "short" },
+            67: { name: "Mülk", type: "mekki", verses: 30, category: "short" },
+            68: { name: "Kalem", type: "mekki", verses: 52, category: "medium" },
+            69: { name: "Hâkka", type: "mekki", verses: 52, category: "medium" },
+            70: { name: "Meâric", type: "mekki", verses: 44, category: "medium" },
+            71: { name: "Nûh", type: "mekki", verses: 28, category: "short" },
+            72: { name: "Cin", type: "mekki", verses: 28, category: "short" },
+            73: { name: "Müzzemmil", type: "mekki", verses: 20, category: "short" },
+            74: { name: "Müddessir", type: "mekki", verses: 56, category: "medium" },
+            75: { name: "Kıyâmet", type: "mekki", verses: 40, category: "medium" },
+            76: { name: "İnsân", type: "medeni", verses: 31, category: "medium" },
+            77: { name: "Mürselât", type: "mekki", verses: 50, category: "medium" },
+            78: { name: "Nebe'", type: "mekki", verses: 40, category: "medium" },
+            79: { name: "Nâziât", type: "mekki", verses: 46, category: "medium" },
+            80: { name: "Abese", type: "mekki", verses: 42, category: "medium" },
+            81: { name: "Tekvîr", type: "mekki", verses: 29, category: "short" },
+            82: { name: "İnfitâr", type: "mekki", verses: 19, category: "short" },
+            83: { name: "Mutaffifîn", type: "mekki", verses: 36, category: "medium" },
+            84: { name: "İnşikâk", type: "mekki", verses: 25, category: "short" },
+            85: { name: "Bürûc", type: "mekki", verses: 22, category: "short" },
+            86: { name: "Târık", type: "mekki", verses: 17, category: "short" },
+            87: { name: "A'lâ", type: "mekki", verses: 19, category: "short" },
+            88: { name: "Gâşiye", type: "mekki", verses: 26, category: "short" },
+            89: { name: "Fecr", type: "mekki", verses: 30, category: "short" },
+            90: { name: "Beled", type: "mekki", verses: 20, category: "short" },
+            91: { name: "Şems", type: "mekki", verses: 15, category: "short" },
+            92: { name: "Leyl", type: "mekki", verses: 21, category: "short" },
+            93: { name: "Duhâ", type: "mekki", verses: 11, category: "short" },
+            94: { name: "İnşirâh", type: "mekki", verses: 8, category: "short" },
+            95: { name: "Tîn", type: "mekki", verses: 8, category: "short" },
+            96: { name: "Alak", type: "mekki", verses: 19, category: "short" },
+            97: { name: "Kadir", type: "mekki", verses: 5, category: "short" },
+            98: { name: "Beyyine", type: "medeni", verses: 8, category: "short" },
+            99: { name: "Zilzâl", type: "medeni", verses: 8, category: "short" },
+            100: { name: "Âdiyât", type: "mekki", verses: 11, category: "short" },
+            101: { name: "Kâria", type: "mekki", verses: 11, category: "short" },
+            102: { name: "Tekâsür", type: "mekki", verses: 8, category: "short" },
+            103: { name: "Asr", type: "mekki", verses: 3, category: "short" },
+            104: { name: "Hümeze", type: "mekki", verses: 9, category: "short" },
+            105: { name: "Fîl", type: "mekki", verses: 5, category: "short" },
+            106: { name: "Kureyş", type: "mekki", verses: 4, category: "short" },
+            107: { name: "Mâûn", type: "mekki", verses: 7, category: "short" },
+            108: { name: "Kevser", type: "mekki", verses: 3, category: "short" },
+            109: { name: "Kâfirûn", type: "mekki", verses: 6, category: "short" },
+            110: { name: "Nasr", type: "medeni", verses: 3, category: "short" },
+            111: { name: "Tebbet", type: "mekki", verses: 5, category: "short" },
+            112: { name: "İhlâs", type: "mekki", verses: 4, category: "short" },
+            113: { name: "Felak", type: "mekki", verses: 5, category: "short" },
+            114: { name: "Nâs", type: "mekki", verses: 6, category: "short" }
+        };
+        
+        // DOM Yükleme
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("DOM yüklendi");
+            
+            // Splash ekranını 3 saniye sonra gizle
+            setTimeout(function() {
+                hideSplash();
+                console.log("Splash ekranı gizlendi");
+            }, 3000);
+            
+            // Kuran verilerini yükle
+            loadQuranData();
+            
+            // Ayarları yükle
+            loadSettings();
+            
+            // Sureleri yükle
+            loadSurahs();
+            
+            // Event Listeners
+            setupEventListeners();
+            
+            // Kurulum banner'ını göster
+            setTimeout(() => {
+                if (!localStorage.getItem("installBannerClosed")) {
+                    document.getElementById("install-banner").classList.add("active");
+                }
+            }, 4000);
+            
+            // Günlük ayet bildirimi
+            if (dailyVerse) {
+                scheduleDailyVerse();
+            }
+        });
+        
+        // Splash ekranını gizleme fonksiyonu
+        function hideSplash() {
+            const splash = document.getElementById("splash");
+            if (splash) {
+                splash.classList.add("hidden");
+            }
+        }
+        
+        // Kuran verilerini yükle
+        function loadQuranData() {
+            showLoading();
+            
+            // JSON dosyasından Kuran verilerini yükle
+            fetch('kuran_mealleri.json')
+                .then(response => response.json())
+                .then(data => {
+                    quranData = data;
+                    
+                    // Mevcut çevirileri bul
+                    if (quranData && quranData.surahs && quranData.surahs.length > 0) {
+                        const firstSurah = quranData.surahs[0];
+                        if (firstSurah.verses && firstSurah.verses.length > 0) {
+                            const firstVerse = firstSurah.verses[0];
+                            if (firstVerse.translations) {
+                                availableTranslations = firstVerse.translations.map(t => t.author);
+                                
+                                // Meal seçicisini doldur
+                                const mealSelect = document.getElementById("meal-select");
+                                mealSelect.innerHTML = '<option value="">Meal Seçin</option>';
+                                
+                                availableTranslations.forEach(author => {
+                                    const option = document.createElement("option");
+                                    option.value = author;
+                                    option.textContent = author;
+                                    if (author === defaultTranslation) {
+                                        option.selected = true;
+                                    }
+                                    mealSelect.appendChild(option);
+                                });
+                                
+                                // Ayarlar sayfasındaki varsayılan çeviri seçicisini doldur
+                                const defaultTranslationSelect = document.getElementById("default-translation");
+                                defaultTranslationSelect.innerHTML = '';
+                                
+                                availableTranslations.forEach(author => {
+                                    const option = document.createElement("option");
+                                    option.value = author;
+                                    option.textContent = author;
+                                    if (author === defaultTranslation) {
+                                        option.selected = true;
+                                    }
+                                    defaultTranslationSelect.appendChild(option);
+                                });
+                            }
+                        }
+                    }
+                    
+                    hideLoading();
+                })
+                .catch(error => {
+                    console.error('Kuran verileri yüklenirken hata oluştu:', error);
+                    hideLoading();
+                    showNotification("Kuran verileri yüklenemedi", "error");
+                });
+        }
+        
+        // Ayarları yükle
+        function loadSettings() {
+            // Tema modu
+            darkMode = localStorage.getItem("darkMode") !== "false";
+            document.getElementById("dark-mode-toggle").checked = darkMode;
+            
+            // Tema rengi
+            accentColor = localStorage.getItem("accentColor") || "#3b82f6";
+            document.documentElement.style.setProperty('--accent', accentColor);
+            document.documentElement.style.setProperty('--accent-hover', adjustColor(accentColor, -20));
+            
+            // Renk seçeneklerini güncelle
+            document.querySelectorAll(".color-option").forEach(option => {
+                if (option.dataset.color === accentColor) {
+                    option.classList.add("active");
+                } else {
+                    option.classList.remove("active");
+                }
+            });
+            
+            // Yazı boyutu
+            fontSize = parseInt(localStorage.getItem("fontSize") || "100");
+            document.documentElement.style.setProperty('--font-size', fontSize + "%");
+            document.getElementById("font-size-value").textContent = fontSize + "%";
+            
+            // Varsayılan çeviri
+            defaultTranslation = localStorage.getItem("defaultTranslation") || "Diyanet Vakfı";
+            
+            // Otomatik kaydırma
+            autoScroll = localStorage.getItem("autoScroll") === "true";
+            document.getElementById("auto-scroll-toggle").checked = autoScroll;
+            
+            // Günlük ayet
+            dailyVerse = localStorage.getItem("dailyVerse") !== "false";
+            document.getElementById("daily-verse-toggle").checked = dailyVerse;
+            
+            // Bildirim zamanı
+            notificationTime = localStorage.getItem("notificationTime") || "morning";
+            document.getElementById("notification-time").value = notificationTime;
+            
+            // Çevrimdışı kullanım
+            offlineMode = localStorage.getItem("offlineMode") !== "false";
+            document.getElementById("offline-toggle").checked = offlineMode;
+            
+            // Tema modunu uygula
+            if (darkMode) {
+                document.documentElement.style.setProperty('--primary', '#1e293b');
+                document.documentElement.style.setProperty('--secondary', '#334155');
+                document.documentElement.style.setProperty('--card', '#334155');
+                document.documentElement.style.setProperty('--card-hover', '#475569');
+                document.documentElement.style.setProperty('--text', '#f8fafc');
+                document.documentElement.style.setProperty('--text-secondary', '#cbd5e1');
+                document.documentElement.style.setProperty('--border', '#475569');
+                document.getElementById("theme-toggle").innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.documentElement.style.setProperty('--primary', '#f8fafc');
+                document.documentElement.style.setProperty('--secondary', '#f1f5f9');
+                document.documentElement.style.setProperty('--card', '#ffffff');
+                document.documentElement.style.setProperty('--card-hover', '#f1f5f9');
+                document.documentElement.style.setProperty('--text', '#1e293b');
+                document.documentElement.style.setProperty('--text-secondary', '#64748b');
+                document.documentElement.style.setProperty('--border', '#e2e8f0');
+                document.getElementById("theme-toggle").innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+        
+        // Renk ayarlama yardımcı fonksiyonu
+        function adjustColor(color, amount) {
+            return '#' + color.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+        }
+        
+        // Sureleri yükle
+        function loadSurahs() {
+            const surahGrid = document.getElementById("surah-grid");
+            surahGrid.innerHTML = "";
+            
+            // Aktif filtre
+            const activeFilter = document.querySelector(".filter-btn.active").dataset.filter;
+            
+            for (let i = 1; i <= 114; i++) {
+                const surah = surahInfo[i];
+                
+                // Filtreleme
+                if (activeFilter !== "all" && surah.type !== activeFilter && surah.category !== activeFilter) {
+                    continue;
+                }
+                
+                const surahCard = document.createElement("div");
+                surahCard.className = "surah-card";
+                surahCard.dataset.id = i;
+                
+                surahCard.innerHTML = `
+                    <div class="surah-number">${i}</div>
+                    <h3 class="surah-title">${surah.name}</h3>
+                    <div class="surah-info">${surah.verses} Ayet • ${surah.type === "mekki" ? "Mekki" : "Medeni"}</div>
+                `;
+                
+                surahCard.addEventListener("click", () => {
+                    loadSurah(i);
+                });
+                
+                surahGrid.appendChild(surahCard);
+            }
+        }
+        
+        // Sure yükle
+        function loadSurah(id) {
+            showLoading();
+            
+            // Surah verilerini bul
+            currentSurah = id;
+            currentSurahIndex = id - 1;
+            
+            const surah = surahInfo[id];
+            document.getElementById("verse-panel-title").textContent = `${surah.name} Suresi`;
+            
+            const verseList = document.getElementById("verse-list");
+            verseList.innerHTML = "";
+            
+            // Ana ekranı gizle, sure panelini göster
+            document.getElementById("home-screen").style.display = "none";
+            document.getElementById("verse-panel").classList.add("active");
+            
+            // Eğer quranData'da sure varsa
+            if (quranData && quranData.surahs) {
+                const surahData = quranData.surahs.find(s => s.id === id);
+                
+                if (surahData && surahData.verses) {
+                    surahData.verses.forEach(verse => {
+                        // Favori kontrolü
+                        const isFavorite = checkFavorite(id, verse.id);
+                        
+                        // Varsayılan çeviriyi bul
+                        const translation = verse.translations.find(t => t.author === defaultTranslation) || verse.translations[0];
+                        
+                        const verseItem = document.createElement("div");
+                        verseItem.className = "verse-item";
+                        verseItem.dataset.verseId = verse.id;
+                        
+                        // Kaydırma işlemleri için iç içe yapı
+                        verseItem.innerHTML = `
+                            <div class="verse-item-actions left">
+                                <i class="fas fa-share-alt"></i>
+                            </div>
+                            <div class="verse-item-inner">
+                                <span class="verse-number">${verse.id}</span>
+                                <span class="verse-text">${translation.text}</span>
+                            </div>
+                            <div class="verse-item-actions right">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        `;
+                        
+                        verseItem.addEventListener("click", (e) => {
+                            // Kaydırma işlemi yapılmadıysa ayet detayını göster
+                            if (!verseItem.classList.contains('swiping-left') && !verseItem.classList.contains('swiping-right')) {
+                                loadVerseDetail(id, verse.id);
+                            }
+                        });
+                        
+                        // Kaydırma işlemleri
+                        setupSwipeActions(verseItem, id, verse.id);
+                        
+                        verseList.appendChild(verseItem);
+                    });
+                } else {
+                    verseList.innerHTML = "<p style='text-align: center; padding: 20px;'>Bu sure için veriler bulunamadı.</p>";
+                }
+            } else {
+                verseList.innerHTML = "<p style='text-align: center; padding: 20px;'>Kuran verileri henüz yüklenmedi.</p>";
+            }
+            
+            hideLoading();
+            
+            // Aktif sekmeyi güncelle
+            updateActiveTab("home");
+        }
+        
+        // Kaydırma işlemleri
+        function setupSwipeActions(element, surahId, verseId) {
+            let startX = 0;
+            let currentX = 0;
+            let isSwiping = false;
+            
+            element.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isSwiping = true;
+            });
+            
+            element.addEventListener('touchmove', (e) => {
+                if (!isSwiping) return;
+                
+                currentX = e.touches[0].clientX;
+                const diffX = currentX - startX;
+                
+                // Sağa veya sola kaydırma
+                if (Math.abs(diffX) > 30) {
+                    if (diffX > 0) {
+                        // Sağa kaydırma - Favorilere ekle
+                        element.classList.add('swiping-right');
+                        element.classList.remove('swiping-left');
+                    } else {
+                        // Sola kaydırma - Paylaş
+                        element.classList.add('swiping-left');
+                        element.classList.remove('swiping-right');
+                    }
+                } else {
+                    element.classList.remove('swiping-right');
+                    element.classList.remove('swiping-left');
+                }
+            });
+            
+            element.addEventListener('touchend', (e) => {
+                isSwiping = false;
+                
+                if (element.classList.contains('swiping-right')) {
+                    // Favorilere ekle
+                    toggleFavorite(surahId, verseId);
+                    showNotification(checkFavorite(surahId, verseId) ? "Favorilere eklendi" : "Favorilerden çıkarıldı", "success");
+                } else if (element.classList.contains('swiping-left')) {
+                    // Paylaş
+                    shareVerse(surahId, verseId);
+                }
+                
+                // Kaydırma sınıflarını temizle
+                setTimeout(() => {
+                    element.classList.remove('swiping-right');
+                    element.classList.remove('swiping-left');
+                }, 500);
+            });
+        }
+        
+        // Ayet detayını yükle
+        function loadVerseDetail(surahId, verseId) {
+            showLoading();
+            
+            currentSurah = surahId;
+            currentVerse = verseId;
+            currentVerseIndex = verseId - 1;
+            
+            const surah = surahInfo[surahId];
+            document.getElementById("verse-detail-title").textContent = `${surah.name} ${verseId}`;
+            
+            // Verse panelini gizle, verse detail panelini göster
+            document.getElementById("verse-panel").classList.remove("active");
+            document.getElementById("verse-detail").classList.add("active");
+            
+            // Eğer quranData'da sure varsa
+            if (quranData && quranData.surahs) {
+                const surahData = quranData.surahs.find(s => s.id === surahId);
+                
+                if (surahData && surahData.verses) {
+                    const verse = surahData.verses.find(v => v.id === verseId);
+                    
+                    if (verse) {
+                        // Seçili çeviriyi göster
+                        const selectedTranslation = document.getElementById("selected-translation");
+                        const otherTranslations = document.getElementById("other-translations");
+                        
+                        // Varsayılan çeviriyi bul
+                        const defaultTrans = verse.translations.find(t => t.author === defaultTranslation) || verse.translations[0];
+                        selectedTranslation.textContent = defaultTrans.text;
+                        
+                        // Diğer çevirileri göster
+                        otherTranslations.innerHTML = "";
+                        
+                        verse.translations.forEach(translation => {
+                            if (translation.author !== defaultTrans.author) {
+                                const translationItem = document.createElement("div");
+                                translationItem.className = "translation-item";
+                                translationItem.innerHTML = `
+                                    <span class="author-name">${translation.author}:</span> ${translation.text}
+                                `;
+                                otherTranslations.appendChild(translationItem);
+                            }
+                        });
+                        
+                        // Favori butonunu güncelle
+                        const favoriteBtn = document.getElementById("favorite-verse-btn");
+                        favoriteBtn.classList.toggle("active", checkFavorite(surahId, verseId));
+                        favoriteBtn.innerHTML = checkFavorite(surahId, verseId) ? 
+                            '<i class="fas fa-star"></i> Favorilerden Çıkar' : 
+                            '<i class="fas fa-star"></i> Favorilere Ekle';
+                        
+                        // Önceki/sonraki butonlarını güncelle
+                        const prevBtn = document.getElementById("prev-verse-btn");
+                        const nextBtn = document.getElementById("next-verse-btn");
+
+                        prevBtn.disabled = verseId <= 1;
+                        nextBtn.disabled = verseId >= surah.verses;
+
+                        // Önceki/sonraki butonlarına olay dinleyicileri ekle
+                        prevBtn.onclick = function() {
+                            if (verseId > 1) {
+                                loadVerseDetail(surahId, verseId - 1);
+                            }
+                        };
+
+                        nextBtn.onclick = function() {
+                            if (verseId < surah.verses) {
+                                loadVerseDetail(surahId, verseId + 1);
+                            }
+                        };
+                        
+                        // Favori ve paylaşım butonlarına olay dinleyicileri ekle
+                        document.getElementById("favorite-verse-btn").onclick = () => {
+                            toggleFavorite(surahId, verseId);
+                            favoriteBtn.classList.toggle("active", checkFavorite(surahId, verseId));
+                            favoriteBtn.innerHTML = checkFavorite(surahId, verseId) ? 
+                                '<i class="fas fa-star"></i> Favorilerden Çıkar' : 
+                                '<i class="fas fa-star"></i> Favorilere Ekle';
+                        };
+                        
+                        document.getElementById("share-verse-btn").onclick = () => {
+                            shareVerse(surahId, verseId);
+                        };
+                    } else {
+                        document.getElementById("selected-translation").textContent = "Ayet bulunamadı.";
+                        document.getElementById("other-translations").innerHTML = "";
+                    }
+                } else {
+                    document.getElementById("selected-translation").textContent = "Bu sure için veriler bulunamadı.";
+                    document.getElementById("other-translations").innerHTML = "";
+                }
+            } else {
+                document.getElementById("selected-translation").textContent = "Kuran verileri henüz yüklenmedi.";
+                document.getElementById("other-translations").innerHTML = "";
+            }
+            
+            hideLoading();
+        }
+        
+        // Favorileri yükle
+        function loadFavorites() {
+            const favoritesList = document.getElementById("favorites-list");
+            favoritesList.innerHTML = "";
+            
+            const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+            
+            if (favorites.length === 0) {
+                favoritesList.innerHTML = `
+                    <div class="favorites-empty">
+                        <i class="fas fa-star" style="font-size: 3rem; color: #fbbf24; margin-bottom: 16px;"></i>
+                        <p>Henüz favori ayet eklenmemiş.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            favorites.forEach(favorite => {
+                const surah = surahInfo[favorite.surahId];
+                
+                // Ayet metnini bul
+                let verseText = "Yükleniyor...";
+                
+                if (quranData && quranData.surahs) {
+                    const surahData = quranData.surahs.find(s => s.id === favorite.surahId);
+                    if (surahData && surahData.verses) {
+                        const verse = surahData.verses.find(v => v.id === favorite.verseId);
+                        if (verse) {
+                            const translation = verse.translations.find(t => t.author === defaultTranslation) || verse.translations[0];
+                            verseText = translation.text;
+                        }
+                    }
+                }
+                
+                const verseItem = document.createElement("div");
+                verseItem.className = "verse-item";
+                
+                // Kaydırma işlemleri için iç içe yapı
+                verseItem.innerHTML = `
+                    <div class="verse-item-actions left">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="verse-item-inner">
+                        <div>
+                            <div class="surah-title">${surah.name} ${favorite.verseId}</div>
+                            <p class="verse-text">${verseText}</p>
+                        </div>
+                    </div>
+                    <div class="verse-item-actions right">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                `;
+                
+                verseItem.addEventListener("click", (e) => {
+                    // Kaydırma işlemi yapılmadıysa ayet detayını göster
+                    if (!verseItem.classList.contains('swiping-left') && !verseItem.classList.contains('swiping-right')) {
+                        loadVerseDetail(favorite.surahId, favorite.verseId);
+                    }
+                });
+                
+                // Kaydırma işlemleri
+                setupFavoriteSwipeActions(verseItem, favorite.surahId, favorite.verseId);
+                
+                favoritesList.appendChild(verseItem);
+            });
+        }
+        
+        // Favoriler için kaydırma işlemleri
+        function setupFavoriteSwipeActions(element, surahId, verseId) {
+            let startX = 0;
+            let currentX = 0;
+            let isSwiping = false;
+            
+            element.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isSwiping = true;
+            });
+            
+            element.addEventListener('touchmove', (e) => {
+                if (!isSwiping) return;
+                
+                currentX = e.touches[0].clientX;
+                const diffX = currentX - startX;
+                
+                // Sağa veya sola kaydırma
+                if (Math.abs(diffX) > 30) {
+                    if (diffX > 0) {
+                        // Sağa kaydırma - Favorilerden çıkar
+                        element.classList.add('swiping-right');
+                        element.classList.remove('swiping-left');
+                    } else {
+                        // Sola kaydırma - Paylaş
+                        element.classList.add('swiping-left');
+                        element.classList.remove('swiping-right');
+                    }
+                } else {
+                    element.classList.remove('swiping-right');
+                    element.classList.remove('swiping-left');
+                }
+            });
+            
+            element.addEventListener('touchend', (e) => {
+                isSwiping = false;
+                
+                if (element.classList.contains('swiping-right')) {
+                    // Favorilerden çıkar
+                    toggleFavorite(surahId, verseId);
+                    showNotification("Favorilerden çıkarıldı", "info");
+                    loadFavorites(); // Favorileri yeniden yükle
+                } else if (element.classList.contains('swiping-left')) {
+                    // Paylaş
+                    shareVerse(surahId, verseId);
+                }
+                
+                // Kaydırma sınıflarını temizle
+                setTimeout(() => {
+                    element.classList.remove('swiping-right');
+                    element.classList.remove('swiping-left');
+                }, 500);
+            });
+        }
+        
+        // Favorilere ekle/çıkar
+        function toggleFavorite(surahId, verseId, button) {
+            const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+            const index = favorites.findIndex(f => f.surahId === surahId && f.verseId === verseId);
+            
+            if (index !== -1) {
+                // Favorilerden çıkar
+                favorites.splice(index, 1);
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                
+                if (button) {
+                    button.classList.remove("active");
+                }
+                
+                showNotification("Favorilerden kaldırıldı", "info");
+            } else {
+                // Favorilere ekle
+                favorites.push({ surahId, verseId });
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                
+                if (button) {
+                    button.classList.add("active");
+                }
+                
+                showNotification("Favorilere eklendi", "success");
+            }
+            
+            // Eğer favoriler sayfası açıksa, favorileri yeniden yükle
+            if (document.getElementById("favorites-panel").classList.contains("active")) {
+                loadFavorites();
+            }
+        }
+        
+        // Favorilerde mi kontrol et
+        function checkFavorite(surahId, verseId) {
+            const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+            return favorites.some(f => f.surahId === surahId && f.verseId === verseId);
+        }
+        
+        // Ayet paylaş
+        function shareVerse(surahId, verseId) {
+            const surah = surahInfo[surahId];
+            
+            // Ayet metnini bul
+            let verseText = "";
+            
+            if (quranData && quranData.surahs) {
+                const surahData = quranData.surahs.find(s => s.id === surahId);
+                if (surahData && surahData.verses) {
+                    const verse = surahData.verses.find(v => v.id === verseId);
+                    if (verse) {
+                        const translation = verse.translations.find(t => t.author === defaultTranslation) || verse.translations[0];
+                        verseText = translation.text;
+                    }
+                }
+            }
+            
+            if (!verseText) {
+                verseText = `${surah.name} Suresi ${verseId}. ayet`;
+            }
+            
+            const text = `${surah.name} Suresi, ${verseId}. Ayet: "${verseText}" - SADECE KURAN`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: "SADECE KURAN",
+                    text: text,
+                    url: window.location.href
+                }).catch(err => {
+                    console.error("Paylaşım hatası:", err);
+                    copyToClipboard(text);
+                });
+            } else {
+                copyToClipboard(text);
+            }
+        }
+        
+        // Panoya kopyala
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    showNotification("Panoya kopyalandı", "success");
+                })
+                .catch(err => {
+                    console.error("Kopyalama hatası:", err);
+                    showNotification("Kopyalama başarısız", "error");
+                });
+        }
+        
+        // Bildirim göster
+        function showNotification(message, type = "info") {
+            const notification = document.getElementById("notification");
+            const notificationText = document.getElementById("notification-text");
+            
+            notification.className = "notification " + type;
+            notificationText.textContent = message;
+            
+            // İkon güncelle
+            const icon = notification.querySelector("i");
+            if (type === "success") {
+                icon.className = "fas fa-check-circle";
+            } else if (type === "error") {
+                icon.className = "fas fa-exclamation-circle";
+            } else {
+                icon.className = "fas fa-info-circle";
+            }
+            
+            notification.classList.add("active");
+            
+            setTimeout(() => {
+                notification.classList.remove("active");
+            }, 3000);
+        }
+        
+        // Yükleniyor göster/gizle
+        function showLoading() {
+            document.getElementById("loading").classList.add("active");
+        }
+        
+        function hideLoading() {
+            document.getElementById("loading").classList.remove("active");
+        }
+        
+        // Aktif sekmeyi güncelle
+        function updateActiveTab(tab) {
+            document.querySelectorAll(".nav-item").forEach(item => {
+                item.classList.remove("active");
+            });
+            
+            document.getElementById(tab + "-nav").classList.add("active");
+        }
+        
+        // Günlük ayet bildirimi
+        function scheduleDailyVerse() {
+            // Bildirim izni kontrol et
+            if (Notification && Notification.permission !== "granted") {
+                Notification.requestPermission();
+            }
+            
+            // Gerçek uygulamada zamanlanmış bildirimler için bir servis kullanılabilir
+            // Bu örnek için sadece simülasyon yapıyoruz
+            if (Math.random() > 0.7 && Notification.permission === "granted") {
+                // Rastgele bir ayet seç
+                const randomSurah = Math.floor(Math.random() * 114) + 1;
+                const randomVerse = Math.floor(Math.random() * surahInfo[randomSurah].verses) + 1;
+                
+                // Bildirim gönder
+                const notification = new Notification("Günlük Ayet", {
+                    body: `${surahInfo[randomSurah].name} ${randomVerse}: Örnek ayet metni.`,
+                    icon: "logokuran2.jpg"
+                });
+                
+                notification.onclick = function() {
+                    window.focus();
+                    loadSurah(randomSurah);
+                    setTimeout(() => {
+                        loadVerseDetail(randomSurah, randomVerse);
+                    }, 500);
+                };
+            }
+        }
+        
+        // Event Listeners
+        function setupEventListeners() {
+            // Ana sayfa butonu
+            document.getElementById("home-nav").addEventListener("click", () => {
+                document.getElementById("home-screen").style.display = "block";
+                document.getElementById("verse-panel").classList.remove("active");
+                document.getElementById("verse-detail").classList.remove("active");
+                document.getElementById("favorites-panel").classList.remove("active");
+                document.getElementById("settings-panel").classList.remove("active");
+                updateActiveTab("home");
+            });
+            
+            // Favoriler butonu
+            document.getElementById("favorites-nav").addEventListener("click", () => {
+                document.getElementById("home-screen").style.display = "none";
+                document.getElementById("verse-panel").classList.remove("active");
+                document.getElementById("verse-detail").classList.remove("active");
+                document.getElementById("favorites-panel").classList.add("active");
+                document.getElementById("settings-panel").classList.remove("active");
+                loadFavorites();
+                updateActiveTab("favorites");
+            });
+            
+            // Ayarlar butonu
+            document.getElementById("settings-nav").addEventListener("click", () => {
+                document.getElementById("home-screen").style.display = "none";
+                document.getElementById("verse-panel").classList.remove("active");
+                document.getElementById("verse-detail").classList.remove("active");
+                document.getElementById("favorites-panel").classList.remove("active");
+                document.getElementById("settings-panel").classList.add("active");
+                updateActiveTab("settings");
+            });
+            
+            // Surelere dön butonu
+            document.getElementById("back-to-surahs").addEventListener("click", () => {
+                document.getElementById("verse-panel").classList.remove("active");
+                document.getElementById("home-screen").style.display = "block";
+            });
+            
+            // Ayetlere dön butonu
+            document.getElementById("back-to-verses").addEventListener("click", () => {
+                document.getElementById("verse-detail").classList.remove("active");
+                document.getElementById("verse-panel").classList.add("active");
+            });
+            
+            // Arama butonu
+            document.getElementById("search-btn").addEventListener("click", () => {
+                document.getElementById("search-page").classList.add("active");
+                document.getElementById("search-page-input").focus();
+            });
+            
+            // Arama sayfasını kapat
+            document.getElementById("close-search").addEventListener("click", () => {
+                document.getElementById("search-page").classList.remove("active");
+            });
+            
+            // Arama temizle
+            document.getElementById("clear-search").addEventListener("click", () => {
+                document.getElementById("search-page-input").value = "";
+                document.getElementById("search-results").innerHTML = "";
+            });
+            
+            // Arama etiketleri
+            document.querySelectorAll(".search-tag").forEach(tag => {
+                tag.addEventListener("click", () => {
+                    const searchTerm = tag.textContent.replace(/[#\s]/g, '').trim();
+                    document.getElementById("search-page-input").value = searchTerm;
+                    performSearch(searchTerm);
+                });
+            });
+            
+            // Arama inputu
+            document.getElementById("search-page-input").addEventListener("input", debounce((e) => {
+                const searchTerm = e.target.value.trim();
+                if (searchTerm.length >= 2) {
+                    performSearch(searchTerm);
+                }
+            }, 300));
+            
+            // Ana sayfa arama
+            document.getElementById("main-search").addEventListener("input", debounce((e) => {
+                const searchTerm = e.target.value.trim();
+                if (searchTerm.length >= 2) {
+                    document.getElementById("search-page").classList.add("active");
+                    document.getElementById("search-page-input").value = searchTerm;
+                    performSearch(searchTerm);
+                }
+            }, 300));
+            
+            // Meal seçici
+            document.getElementById("meal-select").addEventListener("change", (e) => {
+                if (e.target.value) {
+                    defaultTranslation = e.target.value;
+                    localStorage.setItem("defaultTranslation", defaultTranslation);
+                    
+                    // Eğer sure paneli açıksa, ayetleri yeniden yükle
+                    if (document.getElementById("verse-panel").classList.contains("active")) {
+                        loadSurah(currentSurah);
+                    }
+                    
+                    // Eğer ayet detayı açıksa, çeviriyi güncelle
+                    if (document.getElementById("verse-detail").classList.contains("active")) {
+                        loadVerseDetail(currentSurah, currentVerse);
+                    }
+                    
+                    // Ayarlar sayfasındaki varsayılan çeviri seçicisini güncelle
+                    document.getElementById("default-translation").value = defaultTranslation;
+                    
+                    showNotification(`Meal "${defaultTranslation}" olarak değiştirildi`, "success");
+                }
+            });
+            
+            // Filtreler
+            document.querySelectorAll(".filter-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    loadSurahs();
+                });
+            });
+            
+            // Tema değiştirme
+            document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+            
+            // Karanlık mod toggle
+            document.getElementById("dark-mode-toggle").addEventListener("change", (e) => {
+                darkMode = e.target.checked;
+                localStorage.setItem("darkMode", darkMode);
+                
+                if (darkMode) {
+                    document.documentElement.style.setProperty('--primary', '#1e293b');
+                    document.documentElement.style.setProperty('--secondary', '#334155');
+                    document.documentElement.style.setProperty('--card', '#334155');
+                    document.documentElement.style.setProperty('--card-hover', '#475569');
+                    document.documentElement.style.setProperty('--text', '#f8fafc');
+                    document.documentElement.style.setProperty('--text-secondary', '#cbd5e1');
+                    document.documentElement.style.setProperty('--border', '#475569');
+                    document.getElementById("theme-toggle").innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    document.documentElement.style.setProperty('--primary', '#f8fafc');
+                    document.documentElement.style.setProperty('--secondary', '#f1f5f9');
+                    document.documentElement.style.setProperty('--card', '#ffffff');
+                    document.documentElement.style.setProperty('--card-hover', '#f1f5f9');
+                    document.documentElement.style.setProperty('--text', '#1e293b');
+                    document.documentElement.style.setProperty('--text-secondary', '#64748b');
+                    document.documentElement.style.setProperty('--border', '#e2e8f0');
+                    document.getElementById("theme-toggle").innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
+            
+            // Renk seçenekleri
+            document.querySelectorAll(".color-option").forEach(option => {
+                option.addEventListener("click", () => {
+                    document.querySelectorAll(".color-option").forEach(opt => opt.classList.remove("active"));
+                    option.classList.add("active");
+                    
+                    accentColor = option.dataset.color;
+                    localStorage.setItem("accentColor", accentColor);
+                    
+                    document.documentElement.style.setProperty('--accent', accentColor);
+                    document.documentElement.style.setProperty('--accent-hover', adjustColor(accentColor, -20));
+                    
+                    showNotification("Tema rengi değiştirildi", "success");
+                });
+            });
+            
+            // Yazı boyutu azalt
+            document.getElementById("decrease-font").addEventListener("click", () => {
+                if (fontSize > 70) {
+                    fontSize -= 10;
+                    document.documentElement.style.setProperty('--font-size', fontSize + "%");
+                    document.getElementById("font-size-value").textContent = fontSize + "%";
+                    localStorage.setItem("fontSize", fontSize);
+                }
+            });
+            
+            // Yazı boyutu artır
+            document.getElementById("increase-font").addEventListener("click", () => {
+                if (fontSize < 150) {
+                    fontSize += 10;
+                    document.documentElement.style.setProperty('--font-size', fontSize + "%");
+                    document.getElementById("font-size-value").textContent = fontSize + "%";
+                    localStorage.setItem("fontSize", fontSize);
+                }
+            });
+            
+            // Varsayılan çeviri
+            document.getElementById("default-translation").addEventListener("change", (e) => {
+                defaultTranslation = e.target.value;
+                localStorage.setItem("defaultTranslation", defaultTranslation);
+                
+                // Ana sayfadaki meal seçicisini güncelle
+                document.getElementById("meal-select").value = defaultTranslation;
+                
+                // Eğer ayet detayı açıksa, çeviriyi güncelle
+                if (document.getElementById("verse-detail").classList.contains("active")) {
+                    loadVerseDetail(currentSurah, currentVerse);
+                }
+                
+                showNotification(`Varsayılan meal "${defaultTranslation}" olarak ayarlandı`, "success");
+            });
+            
+            // Otomatik kaydırma
+            document.getElementById("auto-scroll-toggle").addEventListener("change", (e) => {
+                autoScroll = e.target.checked;
+                localStorage.setItem("autoScroll", autoScroll);
+            });
+            
+            // Günlük ayet
+            document.getElementById("daily-verse-toggle").addEventListener("change", (e) => {
+                dailyVerse = e.target.checked;
+                localStorage.setItem("dailyVerse", dailyVerse);
+                
+                if (dailyVerse) {
+                    if (Notification && Notification.permission !== "granted") {
+                        Notification.requestPermission();
+                    }
+                    scheduleDailyVerse();
+                }
+            });
+            
+            // Bildirim zamanı
+            document.getElementById("notification-time").addEventListener("change", (e) => {
+                notificationTime = e.target.value;
+                localStorage.setItem("notificationTime", notificationTime);
+            });
+            
+            // Çevrimdışı kullanım
+            document.getElementById("offline-toggle").addEventListener("change", (e) => {
+                offlineMode = e.target.checked;
+                localStorage.setItem("offlineMode", offlineMode);
+            });
+            
+            // Verileri temizle
+            document.getElementById("clear-data-btn").addEventListener("click", () => {
+                if (confirm("Tüm verileri silmek istediğinize emin misiniz? Bu işlem geri alınamaz.")) {
+                    localStorage.clear();
+                    showNotification("Tüm veriler temizlendi", "success");
+                    
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                }
+            });
+            
+            // Geri bildirim
+            document.getElementById("feedback-btn").addEventListener("click", () => {
+                window.location.href = "mailto:info@sadecekuran.com?subject=Sadece Kuran Uygulama Geri Bildirimi";
+            });
+            
+            // Kurulum banner'ını kapat
+            document.getElementById("close-install").addEventListener("click", () => {
+                document.getElementById("install-banner").classList.remove("active");
+                localStorage.setItem("installBannerClosed", "true");
+            });
+            
+            // Kurulum butonu
+            document.getElementById("install-btn").addEventListener("click", () => {
+                // PWA kurulum mantığı burada olacak
+                showNotification("Uygulama kurulum özelliği henüz hazır değil", "info");
+            });
+        }
+        
+        // Arama yap
+        function performSearch(query) {
+            showLoading();
+            
+            // Arama sonuçları
+            const results = [];
+            const searchResults = document.getElementById("search-results");
+            searchResults.innerHTML = "";
+            
+            if (!quranData || !quranData.surahs) {
+                searchResults.innerHTML = "<p>Kuran verileri henüz yüklenmedi.</p>";
+                hideLoading();
+                return;
+            }
+            
+            // Sure adlarında ara
+            for (let i = 1; i <= 114; i++) {
+                const surah = surahInfo[i];
+                if (surah.name.toLowerCase().includes(query.toLowerCase())) {
+                    results.push({
+                        type: "surah",
+                        id: i,
+                        title: `${i}. ${surah.name} Suresi`,
+                        text: `${surah.verses} ayet, ${surah.type === "mekki" ? "Mekki" : "Medeni"}`
+                    });
+                }
+            }
+            
+            // Ayet içeriklerinde ara
+            quranData.surahs.forEach(surah => {
+                surah.verses.forEach(verse => {
+                    verse.translations.forEach(translation => {
+                        if (translation.text.toLowerCase().includes(query.toLowerCase())) {
+                            // Eğer aynı ayet zaten eklenmediyse ekle
+                            if (!results.some(r => r.type === "verse" && r.surahId === surah.id && r.verseId === verse.id)) {
+                                results.push({
+                                    type: "verse",
+                                    surahId: surah.id,
+                                    verseId: verse.id,
+                                    title: `${surahInfo[surah.id].name} ${verse.id}`,
+                                    text: translation.text,
+                                    author: translation.author
+                                });
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Sonuçları göster
+            if (results.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="favorites-empty">
+                        <i class="fas fa-search" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 16px;"></i>
+                        <p>"${query}" için sonuç bulunamadı.</p>
+                    </div>
+                `;
+            } else {
+                results.forEach(result => {
+                    const resultItem = document.createElement("div");
+                    resultItem.className = "search-result";
+                    
+                    // Arama terimini vurgula
+                    const highlightedText = result.text.replace(
+                        new RegExp(query, 'gi'),
+                        match => `<span class="search-highlight">${match}</span>`
+                    );
+                    
+                    resultItem.innerHTML = `
+                        <div class="search-result-title">${result.title}</div>
+                        <div class="search-result-text">${highlightedText}</div>
+                    `;
+                    
+                    resultItem.addEventListener("click", () => {
+                        if (result.type === "surah") {
+                            document.getElementById("search-page").classList.remove("active");
+                            loadSurah(result.id);
+                        } else if (result.type === "verse") {
+                            document.getElementById("search-page").classList.remove("active");
+                            loadSurah(result.surahId);
+                            setTimeout(() => {
+                                loadVerseDetail(result.surahId, result.verseId);
+                            }, 500);
+                        }
+                    });
+                    
+                    searchResults.appendChild(resultItem);
+                });
+            }
+            
+            hideLoading();
+        }
+        
+        // Tema değiştir
+        function toggleTheme() {
+            darkMode = !darkMode;
+            localStorage.setItem("darkMode", darkMode);
+            document.getElementById("dark-mode-toggle").checked = darkMode;
+            
+            if (darkMode) {
+                document.documentElement.style.setProperty('--primary', '#1e293b');
+                document.documentElement.style.setProperty('--secondary', '#334155');
+                document.documentElement.style.setProperty('--card', '#334155');
+                document.documentElement.style.setProperty('--card-hover', '#475569');
+                document.documentElement.style.setProperty('--text', '#f8fafc');
+                document.documentElement.style.setProperty('--text-secondary', '#cbd5e1');
+                document.documentElement.style.setProperty('--border', '#475569');
+                document.getElementById("theme-toggle").innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.documentElement.style.setProperty('--primary', '#f8fafc');
+                document.documentElement.style.setProperty('--secondary', '#f1f5f9');
+                document.documentElement.style.setProperty('--card', '#ffffff');
+                document.documentElement.style.setProperty('--card-hover', '#f1f5f9');
+                document.documentElement.style.setProperty('--text', '#1e293b');
+                document.documentElement.style.setProperty('--text-secondary', '#64748b');
+                document.documentElement.style.setProperty('--border', '#e2e8f0');
+                document.getElementById("theme-toggle").innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+        
+        // Debounce fonksiyonu
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+    </script>
+</body>
+</html>
