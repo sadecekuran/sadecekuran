@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SİYASİ ARŞİV SİSTEMİ</title>
-    <link rel="icon" type="image/png" href="/logo.PNG"/>
-    <link rel="apple-touch-icon" href="/logo.PNG">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -1284,25 +1282,25 @@
             <li>
                 <a href="#" id="home-link" class="active" onclick="showMainContent()">
                     <i class="icon fas fa-home"></i>
-                    <span class="text">Ana Sayfa</span>
+                    <span class="text"></span>
                 </a>
             </li>
             <li>
-                <a href="#" id="history-link" onclick="showHistoryPage()">
+                <a href="#history" id="history-link" onclick="showHistoryPage()">
                     <i class="icon fas fa-history"></i>
-                    <span class="text">Geçmiş</span>
+                    <span class="text"></span>
                 </a>
             </li>
             <li>
-                <a href="#" id="search-link" onclick="showSearchPage()">
+                <a href="#search" id="search-link" onclick="showSearchPage()">
                     <i class="icon fas fa-search"></i>
-                    <span class="text">Arama</span>
+                    <span class="text"></span>
                 </a>
             </li>
             <li>
-                <a href="#" id="settings-link" onclick="showSettingsPage()">
+                <a href="#settings" id="settings-link" onclick="showSettingsPage()">
                     <i class="icon fas fa-cog"></i>
-                    <span class="text">Ayarlar</span>
+                    <span class="text"></span>
                 </a>
             </li>
         </ul>
@@ -1335,12 +1333,6 @@
                 <button class="hero-toggle" id="hero-toggle">
                     <i class="fas fa-chevron-up"></i>
                 </button>
-            </div>
-            
-            <!-- Search Bar - Ana sayfada arama yapmak için arama sayfasına yönlendirir -->
-            <div class="search-container">
-                <i class="search-icon fas fa-search"></i>
-                <input type="text" class="search-bar" id="mainSearchRedirect" placeholder="Arşivde detaylı arama yapmak için tıklayın..." readonly onclick="showSearchPage()">
             </div>
             
             <!-- Main Content (Parties) -->
@@ -1524,9 +1516,6 @@
         </div>
     </div>
     
-    <footer>
-        <p>© 2023 Siyasi Arşiv Sistemi | Tüm Hakları Saklıdır</p>
-    </footer>
 
     <script>
         // Global değişkenler
@@ -1582,7 +1571,13 @@
                     // URL hash'e göre içeriği göster
                     if (window.location.hash) {
                         const hash = window.location.hash.substring(1);
-                        if (document.getElementById(hash)) {
+                        if (hash === 'search') {
+                            showSearchPage();
+                        } else if (hash === 'history') {
+                            showHistoryPage();
+                        } else if (hash === 'settings') {
+                            showSettingsPage();
+                        } else if (document.getElementById(hash)) {
                             if (hash.includes('-')) {
                                 showEventContent(hash);
                             } else {
@@ -1608,11 +1603,6 @@
                 });
                 
             // Arama kutusu olayları
-            document.getElementById('mainSearchRedirect').addEventListener('click', function() {
-                showSearchPage();
-                document.getElementById('searchPageBar').focus();
-            });
-            
             document.getElementById('searchPageBar').addEventListener('input', function(e) {
                 performDetailedSearch(e.target.value);
             });
@@ -2175,6 +2165,8 @@
             
             // Geçmişi güncelle
             gecmisiGuncelle();
+            
+            window.location.hash = 'history';
         }
         
         // Arama sayfasını göster
@@ -2187,6 +2179,8 @@
             
             // Arama kutusuna odaklan
             document.getElementById('searchPageBar').focus();
+            
+            window.location.hash = 'search';
         }
         
         // Ayarlar sayfasını göster
@@ -2196,6 +2190,8 @@
             
             // Sidebar menü aktifliğini güncelle
             updateSidebarActiveLink('settings-link');
+            
+            window.location.hash = 'settings';
         }
         
         // Sidebar menü aktifliğini güncelle
@@ -2557,7 +2553,13 @@ Kaynak: Siyasi Arşiv Sistemi`
         window.addEventListener('hashchange', function() {
             const hash = window.location.hash.substring(1);
             if (hash) {
-                if (document.getElementById(hash)) {
+                if (hash === 'search') {
+                    showSearchPage();
+                } else if (hash === 'history') {
+                    showHistoryPage();
+                } else if (hash === 'settings') {
+                    showSettingsPage();
+                } else if (document.getElementById(hash)) {
                     if (hash.includes('-')) {
                         showEventContent(hash);
                     } else {
