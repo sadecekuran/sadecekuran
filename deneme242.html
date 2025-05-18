@@ -1522,6 +1522,46 @@
                     display: flex;
                 }
             }
+            
+            /* URL hash link styles */
+            .verse-link {
+                color: inherit;
+                text-decoration: none;
+                display: inline-block;
+                margin-right: 5px;
+            }
+            
+            .verse-link:hover {
+                text-decoration: underline;
+                color: var(--highlight-dark);
+            }
+            
+            .copy-url-btn {
+                background: none;
+                border: none;
+                color: var(--text-dark);
+                font-size: 1rem;
+                cursor: pointer;
+                padding: 8px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background-color 0.2s var(--transition-function);
+            }
+            
+            body.day-mode .copy-url-btn {
+                color: var(--text-light);
+            }
+            
+            .copy-url-btn:hover {
+                background-color: var(--accent-dark);
+                color: var(--highlight-dark);
+            }
+            
+            body.day-mode .copy-url-btn:hover {
+                background-color: var(--accent-light);
+            }
         </style>
     </head>
     <body>
@@ -1993,8 +2033,22 @@
             let offlineMode = localStorage.getItem("offlineMode") !== "false";
             let searchHistory = localStorage.getItem("searchHistory") !== "false";
 
+            // URL hash işlemleri için değişkenler
+            let currentSurahId = 0;
+            let currentVerseId = 0;
+
             function getSurahName(id) {
                 return surahNames[id] || `Sure ${id}`;
+            }
+
+            // Sure ID'sini isimden bul
+            function getSurahIdByName(name) {
+                for (const [id, surahName] of Object.entries(surahNames)) {
+                    if (surahName.toLowerCase() === name.toLowerCase()) {
+                        return parseInt(id);
+                    }
+                }
+                return null;
             }
 
             function checkStorageAvailability() {
@@ -2065,6 +2119,9 @@
                             quranData = parsedCache.data;
                             displaySurahs(quranData);
                             hideLoading();
+                            
+                            // URL hash kontrolü
+                            checkUrlHash();
                             return;
                         }
                     } catch (e) {
@@ -2085,10 +2142,14 @@
                         ayetler: surah.verses.map(verse => {
                             const translation = verse.translations.find(t => t.author === author);
                             return translation ? `${verse.verse_id}. ${translation.text}` : `${verse.verse_id}. Çeviri bulunamadı`;
-                        })
+                        }),
+                        id: surah.id // Sure ID'sini ekle
                     }));
 
                     displaySurahs(quranData);
+                    
+                    // URL hash kontrolü
+                    checkUrlHash();
 
                     if (checkStorageAvailability()) {
                         try {
@@ -2154,10 +2215,18 @@
                         const sure = data[i];
                         const surahDiv = document.createElement("div");
                         surahDiv.className = "surah";
-                        surahDiv.innerHTML = `<h2>${sure.sure}</h2>`;
+                        
+                        // Sure için URL hash oluştur
+                        const surahLink = document.createElement("a");
+                        surahLink.href = `#${sure.id}`;
+                        surahLink.className = "verse-link";
+                        surahLink.innerHTML = `<h2>${sure.sure}</h2>`;
+                        
+                        surahDiv.appendChild(surahLink);
                         
                         // Event delegation için data attribute kullan
                         surahDiv.dataset.index = i;
+                        surahDiv.dataset.id = sure.id;
                         
                         fragment.appendChild(surahDiv);
                     }
@@ -2185,7 +2254,7 @@
                     if (surahDiv) {
                         const index = parseInt(surahDiv.dataset.index);
                         const sure = data[index];
-                        displayVerses(sure.sure, sure.ayetler);
+                        displayVerses(sure.sure, sure.ayetler, sure.id);
                         surahsDiv.style.display = "none";
                         // Controls bölümünü gizle
                         document.querySelector('.controls').style.display = "none";
@@ -2233,9 +2302,17 @@
                             if (ayet) {
                                 const verseElement = document.createElement("div");
                                 verseElement.className = "verse-result";
-                                verseElement.innerHTML = `${sure.sure}: ${ayet}`;
+                                
+                                // Ayet için URL hash oluştur
+                                const verseLink = document.createElement("a");
+                                verseLink.href = `#${surahId}-${verseId}`;
+                                verseLink.className = "verse-link";
+                                verseLink.textContent = `${sure.sure}: ${ayet}`;
+                                
+                                verseElement.appendChild(verseLink);
                                 verseElement.dataset.surah = sure.sure;
                                 verseElement.dataset.verseIndex = verseId - 1;
+                                verseElement.dataset.surahId = surahId;
                                 fragment.appendChild(verseElement);
                                 resultsDiv.appendChild(fragment);
                                 return; // Doğrudan ayeti gösterip fonksiyondan çıkıyoruz
@@ -2257,7 +2334,14 @@
                     if (sure.sure.toLowerCase().includes(searchTerm.toLowerCase())) {
                         const surahElement = document.createElement("div");
                         surahElement.className = "verse-result";
-                        surahElement.innerHTML = `<h2>${highlightText(sure.sure, searchTerm)}</h2>`;
+                        
+                        // Sure için URL hash oluştur
+                        const surahLink = document.createElement("a");
+                        surahLink.href = `#${sure.id}`;
+                        surahLink.className = "verse-link";
+                        surahLink.innerHTML = `<h2>${highlightText(sure.sure, searchTerm)}</h2>`;
+                        
+                        surahElement.appendChild(surahLink);
                         surahElement.dataset.index = surahIndex;
                         fragment.appendChild(surahElement);
                         resultCount++;
@@ -2267,9 +2351,17 @@
                         if (ayet.toLowerCase().includes(searchTerm.toLowerCase())) {
                             const verseElement = document.createElement("div");
                             verseElement.className = "verse-result";
-                            verseElement.innerHTML = `${sure.sure}: ${highlightText(ayet, searchTerm)}`;
+                            
+                            // Ayet için URL hash oluştur
+                            const verseLink = document.createElement("a");
+                            verseLink.href = `#${sure.id}-${verseIndex + 1}`;
+                            verseLink.className = "verse-link";
+                            verseLink.innerHTML = `${sure.sure}: ${highlightText(ayet, searchTerm)}`;
+                            
+                            verseElement.appendChild(verseLink);
                             verseElement.dataset.surah = sure.sure;
                             verseElement.dataset.verseIndex = verseIndex;
+                            verseElement.dataset.surahId = sure.id;
                             fragment.appendChild(verseElement);
                             resultCount++;
                         }
@@ -2290,7 +2382,7 @@
                             // Sure sonucu
                             const index = parseInt(verseResult.dataset.index);
                             const sure = quranData[index];
-                            displayVerses(sure.sure, sure.ayetler);
+                            displayVerses(sure.sure, sure.ayetler, sure.id);
                             document.getElementById("search-page").classList.remove("active");
                             document.getElementById("surahs").style.display = "none";
                             // Controls bölümünü gizle
@@ -2299,9 +2391,10 @@
                             // Ayet sonucu
                             const surah = verseResult.dataset.surah;
                             const verseIndex = parseInt(verseResult.dataset.verseIndex);
+                            const surahId = parseInt(verseResult.dataset.surahId);
                             const surahIndex = quranData.findIndex(s => s.sure === surah);
                             const ayet = quranData[surahIndex].ayetler[verseIndex];
-                            displayVerseDetail(surah, ayet, verseIndex);
+                            displayVerseDetail(surah, ayet, verseIndex, surahId);
                             document.getElementById("search-page").classList.remove("active");
                             // Controls bölümünü gizle
                             document.querySelector('.controls').style.display = "none";
@@ -2311,7 +2404,7 @@
             }
 
             // Ayet numarasını formatla
-            function formatVerseNumber(verseText) {
+            function formatVerseNumber(verseText, surahId, verseId) {
                 // Ayet numarasını ve metni ayır (örn: "1. Elif. Lâm. Mîm. Sâd.")
                 const verseMatch = verseText.match(/^(\d+\.)\s(.+)$/);
                 
@@ -2319,16 +2412,19 @@
                     const verseNumber = verseMatch[1].replace('.', ''); // Noktayı kaldır
                     const verseContent = verseMatch[2];
                     
+                    // URL hash için link oluştur
+                    const verseLink = `<a href="#${surahId}-${verseNumber}" class="verse-link">${verseNumber}</a>`;
+                    
                     // Seçilen stile göre HTML oluştur
                     switch(verseNumberStyle) {
                         case 'bg':
-                            return `<span class="verse-number-bg">${verseNumber}</span> ${verseContent}`;
+                            return `<span class="verse-number-bg">${verseLink}</span> ${verseContent}`;
                         case 'bold':
-                            return `<span style="color: var(--highlight-dark); font-weight: bold; margin-right: 5px;">${verseNumber}.</span> ${verseContent}`;
+                            return `<span style="color: var(--highlight-dark); font-weight: bold; margin-right: 5px;">${verseLink}.</span> ${verseContent}`;
                         case 'underline':
-                            return `<span style="color: var(--highlight-dark); font-weight: bold; border-bottom: 2px solid var(--highlight-dark); padding-bottom: 2px; margin-right: 5px;">${verseNumber}.</span> ${verseContent}`;
+                            return `<span style="color: var(--highlight-dark); font-weight: bold; border-bottom: 2px solid var(--highlight-dark); padding-bottom: 2px; margin-right: 5px;">${verseLink}.</span> ${verseContent}`;
                         default:
-                            return verseText;
+                            return `${verseLink}. ${verseContent}`;
                     }
                 }
                 
@@ -2337,11 +2433,16 @@
             }
 
             // Performans optimizasyonu için DOM fragment kullanımı
-            function displayVerses(sureName, ayetler) {
+            function displayVerses(sureName, ayetler, surahId) {
                 const panel = document.getElementById("verse-panel");
                 const panelTitle = document.getElementById("panel-title");
                 const versesDiv = document.getElementById("verses");
                 const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+                
+                // URL hash'i güncelle
+                window.location.hash = `${surahId}`;
+                currentSurahId = surahId;
+                currentVerseId = 0;
                 
                 panelTitle.textContent = sureName;
                 versesDiv.innerHTML = "";
@@ -2363,15 +2464,21 @@
                         verseElement.dataset.verse = ayet;
                         verseElement.dataset.surah = sureName;
                         verseElement.dataset.index = i;
+                        verseElement.dataset.surahId = surahId;
+                        
+                        // Ayet numarasını al (1. gibi)
+                        const verseNumber = ayet.match(/^(\d+)\./);
+                        const verseId = verseNumber ? verseNumber[1] : (i + 1);
                         
                         // Ayet numarasını formatla
-                        const formattedVerse = formatVerseNumber(ayet);
+                        const formattedVerse = formatVerseNumber(ayet, surahId, verseId);
                         
                         verseElement.innerHTML = `
                             <span>${formattedVerse}</span>
                             <span class="verse-actions">
                                 <button class="favorite-btn ${isFavorite ? "active" : ""}" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-star"></i></button>
-                                <button class="share-btn" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-share-alt"></i></button>
+                                <button class="share-btn" data-verse="${ayet}" data-surah="${sureName}" data-surah-id="${surahId}" data-verse-id="${verseId}"><i class="fas fa-share-alt"></i></button>
+                                <button class="copy-url-btn" data-surah-id="${surahId}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
                             </span>
                         `;
                         
@@ -2401,6 +2508,7 @@
                 versesDiv.addEventListener("click", (e) => {
                     const favoriteBtn = e.target.closest('.favorite-btn');
                     const shareBtn = e.target.closest('.share-btn');
+                    const copyUrlBtn = e.target.closest('.copy-url-btn');
                     const verse = e.target.closest('.verse');
                     
                     if (favoriteBtn) {
@@ -2412,17 +2520,25 @@
                         e.stopPropagation();
                         const verse = shareBtn.dataset.verse;
                         const surah = shareBtn.dataset.surah;
-                        shareVerse(surah, verse);
-                    } else if (verse && !e.target.closest('button')) {
+                        const surahId = shareBtn.dataset.surahId;
+                        const verseId = shareBtn.dataset.verseId;
+                        shareVerse(surah, verse, surahId, verseId);
+                    } else if (copyUrlBtn) {
+                        e.stopPropagation();
+                        const surahId = copyUrlBtn.dataset.surahId;
+                        const verseId = copyUrlBtn.dataset.verseId;
+                        copyVerseUrl(surahId, verseId);
+                    } else if (verse && !e.target.closest('button') && !e.target.closest('a')) {
                         e.stopPropagation();
                         const index = parseInt(verse.dataset.index);
-                        displayVerseDetail(sureName, ayetler[index], index);
+                        const surahId = parseInt(verse.dataset.surahId);
+                        displayVerseDetail(sureName, ayetler[index], index, surahId);
                     }
                 });
             }
 
             // Ayet detay panelinde ayet numaralarını göstermeyen fonksiyon
-            function displayVerseDetail(sureName, selectedVerse, verseIndex) {
+            function displayVerseDetail(sureName, selectedVerse, verseIndex, surahId) {
                 const panel = document.getElementById("verse-detail-panel");
                 const title = document.getElementById("verse-detail-title");
                 const selectedTranslation = document.getElementById("selected-translation");
@@ -2430,6 +2546,11 @@
                 const surahIndex = jsonData.surahs.findIndex(s => getSurahName(s.id) === sureName);
                 const verseData = jsonData.surahs[surahIndex].verses[verseIndex];
                 const allTranslations = verseData.translations;
+                
+                // URL hash'i güncelle
+                window.location.hash = `${surahId}-${verseData.verse_id}`;
+                currentSurahId = surahId;
+                currentVerseId = verseData.verse_id;
 
                 title.textContent = `${sureName} - Ayet ${verseData.verse_id}`;
 
@@ -2490,10 +2611,11 @@
 
                 const newSureName = getSurahName(jsonData.surahs[newSurahIndex].id);
                 const newVerse = quranData[newSurahIndex].ayetler[newVerseIndex];
+                const newSurahId = jsonData.surahs[newSurahIndex].id;
                 
                 // Performans için DOM güncellemelerini minimize et
                 requestAnimationFrame(() => {
-                    displayVerseDetail(newSureName, newVerse, newVerseIndex);
+                    displayVerseDetail(newSureName, newVerse, newVerseIndex, newSurahId);
                 });
             }
 
@@ -2535,13 +2657,21 @@
                         verseElement.dataset.surah = f.surah;
                         verseElement.dataset.verse = f.verse;
                         
+                        // Sure ID'sini bul
+                        const surahId = getSurahIdByName(f.surah);
+                        
+                        // Ayet numarasını al
+                        const verseMatch = f.verse.match(/^(\d+)\./);
+                        const verseId = verseMatch ? verseMatch[1] : "1";
+                        
                         // Ayet numarasını formatla
-                        const formattedVerse = formatVerseNumber(f.verse);
+                        const formattedVerse = formatVerseNumber(f.verse, surahId, verseId);
                         
                         verseElement.innerHTML = `
                             <span>${f.surah}: ${formattedVerse}</span>
                             <span class="verse-actions">
                                 <button class="favorite-btn active" data-verse="${f.verse}" data-surah="${f.surah}"><i class="fas fa-trash-alt"></i></button>
+                                <button class="copy-url-btn" data-surah-id="${surahId}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
                             </span>
                         `;
                         fragment.appendChild(verseElement);
@@ -2553,6 +2683,7 @@
                 // Event delegation ile tıklama olaylarını yönet
                 favoritesList.addEventListener("click", (e) => {
                     const favoriteBtn = e.target.closest('.favorite-btn');
+                    const copyUrlBtn = e.target.closest('.copy-url-btn');
                     const verse = e.target.closest('.verse');
                     
                     if (favoriteBtn) {
@@ -2560,26 +2691,34 @@
                         const verse = favoriteBtn.dataset.verse;
                         const surah = favoriteBtn.dataset.surah;
                         toggleFavorite(surah, verse, favoriteBtn);
-                    } else if (verse && !e.target.closest('button')) {
+                    } else if (copyUrlBtn) {
+                        e.stopPropagation();
+                        const surahId = copyUrlBtn.dataset.surahId;
+                        const verseId = copyUrlBtn.dataset.verseId;
+                        copyVerseUrl(surahId, verseId);
+                    } else if (verse && !e.target.closest('button') && !e.target.closest('a')) {
                         e.stopPropagation();
                         const surah = verse.dataset.surah;
                         const verseText = verse.dataset.verse;
                         const surahIndex = quranData.findIndex(s => s.sure === surah);
                         const verseIndex = quranData[surahIndex].ayetler.indexOf(verseText);
-                        displayVerseDetail(surah, verseText, verseIndex);
+                        const surahId = quranData[surahIndex].id;
+                        displayVerseDetail(surah, verseText, verseIndex, surahId);
                         favoritesDiv.style.display = "none";
                     }
                 });
             }
 
-            function shareVerse(surah, verse) {
-                const text = `${surah}: ${verse} - Sadece Kuran`;
+            function shareVerse(surah, verse, surahId, verseId) {
+                const url = `${window.location.origin}${window.location.pathname}#${surahId}-${verseId}`;
+                const text = `${surah}: ${verse} - Sadece Kuran\n${url}`;
+                
                 if (navigator.share) {
                     navigator
                         .share({
                             title: "Sadece Kuran",
                             text: text,
-                            url: window.location.href
+                            url: url
                         })
                         .catch((err) => console.log("Paylaşım hatası:", err));
                 } else {
@@ -2593,6 +2732,19 @@
                             alert("Paylaşım desteklenmiyor, metni manuel kopyalayın: " + text);
                         });
                 }
+            }
+
+            function copyVerseUrl(surahId, verseId) {
+                const url = `${window.location.origin}${window.location.pathname}#${surahId}-${verseId}`;
+                
+                navigator.clipboard.writeText(url)
+                    .then(() => {
+                        showNotification('URL kopyalandı');
+                    })
+                    .catch(err => {
+                        console.error('URL kopyalama hatası:', err);
+                        alert("URL kopyalanamadı: " + url);
+                    });
             }
 
             function showNotification(message, type = 'success') {
@@ -2616,6 +2768,73 @@
                         document.body.removeChild(notification);
                     }, 500);
                 }, 2000);
+            }
+
+            // URL hash değişikliklerini dinle
+            window.addEventListener('hashchange', function() {
+                checkUrlHash();
+            });
+
+            // URL hash'ini kontrol et ve ilgili içeriği göster
+            function checkUrlHash() {
+                const hash = window.location.hash.substring(1); // # işaretini kaldır
+                
+                if (!hash) return;
+                
+                // Surah-Verse formatı: #1-5 (Fatiha suresi 5. ayet)
+                const surahVerseMatch = hash.match(/^(\d+)-(\d+)$/);
+                
+                // Sadece Surah formatı: #1 (Fatiha suresi)
+                const surahMatch = hash.match(/^(\d+)$/);
+                
+                if (surahVerseMatch) {
+                    const surahId = parseInt(surahVerseMatch[1]);
+                    const verseId = parseInt(surahVerseMatch[2]);
+                    
+                    // Eğer zaten bu ayet gösteriliyorsa tekrar yükleme
+                    if (currentSurahId === surahId && currentVerseId === verseId) return;
+                    
+                    const surahIndex = surahId - 1; // Sure ID'leri 1'den başlar
+                    
+                    if (surahIndex >= 0 && surahIndex < quranData.length) {
+                        const sure = quranData[surahIndex];
+                        const verseIndex = verseId - 1; // Ayet ID'leri 1'den başlar
+                        
+                        if (verseIndex >= 0 && verseIndex < sure.ayetler.length) {
+                            const ayet = sure.ayetler[verseIndex];
+                            displayVerseDetail(sure.sure, ayet, verseIndex, surahId);
+                            
+                            // Diğer panelleri gizle
+                            document.getElementById("surahs").style.display = "none";
+                            document.getElementById("favorites").style.display = "none";
+                            document.getElementById("podcasts").style.display = "none";
+                            document.getElementById("settings").style.display = "none";
+                            document.getElementById("search-page").classList.remove("active");
+                            document.querySelector('.controls').style.display = "none";
+                        }
+                    }
+                } else if (surahMatch) {
+                    const surahId = parseInt(surahMatch[1]);
+                    
+                    // Eğer zaten bu sure gösteriliyorsa tekrar yükleme
+                    if (currentSurahId === surahId && currentVerseId === 0) return;
+                    
+                    const surahIndex = surahId - 1; // Sure ID'leri 1'den başlar
+                    
+                    if (surahIndex >= 0 && surahIndex < quranData.length) {
+                        const sure = quranData[surahIndex];
+                        displayVerses(sure.sure, sure.ayetler, surahId);
+                        
+                        // Diğer panelleri gizle
+                        document.getElementById("surahs").style.display = "none";
+                        document.getElementById("verse-detail-panel").classList.remove("active");
+                        document.getElementById("favorites").style.display = "none";
+                        document.getElementById("podcasts").style.display = "none";
+                        document.getElementById("settings").style.display = "none";
+                        document.getElementById("search-page").classList.remove("active");
+                        document.querySelector('.controls').style.display = "none";
+                    }
+                }
             }
 
             // Aktif sekmeyi güncelle
@@ -2678,6 +2897,10 @@
                     surahsDiv.style.display = "block";
                     // Controls bölümünü göster
                     document.querySelector('.controls').style.display = "flex";
+                    // URL hash'i temizle
+                    history.pushState("", document.title, window.location.pathname);
+                    currentSurahId = 0;
+                    currentVerseId = 0;
                 });
 
                 document.getElementById("back-btn").addEventListener("click", () => {
@@ -2691,6 +2914,11 @@
                         favoritesDiv.style.display = "block";
                     } else {
                         versePanel.classList.add("active");
+                        // URL hash'i güncelle - sadece sure ID'si kalsın
+                        if (currentSurahId > 0) {
+                            window.location.hash = `${currentSurahId}`;
+                            currentVerseId = 0;
+                        }
                     }
                 });
 
@@ -2705,6 +2933,10 @@
                     updateActiveTab('home');
                     // Controls bölümünü göster
                     document.querySelector('.controls').style.display = "flex";
+                    // URL hash'i temizle
+                    history.pushState("", document.title, window.location.pathname);
+                    currentSurahId = 0;
+                    currentVerseId = 0;
                 });
                 
                 // Arama sayfası
@@ -2806,6 +3038,11 @@
                 // Update active tab
                 updateActiveTab('home');
                 
+                // URL hash'i temizle
+                history.pushState("", document.title, window.location.pathname);
+                currentSurahId = 0;
+                currentVerseId = 0;
+                
                 // Reload the full list of surahs (this clears any previous search results)
                 displaySurahs(quranData);
             }
@@ -2829,6 +3066,10 @@
                 updateActiveTab('favorites');
                 // Controls bölümünü gizle
                 document.querySelector('.controls').style.display = "none";
+                // URL hash'i temizle
+                history.pushState("", document.title, window.location.pathname);
+                currentSurahId = 0;
+                currentVerseId = 0;
             }
 
             function showPodcasts() {
@@ -2841,6 +3082,10 @@
                 updateActiveTab('podcasts');
                 // Controls bölümünü gizle
                 document.querySelector('.controls').style.display = "none";
+                // URL hash'i temizle
+                history.pushState("", document.title, window.location.pathname);
+                currentSurahId = 0;
+                currentVerseId = 0;
             }
             
             function showSettings() {
@@ -2853,6 +3098,10 @@
                 updateActiveTab('settings');
                 // Controls bölümünü gizle
                 document.querySelector('.controls').style.display = "none";
+                // URL hash'i temizle
+                history.pushState("", document.title, window.location.pathname);
+                currentSurahId = 0;
+                currentVerseId = 0;
             }
 
             // Arama için debounce fonksiyonu
@@ -2884,8 +3133,7 @@
                 if (searchTerm === "") {
                     document.getElementById("search-results").innerHTML = "<p>Arama yapmak için bir kelime yazın.</p>";
                 } else {
-                    displaySearchResults(searchTerm);
-                }
+                    displaySearchResults(searchTerm);                }
             }, 300);
             
             document.getElementById("search-page-input").addEventListener("input", debouncedPageSearch);
@@ -3018,7 +3266,7 @@
                         const sureName = document.getElementById("panel-title").textContent;
                         const surahIndex = quranData.findIndex(s => s.sure === sureName);
                         if (surahIndex >= 0) {
-                            displayVerses(sureName, quranData[surahIndex].ayetler);
+                            displayVerses(sureName, quranData[surahIndex].ayetler, quranData[surahIndex].id);
                         }
                     }
                     
@@ -3033,7 +3281,7 @@
                             if (surahIndex >= 0 && verseId > 0) {
                                 const verseIndex = verseId - 1;
                                 const verse = quranData[surahIndex].ayetler[verseIndex];
-                                displayVerseDetail(sureName, verse, verseIndex);
+                                displayVerseDetail(sureName, verse, verseIndex, quranData[surahIndex].id);
                             }
                         }
                     }
