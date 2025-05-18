@@ -2148,14 +2148,8 @@
 
                     displaySurahs(quranData);
                     
-                    // Bekleyen hash kontrolü varsa şimdi yap
-                    if (window.pendingHashCheck) {
-                        window.pendingHashCheck = false;
-                        checkUrlHash();
-                    } else {
-                        // Normal hash kontrolü
-                        checkUrlHash();
-                    }
+                    // URL hash kontrolü
+                    checkUrlHash();
 
                     if (checkStorageAvailability()) {
                         try {
@@ -2795,8 +2789,6 @@
                 checkUrlHash();
             });
 
-            // Fix the URL hash issue by modifying the checkUrlHash function
-            
             // URL hash'ini kontrol et ve ilgili içeriği göster
             function checkUrlHash() {
                 const hash = window.location.hash.substring(1); // # işaretini kaldır
@@ -2816,170 +2808,48 @@
                     // Eğer zaten bu ayet gösteriliyorsa tekrar yükleme
                     if (currentSurahId === surahId && currentVerseId === verseId) return;
                     
-                    // Önce jsonData'nın yüklendiğinden emin olalım
-                    if (!jsonData.surahs || jsonData.surahs.length === 0) {
-                        console.log("JSON verisi henüz yüklenmedi, hash işlemi erteleniyor");
-                        // Veri yüklendiğinde tekrar kontrol etmek için bir flag ayarlayabiliriz
-                        window.pendingHashCheck = true;
-                        return;
+                    const surahIndex = surahId - 1; // Sure ID'leri 1'den başlar
+                    
+                    if (surahIndex >= 0 && surahIndex < quranData.length) {
+                        const sure = quranData[surahIndex];
+                        const verseIndex = verseId - 1; // Ayet ID'leri 1'den başlar
+                        
+                        if (verseIndex >= 0 && verseIndex < sure.ayetler.length) {
+                            const ayet = sure.ayetler[verseIndex];
+                            displayVerseDetail(sure.sure, ayet, verseIndex, surahId);
+                            
+                            // Diğer panelleri gizle
+                            document.getElementById("surahs").style.display = "none";
+                            document.getElementById("favorites").style.display = "none";
+                            document.getElementById("podcasts").style.display = "none";
+                            document.getElementById("settings").style.display = "none";
+                            document.getElementById("search-page").classList.remove("active");
+                            document.querySelector('.controls').style.display = "none";
+                        }
                     }
-                    
-                    // Sure bilgisini bul
-                    const surahData = jsonData.surahs.find(s => s.id === surahId);
-                    if (!surahData) {
-                        console.error("Belirtilen sure bulunamadı:", surahId);
-                        return;
-                    }
-                    
-                    // Ayet bilgisini bul
-                    const verseData = surahData.verses.find(v => v.verse_id === verseId);
-                    if (!verseData) {
-                        console.error("Belirtilen ayet bulunamadı:", verseId);
-                        return;
-                    }
-                    
-                    // Quran data'dan ilgili sure ve ayeti bul
-                    const sure = quranData.find(s => s.id === surahId);
-                    if (!sure) {
-                        console.error("quranData'da sure bulunamadı:", surahId);
-                        return;
-                    }
-                    
-                    // Ayet metnini bul
-                    const verseIndex = sure.ayetler.findIndex(a => {
-                        const match = a.match(/^(\d+)\./);
-                        return match && parseInt(match[1]) === verseId;
-                    });
-                    
-                    if (verseIndex === -1) {
-                        console.error("Ayet metni bulunamadı:", verseId);
-                        return;
-                    }
-                    
-                    // Ayet detayını göster
-                    displayVerseDetail(sure.sure, sure.ayetler[verseIndex], verseIndex, surahId);
-                    
-                    // Diğer panelleri gizle
-                    document.getElementById("surahs").style.display = "none";
-                    document.getElementById("favorites").style.display = "none";
-                    document.getElementById("podcasts").style.display = "none";
-                    document.getElementById("settings").style.display = "none";
-                    document.getElementById("search-page").classList.remove("active");
-                    document.querySelector('.controls').style.display = "none";
                 } else if (surahMatch) {
                     const surahId = parseInt(surahMatch[1]);
                     
                     // Eğer zaten bu sure gösteriliyorsa tekrar yükleme
                     if (currentSurahId === surahId && currentVerseId === 0) return;
                     
-                    // Önce jsonData'nın yüklendiğinden emin olalım
-                    if (!jsonData.surahs || jsonData.surahs.length === 0) {
-                        console.log("JSON verisi henüz yüklenmedi, hash işlemi erteleniyor");
-                        // Veri yüklendiğinde tekrar kontrol etmek için bir flag ayarlayabiliriz
-                        window.pendingHashCheck = true;
-                        return;
+                    const surahIndex = surahId - 1; // Sure ID'leri 1'den başlar
+                    
+                    if (surahIndex >= 0 && surahIndex < quranData.length) {
+                        const sure = quranData[surahIndex];
+                        displayVerses(sure.sure, sure.ayetler, surahId);
+                        
+                        // Diğer panelleri gizle
+                        document.getElementById("surahs").style.display = "none";
+                        document.getElementById("verse-detail-panel").classList.remove("active");
+                        document.getElementById("favorites").style.display = "none";
+                        document.getElementById("podcasts").style.display = "none";
+                        document.getElementById("settings").style.display = "none";
+                        document.getElementById("search-page").classList.remove("active");
+                        document.querySelector('.controls').style.display = "none";
                     }
-                    
-                    // Sure bilgisini bul
-                    const surahData = jsonData.surahs.find(s => s.id === surahId);
-                    if (!surahData) {
-                        console.error("Belirtilen sure bulunamadı:", surahId);
-                        return;
-                    }
-                    
-                    // Quran data'dan ilgili sureyi bul
-                    const sure = quranData.find(s => s.id === surahId);
-                    if (!sure) {
-                        console.error("quranData'da sure bulunamadı:", surahId);
-                        return;
-                    }
-                    
-                    // Sure içeriğini göster
-                    displayVerses(sure.sure, sure.ayetler, surahId);
-                    
-                    // Diğer panelleri gizle
-                    document.getElementById("surahs").style.display = "none";
-                    document.getElementById("verse-detail-panel").classList.remove("active");
-                    document.getElementById("favorites").style.display = "none";
-                    document.getElementById("podcasts").style.display = "none";
-                    document.getElementById("settings").style.display = "none";
-                    document.getElementById("search-page").classList.remove("active");
-                    document.querySelector('.controls').style.display = "none";
                 }
             }
-            
-            // loadQuranData fonksiyonunda, veri yüklendikten sonra bekleyen hash kontrolünü yap
-            async function loadQuranData(author) {
-                // Mevcut kodun geri kalanı aynı kalır
-                
-                try {
-                    const response = await fetch("kuran_mealleri.json");
-                    if (!response.ok) {
-                        throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
-                    }
-                    jsonData = await response.json();
-
-                    // Veri işleme optimizasyonu
-                    quranData = jsonData.surahs.map(surah => ({
-                        sure: getSurahName(surah.id),
-                        ayetler: surah.verses.map(verse => {
-                            const translation = verse.translations.find(t => t.author === author);
-                            return translation ? `${verse.verse_id}. ${translation.text}` : `${verse.verse_id}. Çeviri bulunamadı`;
-                        }),
-                        id: surah.id // Sure ID'sini ekle
-                    }));
-
-                    displaySurahs(quranData);
-                    
-                    // Bekleyen hash kontrolü varsa şimdi yap
-                    if (window.pendingHashCheck) {
-                        window.pendingHashCheck = false;
-                        checkUrlHash();
-                    } else {
-                        // Normal hash kontrolü
-                        checkUrlHash();
-                    }
-
-                    // Önbelleğe alma kodu aynı kalır
-                    
-                } catch (error) {
-                    console.error("JSON yüklenirken hata:", error);
-                    alert("Kuran mealleri yüklenirken bir hata oluştu: " + error.message);
-                } finally {
-                    hideLoading();
-                }
-            }
-            
-            // Ayet numarasını çıkaran yardımcı fonksiyon
-            function extractVerseNumber(verseText) {
-                const match = verseText.match(/^(\d+)\./);
-                return match ? parseInt(match[1]) : 0;
-            }
-            
-            // DOMContentLoaded event listener'ında, veri yükleme işlemini bekle
-            document.addEventListener("DOMContentLoaded", async () => {
-                try {
-                    // Veri yükleme işlemi
-                    const response = await fetch("kuran_mealleri.json");
-                    if (!response.ok) {
-                        throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
-                    }
-                    jsonData = await response.json();
-                    loadAuthors(jsonData);
-                    await loadQuranData(selectedAuthor);
-                    loadTheme();
-                    applySettings();
-                    
-                    // Veri yüklendikten sonra hash kontrolü yapılacak
-                } catch (error) {
-                    console.error("Başlangıçta hata:", error);
-                    alert("Uygulama başlatılırken bir hata oluştu: " + error.message);
-                }
-                
-                // Diğer event listener'lar aynı kalır
-            });
-            
-            // Diğer fonksiyonlar aynı kalır
 
             // Aktif sekmeyi güncelle
             function updateActiveTab(id) {
