@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #1da1f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .loading {
+            display: none;
+            margin-bottom: 10px;
+        }
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kuran JSON Veri Testi</h1>
+    
+    <button id="test-basic-json">kuran_mealleri.json Test Et</button>
+    <button id="test-detailed-json">all_surahs_data.json Test Et</button>
+    
+    <div id="loading" class="loading">Yükleniyor...</div>
+    <div id="error" class="error"></div>
+    
+    <h2>Sonuç:</h2>
+    <pre id="result">Henüz test edilmedi.</pre>
+    
+    <script>
+        document.getElementById('test-basic-json').addEventListener('click', async () => {
+            testJSON('kuran_mealleri.json');
+        });
+        
+        document.getElementById('test-detailed-json').addEventListener('click', async () => {
+            testJSON('all_surahs_data.json');
+        });
+        
+        async function testJSON(filename) {
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const resultEl = document.getElementById('result');
+            
+            loadingEl.style.display = 'block';
+            errorEl.textContent = '';
+            resultEl.textContent = 'Yükleniyor...';
+            
+            try {
+                const response = await fetch(filename);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Veri yapısını kontrol et
+                if (filename === 'kuran_mealleri.json') {
+                    // Temel JSON yapısını kontrol et
+                    if (!data.surahs || !Array.isArray(data.surahs)) {
+                        throw new Error('Geçersiz JSON yapısı: "surahs" dizisi bulunamadı');
+                    }
+                    
+                    // İlk sure ve ayet bilgilerini göster
+                    const firstSurah = data.surahs[0];
+                    const sampleData = {
+                        surahCount: data.surahs.length,
+                        firstSurah: {
+                            id: firstSurah.id,
+                            name: firstSurah.name || 'Belirtilmemiş',
+                            verseCount: firstSurah.verses.length,
+                            sampleVerse: firstSurah.verses[0],
+                            translationCount: firstSurah.verses[0].translations.length,
+                            authors: [...new Set(firstSurah.verses[0].translations.map(t => t.author))]
+                        }
+                    };
+                    
+                    resultEl.textContent = JSON.stringify(sampleData, null, 2);
+                } else {
+                    // Detaylı JSON yapısını kontrol et
+                    if (!data.surahs || !Array.isArray(data.surahs)) {
+                        throw new Error('Geçersiz JSON yapısı: "surahs" dizisi bulunamadı');
+                    }
+                    
+                    // İlk sure ve ayet bilgilerini göster
+                    const firstSurah = data.surahs[0];
+                    const firstVerse = firstSurah.verses[0];
+                    
+                    const sampleData = {
+                        surahCount: data.surahs.length,
+                        firstSurah: {
+                            id: firstSurah.id,
+                            name: firstSurah.name || 'Belirtilmemiş',
+                            verseCount: firstSurah.verses.length
+                        },
+                        firstVerse: {
+                            verse_number: firstVerse.verse_number,
+                            text: firstVerse.text,
+                            transcription_tr: firstVerse.transcription_tr,
+                            transcription_en: firstVerse.transcription_en,
+                            hasWords: !!firstVerse.words,
+                            wordCount: firstVerse.words ? firstVerse.words.length : 0
+                        }
+                    };
+                    
+                    // Kelime örneği ekle
+                    if (firstVerse.words && firstVerse.words.length > 0) {
+                        sampleData.sampleWord = firstVerse.words[0];
+                    }
+                    
+                    resultEl.textContent = JSON.stringify(sampleData, null, 2);
+                }
+            } catch (error) {
+                console.error('JSON yükleme hatası:', error);
+                errorEl.textContent = `Hata: ${error.message}`;
+                resultEl.textContent = 'Hata oluştu.';
+            } finally {
+                loadingEl.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

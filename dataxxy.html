@@ -3,184 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Açık Kuran Surah Fetcher</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        button {
-            background-color: #28a745;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 10px 5px;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        button:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-        }
-        #surahList, #audioList {
-            margin-top: 20px;
-        }
-        .surah-item, .audio-item {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        .surah-item:last-child, .audio-item:last-child {
-            border-bottom: none;
-        }
-        .error {
-            color: red;
-            margin-top: 10px;
-        }
-        .progress {
-            color: #333;
-            margin-top: 10px;
-        }
-    </style>
+    <title>Açık Kur'an Data Fetcher</title>
+    <!-- Local Tailwind CSS -->
+    <link href="styles.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>Açık Kuran - Surah List</h1>
-        <button onclick="fetchSurahs()">Fetch Surahs</button>
-        <button id="downloadJsonBtn" onclick="downloadJSON()" disabled>Download as JSON</button>
-        <button id="showAudioLinksBtn" onclick="showAudioLinks()" disabled>Show Audio Download Links</button>
-        <div id="surahList"></div>
-        <div id="audioList"></div>
-        <div id="error" class="error"></div>
-        <div id="progress" class="progress"></div>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+        <h1 class="text-2xl font-bold text-center mb-4">Açık Kur'an Data Fetcher</h1>
+        
+        <!-- Surah Selection -->
+        <div class="mb-4">
+            <label for="surahSelect" class="block text-sm font-medium text-gray-700">Select Surah:</label>
+            <select id="surahSelect" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                <option value="">-- Select a Surah --</option>
+            </select>
+        </div>
+        
+        <!-- Fetch Single Surah Button -->
+        <button id="fetchButton" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 disabled:bg-gray-400 mb-2" disabled>
+            Fetch Single Surah Data
+        </button>
+        
+        <!-- Fetch All Surahs Button -->
+        <button id="fetchAllButton" class="w-full bg-purple-500 text-white p-2 rounded-md hover:bg-purple-600 mb-2">
+            Download All Surahs JSON
+        </button>
+        
+        <!-- Download Guide Button -->
+        <button id="downloadGuideButton" class="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 mb-4">
+            Download Guide JSON
+        </button>
+        
+        <!-- Loading Indicator -->
+        <div id="loading" class="hidden text-center mt-4">
+            <p class="text-gray-600" id="loadingText">Loading...</p>
+        </div>
+        
+        <!-- Error Message -->
+        <div id="error" class="hidden text-red-600 text-center mt-4"></div>
+        
+        <!-- Results Display -->
+        <div id="results" class="mt-4 hidden">
+            <h2 class="text-xl font-semibold mb-2">Surah Details</h2>
+            <div id="surahDetails" class="mb-4"></div>
+            <h2 class="text-xl font-semibold mb-2">Verses and Words</h2>
+            <div id="verseDetails"></div>
+            <!-- Download Single Surah JSON -->
+            <button id="downloadButton" class="mt-4 w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600">
+                Download Single Surah JSON
+            </button>
+        </div>
     </div>
 
     <script>
-        let surahData = null; // Store fetched data
+        // API Base URL
+        const API_BASE = 'https://api.acikkuran.com';
 
-        // Function to fetch surahs from Açık Kuran API
-        async function fetchSurahs() {
-            const surahList = document.getElementById('surahList');
-            const audioList = document.getElementById('audioList');
-            const errorDiv = document.getElementById('error');
-            const progressDiv = document.getElementById('progress');
-            const downloadJsonBtn = document.getElementById('downloadJsonBtn');
-            const showAudioLinksBtn = document.getElementById('showAudioLinksBtn');
+        // Elements
+        const surahSelect = document.getElementById('surahSelect');
+        const fetchButton = document.getElementById('fetchButton');
+        const fetchAllButton = document.getElementById('fetchAllButton');
+        const downloadGuideButton = document.getElementById('downloadGuideButton');
+        const loading = document.getElementById('loading');
+        const loadingText = document.getElementById('loadingText');
+        const errorDiv = document.getElementById('error');
+        const results = document.getElementById('results');
+        const surahDetails = document.getElementById('surahDetails');
+        const verseDetails = document.getElementById('verseDetails');
+        const downloadButton = document.getElementById('downloadButton');
 
-            // Clear previous content
-            surahList.innerHTML = '<p>Loading...</p>';
-            audioList.innerHTML = '';
-            errorDiv.innerHTML = '';
-            progressDiv.innerHTML = '';
-            downloadJsonBtn.disabled = true;
-            showAudioLinksBtn.disabled = true;
+        // JSON data storage
+        let singleSurahData = {};
+        let allSurahsData = {};
 
-            try {
-                const response = await fetch('https://api.acikkuran.com/surahs');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+        // Guide JSON
+        const guideData = {
+            about: "This guide explains the structure of the JSON data downloaded from the Açık Kur'an Data Fetcher site and provides instructions on how to use the site.",
+            data_structure: {
+                description: "The JSON file (e.g., 'all_surahs_data.json' or 'surah_[id]_data.json') contains Quranic data fetched from the Açık Kur'an API (https://api.acikkuran.com).",
+                structure: {
+                    surahs: {
+                        description: "For 'all_surahs_data.json', an array of surah objects. For single surah download, a single surah object.",
+                        fields: {
+                            id: "Numeric ID of the surah (1–114).",
+                            name: "Surah name in Turkish (e.g., 'Fatiha').",
+                            name_en: "Surah name in English (e.g., 'Al-Fatihah').",
+                            name_original: "Surah name in Arabic (e.g., 'سُورَةُ ٱلْفَاتِحَةِ').",
+                            verse_count: "Number of verses in the surah.",
+                            verses: {
+                                description: "Array of verse objects for the surah.",
+                                fields: {
+                                    verse_number: "Verse number within the surah.",
+                                    text: "Arabic text of the verse.",
+                                    transcription_tr: "Turkish Latin transcription of the verse.",
+                                    transcription_en: "English Latin transcription of the verse.",
+                                    translation_tr: "Turkish translation of the verse.",
+                                    translation_en: "English translation of the verse (may be same as Turkish).",
+                                    words: {
+                                        description: "Array of word objects (verse parts) for the verse.",
+                                        fields: {
+                                            arabic: "Arabic text of the word.",
+                                            transcription_tr: "Turkish Latin transcription of the word.",
+                                            transcription_en: "English Latin transcription of the word.",
+                                            translation_tr: "Turkish meaning of the word.",
+                                            translation_en: "English meaning of the word.",
+                                            root: {
+                                                description: "Root information for the word (null if no root).",
+                                                fields: {
+                                                    latin: "Latin representation of the root (e.g., 'Hmd').",
+                                                    arabic: "Arabic representation of the root (e.g., 'حمد').",
+                                                    meaning: "Meaning of the root in Turkish (or 'N/A' if not provided)."
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+            },
+            usage_instructions: {
+                description: "How to use the Açık Kur'an Data Fetcher site.",
+                steps: [
+                    "Open the site in a web browser.",
+                    "To fetch data for a single surah:",
+                    "  a. Select a surah from the dropdown menu (e.g., '1. Fatiha (Al-Fatihah)').",
+                    "  b. Click 'Fetch Single Surah Data' to retrieve and display the surah's verses and words.",
+                    "  c. View the surah details and verse-by-verse breakdown, including Arabic text, transcriptions, translations, and word meanings.",
+                    "  d. Click 'Download Single Surah JSON' to save the data as 'surah_[id]_data.json'.",
+                    "To fetch data for all surahs:",
+                    "  a. Click 'Download All Surahs JSON'.",
+                    "  b. Wait for the data to be fetched (this may take a few minutes due to the large number of API calls).",
+                    "  c. The file 'all_surahs_data.json' will be downloaded automatically.",
+                    "To understand the data:",
+                    "  a. Click 'Download Guide JSON' to get 'guide.json'.",
+                    "  b. Refer to the guide for details on the JSON structure and field meanings.",
+                    "Use the JSON data in your applications (e.g., for Quranic study tools, linguistic analysis, or educational projects)."
+                ],
+                notes: [
+                    "The site uses the Açık Kur'an API, which may have rate limits. Large surahs or all-surah downloads may take time.",
+                    "Ensure a stable internet connection for fetching data.",
+                    "The JSON files are formatted with indentation for readability."
+                ]
+            },
+            source: "Açık Kur'an API (https://api.acikkuran.com)",
+            generated: "2025-05-19T15:34:00+03:00"
+        };
+
+        // Fetch surahs and populate dropdown
+        async function loadSurahs() {
+            try {
+                const response = await fetch(`${API_BASE}/surahs`);
                 const data = await response.json();
-                surahData = data.data; // Store the surah data
-
-                // Clear loading message
-                surahList.innerHTML = '';
-
-                // Display surahs
-                surahData.forEach(surah => {
-                    const surahDiv = document.createElement('div');
-                    surahDiv.classList.add('surah-item');
-                    surahDiv.innerHTML = `
-                        <strong>${surah.id}. ${surah.name} (${surah.name_en})</strong><br>
-                        Original: ${surah.name_original}<br>
-                        Verse Count: ${surah.verse_count}<br>
-                        Page: ${surah.page_number}<br>
-                        Audio: <a href="${surah.audio.mp3}" target="_blank">Listen (TR)</a> | 
-                        <a href="${surah.audio.mp3_en}" target="_blank">Listen (EN)</a>
-                    `;
-                    surahList.appendChild(surahDiv);
-                });
-
-                // Enable buttons
-                downloadJsonBtn.disabled = false;
-                showAudioLinksBtn.disabled = false;
+                if (data.data) {
+                    data.data.forEach(surah => {
+                        const option = document.createElement('option');
+                        option.value = surah.id;
+                        option.textContent = `${surah.id}. ${surah.name} (${surah.name_en})`;
+                        surahSelect.appendChild(option);
+                    });
+                    fetchButton.disabled = false;
+                }
             } catch (error) {
-                errorDiv.innerHTML = `Error fetching data: ${error.message}`;
-                surahList.innerHTML = '';
+                showError('Failed to load surahs. Please try again.');
             }
         }
 
-        // Function to download data as JSON
-        function downloadJSON() {
-            if (!surahData) {
-                document.getElementById('error').innerHTML = 'No data to download. Please fetch surahs first.';
-                return;
-            }
+        // Show error message
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            loading.classList.add('hidden');
+        }
 
-            const jsonString = JSON.stringify(surahData, null, 2);
-            const blob = new Blob([jsonString], { type: 'application/json' });
+        // Fetch single surah data
+        async function fetchSurahData(surahId) {
+            loadingText.textContent = `Loading Surah ${surahId}...`;
+            loading.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            results.classList.add('hidden');
+
+            try {
+                // Fetch surah details
+                const surahResponse = await fetch(`${API_BASE}/surah/${surahId}`);
+                const surahData = await surahResponse.json();
+                if (!surahData.data) throw new Error('No surah data found.');
+
+                // Initialize JSON structure
+                singleSurahData = {
+                    surah: {
+                        id: surahData.data.id,
+                        name: surahData.data.name,
+                        name_en: surahData.data.name_en,
+                        name_original: surahData.data.name_original,
+                        verse_count: surahData.data.verse_count,
+                        verses: []
+                    }
+                };
+
+                // Display surah details
+                surahDetails.innerHTML = `
+                    <p><strong>Name:</strong> ${surahData.data.name} (${surahData.data.name_en})</p>
+                    <p><strong>Original:</strong> ${surahData.data.name_original}</p>
+                    <p><strong>Verse Count:</strong> ${surahData.data.verse_count}</p>
+                `;
+
+                // Fetch verse parts for each verse
+                verseDetails.innerHTML = '';
+                for (let verseNum = 1; verseNum <= surahData.data.verse_count; verseNum++) {
+                    loadingText.textContent = `Loading Surah ${surahId}, Verse ${verseNum}...`;
+                    const versePartsResponse = await fetch(`${API_BASE}/surah/${surahId}/verse/${verseNum}/verseparts`);
+                    const versePartsData = await versePartsResponse.json();
+                    if (!versePartsData.data) continue;
+
+                    // Fetch verse details
+                    const verseResponse = await fetch(`${API_BASE}/surah/${surahId}/verse/${verseNum}`);
+                    const verseData = await verseResponse.json();
+                    if (!verseData.data) continue;
+
+                    // Add verse to JSON
+                    const verseObj = {
+                        verse_number: verseNum,
+                        text: verseData.data.verse,
+                        transcription_tr: verseData.data.transcription,
+                        transcription_en: verseData.data.transcription_en,
+                        translation_tr: verseData.data.translation?.text || '',
+                        translation_en: verseData.data.translation?.text || '',
+                        words: versePartsData.data.map(part => ({
+                            arabic: part.arabic,
+                            transcription_tr: part.transcription_tr,
+                            transcription_en: part.transcription_en,
+                            translation_tr: part.translation_tr,
+                            translation_en: part.translation_en,
+                            root: part.root ? {
+                                latin: part.root.latin,
+                                arabic: part.root.arabic,
+                                meaning: part.root.mean || 'N/A'
+                            } : null
+                        }))
+                    };
+                    singleSurahData.surah.verses.push(verseObj);
+
+                    // Display verse and words
+                    const verseDiv = document.createElement('div');
+                    verseDiv.classList.add('mb-4');
+                    verseDiv.innerHTML = `
+                        <h3 class="text-lg font-medium">Verse ${verseNum}</h3>
+                        <p><strong>Arabic:</strong> ${verseData.data.verse}</p>
+                        <p><strong>Transcription (TR):</strong> ${verseData.data.transcription}</p>
+                        <p><strong>Transcription (EN):</strong> ${verseData.data.transcription_en}</p>
+                        <p><strong>Translation (TR):</strong> ${verseData.data.translation?.text || 'N/A'}</p>
+                        <h4 class="font-medium mt-2">Words:</h4>
+                        <ul class="list-disc pl-5">
+                            ${versePartsData.data.map(part => `
+                                <li>
+                                    <strong>Arabic:</strong> ${part.arabic} |
+                                    <strong>Trans (TR):</strong> ${part.transcription_tr} |
+                                    <strong>Trans (EN):</strong> ${part.transcription_en} |
+                                    <strong>Meaning (TR):</strong> ${part.translation_tr} |
+                                    <strong>Root:</strong> ${part.root ? `${part.root.latin} (${part.root.arabic}) - ${part.root.mean || 'N/A'}` : 'None'}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                    verseDetails.appendChild(verseDiv);
+                }
+
+                // Show results
+                results.classList.remove('hidden');
+                loading.classList.add('hidden');
+            } catch (error) {
+                showError(`Error fetching data: ${error.message}`);
+            }
+        }
+
+        // Fetch all surahs data
+        async function fetchAllSurahsData() {
+            loadingText.textContent = 'Loading all surahs...';
+            loading.classList.remove('hidden');
+            errorDiv.classList.add('hidden');
+            results.classList.add('hidden');
+
+            try {
+                // Fetch surah list
+                const surahsResponse = await fetch(`${API_BASE}/surahs`);
+                const surahsData = await surahsResponse.json();
+                if (!surahsData.data) throw new Error('No surahs found.');
+
+                // Initialize JSON structure
+                allSurahsData = {
+                    surahs: []
+                };
+
+                // Fetch each surah
+                for (const surah of surahsData.data) {
+                    loadingText.textContent = `Loading Surah ${surah.id} (${surah.name})...`;
+                    const surahResponse = await fetch(`${API_BASE}/surah/${surah.id}`);
+                    const surahData = await surahResponse.json();
+                    if (!surahData.data) continue;
+
+                    const surahObj = {
+                        id: surahData.data.id,
+                        name: surahData.data.name,
+                        name_en: surahData.data.name_en,
+                        name_original: surahData.data.name_original,
+                        verse_count: surahData.data.verse_count,
+                        verses: []
+                    };
+
+                    // Fetch verse parts for each verse
+                    for (let verseNum = 1; verseNum <= surahData.data.verse_count; verseNum++) {
+                        const versePartsResponse = await fetch(`${API_BASE}/surah/${surah.id}/verse/${verseNum}/verseparts`);
+                        const versePartsData = await versePartsResponse.json();
+                        if (!versePartsData.data) continue;
+
+                        const verseResponse = await fetch(`${API_BASE}/surah/${surah.id}/verse/${verseNum}`);
+                        const verseData = await verseResponse.json();
+                        if (!verseData.data) continue;
+
+                        const verseObj = {
+                            verse_number: verseNum,
+                            text: verseData.data.verse,
+                            transcription_tr: verseData.data.transcription,
+                            transcription_en: verseData.data.transcription_en,
+                            translation_tr: verseData.data.translation?.text || '',
+                            translation_en: verseData.data.translation?.text || '',
+                            words: versePartsData.data.map(part => ({
+                                arabic: part.arabic,
+                                transcription_tr: part.transcription_tr,
+                                transcription_en: part.transcription_en,
+                                translation_tr: part.translation_tr,
+                                translation_en: part.translation_en,
+                                root: part.root ? {
+                                    latin: part.root.latin,
+                                    arabic: part.root.arabic,
+                                    meaning: part.root.mean || 'N/A'
+                                } : null
+                            }))
+                        };
+                        surahObj.verses.push(verseObj);
+                    }
+
+                    allSurahsData.surahs.push(surahObj);
+                }
+
+                // Download JSON
+                downloadAllSurahsJSON();
+                loading.classList.add('hidden');
+            } catch (error) {
+                showError(`Error fetching all surahs: ${error.message}`);
+            }
+        }
+
+        // Download single surah JSON
+        function downloadSingleSurahJSON() {
+            const blob = new Blob([JSON.stringify(singleSurahData, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'surahs.json';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `surah_${singleSurahData.surah.id}_data.json`;
+            a.click();
             URL.revokeObjectURL(url);
         }
 
-        // Function to show audio download links
-        function showAudioLinks() {
-            if (!surahData) {
-                document.getElementById('error').innerHTML = 'No audio files to display. Please fetch surahs first.';
-                return;
-            }
-
-            const audioList = document.getElementById('audioList');
-            const errorDiv = document.getElementById('error');
-            audioList.innerHTML = '';
-            errorDiv.innerHTML = '';
-
-            let totalFiles = 0;
-            surahData.forEach(surah => {
-                if (surah.audio.mp3) {
-                    const audioDiv = document.createElement('div');
-                    audioDiv.classList.add('audio-item');
-                    audioDiv.innerHTML = `<a href="${surah.audio.mp3}" download="Surah_${surah.id}_${surah.name}_TR.mp3">Download Surah ${surah.id} ${surah.name} (TR)</a>`;
-                    audioList.appendChild(audioDiv);
-                    totalFiles++;
-                }
-                if (surah.audio.mp3_en) {
-                    const audioDiv = document.createElement('div');
-                    audioDiv.classList.add('audio-item');
-                    audioDiv.innerHTML = `<a href="${surah.audio.mp3_en}" download="Surah_${surah.id}_${surah.name}_EN.mp3">Download Surah ${surah.id} ${surah.name} (EN)</a>`;
-                    audioList.appendChild(audioDiv);
-                    totalFiles++;
-                }
-            });
-
-            if (totalFiles === 0) {
-                errorDiv.innerHTML = 'No audio files found.';
-            } else {
-                document.getElementById('progress').innerHTML = `Displayed ${totalFiles} audio download links. Use a download manager to bulk download.`;
-            }
+        // Download all surahs JSON
+        function downloadAllSurahsJSON() {
+            const blob = new Blob([JSON.stringify(allSurahsData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'all_surahs_data.json';
+            a.click();
+            URL.revokeObjectURL(url);
         }
+
+        // Download guide JSON
+        function downloadGuideJSON() {
+            const blob = new Blob([JSON.stringify(guideData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'guide.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Event Listeners
+        surahSelect.addEventListener('change', () => {
+            fetchButton.disabled = surahSelect.value === '';
+        });
+
+        fetchButton.addEventListener('click', () => {
+            if (surahSelect.value) {
+                fetchSurahData(surahSelect.value);
+            }
+        });
+
+        fetchAllButton.addEventListener('click', fetchAllSurahsData);
+
+        downloadButton.addEventListener('click', downloadSingleSurahJSON);
+
+        downloadGuideButton.addEventListener('click', downloadGuideJSON);
+
+        // Load surahs on page load
+        loadSurahs();
     </script>
 </body>
 </html>
