@@ -7,10 +7,8 @@
         <link rel="icon" type="image/png" href="/logokuran2.jpg"/>
         <link rel="apple-touch-icon" href="/logokuran2.jpg">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
-            /* Mevcut CSS stilleri korundu */
             :root {
                 --primary-dark: #15202b;
                 --secondary-dark: #192734;
@@ -539,7 +537,7 @@
                 color: var(--highlight-dark);
             }
             
-            /* Verse Detail Panel - YENİ TASARIM */
+            /* Verse Detail Panel */
             #verse-detail-panel {
                 background-color: var(--secondary-dark);
                 border-radius: 12px;
@@ -604,7 +602,7 @@
                 background-color: var(--highlight-dark);
                 padding: 20px;
                 border-radius: 12px;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 font-size: 1.1rem;
                 line-height: 1.6;
                 border: 1px solid var(--highlight-dark);
@@ -697,7 +695,7 @@
             .verse-navigation-buttons {
                 display: flex;
                 justify-content: flex-end;
-                margin-top: 20px;
+                margin-top: -15px;
                 margin-bottom: 20px;
                 position: relative;
                 z-index: 20;
@@ -1352,7 +1350,7 @@
                 }
                 
                 .verse-navigation-buttons {
-                    margin-top: 20px;
+                    margin-top: -10px;
                 }
                 
                 .setting-item {
@@ -1564,362 +1562,10 @@
             body.day-mode .copy-url-btn:hover {
                 background-color: var(--accent-light);
             }
-
-            /* New styles for Arabic text display */
-            .arabic-text {
-                font-family: 'Amiri', 'Scheherazade New', serif;
-                direction: rtl;
-                text-align: right;
-                font-size: 1.5em;
-                line-height: 1.8;
-                margin-bottom: 15px;
-                padding: 15px;
-                background-color: var(--accent-dark);
-                border-radius: 12px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            body.day-mode .arabic-text {
-                background-color: var(--accent-light);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            /* Word-by-word analysis styles */
-            .word-analysis {
-                margin-top: 20px;
-                border-top: 1px solid var(--accent-dark);
-                padding-top: 20px;
-            }
-            
-            body.day-mode .word-analysis {
-                border-top: 1px solid var(--accent-light);
-            }
-            
-            .word-analysis h4 {
-                font-size: 1.1rem;
-                margin-bottom: 15px;
-                color: var(--highlight-dark);
-            }
-            
-            .word-list {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                margin-bottom: 20px;
-            }
-            
-            .word-item {
-                background-color: var(--secondary-dark);
-                border-radius: 8px;
-                padding: 10px;
-                border: 1px solid var(--accent-dark);
-                cursor: pointer;
-                transition: all 0.2s var(--transition-function);
-                min-width: 100px;
-                text-align: center;
-            }
-            
-            body.day-mode .word-item {
-                background-color: var(--secondary-light);
-                border: 1px solid var(--accent-light);
-            }
-            
-            .word-item:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                border-color: var(--highlight-dark);
-            }
-            
-            body.day-mode .word-item:hover {
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            }
-            
-            .word-arabic {
-                font-family: 'Amiri', 'Scheherazade New', serif;
-                font-size: 1.3em;
-                margin-bottom: 5px;
-                direction: rtl;
-            }
-            
-            .word-translation {
-                font-size: 0.85rem;
-                color: var(--text-dark);
-                opacity: 0.9;
-            }
-            
-            body.day-mode .word-translation {
-                color: var(--text-light);
-            }
-            
-            .word-detail {
-                display: none;
-                background-color: var(--accent-dark);
-                border-radius: 10px;
-                padding: 15px;
-                margin-top: 10px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            body.day-mode .word-detail {
-                background-color: var(--accent-light);
-                border: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            .word-detail.active {
-                display: block;
-            }
-            
-            .word-detail-row {
-                display: flex;
-                margin-bottom: 8px;
-                align-items: flex-start;
-            }
-            
-            .word-detail-label {
-                font-weight: 500;
-                min-width: 100px;
-                color: var(--highlight-dark);
-            }
-            
-            .word-detail-value {
-                flex: 1;
-            }
-            
-            .root-info {
-                margin-top: 10px;
-                padding-top: 10px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            body.day-mode .root-info {
-                border-top: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            
-            /* Transcription styles */
-            .transcription {
-                margin-bottom: 20px;
-                padding: 15px;
-                background-color: var(--secondary-dark);
-                border-radius: 12px;
-                border: 1px solid var(--accent-dark);
-                font-style: italic;
-            }
-            
-            body.day-mode .transcription {
-                background-color: var(--secondary-light);
-                border: 1px solid var(--accent-light);
-            }
-            
-            .transcription-label {
-                font-weight: 500;
-                color: var(--highlight-dark);
-                margin-right: 5px;
-            }
-            
-            /* Tab navigation for verse detail */
-            .verse-tabs {
-                display: flex;
-                margin-top: 20px;
-                margin-bottom: 15px;
-                border-bottom: 1px solid var(--accent-dark);
-            }
-            
-            body.day-mode .verse-tabs {
-                border-bottom: 1px solid var(--accent-light);
-            }
-            
-            .verse-tab {
-                padding: 10px 20px;
-                background: none;
-                border: none;
-                color: var(--text-dark);
-                cursor: pointer;
-                font-size: 0.95rem;
-                position: relative;
-                transition: all 0.2s var(--transition-function);
-            }
-            
-            body.day-mode .verse-tab {
-                color: var(--text-light);
-            }
-            
-            .verse-tab.active {
-                color: var(--highlight-dark);
-                font-weight: 500;
-            }
-            
-            .verse-tab.active::after {
-                content: '';
-                position: absolute;
-                bottom: -1px;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background-color: var(--highlight-dark);
-            }
-            
-            .verse-tab-content {
-                display: none;
-            }
-            
-            .verse-tab-content.active {
-                display: block;
-            }
-            
-            /* YENİ TASARIM İÇİN STILLER */
-            .verse-content-container {
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .verse-section {
-                margin-bottom: 15px;
-            }
-            
-            .verse-section-title {
-                font-weight: 600;
-                margin-bottom: 10px;
-                color: var(--highlight-dark);
-                font-size: 1.1rem;
-            }
-            
-            .tab-container {
-                margin-top: 20px;
-            }
-            
-            .tab-buttons {
-                display: flex;
-                border-bottom: 1px solid var(--accent-dark);
-                margin-bottom: 15px;
-            }
-            
-            body.day-mode .tab-buttons {
-                border-bottom: 1px solid var(--accent-light);
-            }
-            
-            .tab-button {
-                padding: 10px 20px;
-                background: none;
-                border: none;
-                color: var(--text-dark);
-                cursor: pointer;
-                font-size: 0.95rem;
-                position: relative;
-                transition: all 0.2s var(--transition-function);
-            }
-            
-            body.day-mode .tab-button {
-                color: var(--text-light);
-            }
-            
-            .tab-button.active {
-                color: var(--highlight-dark);
-                font-weight: 500;
-            }
-            
-            .tab-button.active::after {
-                content: '';
-                position: absolute;
-                bottom: -1px;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background-color: var(--highlight-dark);
-            }
-            
-            .tab-content {
-                display: none;
-            }
-            
-            .tab-content.active {
-                display: block;
-            }
-
-            /* Kelimenin geçtiği diğer ayetler için stiller */
-            .other-occurrences {
-                margin-top: 15px;
-                padding-top: 15px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            body.day-mode .other-occurrences {
-                border-top: 1px solid rgba(0, 0, 0, 0.1);
-            }
-
-            .occurrences-title {
-                font-size: 1.1rem;
-                margin-bottom: 10px;
-                color: var(--highlight-dark);
-            }
-
-            .word-occurrences {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                max-height: 200px;
-                overflow-y: auto;
-            }
-
-            .occurrence-item {
-                padding: 8px 12px;
-                background-color: var(--accent-dark);
-                border-radius: 8px;
-                transition: all 0.2s var(--transition-function);
-            }
-
-            body.day-mode .occurrence-item {
-                background-color: var(--accent-light);
-            }
-
-            .occurrence-item:hover {
-                background-color: var(--highlight-dark);
-                color: white;
-            }
-
-            .occurrence-link {
-                color: inherit;
-                text-decoration: none;
-                display: block;
-                width: 100%;
-            }
-
-            .loading-occurrences, .no-occurrences, .more-occurrences {
-                padding: 8px;
-                text-align: center;
-                font-style: italic;
-                opacity: 0.8;
-            }
-
-            .more-occurrences {
-                font-size: 0.9rem;
-                color: var(--highlight-dark);
-            }
-
-            /* Meal, Arapça metin ve Türkçe okunuş arasındaki boşlukları azaltmak için CSS */
-            .verse-section {
-                margin-bottom: 5px;
-            }
-
-            .verse-content-container {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .transcription {
-                margin-bottom: 5px;
-                padding: 15px;
-                background-color: var(--secondary-dark);
-                border-radius: 12px;
-                border: 1px solid var(--accent-dark);
-                font-style: italic;
-            }
         </style>
     </head>
     <body>
-        <!-- Diğer HTML içeriği korundu -->
-        <!-- Sadece verse-detail-panel kısmı değiştirildi -->
+        
         
         <!-- Desktop Sidebar -->
         <div class="sidebar">
@@ -1978,61 +1624,18 @@
                     <div id="verses"></div>
                 </div>
                 
-                <!-- YENİ TASARIM - Ayet Detay Paneli -->
                 <div id="verse-detail-panel">
                     <h3>
                         <button id="back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
                         <span id="verse-detail-title"></span>
                     </h3>
-                    
-                    <!-- Yeni düzenlenmiş içerik yapısı -->
-                    <div class="verse-content-container">
-                        <!-- Meal (Türkçe çeviri) -->
-                        <div class="verse-section">
-                            <div id="selected-translation" class="selected-translation"></div>
-                        </div>
-                        
-                        <!-- Arapça metin -->
-                        <div class="verse-section">
-                            <div id="arabic-text" class="arabic-text"></div>
-                        </div>
-                        
-                        <!-- Türkçe okunuş -->
-                        <div class="verse-section">
-                            <div class="transcription">
-                                <span class="transcription-label">Türkçe Okunuş:</span>
-                                <span id="transcription-tr"></span>
-                            </div>
-                        </div>
-                        
-                        <!-- Navigasyon butonları -->
-                        <div class="verse-navigation-buttons">
-                            <button id="prev-verse-btn" class="nav-btn"><i class="fas fa-chevron-left"></i> Önceki</button>
-                            <button id="next-verse-btn" class="nav-btn">Sonraki <i class="fas fa-chevron-right"></i></button>
-                        </div>
-                        
-                        <!-- Sekmeli içerik -->
-                        <div class="tab-container">
-                            <div class="tab-buttons">
-                                <button class="tab-button active" data-tab="other-translations">DİĞER MEALLER</button>
-                                <button class="tab-button" data-tab="word-analysis">Kelime Analizi</button>
-                            </div>
-                            
-                            <!-- Diğer Mealler sekmesi -->
-                            <div class="tab-content active" id="other-translations-tab">
-                                <div id="other-translations" class="other-translations"></div>
-                            </div>
-                            
-                            <!-- Kelime Analizi sekmesi -->
-                            <div class="tab-content" id="word-analysis-tab">
-                                <div class="word-analysis">
-                                    <h4>Kelime Analizi</h4>
-                                    <div id="word-list" class="word-list"></div>
-                                    <div id="word-detail" class="word-detail"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="selected-translation" class="selected-translation"></div>
+                    <div class="verse-navigation-buttons">
+                        <button id="prev-verse-btn" class="nav-btn"><i class="fas fa-chevron-left"></i> Önceki</button>
+                        <button id="next-verse-btn" class="nav-btn">Sonraki <i class="fas fa-chevron-right"></i></button>
                     </div>
+                    <div class="translations-heading">DİĞER MEALLER</div>
+                    <div id="other-translations" class="other-translations"></div>
                 </div>
                 
                 <div id="favorites">
@@ -2110,21 +1713,6 @@
                                 </select>
                             </div>
                         </div>
-                        
-                        <!-- Arapça Metin Görünümü Ayarı -->
-                        <div class="setting-item">
-                            <div class="setting-label">
-                                <span>Arapça Metin Görünümü</span>
-                                <span>Arapça metin gösterim tercihini seçin</span>
-                            </div>
-                            <div class="custom-select">
-                                <select id="arabic-display-mode">
-                                    <option value="always">Her Zaman Göster</option>
-                                    <option value="tab" selected>Sekme Olarak Göster</option>
-                                    <option value="never">Gösterme</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     
                     <div class="settings-section">
@@ -2165,17 +1753,6 @@
                             <div class="range-slider">
                                 <input type="range" min="1" max="10" value="5" id="scroll-speed">
                             </div>
-                        </div>
-                        
-                        <div class="setting-item">
-                            <div class="setting-label">
-                                <span>Kelime Analizi</span>
-                                <span>Ayet detayında kelime analizi göster</span>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="word-analysis-toggle" checked>
-                                <span class="toggle-slider"></span>
-                            </label>
                         </div>
                     </div>
                     
@@ -2252,7 +1829,7 @@
                         <div class="setting-item">
                             <div class="setting-label">
                                 <span>Uygulama Versiyonu</span>
-                                <span>v1.3.0</span>
+                                <span>v1.2.0</span>
                             </div>
                         </div>
                         
@@ -2321,15 +1898,10 @@
         <script>
             let quranData = [];
             let jsonData = {};
-            let allSurahsData = null; // Yeni JSON verisi için değişken
             let selectedAuthor = "Mehmet Okuyan";
             const totalSurahs = 114;
             // Ayet numarası stili
             let verseNumberStyle = localStorage.getItem("verseNumberStyle") || "bg";
-            // Arapça metin görünümü
-            let arabicDisplayMode = localStorage.getItem("arabicDisplayMode") || "tab";
-            // Kelime analizi gösterimi
-            let showWordAnalysis = localStorage.getItem("showWordAnalysis") !== "false";
 
             // Sure isimleri haritası (şapkasız harflerle)
             const surahNames = {
@@ -2620,60 +2192,6 @@
                 }
             }
 
-            // Yeni JSON verisi yükleme fonksiyonu
-            async function loadAllSurahsData() {
-                const cacheKey = 'allSurahsData';
-                const cachedData = localStorage.getItem(cacheKey);
-                const cacheExpiry = 604800000; // 7 gün (milisaniye)
-
-                if (cachedData && checkStorageAvailability()) {
-                    try {
-                        const parsedCache = JSON.parse(cachedData);
-                        const now = Date.now();
-                        
-                        // Önbellek geçerli mi kontrol et
-                        if (parsedCache.timestamp && (now - parsedCache.timestamp < cacheExpiry)) {
-                            allSurahsData = parsedCache.data;
-                            return allSurahsData;
-                        }
-                    } catch (e) {
-                        console.warn("Önbellek verisi ayrıştırılamadı:", e);
-                    }
-                }
-
-                try {
-                    showLoading();
-                    const response = await fetch("all_surahs_data.json");
-                    if (!response.ok) {
-                        throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
-                    }
-                    
-                    allSurahsData = await response.json();
-                    
-                    if (checkStorageAvailability()) {
-                        try {
-                            localStorage.setItem(
-                                cacheKey,
-                                JSON.stringify({
-                                    data: allSurahsData,
-                                    timestamp: Date.now()
-                                })
-                            );
-                        } catch (storageError) {
-                            console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
-                        }
-                    }
-                    
-                    return allSurahsData;
-                } catch (error) {
-                    console.error("all_surahs_data.json yüklenirken hata:", error);
-                    showNotification("Detaylı veri yüklenemedi. Temel özellikler çalışmaya devam edecek.", "error");
-                    return null;
-                } finally {
-                    hideLoading();
-                }
-            }
-
             // DOM manipülasyonu optimizasyonu
             function displaySurahs(data) {
                 const surahsDiv = document.getElementById("surahs");
@@ -2758,7 +2276,7 @@
 
                 // Sure numarası ve ayet numarası ile arama kontrolü (örn: "4 1") veya sure adı ile (örn: "Fatiha 1")
                 const numberMatch = searchTerm.match(/^(\d+)\s+(\d+)$/); // "4 1" gibi
-                const surahVerseMatch = searchTerm.match(/^([a-zA-ZçÇğĞıİöÖ��ŞüÜ\s-]+)\s+(\d+)$/i); // "Fatiha 1" gibi
+                const surahVerseMatch = searchTerm.match(/^([a-zA-ZçÇğĞıİöÖşŞüÜ\s-]+)\s+(\d+)$/i); // "Fatiha 1" gibi
 
                 if (numberMatch || surahVerseMatch) {
                     let surahId, verseId;
@@ -3034,7 +2552,7 @@
             }
 
             // Ayet detay panelinde ayet numaralarını göstermeyen fonksiyon
-            async function displayVerseDetail(sureName, selectedVerse, verseIndex, surahId) {
+            function displayVerseDetail(sureName, selectedVerse, verseIndex, surahId) {
                 const panel = document.getElementById("verse-detail-panel");
                 const title = document.getElementById("verse-detail-title");
                 const selectedTranslation = document.getElementById("selected-translation");
@@ -3070,117 +2588,6 @@
 
                 otherTranslations.appendChild(fragment);
 
-                // Yeni JSON verisinden ayet detaylarını yükle
-                if (allSurahsData) {
-                    try {
-                        // Arapça metin ve transkripsiyon
-                        const detailedSurah = allSurahsData.surahs.find(s => s.id === surahId);
-                        if (detailedSurah) {
-                            const detailedVerse = detailedSurah.verses.find(v => v.verse_number === verseData.verse_id);
-                            if (detailedVerse) {
-                                // Arapça metin
-                                document.getElementById("arabic-text").textContent = detailedVerse.text;
-                                
-                                // Transkripsiyon
-                                document.getElementById("transcription-tr").textContent = detailedVerse.transcription_tr;
-                                
-                                // Kelime analizi
-                                if (showWordAnalysis && detailedVerse.words) {
-                                    const wordList = document.getElementById("word-list");
-                                    wordList.innerHTML = "";
-                                    
-                                    detailedVerse.words.forEach((word, index) => {
-                                        const wordItem = document.createElement("div");
-                                        wordItem.className = "word-item";
-                                        wordItem.dataset.index = index;
-                                        
-                                        wordItem.innerHTML = `
-                                            <div class="word-arabic">${word.arabic}</div>
-                                            <div class="word-translation">${word.translation_tr}</div>
-                                        `;
-                                        
-                                        wordList.appendChild(wordItem);
-                                    });
-                                    
-                                    // Kelime detayı gösterme olayı
-                                    wordList.addEventListener("click", (e) => {
-                                        const wordItem = e.target.closest('.word-item');
-                                        if (wordItem) {
-                                            const index = parseInt(wordItem.dataset.index);
-                                            const word = detailedVerse.words[index];
-                                            
-                                            const wordDetail = document.getElementById("word-detail");
-                                            wordDetail.innerHTML = `
-                                                <div class="word-detail-row">
-                                                    <div class="word-detail-label">Arapça:</div>
-                                                    <div class="word-detail-value">${word.arabic}</div>
-                                                </div>
-                                                <div class="word-detail-row">
-                                                    <div class="word-detail-label">Türkçe:</div>
-                                                    <div class="word-detail-value">${word.translation_tr}</div>
-                                                </div>
-                                                <div class="word-detail-row">
-                                                    <div class="word-detail-label">İngilizce:</div>
-                                                    <div class="word-detail-value">${word.translation_en}</div>
-                                                </div>
-                                                <div class="word-detail-row">
-                                                    <div class="word-detail-label">Türkçe Okunuş:</div>
-                                                    <div class="word-detail-value">${word.transcription_tr}</div>
-                                                </div>
-                                                <div class="word-detail-row">
-                                                    <div class="word-detail-label">İngilizce Okunuş:</div>
-                                                    <div class="word-detail-value">${word.transcription_en}</div>
-                                                </div>
-                                            `;
-                                            
-                                            // Kök bilgisi varsa ekle
-                                            if (word.root) {
-                                                wordDetail.innerHTML += `
-                                                    <div class="root-info">
-                                                        <div class="word-detail-row">
-                                                            <div class="word-detail-label">Kök (Latin):</div>
-                                                            <div class="word-detail-value">${word.root.latin}</div>
-                                                        </div>
-                                                        <div class="word-detail-row">
-                                                            <div class="word-detail-label">Kök (Arapça):</div>
-                                                            <div class="word-detail-value">${word.root.arabic}</div>
-                                                        </div>
-                                                        <div class="word-detail-row">
-                                                            <div class="word-detail-label">Kök Anlamı:</div>
-                                                            <div class="word-detail-value">${word.root.meaning || 'Belirtilmemiş'}</div>
-                                                        </div>
-                                                    </div>
-                                                `;
-                                            }
-                                            
-                                            // Kelimenin geçtiği diğer ayetleri bul ve göster
-                                            if (allSurahsData) {
-                                                wordDetail.innerHTML += `
-                                                    <div class="other-occurrences">
-                                                        <h4 class="occurrences-title">Bu Kelimenin Geçtiği Diğer Ayetler</h4>
-                                                        <div id="word-occurrences" class="word-occurrences">
-                                                            <div class="loading-occurrences">Aranıyor...</div>
-                                                        </div>
-                                                    </div>
-                                                `;
-                                                
-                                                // Asenkron olarak diğer ayetleri ara
-                                                setTimeout(() => {
-                                                    findWordOccurrences(word.arabic, surahId, verseData.verse_id);
-                                                }, 100);
-                                            }
-                                            
-                                            wordDetail.classList.add("active");
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    } catch (error) {
-                        console.error("Detaylı ayet verisi yüklenirken hata:", error);
-                    }
-                }
-
                 panel.classList.add("active");
                 document.getElementById("verse-panel").classList.remove("active");
                 document.getElementById("surahs").style.display = "none";
@@ -3200,91 +2607,6 @@
 
                 prevBtn.onclick = () => navigateVerse(surahIndex, verseIndex, -1);
                 nextBtn.onclick = () => navigateVerse(surahIndex, verseIndex, 1);
-                
-                // Sekme olaylarını ayarla
-                setupTabEvents();
-            }
-
-            // Kelimenin geçtiği diğer ayetleri bul
-            function findWordOccurrences(wordArabic, currentSurahId, currentVerseId) {
-                const occurrencesDiv = document.getElementById("word-occurrences");
-                if (!occurrencesDiv) return;
-                
-                const occurrences = [];
-                let totalFound = 0;
-                
-                // Tüm sureleri ve ayetleri tara
-                allSurahsData.surahs.forEach(surah => {
-                    surah.verses.forEach(verse => {
-                        // Mevcut ayeti atla
-                        if (surah.id === currentSurahId && verse.verse_number === currentVerseId) {
-                            return;
-                        }
-                        
-                        // Ayet metninde kelimeyi ara
-                        if (verse.text && verse.text.includes(wordArabic)) {
-                            occurrences.push({
-                                surahId: surah.id,
-                                surahName: getSurahName(surah.id),
-                                verseId: verse.verse_number,
-                                text: verse.text
-                            });
-                            totalFound++;
-                            
-                            // Performans için maksimum 10 sonuç göster
-                            if (totalFound >= 10) {
-                                return;
-                            }
-                        }
-                    });
-                    
-                    if (totalFound >= 10) {
-                        return;
-                    }
-                });
-                
-                // Sonuçları göster
-                if (occurrences.length > 0) {
-                    let html = '';
-                    occurrences.forEach(occurrence => {
-                        html += `
-                            <div class="occurrence-item">
-                                <a href="#${occurrence.surahId}-${occurrence.verseId}" class="occurrence-link">
-                                    ${occurrence.surahName} ${occurrence.verseId}
-                                </a>
-                            </div>
-                        `;
-                    });
-                    
-                    if (totalFound >= 10) {
-                        html += `<div class="more-occurrences">ve daha fazla...</div>`;
-                    }
-                    
-                    occurrencesDiv.innerHTML = html;
-                } else {
-                    occurrencesDiv.innerHTML = `<div class="no-occurrences">Bu kelime başka ayette bulunamadı.</div>`;
-                }
-            }
-
-            // Sekme olaylarını ayarla - YENİ TASARIM
-            function setupTabEvents() {
-                // Sekme butonları için olay dinleyicileri
-                document.querySelectorAll('.tab-button').forEach(button => {
-                    button.addEventListener('click', () => {
-                        // Aktif sekme butonunu değiştir
-                        document.querySelectorAll('.tab-button').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                        button.classList.add('active');
-                        
-                        // Aktif içeriği değiştir
-                        const tabId = button.getAttribute('data-tab');
-                        document.querySelectorAll('.tab-content').forEach(content => {
-                            content.classList.remove('active');
-                        });
-                        document.getElementById(`${tabId}-tab`).classList.add('active');
-                    });
-                });
             }
 
             function navigateVerse(surahIndex, verseIndex, direction) {
@@ -3320,7 +2642,7 @@
                     favorites = favorites.filter((f) => !(f.surah === surah && f.verse === verse));
                     localStorage.setItem("favorites", JSON.stringify(favorites));
                     button.classList.remove("active");
-                } else                {
+                } else {
                     // Favorilere ekle
                     // Ayet numarasını al
                     const verseMatch = verse.match(/^(\d+)\./);
@@ -3484,12 +2806,12 @@
             }
 
             // URL hash değişikliklerini dinle
-            window.addEventListener('hashchange', async function() {
-                await checkUrlHash();
+            window.addEventListener('hashchange', function() {
+                checkUrlHash();
             });
 
             // URL hash'ini kontrol et ve ilgili içeriği göster
-            async function checkUrlHash() {
+            function checkUrlHash() {
                 const hash = window.location.hash.substring(1); // # işaretini kaldır
                 
                 if (!hash) return;
@@ -3511,11 +2833,6 @@
                 
                 // Sadece Surah formatı: #1 (Fatiha suresi)
                 const surahMatch = hash.match(/^(\d+)$/);
-                
-                // Eğer allSurahsData yüklenmemişse, yükle
-                if (!allSurahsData) {
-                    allSurahsData = await loadAllSurahsData();
-                }
                 
                 if (surahVerseMatch) {
                     const surahId = parseInt(surahVerseMatch[1]);
@@ -3597,10 +2914,6 @@
                     jsonData = await response.json();
                     loadAuthors(jsonData);
                     await loadQuranData(selectedAuthor);
-                    
-                    // Yeni JSON verisini yükle
-                    allSurahsData = await loadAllSurahsData();
-                    
                     loadTheme();
                     applySettings();
                 } catch (error) {
@@ -3622,6 +2935,19 @@
                         // Controls bölümünü göster
                         document.querySelector('.controls').style.display = "flex";
                     }
+                });
+
+                document.getElementById("close-panel").addEventListener("click", () => {
+                    const panel = document.getElementById("verse-panel");
+                    const surahsDiv = document.getElementById("surahs");
+                    panel.classList.remove("active");
+                    surahsDiv.style.display = "block";
+                    // Controls bölümünü göster
+                    document.querySelector('.controls').style.display = "flex";
+                    // URL hash'i temizle
+                    history.pushState("", document.title, window.location.pathname);
+                    currentSurahId = 0;
+                    currentVerseId = 0;
                 });
 
                 document.getElementById("back-btn").addEventListener("click", () => {
@@ -3927,12 +3253,6 @@
                 
                 // Ayet numarası stili ayarı
                 document.getElementById("verse-number-style").value = verseNumberStyle;
-                
-                // Arapça metin görünümü ayarı
-                document.getElementById("arabic-display-mode").value = arabicDisplayMode;
-                
-                // Kelime analizi gösterimi ayarı
-                document.getElementById("word-analysis-toggle").checked = showWordAnalysis;
             }
             
             function applyHighlightColor(color) {
@@ -3997,52 +3317,6 @@
                             displayVerses(sureName, quranData[surahIndex].ayetler, quranData[surahIndex].id);
                         }
                     }
-                    
-                    // Detay panelini güncelle
-                    if (document.getElementById("verse-detail-panel").classList.contains("active")) {
-                        const title = document.getElementById("verse-detail-title").textContent;
-                        const parts = title.split(" - Ayet ");
-                        if (parts.length === 2) {
-                            const sureName = parts[0];
-                            const verseId = parseInt(parts[1]);
-                            const surahIndex = quranData.findIndex(s => s.sure === sureName);
-                            if (surahIndex >= 0 && verseId > 0) {
-                                const verseIndex = verseId - 1;
-                                const verse = quranData[surahIndex].ayetler[verseIndex];
-                                displayVerseDetail(sureName, verse, verseIndex, quranData[surahIndex].id);
-                            }
-                        }
-                    }
-                });
-                
-                // Arapça metin görünümü değiştirme
-                document.getElementById("arabic-display-mode").addEventListener("change", function(e) {
-                    arabicDisplayMode = e.target.value;
-                    localStorage.setItem("arabicDisplayMode", arabicDisplayMode);
-                    showNotification("Arapça metin görünümü değiştirildi");
-                    
-                    // Detay panelini güncelle
-                    if (document.getElementById("verse-detail-panel").classList.contains("active")) {
-                        const title = document.getElementById("verse-detail-title").textContent;
-                        const parts = title.split(" - Ayet ");
-                        if (parts.length === 2) {
-                            const sureName = parts[0];
-                            const verseId = parseInt(parts[1]);
-                            const surahIndex = quranData.findIndex(s => s.sure === sureName);
-                            if (surahIndex >= 0 && verseId > 0) {
-                                const verseIndex = verseId - 1;
-                                const verse = quranData[surahIndex].ayetler[verseIndex];
-                                displayVerseDetail(sureName, verse, verseIndex, quranData[surahIndex].id);
-                            }
-                        }
-                    }
-                });
-                
-                // Kelime analizi gösterimi değiştirme
-                document.getElementById("word-analysis-toggle").addEventListener("change", function(e) {
-                    showWordAnalysis = e.target.checked;
-                    localStorage.setItem("showWordAnalysis", showWordAnalysis);
-                    showNotification("Kelime analizi görünümü " + (showWordAnalysis ? "etkinleştirildi" : "devre dışı bırakıldı"));
                     
                     // Detay panelini güncelle
                     if (document.getElementById("verse-detail-panel").classList.contains("active")) {
