@@ -1915,7 +1915,155 @@
                 border: 1px solid var(--accent-dark);
                 font-style: italic;
             }
+            
+            body.day-mode .transcription {
+                background-color: var(--secondary-light);
+                border: 1px solid var(--accent-light);
+            }
+            
+            /* BÜYÜK EKRANLAR İÇİN YENİ DÜZEN - SADECE DESKTOP */
+            @media (min-width: 1024px) {
+                /* Content container genişliğini artır */
+                .content {
+                    max-width: 1400px; /* Increased from 1200px */
+                }
+                
+                /* Ayet detay panelini genişlet */
+                #verse-detail-panel {
+                    padding: 30px;
+                }
+                
+                /* Ayet içeriği için 3 kolonlu düzen */
+                .verse-content-container {
+                    display: grid;
+                    grid-template-columns: 1fr 3fr 1fr; /* Changed from 1fr 2fr 1fr for wider center column */
+                    gap: 30px; /* Increased from 20px */
+                }
+                
+                /* Ana içerik (meal, arapça metin, okunuş) */
+                .verse-section {
+                    grid-column: 2;
+                }
+                
+                /* Navigasyon butonları */
+                .verse-navigation-buttons {
+                    grid-column: 2;
+                    margin-bottom: 30px;
+                }
+                
+                /* Tab container'ı gizle */
+                .tab-container {
+                    display: none;
+                }
+                
+                /* Diğer Mealler bölümünü sol tarafa yerleştir */
+                #other-translations-tab {
+                    display: block !important;
+                    grid-column: 1;
+                    grid-row: 1 / span 5;
+                    border-right: 1px solid var(--accent-dark);
+                    padding-right: 20px;
+                }
+                
+                body.day-mode #other-translations-tab {
+                    border-right: 1px solid var(--accent-light);
+                }
+                
+                /* Kelime Analizi bölümünü sağ tarafa yerleştir */
+                #word-analysis-tab {
+                    display: block !important;
+                    grid-column: 3;
+                    grid-row: 1 / span 5;
+                    border-left: 1px solid var(--accent-dark);
+                    padding-left: 20px;
+                }
+                
+                body.day-mode #word-analysis-tab {
+                    border-left: 1px solid var(--accent-light);
+                }
+                
+                /* Bölüm başlıkları ekle */
+                #other-translations-tab::before {
+                    content: 'DİĞER MEALLER';
+                    display: block;
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                    margin-bottom: 15px;
+                    color: var(--highlight-dark);
+                    border-bottom: 1px solid var(--accent-dark);
+                    padding-bottom: 10px;
+                }
+                
+                #word-analysis-tab::before {
+                    content: 'KELİME ANALİZİ';
+                    display: block;
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                    margin-bottom: 15px;
+                    color: var(--highlight-dark);
+                    border-bottom: 1px solid var(--accent-dark);
+                    padding-bottom: 10px;
+                }
+                
+                body.day-mode #other-translations-tab::before,
+                body.day-mode #word-analysis-tab::before {
+                    border-bottom: 1px solid var(--accent-light);
+                }
+                
+                /* Seçili çeviriyi daha belirgin yap */
+                #verse-detail-panel .selected-translation {
+                    font-size: 1.2rem;
+                    padding: 25px;
+                }
+                
+                /* Arapça metni daha belirgin yap */
+                .arabic-text {
+                    font-size: 1.8em;
+                    padding: 20px;
+                }
+                
+                /* Navigasyon tuşları için klavye kısayolları */
+                #prev-verse-btn::after {
+                    content: ' (←)';
+                    font-size: 0.8rem;
+                    opacity: 0.8;
+                }
+                
+                #next-verse-btn::after {
+                    content: ' (→)';
+                    font-size: 0.8rem;
+                    opacity: 0.8;
+                }
+                
+                /* Verse panel genişliğini artır */
+                #verse-panel {
+                    max-width: 1200px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
         </style>
+        <script>
+            // Klavye navigasyonu için event listener
+            document.addEventListener('keydown', function(e) {
+                // Sadece büyük ekranlarda çalışsın
+                if (window.innerWidth >= 1024) {
+                    // Ayet detay paneli açıksa
+                    if (document.getElementById('verse-detail-panel').classList.contains('active')) {
+                        // Sol ok tuşu - Önceki ayet
+                        if (e.key === 'ArrowLeft') {
+                            document.getElementById('prev-verse-btn').click();
+                            e.preventDefault();
+                        }
+                        // Sağ ok tuşu - Sonraki ayet
+                        else if (e.key === 'ArrowRight') {
+                            document.getElementById('next-verse-btn').click();
+                            e.preventDefault();
+                        }
+                    }
+                }
+            });
+        </script>
     </head>
     <body>
         <!-- Diğer HTML içeriği korundu -->
@@ -2758,7 +2906,7 @@
 
                 // Sure numarası ve ayet numarası ile arama kontrolü (örn: "4 1") veya sure adı ile (örn: "Fatiha 1")
                 const numberMatch = searchTerm.match(/^(\d+)\s+(\d+)$/); // "4 1" gibi
-                const surahVerseMatch = searchTerm.match(/^([a-zA-ZçÇğĞıİöÖ��ŞüÜ\s-]+)\s+(\d+)$/i); // "Fatiha 1" gibi
+                const surahVerseMatch = searchTerm.match(/^([a-zA-ZçÇğĞıİöÖşŞüÜ\s-]+)\s+(\d+)$/i); // "Fatiha 1" gibi
 
                 if (numberMatch || surahVerseMatch) {
                     let surahId, verseId;
@@ -3320,7 +3468,7 @@
                     favorites = favorites.filter((f) => !(f.surah === surah && f.verse === verse));
                     localStorage.setItem("favorites", JSON.stringify(favorites));
                     button.classList.remove("active");
-                } else                {
+                } else {
                     // Favorilere ekle
                     // Ayet numarasını al
                     const verseMatch = verse.match(/^(\d+)\./);
@@ -3424,7 +3572,8 @@
 
             function shareVerse(surah, verse, surahId, verseId) {
                 const url = `${window.location.origin}${window.location.pathname}#${surahId}-${verseId}`;
-                const text = `${surah}: ${verse} - Sadece Kuran\n${url}`;
+                const text = `${surah}: ${verse} - Sadece Kuran
+${url}`;
                 
                 if (navigator.share) {
                     navigator
@@ -4165,5 +4314,167 @@
                 }, 1500);
             }
         </script>
-    </body>
-</html>
+
+        <!-- Fix for the close-panel button in verse panel -->
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+            // Add event listener for the close-panel button
+            document.getElementById("close-panel").addEventListener("click", function() {
+                document.getElementById("verse-panel").classList.remove("active");
+                document.getElementById("surahs").style.display = "block";
+                document.querySelector('.controls').style.display = "flex";
+                // Update URL hash
+                history.pushState("", document.title, window.location.pathname);
+                currentSurahId = 0;
+                currentVerseId = 0;
+            });
+            });
+            </script>
+
+            <!-- Klavye navigasyonu için event listener -->
+            <script>
+            document.addEventListener('keydown', function(e) {
+                // Sadece büyük ekranlarda çalışsın
+                if (window.innerWidth >= 1024) {
+                    // Ayet detay paneli açıksa
+                    if (document.getElementById('verse-detail-panel').classList.contains('active')) {
+                        // Sol ok tuşu - Önceki ayet
+                        if (e.key === 'ArrowLeft') {
+                            document.getElementById('prev-verse-btn').click();
+                            e.preventDefault();
+                        }
+                        // Sağ ok tuşu - Sonraki ayet
+                        else if (e.key === 'ArrowRight') {
+                            document.getElementById('next-verse-btn').click();
+                            e.preventDefault();
+                        }
+                    }
+                }
+            });
+            </script>
+
+            <style>
+            /* BÜYÜK EKRANLAR İÇİN YENİ DÜZEN - SADECE DESKTOP */
+            @media (min-width: 1024px) {
+            /* Content container genişliğini artır */
+            .content {
+                max-width: 1400px; /* Increased from 1200px */
+            }
+
+            /* Ayet detay panelini genişlet */
+            #verse-detail-panel {
+                padding: 30px;
+            }
+
+            /* Ayet içeriği için 3 kolonlu düzen */
+            .verse-content-container {
+                display: grid;
+                grid-template-columns: 1fr 3fr 1fr; /* Changed from 1fr 2fr 1fr for wider center column */
+                gap: 30px; /* Increased from 20px */
+            }
+
+            /* Ana içerik (meal, arapça metin, okunuş) */
+            .verse-section {
+                grid-column: 2;
+            }
+
+            /* Navigasyon butonları */
+            .verse-navigation-buttons {
+                grid-column: 2;
+                margin-bottom: 30px;
+            }
+
+            /* Tab container'ı gizle */
+            .tab-container {
+                display: none;
+            }
+
+            /* Diğer Mealler bölümünü sol tarafa yerleştir */
+            #other-translations-tab {
+                display: block !important;
+                grid-column: 1;
+                grid-row: 1 / span 5;
+                border-right: 1px solid var(--accent-dark);
+                padding-right: 20px;
+            }
+
+            body.day-mode #other-translations-tab {
+                border-right: 1px solid var(--accent-light);
+            }
+
+            /* Kelime Analizi bölümünü sağ tarafa yerleştir */
+            #word-analysis-tab {
+                display: block !important;
+                grid-column: 3;
+                grid-row: 1 / span 5;
+                border-left: 1px solid var(--accent-dark);
+                padding-left: 20px;
+            }
+
+            body.day-mode #word-analysis-tab {
+                border-left: 1px solid var(--accent-light);
+            }
+
+            /* Bölüm başlıkları ekle */
+            #other-translations-tab::before {
+                content: 'DİĞER MEALLER';
+                display: block;
+                font-weight: 600;
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+                color: var(--highlight-dark);
+                border-bottom: 1px solid var(--accent-dark);
+                padding-bottom: 10px;
+            }
+
+            #word-analysis-tab::before {
+                content: 'KELİME ANALİZİ';
+                display: block;
+                font-weight: 600;
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+                color: var(--highlight-dark);
+                border-bottom: 1px solid var(--accent-dark);
+                padding-bottom: 10px;
+            }
+
+            body.day-mode #other-translations-tab::before,
+            body.day-mode #word-analysis-tab::before {
+                border-bottom: 1px solid var(--accent-light);
+            }
+
+            /* Seçili çeviriyi daha belirgin yap */
+            #verse-detail-panel .selected-translation {
+                font-size: 1.2rem;
+                padding: 25px;
+            }
+
+            /* Arapça metni daha belirgin yap */
+            .arabic-text {
+                font-size: 1.8em;
+                padding: 20px;
+            }
+
+            /* Navigasyon tuşları için klavye kısayolları */
+            #prev-verse-btn::after {
+                content: ' (←)';
+                font-size: 0.8rem;
+                opacity: 0.8;
+            }
+
+            #next-verse-btn::after {
+                content: ' (→)';
+                font-size: 0.8rem;
+                opacity: 0.8;
+            }
+
+            /* Verse panel genişliğini artır */
+            #verse-panel {
+                max-width: 1200px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            }
+            </style>
+            </body>
+            </html>
