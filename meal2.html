@@ -2203,7 +2203,7 @@
                             <div class="verse-navigation-buttons">
                                 <button id="prev-verse-btn" class="nav-btn">
                                     <i class="fas fa-chevron-left"></i> Önceki
-                                    <span class="keyboard-shortcut"></span>
+                                    <span class="keyboard-shortcut">←</span>
                                 </button>
                                 <button id="next-verse-btn" class="nav-btn">
                                     Sonraki <i class="fas fa-chevron-right"></i>
@@ -3255,7 +3255,7 @@
                 
                 // Hem mobil hem de masaüstü için içeriği ayarla
                 selectedTranslation.innerHTML = verseContent;
-                selectedTranslationMobile.innerHTML = verseContent;
+                                selectedTranslationMobile.innerHTML = verseContent;
 
                 otherTranslations.innerHTML = "";
                 otherTranslationsMobile.innerHTML = "";
@@ -3459,7 +3459,7 @@
                 }
 
                 panel.classList.add("active");
-                document.getElementById("verse-panel").classList.remove("active");
+                document.getElementById("verse-panel").classList.add("active");
                 document.getElementById("surahs").style.display = "none";
                 document.getElementById("favorites").style.display = "none";
                 document.getElementById("podcasts").style.display = "none";
@@ -4089,9 +4089,9 @@
                     if (searchTerm.length >= 2) {
                         searchTimeout = setTimeout(() => {
                             displaySearchResults(searchTerm);
+                            document.getElementById("search-page").classList.add("active");
+                            document.getElementById("search-page-input").value = searchTerm;
                         }, 300);
-                    } else {
-                        document.getElementById("search-results").innerHTML = "";
                     }
                 });
 
