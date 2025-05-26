@@ -3,142 +3,669 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Test</title>
+    <title>Minimal Meal Stilleri</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #2a2a2a;
+            --accent: #3a3a3a;
+            --text: #ffffff;
+            --highlight: #0066cc;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body.light {
+            --primary: #ffffff;
+            --secondary: #f8f9fa;
+            --accent: #e9ecef;
+            --text: #212529;
+            --highlight: #0066cc;
+            --border: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
             padding: 20px;
+            transition: all 0.3s ease;
         }
-        pre {
-            background-color: #f5f5f5;
-            padding: 10px;
-            border-radius: 5px;
-            overflow: auto;
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
         }
-        button {
-            padding: 10px 15px;
-            background-color: #1da1f2;
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .theme-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--highlight);
             color: white;
             border: none;
-            border-radius: 5px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .style-card {
+            background: var(--secondary);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .style-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .style-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--highlight);
+        }
+
+        .style-desc {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 25px;
+        }
+
+        .select-btn {
+            background: var(--highlight);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .select-btn:hover {
+            opacity: 0.9;
+        }
+
+        .select-btn.selected {
+            background: #28a745;
+        }
+
+        /* Stil 17: Ultra Minimal */
+        .style-17 .item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .style-17 .item:last-child {
+            border-bottom: none;
+        }
+
+        .style-17 .author {
+            font-size: 0.8rem;
+            color: var(--highlight);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .style-17 .text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Stil 18: Dot Separator */
+        .style-18 .item {
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .style-18 .item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--highlight);
+            font-size: 1.2rem;
+        }
+
+        .style-18 .author {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .style-18 .text {
+            opacity: 0.9;
+        }
+
+        /* Stil 19: Number List */
+        .style-19 {
+            counter-reset: item;
+        }
+
+        .style-19 .item {
+            counter-increment: item;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .style-19 .item::before {
+            content: counter(item);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--highlight);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .style-19 .author {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        /* Stil 20: Quote Style */
+        .style-20 .item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--accent);
+            border-left: 4px solid var(--highlight);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .style-20 .text {
+            font-style: italic;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .style-20 .author {
+            text-align: right;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .style-20 .author::before {
+            content: '— ';
+        }
+
+        /* Stil 21: Clean Cards */
+        .style-21 .item {
+            background: var(--accent);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .style-21 .author {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--highlight);
+            margin-bottom: 8px;
+        }
+
+        .style-21 .text {
+            line-height: 1.6;
+        }
+
+        /* Stil 22: Typography Focus */
+        .style-22 .item {
+            margin-bottom: 30px;
+        }
+
+        .style-22 .author {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--highlight);
+            margin-bottom: 10px;
+        }
+
+        .style-22 .text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .style-22 .text::first-letter {
+            font-size: 2em;
+            font-weight: bold;
+            float: left;
+            line-height: 1;
+            margin-right: 8px;
+            color: var(--highlight);
+        }
+
+        /* Stil 23: Sidebar Style */
+        .style-23 {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .style-23 .authors {
+            position: sticky;
+            top: 20px;
+        }
+
+        .style-23 .author-btn {
+            display: block;
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text);
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .style-23 .author-btn:hover,
+        .style-23 .author-btn.active {
+            background: var(--highlight);
+            color: white;
+        }
+
+        .style-23 .content {
+            background: var(--accent);
+            padding: 25px;
+            border-radius: 6px;
+            min-height: 150px;
+        }
+
+        .style-23 .text-content {
+            display: none;
+            line-height: 1.6;
+        }
+
+        .style-23 .text-content.active {
+            display: block;
+        }
+
+        /* Stil 24: Floating Labels */
+        .style-24 .item {
+            position: relative;
+            background: var(--accent);
+            padding: 25px 20px 20px;
+            border-radius: 6px;
             margin-bottom: 20px;
         }
-        .loading {
-            display: none;
-            margin-bottom: 10px;
+
+        .style-24 .author {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--highlight);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
-        .error {
-            color: red;
-            margin-bottom: 10px;
+
+        .style-24 .text {
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .style-23 {
+                grid-template-columns: 1fr;
+            }
+            
+            .style-23 .authors {
+                display: flex;
+                gap: 10px;
+                position: static;
+            }
+            
+            .style-23 .author-btn {
+                flex: 1;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Kuran JSON Veri Testi</h1>
-    
-    <button id="test-basic-json">kuran_mealleri.json Test Et</button>
-    <button id="test-detailed-json">all_surahs_data.json Test Et</button>
-    
-    <div id="loading" class="loading">Yükleniyor...</div>
-    <div id="error" class="error"></div>
-    
-    <h2>Sonuç:</h2>
-    <pre id="result">Henüz test edilmedi.</pre>
-    
+    <button class="theme-btn" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <h1>Minimal Meal Stilleri</h1>
+            <p>Sade ve temiz tasarım odaklı 8 minimal stil seçeneği</p>
+        </div>
+
+        <!-- Stil 17: Ultra Minimal -->
+        <div class="style-card">
+            <h2 class="style-title">Stil 17: Ultra Minimal</h2>
+            <p class="style-desc">En sade tasarım - Sadece çizgilerle ayrılmış, minimum görsel öğe</p>
+            
+            <div class="style-17">
+                <div class="item">
+                    <div class="author">Mehmet Okuyan</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Mustafa İslamoğlu</div>
+                    <div class="text">Rahmeti bol ve kesintisiz olan Tanrı'nın adıyla. Övgü, evrenler efendisi Tanrı'ya özgüdür.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Diyanet Vakfı</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi olan Allah'a mahsustur.</div>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="selectStyle(17)">Bu Stili Seç</button>
+        </div>
+
+        <!-- Stil 18: Dot Separator -->
+        <div class="style-card">
+            <h2 class="style-title">Stil 18: Dot Separator</h2>
+            <p class="style-desc">Nokta işaretli liste - Basit ve düzenli görünüm</p>
+            
+            <div class="style-18">
+                <div class="item">
+                    <div class="author">Mehmet Okuyan</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Mustafa İslamoğlu</div>
+                    <div class="text">Rahmeti bol ve kesintisiz olan Tanrı'nın adıyla. Övgü, evrenler efendisi Tanrı'ya özgüdür.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Diyanet Vakfı</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi olan Allah'a mahsustur.</div>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="selectStyle(18)">Bu Stili Seç</button>
+        </div>
+
+        <!-- Stil 19: Number List -->
+        <div class="style-card">
+            <h2 class="style-title">Stil 19: Number List</h2>
+            <p class="style-desc">Numaralı liste - Sıralı ve organize görünüm</p>
+            
+            <div class="style-19">
+                <div class="item">
+                    <div class="author">Mehmet Okuyan</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Mustafa İslamoğlu</div>
+                    <div class="text">Rahmeti bol ve kesintisiz olan Tanrı'nın adıyla. Övgü, evrenler efendisi Tanrı'ya özgüdür.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Diyanet Vakfı</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi olan Allah'a mahsustur.</div>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="selectStyle(19)">Bu Stili Seç</button>
+        </div>
+
+        <!-- Stil 20: Quote Style -->
+        <div class="style-card">
+            <h2 class="style-title">Stil 20: Quote Style</h2>
+            <p class="style-desc">Alıntı tarzı - İtalik metin ve yazar imzası</p>
+            
+            <div class="style-20">
+                <div class="item">
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur.</div>
+                    <div class="author">Mehmet Okuyan</div>
+                </div>
+                <div class="item">
+                    <div class="text">Rahmeti bol ve kesintisiz olan Tanrı'nın adıyla. Övgü, evrenler efendisi Tanrı'ya özgüdür.</div>
+                    <div class="author">Mustafa İslamoğlu</div>
+                </div>
+                <div class="item">
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi olan Allah'a mahsustur.</div>
+                    <div class="author">Diyanet Vakfı</div>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="selectStyle(20)">Bu Stili Seç</button>
+        </div>
+
+        <!-- Stil 21: Clean Cards -->
+        <div class="style-card">
+            <h2 class="style-title">Stil 21: Clean Cards</h2>
+            <p class="style-desc">Temiz kartlar - Minimal kenarlık ve padding</p>
+            
+            <div class="style-21">
+                <div class="item">
+                    <div class="author">Mehmet Okuyan</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Mustafa İslamoğlu</div>
+                    <div class="text">Rahmeti bol ve kesintisiz olan Tanrı'nın adıyla. Övgü, evrenler efendisi Tanrı'ya özgüdür.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Diyanet Vakfı</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi olan Allah'a mahsustur.</div>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="selectStyle(21)">Bu Stili Seç</button>
+        </div>
+
+        <!-- Stil 22: Typography Focus -->
+        <div class="style-card">
+            <h2 class="style-title">Stil 22: Typography Focus</h2>
+            <p class="style-desc">Tipografi odaklı - Büyük ilk harf ve zarif yazı tipi</p>
+            
+            <div class="style-22">
+                <div class="item">
+                    <div class="author">Mehmet Okuyan</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Mustafa İslamoğlu</div>
+                    <div class="text">Rahmeti bol ve kesintisiz olan Tanrı'nın adıyla. Övgü, evrenler efendisi Tanrı'ya özgüdür.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Diyanet Vakfı</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi olan Allah'a mahsustur.</div>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="selectStyle(22)">Bu Stili Seç</button>
+        </div>
+
+        <!-- Stil 23: Sidebar Style -->
+        <div class="style-card">
+            <h2 class="style-title">Stil 23: Sidebar Style</h2>
+            <p class="style-desc">Yan panel - Meal isimleri solda, içerik sağda</p>
+            
+            <div class="style-23">
+                <div class="authors">
+                    <button class="author-btn active" onclick="showContent(0, this)">Mehmet Okuyan</button>
+                    <button class="author-btn" onclick="showContent(1, this)">Mustafa İslamoğlu</button>
+                    <button class="author-btn" onclick="showContent(2, this)">Diyanet Vakfı</button>
+                </div>
+                <div class="content">
+                    <div class="text-content active">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur.</div>
+                    <div class="text-content">Rahmeti bol ve kesintisiz olan Tanrı'nın adıyla. Övgü, evrenler efendisi Tanrı'ya özgüdür.</div>
+                    <div class="text-content">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi olan Allah'a mahsustur.</div>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="selectStyle(23)">Bu Stili Seç</button>
+        </div>
+
+        <!-- Stil 24: Floating Labels -->
+        <div class="style-card">
+            <h2 class="style-title">Stil 24: Floating Labels</h2>
+            <p class="style-desc">Yüzen etiketler - Modern ve şık görünüm</p>
+            
+            <div class="style-24">
+                <div class="item">
+                    <div class="author">Mehmet Okuyan</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Mustafa İslamoğlu</div>
+                    <div class="text">Rahmeti bol ve kesintisiz olan Tanrı'nın adıyla. Övgü, evrenler efendisi Tanrı'ya özgüdür.</div>
+                </div>
+                <div class="item">
+                    <div class="author">Diyanet Vakfı</div>
+                    <div class="text">Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi olan Allah'a mahsustur.</div>
+                </div>
+            </div>
+            
+            <button class="select-btn" onclick="selectStyle(24)">Bu Stili Seç</button>
+        </div>
+    </div>
+
     <script>
-        document.getElementById('test-basic-json').addEventListener('click', async () => {
-            testJSON('kuran_mealleri.json');
-        });
-        
-        document.getElementById('test-detailed-json').addEventListener('click', async () => {
-            testJSON('all_surahs_data.json');
-        });
-        
-        async function testJSON(filename) {
-            const loadingEl = document.getElementById('loading');
-            const errorEl = document.getElementById('error');
-            const resultEl = document.getElementById('result');
+        let isLight = false;
+
+        function toggleTheme() {
+            isLight = !isLight;
+            document.body.classList.toggle('light', isLight);
             
-            loadingEl.style.display = 'block';
-            errorEl.textContent = '';
-            resultEl.textContent = 'Yükleniyor...';
-            
-            try {
-                const response = await fetch(filename);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                // Veri yapısını kontrol et
-                if (filename === 'kuran_mealleri.json') {
-                    // Temel JSON yapısını kontrol et
-                    if (!data.surahs || !Array.isArray(data.surahs)) {
-                        throw new Error('Geçersiz JSON yapısı: "surahs" dizisi bulunamadı');
-                    }
-                    
-                    // İlk sure ve ayet bilgilerini göster
-                    const firstSurah = data.surahs[0];
-                    const sampleData = {
-                        surahCount: data.surahs.length,
-                        firstSurah: {
-                            id: firstSurah.id,
-                            name: firstSurah.name || 'Belirtilmemiş',
-                            verseCount: firstSurah.verses.length,
-                            sampleVerse: firstSurah.verses[0],
-                            translationCount: firstSurah.verses[0].translations.length,
-                            authors: [...new Set(firstSurah.verses[0].translations.map(t => t.author))]
-                        }
-                    };
-                    
-                    resultEl.textContent = JSON.stringify(sampleData, null, 2);
-                } else {
-                    // Detaylı JSON yapısını kontrol et
-                    if (!data.surahs || !Array.isArray(data.surahs)) {
-                        throw new Error('Geçersiz JSON yapısı: "surahs" dizisi bulunamadı');
-                    }
-                    
-                    // İlk sure ve ayet bilgilerini göster
-                    const firstSurah = data.surahs[0];
-                    const firstVerse = firstSurah.verses[0];
-                    
-                    const sampleData = {
-                        surahCount: data.surahs.length,
-                        firstSurah: {
-                            id: firstSurah.id,
-                            name: firstSurah.name || 'Belirtilmemiş',
-                            verseCount: firstSurah.verses.length
-                        },
-                        firstVerse: {
-                            verse_number: firstVerse.verse_number,
-                            text: firstVerse.text,
-                            transcription_tr: firstVerse.transcription_tr,
-                            transcription_en: firstVerse.transcription_en,
-                            hasWords: !!firstVerse.words,
-                            wordCount: firstVerse.words ? firstVerse.words.length : 0
-                        }
-                    };
-                    
-                    // Kelime örneği ekle
-                    if (firstVerse.words && firstVerse.words.length > 0) {
-                        sampleData.sampleWord = firstVerse.words[0];
-                    }
-                    
-                    resultEl.textContent = JSON.stringify(sampleData, null, 2);
-                }
-            } catch (error) {
-                console.error('JSON yükleme hatası:', error);
-                errorEl.textContent = `Hata: ${error.message}`;
-                resultEl.textContent = 'Hata oluştu.';
-            } finally {
-                loadingEl.style.display = 'none';
-            }
+            const icon = document.querySelector('.theme-btn i');
+            icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
         }
+
+        function showContent(index, button) {
+            // Tüm butonları pasif yap
+            document.querySelectorAll('.style-23 .author-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Tüm içerikleri gizle
+            document.querySelectorAll('.style-23 .text-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Seçilen butonu aktif yap
+            button.classList.add('active');
+            
+            // Seçilen içeriği göster
+            document.querySelectorAll('.style-23 .text-content')[index].classList.add('active');
+        }
+
+        function selectStyle(styleNumber) {
+            // Önceki seçimleri temizle
+            document.querySelectorAll('.select-btn').forEach(btn => {
+                btn.classList.remove('selected');
+                btn.textContent = 'Bu Stili Seç';
+            });
+            
+            // Seçilen butonu işaretle
+            event.target.classList.add('selected');
+            event.target.textContent = 'Seçildi ✓';
+            
+            // LocalStorage'a kaydet
+            localStorage.setItem('selectedMealStyle', styleNumber);
+            
+            // Bildirim göster
+            showNotification(`Stil ${styleNumber} seçildi!`);
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: var(--highlight);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 6px;
+                z-index: 1000;
+                font-size: 0.9rem;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // CSS animasyonları ekle
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Sayfa yüklendiğinde önceki seçimi kontrol et
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedStyle = localStorage.getItem('selectedMealStyle');
+            if (savedStyle && savedStyle >= 17 && savedStyle <= 24) {
+                const buttons = document.querySelectorAll('.select-btn');
+                const buttonIndex = savedStyle - 17;
+                if (buttons[buttonIndex]) {
+                    buttons[buttonIndex].classList.add('selected');
+                    buttons[buttonIndex].textContent = 'Seçildi ✓';
+                }
+            }
+        });
     </script>
 </body>
 </html>
