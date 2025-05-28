@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Ali Bulaç",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/ali.webp?height=300&width=300",
       "birth_year": "1951",
       "death_year": null,
       "title": "Prof. Dr.",
@@ -34,7 +34,7 @@
     {
       "id": 2,
       "name": "Edip Yüksel (Eski Baskı)",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/edip.jpg?height=300&width=300",
       "birth_year": "1957",
       "death_year": null,
       "title": "Dr.",
@@ -65,7 +65,7 @@
     {
       "id": 3,
       "name": "Ahmed Hulusi",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/hulusi.jpg?height=300&width=300",
       "birth_year": "1945",
       "death_year": null,
       "title": "",
@@ -96,7 +96,7 @@
     {
       "id": 4,
       "name": "Elmalılı (Sadeleştirilmiş)",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/elmalı.jpg?height=300&width=300",
       "birth_year": "1878",
       "death_year": "1942",
       "title": "Elmalılı",
@@ -127,7 +127,7 @@
     {
       "id": 5,
       "name": "Bayraktar Bayraklı",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/bayraklı.jpg?height=300&width=300",
       "birth_year": "1943",
       "death_year": null,
       "title": "Prof. Dr.",
@@ -158,7 +158,7 @@
     {
       "id": 6,
       "name": "Erhan Aktaş",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/erhan.jpg?height=300&width=300",
       "birth_year": "1960",
       "death_year": null,
       "title": "Dr.",
@@ -189,7 +189,7 @@
     {
       "id": 7,
       "name": "Elmalılı Hamdi Yazır",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/elmalı.jpg?height=300&width=300",
       "birth_year": "1878",
       "death_year": "1942",
       "title": "Elmalılı",
@@ -220,7 +220,7 @@
     {
       "id": 8,
       "name": "Diyanet İşleri Başkanlığı",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/diyanet.PNG?height=300&width=300",
       "birth_year": null,
       "death_year": null,
       "title": "Kurum",
@@ -282,7 +282,7 @@
     {
       "id": 10,
       "name": "Hasan Basri Çantay",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/hasan.jpg?height=300&width=300",
       "birth_year": "1887",
       "death_year": "1964",
       "title": "Hoca",
@@ -313,7 +313,7 @@
     {
       "id": 11,
       "name": "İbni Kesir",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/kesir.jpg?height=300&width=300",
       "birth_year": "1300",
       "death_year": "1373",
       "title": "İmam",
@@ -344,7 +344,7 @@
     {
       "id": 12,
       "name": "Muhammed Esed",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/esed.jpg?height=300&width=300",
       "birth_year": "1900",
       "death_year": "1992",
       "title": "Dr.",
@@ -375,7 +375,7 @@
     {
       "id": 13,
       "name": "Şaban Piriş",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/şaban.jpg?height=300&width=300",
       "birth_year": "1945",
       "death_year": null,
       "title": "Dr.",
@@ -406,7 +406,7 @@
     {
       "id": 14,
       "name": "Suat Yıldırım",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/suat.jpg?height=300&width=300",
       "birth_year": "1941",
       "death_year": null,
       "title": "Prof. Dr.",
@@ -437,7 +437,7 @@
     {
       "id": 15,
       "name": "Süleyman Ateş",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/ateş.jpg?height=300&width=300",
       "birth_year": "1933",
       "death_year": "2009",
       "title": "Prof. Dr.",
@@ -468,7 +468,7 @@
     {
       "id": 16,
       "name": "Yaşar Nuri Öztürk",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/yaşar.jpg?height=300&width=300",
       "birth_year": "1945",
       "death_year": "2016",
       "title": "Prof. Dr.",
@@ -499,7 +499,7 @@
     {
       "id": 17,
       "name": "Mustafa İslamoğlu",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/mustafa.jpg?height=300&width=300",
       "birth_year": "1960",
       "death_year": null,
       "title": "Dr.",
@@ -530,7 +530,7 @@
     {
       "id": 18,
       "name": "Süleymaniye Vakfı",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/süleymaniye.jpg?height=300&width=300",
       "birth_year": null,
       "death_year": null,
       "title": "Vakıf",
@@ -561,7 +561,7 @@
     {
       "id": 19,
       "name": "Erhan Aktaş (Eski Baskı)",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/erhan.jpg?height=300&width=300",
       "birth_year": "1960",
       "death_year": null,
       "title": "Dr.",
@@ -623,7 +623,7 @@
     {
       "id": 21,
       "name": "Edip Yüksel",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/edip.jpg?height=300&width=300",
       "birth_year": "1957",
       "death_year": null,
       "title": "Dr.",
@@ -685,7 +685,7 @@
     {
       "id": 23,
       "name": "Erhan Aktaş (10. Baskı)",
-      "image": "/placeholder.svg?height=300&width=300",
+      "image": "yazar/erhan.jpg?height=300&width=300",
       "birth_year": "1960",
       "death_year": null,
       "title": "Dr.",
