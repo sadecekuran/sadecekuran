@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
-<title>SADECE KURAN / MEAL</title>
+<title>SADECE KURAN</title>
 <link rel="icon" type="image/png" href="/logokuran2.jpg"/>
 <link rel="apple-touch-icon" href="/logokuran2.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
@@ -23,6 +23,12 @@
 --text-light: #0f1419;
 --highlight-light: #1da1f2;
 
+/* True Black Mode Variables */
+--primary-black: #000000;
+--secondary-black: #0a0a0a;
+--accent-black: #1a1a1a;
+--text-black: #ffffff;
+
 --transition-speed: 0.3s;
 --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
 --verse-font-size: 100%;
@@ -34,6 +40,124 @@ padding: 0;
 box-sizing: border-box;
 }
 
+/* Enhanced animations */
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(30px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes fadeInLeft {
+from {
+opacity: 0;
+transform: translateX(-30px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+
+@keyframes fadeInRight {
+from {
+opacity: 0;
+transform: translateX(30px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+
+@keyframes slideInFromTop {
+from {
+opacity: 0;
+transform: translateY(-100%);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes scaleIn {
+from {
+opacity: 0;
+transform: scale(0.8);
+}
+to {
+opacity: 1;
+transform: scale(1);
+}
+}
+
+@keyframes pulse {
+0%, 100% {
+transform: scale(1);
+}
+50% {
+transform: scale(1.05);
+}
+}
+
+@keyframes shimmer {
+0% {
+background-position: -200px 0;
+}
+100% {
+background-position: calc(200px + 100%) 0;
+}
+}
+
+@keyframes swipeLeft {
+0% {
+transform: translateX(0);
+opacity: 1;
+}
+100% {
+transform: translateX(-100%);
+opacity: 0;
+}
+}
+
+@keyframes swipeRight {
+0% {
+transform: translateX(0);
+opacity: 1;
+}
+100% {
+transform: translateX(100%);
+opacity: 0;
+}
+}
+
+@keyframes slideInLeft {
+0% {
+transform: translateX(-100%);
+opacity: 0;
+}
+100% {
+transform: translateX(0);
+opacity: 1;
+}
+}
+
+@keyframes slideInRight {
+0% {
+transform: translateX(100%);
+opacity: 0;
+}
+100% {
+transform: translateX(0);
+opacity: 1;
+}
+}
+
 body {
 font-family: 'Poppins', sans-serif;
 background-color: var(--primary-dark);
@@ -42,7 +166,7 @@ line-height: 1.5;
 display: flex;
 flex-direction: column;
 min-height: 100vh;
-transition: background 0.3s var(--transition-function), color 0.3s var(--transition-function);
+transition: all 0.4s var(--transition-function);
 scrollbar-width: thin;
 scrollbar-color: var(--accent-dark) var(--primary-dark);
 overflow-x: hidden;
@@ -52,6 +176,58 @@ body.day-mode {
 background-color: var(--primary-light);
 color: var(--text-light);
 scrollbar-color: var(--accent-light) var(--primary-light);
+}
+
+/* True Black Mode */
+body.black-mode {
+background-color: var(--primary-black);
+color: var(--text-black);
+scrollbar-color: var(--accent-black) var(--primary-black);
+}
+
+body.black-mode .sidebar {
+background-color: var(--secondary-black);
+border-right: 1px solid var(--accent-black);
+}
+
+body.black-mode .header {
+background-color: var(--primary-black);
+border-bottom: 1px solid var(--accent-black);
+}
+
+body.black-mode .surah,
+body.black-mode .verse-result,
+body.black-mode #verse-panel,
+body.black-mode #verse-detail-panel,
+body.black-mode #favorites,
+body.black-mode #podcasts,
+body.black-mode #settings {
+background-color: var(--secondary-black);
+border: 1px solid var(--accent-black);
+}
+
+body.black-mode .nav-item:hover,
+body.black-mode #theme-toggle:hover,
+body.black-mode #close-panel:hover,
+body.black-mode .verse .favorite-btn:hover,
+body.black-mode .verse .share-btn:hover {
+background-color: var(--accent-black);
+}
+
+body.black-mode #search,
+body.black-mode #author-select {
+background-color: var(--secondary-black);
+border: 1px solid var(--accent-black);
+color: var(--text-black);
+}
+
+body.black-mode .arabic-text,
+body.black-mode .transcription,
+body.black-mode .setting-item,
+body.black-mode .verse-left-sidebar,
+body.black-mode .verse-right-sidebar {
+background-color: var(--accent-black);
+border: 1px solid var(--accent-black);
 }
 
 body::-webkit-scrollbar {
@@ -66,6 +242,10 @@ body.day-mode::-webkit-scrollbar-track {
 background: var(--primary-light);
 }
 
+body.black-mode::-webkit-scrollbar-track {
+background: var(--primary-black);
+}
+
 body::-webkit-scrollbar-thumb {
 background-color: var(--accent-dark);
 border-radius: 20px;
@@ -75,7 +255,11 @@ body.day-mode::-webkit-scrollbar-thumb {
 background-color: var(--accent-light);
 }
 
-/* Sidebar - Desktop */
+body.black-mode::-webkit-scrollbar-thumb {
+background-color: var(--accent-black);
+}
+
+/* Enhanced Sidebar with animations */
 .sidebar {
 width: 60px;
 background-color: var(--secondary-dark);
@@ -86,7 +270,8 @@ padding: 20px 0;
 position: fixed;
 height: 100%;
 z-index: 10;
-transition: background-color 0.3s var(--transition-function);
+transition: all 0.4s var(--transition-function);
+animation: slideInLeft 0.6s ease-out;
 }
 
 body.day-mode .sidebar {
@@ -100,6 +285,12 @@ height: 40px;
 border-radius: 50%;
 margin-bottom: 30px;
 object-fit: cover;
+transition: transform 0.3s ease;
+animation: scaleIn 0.8s ease-out 0.2s both;
+}
+
+.sidebar-logo:hover {
+transform: scale(1.1) rotate(5deg);
 }
 
 .sidebar-nav {
@@ -117,9 +308,17 @@ padding: 15px 0;
 color: var(--text-dark);
 font-size: 1.3rem;
 cursor: pointer;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 position: relative;
+animation: fadeInLeft 0.6s ease-out calc(0.1s * var(--i, 0)) both;
 }
+
+.nav-item:nth-child(1) { --i: 1; }
+.nav-item:nth-child(2) { --i: 2; }
+.nav-item:nth-child(3) { --i: 3; }
+.nav-item:nth-child(4) { --i: 4; }
+.nav-item:nth-child(5) { --i: 5; }
+.nav-item:nth-child(6) { --i: 6; }
 
 body.day-mode .nav-item {
 color: var(--text-light);
@@ -127,6 +326,7 @@ color: var(--text-light);
 
 .nav-item:hover {
 background-color: var(--accent-dark);
+transform: translateX(5px);
 }
 
 body.day-mode .nav-item:hover {
@@ -135,6 +335,7 @@ background-color: var(--accent-light);
 
 .nav-item.active {
 color: var(--highlight-dark);
+transform: translateX(8px);
 }
 
 .nav-item.active::before {
@@ -144,18 +345,20 @@ left: 0;
 height: 100%;
 width: 3px;
 background-color: var(--highlight-dark);
+animation: scaleIn 0.3s ease-out;
 }
 
-/* Main Content */
+/* Enhanced Main Content */
 .main-content {
 flex: 1;
 margin-left: 60px;
 display: flex;
 flex-direction: column;
 min-height: 100vh;
+animation: fadeInRight 0.8s ease-out;
 }
 
-/* Header */
+/* Enhanced Header */
 .header {
 padding: 15px 20px;
 border-bottom: 1px solid var(--accent-dark);
@@ -166,7 +369,9 @@ position: sticky;
 top: 0;
 background-color: var(--primary-dark);
 z-index: 5;
-transition: background-color 0.3s var(--transition-function);
+transition: all 0.4s var(--transition-function);
+animation: slideInFromTop 0.6s ease-out;
+backdrop-filter: blur(10px);
 }
 
 body.day-mode .header {
@@ -177,6 +382,11 @@ border-bottom: 1px solid var(--accent-light);
 .header h1 {
 font-size: 1.2rem;
 font-weight: 700;
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+animation: pulse 2s infinite;
 }
 
 .header-actions {
@@ -196,7 +406,7 @@ border-radius: 50%;
 display: flex;
 align-items: center;
 justify-content: center;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode #theme-toggle {
@@ -205,13 +415,14 @@ color: var(--text-light);
 
 #theme-toggle:hover {
 background-color: var(--accent-dark);
+transform: rotate(180deg);
 }
 
 body.day-mode #theme-toggle:hover {
 background-color: var(--accent-light);
 }
 
-/* Content Container */
+/* Enhanced Content Container */
 .content {
 flex: 1;
 padding: 20px;
@@ -219,21 +430,22 @@ max-width: 800px;
 margin: 0 auto;
 width: 100%;
 padding-bottom: 80px;
+animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
-/* BÜYÜK EKRANLAR İÇİN CONTENT GENİŞLETME */
 @media (min-width: 1200px) {
 .content {
 max-width: 1400px;
 }
 }
 
-/* Controls */
+/* Enhanced Controls */
 .controls {
 margin-bottom: 20px;
 display: flex;
 flex-direction: column;
 gap: 10px;
+animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 
 .search-container {
@@ -248,19 +460,20 @@ border-radius: 20px;
 background-color: var(--secondary-dark);
 color: var(--text-dark);
 font-size: 0.95rem;
-transition: all 0.2s var(--transition-function);
-}
-
-body.day-mode #search {
-background-color: var(--secondary-light);
-border: 1px solid var(--accent-light);
-color: var(--text-light);
+transition: all 0.3s var(--transition-function);
 }
 
 #search:focus {
 outline: none;
 border-color: var(--highlight-dark);
 box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+transform: translateY(-2px);
+}
+
+body.day-mode #search {
+background-color: var(--secondary-light);
+border: 1px solid var(--accent-light);
+color: var(--text-light);
 }
 
 .search-icon {
@@ -270,6 +483,7 @@ top: 50%;
 transform: translateY(-50%);
 color: var(--text-dark);
 opacity: 0.6;
+transition: all 0.3s ease;
 }
 
 body.day-mode .search-icon {
@@ -294,7 +508,14 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 background-repeat: no-repeat;
 background-position: right 15px center;
 background-size: 16px;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
+}
+
+#author-select:focus {
+outline: none;
+border-color: var(--highlight-dark);
+box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+transform: translateY(-2px);
 }
 
 body.day-mode #author-select {
@@ -304,28 +525,23 @@ color: var(--text-light);
 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230f1419' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
 }
 
-#author-select:focus {
-outline: none;
-border-color: var(--highlight-dark);
-box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
-}
-
 #show-favorites {
 padding: 12px 20px;
 border: none;
 border-radius: 20px;
-background-color: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 color: white;
 font-size: 0.95rem;
 cursor: pointer;
 display: flex;
 align-items: center;
 gap: 8px;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 #show-favorites:hover {
-background-color: #1a91da;
+transform: translateY(-3px);
+box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4);
 }
 
 #loading-bar {
@@ -340,16 +556,17 @@ display: none;
 #loading-bar .progress {
 width: 0%;
 height: 100%;
-background: var(--highlight-dark);
+background: linear-gradient(90deg, var(--highlight-dark), #1a91da, var(--highlight-dark));
+background-size: 200% 100%;
 border-radius: 2px;
-animation: loadingProgress 1.5s infinite ease-in-out;
+animation: shimmer 1.5s infinite;
 }
 
 body.day-mode #loading-bar {
 background: var(--accent-light);
 }
 
-/* Surah List */
+/* Enhanced Surah List */
 #surahs {
 display: grid;
 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -362,8 +579,28 @@ background-color: var(--secondary-dark);
 padding: 15px;
 border-radius: 12px;
 cursor: pointer;
-transition: all 0.2s var(--transition-function);
+transition: all 0.4s var(--transition-function);
 border: 1px solid var(--accent-dark);
+position: relative;
+overflow: hidden;
+animation: fadeInUp 0.6s ease-out calc(0.05s * var(--i, 0)) both;
+}
+
+.surah:nth-child(n) { --i: calc(var(--index, 0)); }
+
+.surah::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+transition: left 0.5s ease;
+}
+
+.surah:hover::before {
+left: 100%;
 }
 
 body.day-mode .surah {
@@ -372,19 +609,24 @@ border: 1px solid var(--accent-light);
 }
 
 .surah:hover {
-transform: translateY(-3px);
-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+transform: translateY(-8px) scale(1.02);
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 border-color: var(--highlight-dark);
 }
 
 body.day-mode .surah:hover {
-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 .surah h2 {
 font-size: 1.1rem;
 font-weight: 500;
 margin-bottom: 5px;
+transition: color 0.3s ease;
+}
+
+.surah:hover h2 {
+color: var(--highlight-dark);
 }
 
 .verse-result {
@@ -392,9 +634,10 @@ background-color: var(--secondary-dark);
 padding: 15px;
 border-radius: 12px;
 cursor: pointer;
-transition: all 0.2s var(--transition-function);
+transition: all 0.4s var(--transition-function);
 border: 1px solid var(--accent-dark);
 margin-bottom: 10px;
+animation: fadeInUp 0.4s ease-out calc(0.05s * var(--i, 0)) both;
 }
 
 body.day-mode .verse-result {
@@ -403,16 +646,16 @@ border: 1px solid var(--accent-light);
 }
 
 .verse-result:hover {
-transform: translateY(-3px);
-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 border-color: var(--highlight-dark);
 }
 
 body.day-mode .verse-result:hover {
-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* Verse Panel */
+/* Enhanced Verse Panel */
 #verse-panel {
 background-color: var(--secondary-dark);
 border-radius: 12px;
@@ -420,6 +663,7 @@ padding: 20px;
 margin-bottom: 20px;
 display: none;
 border: 1px solid var(--accent-dark);
+animation: scaleIn 0.5s ease-out;
 }
 
 body.day-mode #verse-panel {
@@ -439,6 +683,7 @@ border-bottom: 1px solid var(--accent-dark);
 display: flex;
 align-items: center;
 gap: 10px;
+animation: fadeInUp 0.6s ease-out;
 }
 
 body.day-mode #verse-panel h3 {
@@ -456,7 +701,7 @@ border-radius: 50%;
 display: flex;
 align-items: center;
 justify-content: center;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode #close-panel {
@@ -465,12 +710,14 @@ color: var(--text-light);
 
 #close-panel:hover {
 background-color: var(--accent-dark);
+transform: rotate(-180deg);
 }
 
 body.day-mode #close-panel:hover {
 background-color: var(--accent-light);
 }
 
+/* Enhanced Verse Styling with Mobile Swipe Animation */
 .verse {
 padding: 12px 0;
 border-bottom: 1px solid var(--accent-dark);
@@ -478,9 +725,13 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 cursor: pointer;
-transition: all 0.2s var(--transition-function);
+transition: all 0.4s var(--transition-function);
 font-size: var(--verse-font-size);
+position: relative;
+animation: fadeInUp 0.4s ease-out calc(0.05s * var(--i, 0)) both;
 }
+
+.verse:nth-child(n) { --i: calc(var(--index, 0)); }
 
 body.day-mode .verse {
 border-bottom: 1px solid var(--accent-light);
@@ -491,18 +742,97 @@ border-bottom: none;
 }
 
 .verse:hover {
-padding-left: 5px;
+padding-left: 10px;
+background: linear-gradient(90deg, rgba(29, 161, 242, 0.1), transparent);
 }
 
+/* Mobile Swipe Animation Classes */
+.verse.swipe-left {
+animation: swipeLeft 0.3s ease-out forwards;
+}
+
+.verse.swipe-right {
+animation: swipeRight 0.3s ease-out forwards;
+}
+
+.verse.slide-in-left {
+animation: slideInLeft 0.3s ease-out forwards;
+}
+
+.verse.slide-in-right {
+animation: slideInRight 0.3s ease-out forwards;
+}
+
+/* Enhanced Verse Actions */
 .verse-actions {
 display: flex;
 gap: 10px;
 opacity: 0;
-transition: opacity 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
+@media (min-width: 769px) {
 .verse:hover .verse-actions {
 opacity: 1;
+transform: translateX(-5px);
+}
+}
+
+@media (max-width: 768px) {
+.verse-actions {
+position: absolute;
+right: 10px;
+top: 50%;
+transform: translateY(-50%);
+background-color: var(--secondary-dark);
+border-radius: 20px;
+padding: 5px;
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+z-index: 10;
+opacity: 0;
+visibility: hidden;
+transition: all 0.4s var(--transition-function);
+pointer-events: none;
+}
+
+body.day-mode .verse-actions {
+background-color: var(--secondary-light);
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.verse-actions.show {
+opacity: 1;
+visibility: visible;
+pointer-events: auto;
+transform: translateY(-50%) scale(1.05);
+}
+
+.verse-actions::before {
+content: '';
+position: absolute;
+left: -8px;
+top: 50%;
+transform: translateY(-50%);
+width: 0;
+height: 0;
+border-top: 8px solid transparent;
+border-bottom: 8px solid transparent;
+border-right: 8px solid var(--secondary-dark);
+}
+
+body.day-mode .verse-actions::before {
+border-right-color: var(--secondary-light);
+}
+
+.verse.scroll-disabled {
+pointer-events: none;
+}
+
+.verse.scroll-disabled .verse-actions {
+opacity: 0 !important;
+visibility: hidden !important;
+pointer-events: none !important;
+}
 }
 
 .verse .favorite-btn,
@@ -517,7 +847,7 @@ border-radius: 50%;
 display: flex;
 align-items: center;
 justify-content: center;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode .verse .favorite-btn,
@@ -528,6 +858,7 @@ color: var(--text-light);
 .verse .favorite-btn:hover,
 .verse .share-btn:hover {
 background-color: var(--accent-dark);
+transform: scale(1.1);
 }
 
 body.day-mode .verse .favorite-btn:hover,
@@ -537,9 +868,10 @@ background-color: var(--accent-light);
 
 .verse .favorite-btn.active {
 color: var(--highlight-dark);
+animation: pulse 0.5s ease-out;
 }
 
-/* Verse Detail Panel - RESPONSIVE TASARIM DÜZELTMESİ */
+/* Enhanced Verse Detail Panel */
 #verse-detail-panel {
 background-color: var(--secondary-dark);
 border-radius: 12px;
@@ -549,6 +881,7 @@ display: none;
 border: 1px solid var(--accent-dark);
 position: relative;
 touch-action: pan-y;
+animation: scaleIn 0.5s ease-out;
 }
 
 body.day-mode #verse-detail-panel {
@@ -567,6 +900,7 @@ padding-bottom: 10px;
 border-bottom: 1px solid var(--accent-dark);
 text-align: center;
 position: relative;
+animation: fadeInUp 0.6s ease-out;
 }
 
 body.day-mode #verse-detail-panel h3 {
@@ -587,7 +921,7 @@ border-radius: 50%;
 display: flex;
 align-items: center;
 justify-content: center;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode #verse-detail-panel .back-btn {
@@ -596,6 +930,7 @@ color: var(--text-light);
 
 #verse-detail-panel .back-btn:hover {
 background-color: var(--accent-dark);
+transform: translateX(-5px);
 }
 
 body.day-mode #verse-detail-panel .back-btn:hover {
@@ -603,7 +938,7 @@ background-color: var(--accent-light);
 }
 
 #verse-detail-panel .selected-translation {
-background-color: var(--highlight-dark);
+background: linear-gradient(135deg, var(--highlight-dark), #1a91da);
 padding: 20px;
 border-radius: 12px;
 margin-bottom: 20px;
@@ -612,24 +947,26 @@ line-height: 1.6;
 border: 1px solid var(--highlight-dark);
 color: white;
 font-weight: 500;
-box-shadow: 0 4px 12px rgba(29, 161, 242, 0.2);
+box-shadow: 0 8px 25px rgba(29, 161, 242, 0.3);
 font-size: var(--verse-font-size);
+animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
 body.day-mode #verse-detail-panel .selected-translation {
-background-color: var(--highlight-light);
+background: linear-gradient(135deg, var(--highlight-light), #1a91da);
 border: 1px solid var(--highlight-light);
 color: white;
-box-shadow: 0 4px 12px rgba(29, 161, 242, 0.15);
+box-shadow: 0 8px 25px rgba(29, 161, 242, 0.2);
 }
 
-/* BÜYÜK EKRANLAR İÇİN LAYOUT - SADECE 1024px VE ÜSTÜ */
+/* Enhanced Layout for Large Screens */
 @media (min-width: 1024px) {
 .verse-content-container {
 display: grid;
 grid-template-columns: 1fr 2fr 1fr;
 gap: 30px;
 align-items: start;
+animation: fadeInUp 0.8s ease-out 0.4s both;
 }
 
 .verse-main-content {
@@ -645,6 +982,7 @@ background-color: var(--accent-dark);
 border-radius: 12px;
 padding: 20px;
 border: 1px solid var(--accent-dark);
+animation: fadeInLeft 0.6s ease-out 0.6s both;
 }
 
 body.day-mode .verse-left-sidebar {
@@ -658,6 +996,7 @@ background-color: var(--accent-dark);
 border-radius: 12px;
 padding: 20px;
 border: 1px solid var(--accent-dark);
+animation: fadeInRight 0.6s ease-out 0.6s both;
 }
 
 body.day-mode .verse-right-sidebar {
@@ -673,18 +1012,22 @@ color: var(--highlight-dark);
 text-align: center;
 border-bottom: 2px solid var(--highlight-dark);
 padding-bottom: 8px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+animation: fadeInUp 0.4s ease-out;
 }
 
-/* Navigasyon butonları büyük ekranlarda - SAĞ TARAFA HİZALANDI */
 .verse-navigation-buttons {
 display: flex;
 justify-content: flex-end;
 gap: 15px;
 margin: 20px 0;
+animation: fadeInUp 0.6s ease-out 0.8s both;
 }
 
 .nav-btn {
-background: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 border: none;
 color: white;
 font-size: 1rem;
@@ -695,45 +1038,43 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 8px;
-transition: all 0.2s var(--transition-function);
-box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+transition: all 0.3s var(--transition-function);
+box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
 min-width: 120px;
 }
 
 .nav-btn:hover {
-background-color: #1a91da;
-transform: translateY(-2px);
-box-shadow: 0 4px 12px rgba(29, 161, 242, 0.4);
+transform: translateY(-3px);
+box-shadow: 0 8px 25px rgba(29, 161, 242, 0.5);
 }
 
-/* MOBİL İÇERİKLERİNİ BÜYÜK EKRANLARDA GİZLE */
 .tab-container {
 display: none;
 }
 }
 
-/* MOBİL EKRANLAR İÇİN LAYOUT - 1023px VE ALTI */
+/* Enhanced Mobile Layout */
 @media (max-width: 1023px) {
 .verse-content-container {
 display: flex;
 flex-direction: column;
 gap: 20px;
+animation: fadeInUp 0.6s ease-out;
 }
 
 .verse-main-content {
 order: 1;
 }
 
-/* BÜYÜK EKRAN SİDEBAR'LARINI MOBİLDE GİZLE */
 .verse-left-sidebar,
 .verse-right-sidebar {
 display: none;
 }
 
-/* Sekmeli içerik mobilde */
 .tab-container {
 margin-top: 20px;
 display: block;
+animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 
 .tab-buttons {
@@ -746,6 +1087,13 @@ body.day-mode .tab-buttons {
 border-bottom: 1px solid var(--accent-light);
 }
 
+.tab-header {
+display: flex;
+align-items: center;
+gap: 5px;
+flex: 1;
+}
+
 .tab-button {
 padding: 10px 20px;
 background: none;
@@ -754,7 +1102,7 @@ color: var(--text-dark);
 cursor: pointer;
 font-size: 0.95rem;
 position: relative;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 flex: 1;
 text-align: center;
 }
@@ -766,6 +1114,7 @@ color: var(--text-light);
 .tab-button.active {
 color: var(--highlight-dark);
 font-weight: 500;
+transform: translateY(-2px);
 }
 
 .tab-button.active::after {
@@ -776,6 +1125,7 @@ left: 0;
 width: 100%;
 height: 2px;
 background-color: var(--highlight-dark);
+animation: scaleIn 0.3s ease-out;
 }
 
 .tab-content {
@@ -784,18 +1134,19 @@ display: none;
 
 .tab-content.active {
 display: block;
+animation: fadeInUp 0.4s ease-out;
 }
 
-/* Navigasyon butonları mobilde - KÜÇÜLTÜLDÜ VE SAĞ TARAFA HİZALANDI */
 .verse-navigation-buttons {
 display: flex;
 justify-content: flex-end;
 margin: 20px 0;
 gap: 8px;
+animation: fadeInUp 0.6s ease-out 0.6s both;
 }
 
 .nav-btn {
-background: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 border: none;
 color: white;
 font-size: 0.8rem;
@@ -806,16 +1157,17 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 4px;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 min-width: 80px;
 }
 
 .nav-btn:hover {
-background-color: #1a91da;
+transform: translateY(-2px);
+box-shadow: 0 4px 15px rgba(29, 161, 242, 0.4);
 }
 }
 
-/* FLOATING LABELS STYLE - DİĞER MEALLER */
+/* Enhanced Other Translations */
 #verse-detail-panel .other-translations {
 display: flex;
 flex-direction: column;
@@ -829,9 +1181,11 @@ background-color: var(--secondary-dark);
 border: 1px solid var(--accent-dark);
 border-radius: 12px;
 padding: 20px 15px 15px 15px;
-transition: all 0.3s var(--transition-function);
-animation: fadeInUp 0.4s ease-out;
+transition: all 0.4s var(--transition-function);
+animation: fadeInUp 0.4s ease-out calc(0.1s * var(--i, 0)) both;
 }
+
+.translation-item:nth-child(n) { --i: calc(var(--index, 0)); }
 
 body.day-mode #verse-detail-panel .other-translations .translation-item {
 background-color: var(--secondary-light);
@@ -839,33 +1193,34 @@ border: 1px solid var(--accent-light);
 }
 
 #verse-detail-panel .other-translations .translation-item:hover {
-transform: translateY(-2px);
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+transform: translateY(-5px) scale(1.02);
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 border-color: var(--highlight-dark);
 }
 
 body.day-mode #verse-detail-panel .other-translations .translation-item:hover {
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 #verse-detail-panel .other-translations .floating-label {
 position: absolute;
 top: -8px;
 left: 15px;
-background-color: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 color: white;
 padding: 4px 12px;
 border-radius: 20px;
 font-size: 0.8rem;
 font-weight: 600;
 letter-spacing: 0.5px;
-box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+box-shadow: 0 4px 15px rgba(29, 161, 242, 0.4);
 z-index: 2;
+animation: scaleIn 0.3s ease-out 0.2s both;
 }
 
 body.day-mode #verse-detail-panel .other-translations .floating-label {
-background-color: var(--highlight-light);
-box-shadow: 0 2px 8px rgba(29, 161, 242, 0.2);
+background: linear-gradient(45deg, var(--highlight-light), #1a91da);
+box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
 }
 
 #verse-detail-panel .other-translations .translation-text {
@@ -880,36 +1235,218 @@ body.day-mode #verse-detail-panel .other-translations .translation-text {
 color: var(--text-light);
 }
 
-/* Fade in animation */
-@keyframes fadeInUp {
-from {
-opacity: 0;
-transform: translateY(20px);
-}
-to {
-opacity: 1;
-transform: translateY(0);
-}
-}
-
-/* Responsive adjustments for floating labels */
-@media (max-width: 768px) {
-#verse-detail-panel .other-translations .translation-item {
-padding: 18px 12px 12px 12px;
-}
-
-#verse-detail-panel .other-translations .floating-label {
-font-size: 0.75rem;
-padding: 3px 10px;
-left: 12px;
-}
-
-#verse-detail-panel .other-translations .translation-text {
+/* Enhanced Author Sorting */
+.sort-authors-btn {
+background: none;
+border: none;
+color: var(--highlight-dark);
 font-size: 0.9rem;
-}
+cursor: pointer;
+padding: 4px 8px;
+border-radius: 15px;
+display: flex;
+align-items: center;
+gap: 4px;
+transition: all 0.3s var(--transition-function);
 }
 
-/* Favorites - YENİ TASARIM */
+.sort-authors-btn:hover {
+background-color: rgba(29, 161, 242, 0.1);
+transform: scale(1.05);
+}
+
+.author-sort-panel {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.7);
+z-index: 1000;
+display: none;
+align-items: center;
+justify-content: center;
+animation: fadeInUp 0.4s ease-out;
+backdrop-filter: blur(5px);
+}
+
+.author-sort-content {
+background-color: var(--secondary-dark);
+border-radius: 12px;
+padding: 25px;
+max-width: 500px;
+width: 90%;
+max-height: 80vh;
+overflow-y: auto;
+border: 1px solid var(--accent-dark);
+animation: scaleIn 0.5s ease-out;
+}
+
+body.day-mode .author-sort-content {
+background-color: var(--secondary-light);
+border: 1px solid var(--accent-light);
+}
+
+.author-sort-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+padding-bottom: 15px;
+border-bottom: 1px solid var(--accent-dark);
+animation: fadeInUp 0.4s ease-out;
+}
+
+body.day-mode .author-sort-header {
+border-bottom: 1px solid var(--accent-light);
+}
+
+.author-sort-title {
+font-size: 1.3rem;
+font-weight: 600;
+color: var(--text-dark);
+}
+
+body.day-mode .author-sort-title {
+color: var(--text-light);
+}
+
+.close-sort-panel {
+background: none;
+border: none;
+color: var(--text-dark);
+font-size: 1.2rem;
+cursor: pointer;
+padding: 8px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.3s var(--transition-function);
+}
+
+body.day-mode .close-sort-panel {
+color: var(--text-light);
+}
+
+.close-sort-panel:hover {
+background-color: var(--accent-dark);
+transform: rotate(90deg);
+}
+
+body.day-mode .close-sort-panel:hover {
+background-color: var(--accent-light);
+}
+
+.author-list {
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin-bottom: 20px;
+}
+
+.author-item {
+background-color: var(--accent-dark);
+border-radius: 8px;
+padding: 15px;
+border: 1px solid var(--accent-dark);
+cursor: grab;
+transition: all 0.3s var(--transition-function);
+display: flex;
+align-items: center;
+justify-content: space-between;
+animation: fadeInLeft 0.4s ease-out calc(0.1s * var(--i, 0)) both;
+}
+
+.author-item:nth-child(n) { --i: calc(var(--index, 0)); }
+
+body.day-mode .author-item {
+background-color: var(--accent-light);
+border: 1px solid var(--accent-light);
+}
+
+.author-item:hover {
+transform: translateY(-3px) scale(1.02);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+body.day-mode .author-item:hover {
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.author-item.dragging {
+opacity: 0.7;
+transform: rotate(5deg) scale(1.05);
+cursor: grabbing;
+}
+
+.author-name {
+font-weight: 500;
+color: var(--text-dark);
+}
+
+body.day-mode .author-name {
+color: var(--text-light);
+}
+
+.drag-handle {
+color: var(--text-dark);
+opacity: 0.6;
+font-size: 1.2rem;
+transition: opacity 0.3s ease;
+}
+
+body.day-mode .drag-handle {
+color: var(--text-light);
+}
+
+.author-item:hover .drag-handle {
+opacity: 1;
+}
+
+.sort-actions {
+display: flex;
+gap: 10px;
+justify-content: flex-end;
+animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+.sort-btn {
+padding: 10px 20px;
+border: none;
+border-radius: 20px;
+font-size: 0.9rem;
+cursor: pointer;
+transition: all 0.3s var(--transition-function);
+}
+
+.save-sort-btn {
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
+color: white;
+}
+
+.save-sort-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(29, 161, 242, 0.4);
+}
+
+.reset-sort-btn {
+background-color: var(--accent-dark);
+color: var(--text-dark);
+}
+
+body.day-mode .reset-sort-btn {
+background-color: var(--accent-light);
+color: var(--text-light);
+}
+
+.reset-sort-btn:hover {
+background-color: var(--highlight-dark);
+color: white;
+transform: translateY(-2px);
+}
+
+/* Enhanced Favorites */
 #favorites {
 background-color: var(--secondary-dark);
 border-radius: 12px;
@@ -917,6 +1454,7 @@ padding: 20px;
 margin-bottom: 20px;
 display: none;
 border: 1px solid var(--accent-dark);
+animation: scaleIn 0.5s ease-out;
 }
 
 body.day-mode #favorites {
@@ -935,6 +1473,7 @@ justify-content: center;
 gap: 12px;
 color: var(--text-dark);
 text-align: center;
+animation: fadeInUp 0.6s ease-out;
 }
 
 body.day-mode #favorites h2 {
@@ -944,6 +1483,7 @@ color: var(--text-light);
 #favorites h2 i {
 color: var(--highlight-dark);
 font-size: 1.5rem;
+animation: pulse 2s infinite;
 }
 
 #favorites-list {
@@ -958,10 +1498,13 @@ background-color: var(--accent-dark);
 border-radius: 12px;
 padding: 20px;
 border: 1px solid var(--accent-dark);
-transition: all 0.3s var(--transition-function);
+transition: all 0.4s var(--transition-function);
 position: relative;
 overflow: hidden;
+animation: fadeInUp 0.4s ease-out calc(0.1s * var(--i, 0)) both;
 }
+
+#favorites-list .verse:nth-child(n) { --i: calc(var(--index, 0)); }
 
 body.day-mode #favorites-list .verse {
 background-color: var(--accent-light);
@@ -969,13 +1512,13 @@ border: 1px solid var(--accent-light);
 }
 
 #favorites-list .verse:hover {
-transform: translateY(-3px);
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+transform: translateY(-5px) scale(1.02);
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 border-color: var(--highlight-dark);
 }
 
 body.day-mode #favorites-list .verse:hover {
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 #favorites-list .verse::before {
@@ -986,6 +1529,7 @@ top: 0;
 height: 100%;
 width: 4px;
 background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
+animation: scaleIn 0.3s ease-out 0.2s both;
 }
 
 #favorites-list .verse .verse-actions {
@@ -1005,7 +1549,7 @@ font-size: 0.9rem;
 
 #favorites-list .verse .favorite-btn:hover {
 background-color: rgba(229, 62, 62, 0.2);
-transform: scale(1.05);
+transform: scale(1.1);
 }
 
 #favorites-list .verse .copy-url-btn {
@@ -1018,7 +1562,7 @@ font-size: 0.9rem;
 
 #favorites-list .verse .copy-url-btn:hover {
 background-color: rgba(29, 161, 242, 0.2);
-transform: scale(1.05);
+transform: scale(1.1);
 }
 
 #back-to-surahs {
@@ -1036,16 +1580,17 @@ justify-content: center;
 gap: 10px;
 margin: 0 auto;
 transition: all 0.3s var(--transition-function);
-box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
+box-shadow: 0 6px 20px rgba(29, 161, 242, 0.4);
 min-width: 200px;
+animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 
 #back-to-surahs:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 20px rgba(29, 161, 242, 0.4);
+transform: translateY(-3px);
+box-shadow: 0 10px 30px rgba(29, 161, 242, 0.6);
 }
 
-/* Search Page */
+/* Enhanced Search Page */
 #search-page {
 position: fixed;
 top: 0;
@@ -1057,7 +1602,8 @@ z-index: 100;
 padding: 20px;
 display: none;
 overflow-y: auto;
-transition: all 0.3s var(--transition-function);
+transition: all 0.4s var(--transition-function);
+animation: slideInRight 0.5s ease-out;
 }
 
 body.day-mode #search-page {
@@ -1076,6 +1622,7 @@ gap: 15px;
 margin-bottom: 30px;
 padding-bottom: 15px;
 border-bottom: 1px solid var(--accent-dark);
+animation: fadeInUp 0.6s ease-out;
 }
 
 body.day-mode .search-page-header {
@@ -1093,7 +1640,7 @@ border-radius: 50%;
 display: flex;
 align-items: center;
 justify-content: center;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode .search-page-back {
@@ -1102,6 +1649,7 @@ color: var(--text-light);
 
 .search-page-back:hover {
 background-color: var(--accent-dark);
+transform: translateX(-5px);
 }
 
 body.day-mode .search-page-back:hover {
@@ -1112,6 +1660,7 @@ background-color: var(--accent-light);
 display: flex;
 gap: 20px;
 flex: 1;
+animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
 .search-page-main {
@@ -1131,7 +1680,7 @@ border-radius: 25px;
 background-color: var(--secondary-dark);
 color: var(--text-dark);
 font-size: 1.1rem;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode #search-page-input {
@@ -1144,6 +1693,7 @@ color: var(--text-light);
 outline: none;
 border-color: var(--highlight-dark);
 box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+transform: translateY(-2px);
 }
 
 .search-page-icon {
@@ -1175,6 +1725,7 @@ border: 1px solid var(--accent-dark);
 align-self: flex-start;
 position: sticky;
 top: 20px;
+animation: fadeInRight 0.6s ease-out 0.4s both;
 }
 
 body.day-mode .search-page-sidebar {
@@ -1204,12 +1755,15 @@ padding: 8px 12px;
 background-color: var(--accent-dark);
 border-radius: 15px;
 cursor: pointer;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 font-size: 0.9rem;
 display: flex;
 align-items: center;
 gap: 5px;
+animation: fadeInUp 0.4s ease-out calc(0.1s * var(--i, 0)) both;
 }
+
+.example-search:nth-child(n) { --i: calc(var(--index, 0)); }
 
 body.day-mode .example-search {
 background-color: var(--accent-light);
@@ -1218,15 +1772,17 @@ background-color: var(--accent-light);
 .example-search:hover {
 background-color: var(--highlight-dark);
 color: white;
+transform: translateX(5px);
 }
 
 .highlight {
-background-color: rgba(29, 161, 242, 0.2);
+background-color: rgba(29, 161, 242, 0.3);
 padding: 0 2px;
 border-radius: 3px;
+animation: pulse 1s infinite;
 }
 
-/* Podcasts Section */
+/* Enhanced Podcasts Section */
 #podcasts {
 background-color: var(--secondary-dark);
 border-radius: 12px;
@@ -1234,6 +1790,7 @@ padding: 20px;
 margin-bottom: 20px;
 display: none;
 border: 1px solid var(--accent-dark);
+animation: scaleIn 0.5s ease-out;
 }
 
 body.day-mode #podcasts {
@@ -1249,6 +1806,7 @@ border-bottom: 1px solid var(--accent-dark);
 display: flex;
 align-items: center;
 gap: 10px;
+animation: fadeInUp 0.6s ease-out;
 }
 
 body.day-mode #podcasts h2 {
@@ -1257,24 +1815,32 @@ border-bottom: 1px solid var(--accent-light);
 
 #podcasts h2 i {
 color: var(--highlight-dark);
+animation: pulse 2s infinite;
 }
 
 .podcast-container {
 margin-bottom: 30px;
 width: 100%;
+animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
 .podcast-container iframe {
 width: 100%;
 margin-bottom: 20px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+border-radius: 12px;
+transition: transform 0.3s ease;
+}
+
+.podcast-container iframe:hover {
+transform: scale(1.02);
 }
 
 body.day-mode .podcast-container iframe {
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* Settings Section */
+/* Enhanced Settings Section */
 #settings {
 background-color: var(--secondary-dark);
 border-radius: 12px;
@@ -1282,6 +1848,7 @@ padding: 20px;
 margin-bottom: 20px;
 display: none;
 border: 1px solid var(--accent-dark);
+animation: scaleIn 0.5s ease-out;
 }
 
 body.day-mode #settings {
@@ -1297,6 +1864,7 @@ border-bottom: 1px solid var(--accent-dark);
 display: flex;
 align-items: center;
 gap: 10px;
+animation: fadeInUp 0.6s ease-out;
 }
 
 body.day-mode #settings h2 {
@@ -1305,11 +1873,15 @@ border-bottom: 1px solid var(--accent-light);
 
 #settings h2 i {
 color: var(--highlight-dark);
+animation: pulse 2s infinite;
 }
 
 .settings-section {
 margin-bottom: 30px;
+animation: fadeInUp 0.4s ease-out calc(0.1s * var(--i, 0)) both;
 }
+
+.settings-section:nth-child(n) { --i: calc(var(--index, 0)); }
 
 .settings-section h3 {
 font-size: 1.2rem;
@@ -1325,20 +1897,23 @@ padding: 15px;
 background-color: var(--accent-dark);
 border-radius: 10px;
 margin-bottom: 15px;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
+animation: fadeInLeft 0.4s ease-out calc(0.05s * var(--i, 0)) both;
 }
+
+.setting-item:nth-child(n) { --i: calc(var(--index, 0)); }
 
 body.day-mode .setting-item {
 background-color: var(--accent-light);
 }
 
 .setting-item:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+transform: translateY(-3px) scale(1.02);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 body.day-mode .setting-item:hover {
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .setting-label {
@@ -1356,7 +1931,7 @@ font-size: 0.85rem;
 opacity: 0.7;
 }
 
-/* Toggle Switch */
+/* Enhanced Toggle Switch */
 .toggle-switch {
 position: relative;
 display: inline-block;
@@ -1378,7 +1953,7 @@ left: 0;
 right: 0;
 bottom: 0;
 background-color: var(--accent-dark);
-transition: .4s;
+transition: all 0.4s var(--transition-function);
 border-radius: 24px;
 }
 
@@ -1394,19 +1969,28 @@ width: 18px;
 left: 3px;
 bottom: 3px;
 background-color: white;
-transition: .4s;
+transition: all 0.4s var(--transition-function);
 border-radius: 50%;
+box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 input:checked + .toggle-slider {
-background-color: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 }
 
 input:checked + .toggle-slider:before {
 transform: translateX(26px);
 }
 
-/* Color Picker */
+.toggle-slider:hover:before {
+transform: scale(1.1);
+}
+
+input:checked + .toggle-slider:hover:before {
+transform: translateX(26px) scale(1.1);
+}
+
+/* Enhanced Color Picker */
 .color-options {
 display: flex;
 gap: 10px;
@@ -1418,12 +2002,16 @@ width: 30px;
 height: 30px;
 border-radius: 50%;
 cursor: pointer;
-transition: transform 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 position: relative;
+animation: scaleIn 0.3s ease-out calc(0.1s * var(--i, 0)) both;
 }
 
+.color-option:nth-child(n) { --i: calc(var(--index, 0)); }
+
 .color-option:hover {
-transform: scale(1.1);
+transform: scale(1.2);
+box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .color-option.active::after {
@@ -1437,9 +2025,10 @@ transform: translate(-50%, -50%);
 color: white;
 font-size: 14px;
 text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+animation: scaleIn 0.3s ease-out;
 }
 
-/* Font Size Control */
+/* Enhanced Font Size Control */
 .font-size-control {
 display: flex;
 align-items: center;
@@ -1458,7 +2047,7 @@ align-items: center;
 justify-content: center;
 cursor: pointer;
 font-size: 1.2rem;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode .font-size-btn {
@@ -1469,6 +2058,7 @@ color: var(--text-light);
 .font-size-btn:hover {
 background-color: var(--highlight-dark);
 color: white;
+transform: scale(1.1);
 }
 
 .font-size-value {
@@ -1477,7 +2067,7 @@ min-width: 30px;
 text-align: center;
 }
 
-/* Select Dropdown */
+/* Enhanced Select Dropdown */
 .custom-select {
 position: relative;
 width: 100%;
@@ -1496,7 +2086,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 background-repeat: no-repeat;
 background-position: right 15px center;
 background-size: 16px;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode .custom-select select {
@@ -1510,9 +2100,10 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 outline: none;
 border-color: var(--highlight-dark);
 box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+transform: translateY(-2px);
 }
 
-/* Range Slider */
+/* Enhanced Range Slider */
 .range-slider {
 width: 100%;
 margin: 10px 0;
@@ -1525,6 +2116,7 @@ border-radius: 5px;
 background: var(--accent-dark);
 outline: none;
 -webkit-appearance: none;
+transition: all 0.3s ease;
 }
 
 body.day-mode .range-slider input {
@@ -1537,25 +2129,39 @@ appearance: none;
 width: 18px;
 height: 18px;
 border-radius: 50%;
-background: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+}
+
+.range-slider input::-webkit-slider-thumb:hover {
+transform: scale(1.2);
+box-shadow: 0 4px 15px rgba(29, 161, 242, 0.5);
 }
 
 .range-slider input::-moz-range-thumb {
 width: 18px;
 height: 18px;
 border-radius: 50%;
-background: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 cursor: pointer;
 border: none;
+transition: all 0.3s ease;
+box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
 }
 
-/* Settings Button */
+.range-slider input::-moz-range-thumb:hover {
+transform: scale(1.2);
+box-shadow: 0 4px 15px rgba(29, 161, 242, 0.5);
+}
+
+/* Enhanced Settings Button */
 .settings-btn {
 padding: 12px 20px;
 border: none;
 border-radius: 10px;
-background-color: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 color: white;
 font-size: 0.95rem;
 cursor: pointer;
@@ -1563,16 +2169,18 @@ display: flex;
 align-items: center;
 justify-content: center;
 gap: 8px;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 width: 100%;
 margin-top: 10px;
+box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
 }
 
 .settings-btn:hover {
-background-color: #1a91da;
+transform: translateY(-3px);
+box-shadow: 0 8px 25px rgba(29, 161, 242, 0.5);
 }
 
-/* Footer */
+/* Enhanced Footer */
 footer {
 padding: 15px 20px;
 text-align: center;
@@ -1582,6 +2190,7 @@ opacity: 0.8;
 border-top: 1px solid var(--accent-dark);
 margin-top: auto;
 transition: all 0.3s var(--transition-function);
+animation: fadeInUp 0.6s ease-out 1s both;
 }
 
 body.day-mode footer {
@@ -1595,7 +2204,7 @@ border-top: 1px solid var(--accent-light);
 100% { width: 0%; }
 }
 
-/* Bottom Navigation */
+/* Enhanced Bottom Navigation */
 .bottom-nav {
 position: fixed;
 bottom: 20px;
@@ -1607,14 +2216,16 @@ padding: 5px;
 display: flex;
 align-items: center;
 justify-content: center;
-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 z-index: 50;
 display: none;
+animation: slideInFromTop 0.6s ease-out 0.8s both;
+backdrop-filter: blur(10px);
 }
 
 body.day-mode .bottom-nav {
 background-color: var(--secondary-light);
-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .bottom-nav-item {
@@ -1630,6 +2241,7 @@ transition: all 0.3s ease;
 
 .bottom-nav-item:hover {
 background-color: var(--accent-dark);
+transform: translateY(-3px);
 }
 
 body.day-mode .bottom-nav-item:hover {
@@ -1637,35 +2249,42 @@ background-color: var(--accent-light);
 }
 
 .bottom-nav-item.active {
-background-color: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 color: white;
+transform: translateY(-5px);
+box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
 }
 
 .bottom-nav-item i {
 font-size: 1.2rem;
+transition: transform 0.3s ease;
+}
+
+.bottom-nav-item:hover i {
+transform: scale(1.1);
 }
 
 .home-btn {
 width: 60px;
 height: 60px;
 border-radius: 30px;
-background-color: var(--highlight-dark);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
 color: white;
 display: flex;
 align-items: center;
 justify-content: center;
 font-size: 1.5rem;
 margin: 0 5px;
-box-shadow: 0 5px 15px rgba(29, 161, 242, 0.3);
+box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4);
 transition: all 0.3s ease;
 }
 
 .home-btn:hover {
-transform: translateY(-5px);
-box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
+transform: translateY(-8px) scale(1.05);
+box-shadow: 0 15px 35px rgba(29, 161, 242, 0.6);
 }
 
-/* Responsive */
+/* Enhanced Responsive */
 @media (max-width: 768px) {
 .sidebar {
 display: none;
@@ -1727,6 +2346,29 @@ display: flex;
 left: 0;
 width: 100%;
 }
+
+.author-sort-content {
+width: 95%;
+max-height: 90vh;
+padding: 20px;
+}
+
+.author-sort-title {
+font-size: 1.1rem;
+}
+
+.author-item {
+padding: 12px;
+}
+
+.sort-actions {
+flex-direction: column;
+gap: 8px;
+}
+
+.sort-btn {
+width: 100%;
+}
 }
 
 @media (max-width: 480px) {
@@ -1784,17 +2426,19 @@ display: flex;
 }
 }
 
-/* URL hash link styles */
+/* Enhanced URL hash link styles */
 .verse-link {
 color: inherit;
 text-decoration: none;
 display: inline-block;
 margin-right: 5px;
+transition: all 0.3s ease;
 }
 
 .verse-link:hover {
 text-decoration: underline;
 color: var(--highlight-dark);
+transform: scale(1.05);
 }
 
 .copy-url-btn {
@@ -1808,7 +2452,7 @@ border-radius: 50%;
 display: flex;
 align-items: center;
 justify-content: center;
-transition: background-color 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 }
 
 body.day-mode .copy-url-btn {
@@ -1818,13 +2462,14 @@ color: var(--text-light);
 .copy-url-btn:hover {
 background-color: var(--accent-dark);
 color: var(--highlight-dark);
+transform: scale(1.1);
 }
 
 body.day-mode .copy-url-btn:hover {
 background-color: var(--accent-light);
 }
 
-/* New styles for Arabic text display */
+/* Enhanced Arabic text display */
 .arabic-text {
 font-family: 'Amiri', 'Scheherazade New', serif;
 direction: rtl;
@@ -1836,6 +2481,7 @@ padding: 15px;
 background-color: var(--accent-dark);
 border-radius: 12px;
 border: 1px solid rgba(255, 255, 255, 0.1);
+animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 
 body.day-mode .arabic-text {
@@ -1843,11 +2489,12 @@ background-color: var(--accent-light);
 border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Word-by-word analysis styles */
+/* Enhanced Word-by-word analysis styles */
 .word-analysis {
 margin-top: 20px;
 border-top: 1px solid var(--accent-dark);
 padding-top: 20px;
+animation: fadeInUp 0.6s ease-out 0.6s both;
 }
 
 body.day-mode .word-analysis {
@@ -1873,10 +2520,13 @@ border-radius: 8px;
 padding: 10px;
 border: 1px solid var(--accent-dark);
 cursor: pointer;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
 min-width: 100px;
 text-align: center;
+animation: fadeInUp 0.4s ease-out calc(0.05s * var(--i, 0)) both;
 }
+
+.word-item:nth-child(n) { --i: calc(var(--index, 0)); }
 
 body.day-mode .word-item {
 background-color: var(--secondary-light);
@@ -1884,13 +2534,13 @@ border: 1px solid var(--accent-light);
 }
 
 .word-item:hover {
-transform: translateY(-3px);
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+transform: translateY(-5px) scale(1.05);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 border-color: var(--highlight-dark);
 }
 
 body.day-mode .word-item:hover {
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .word-arabic {
@@ -1917,6 +2567,7 @@ border-radius: 10px;
 padding: 15px;
 margin-top: 10px;
 border: 1px solid rgba(255, 255, 255, 0.1);
+animation: fadeInUp 0.4s ease-out;
 }
 
 body.day-mode .word-detail {
@@ -1954,7 +2605,7 @@ body.day-mode .root-info {
 border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Transcription styles */
+/* Enhanced Transcription styles */
 .transcription {
 margin-bottom: 20px;
 padding: 15px;
@@ -1962,6 +2613,7 @@ background-color: var(--secondary-dark);
 border-radius: 12px;
 border: 1px solid var(--accent-dark);
 font-style: italic;
+animation: fadeInUp 0.6s ease-out 0.6s both;
 }
 
 body.day-mode .transcription {
@@ -1975,11 +2627,12 @@ color: var(--highlight-dark);
 margin-right: 5px;
 }
 
-/* Kelimenin geçtiği diğer ayetler için stiller */
+/* Enhanced Other occurrences styles */
 .other-occurrences {
 margin-top: 15px;
 padding-top: 15px;
 border-top: 1px solid rgba(255, 255, 255, 0.1);
+animation: fadeInUp 0.4s ease-out 0.2s both;
 }
 
 body.day-mode .other-occurrences {
@@ -2004,8 +2657,11 @@ overflow-y: auto;
 padding: 8px 12px;
 background-color: var(--accent-dark);
 border-radius: 8px;
-transition: all 0.2s var(--transition-function);
+transition: all 0.3s var(--transition-function);
+animation: fadeInLeft 0.3s ease-out calc(0.05s * var(--i, 0)) both;
 }
+
+.occurrence-item:nth-child(n) { --i: calc(var(--index, 0)); }
 
 body.day-mode .occurrence-item {
 background-color: var(--accent-light);
@@ -2014,6 +2670,7 @@ background-color: var(--accent-light);
 .occurrence-item:hover {
 background-color: var(--highlight-dark);
 color: white;
+transform: translateX(5px);
 }
 
 .occurrence-link {
@@ -2035,25 +2692,26 @@ font-size: 0.9rem;
 color: var(--highlight-dark);
 }
 
-/* Meal, Arapça metin ve Türkçe okunuş arasındaki boşlukları azaltmak için CSS */
+/* Enhanced verse section spacing */
 .verse-section {
 margin-bottom: 5px;
 }
 
-/* Ana sayfa arama sonuçları için stil */
+/* Enhanced main search results */
 #main-search-results {
 margin-top: 20px;
 display: none;
+animation: fadeInUp 0.6s ease-out;
 }
 
 #main-search-results.active {
 display: block;
 }
 
-/* Soluk Arka Plan Blok Stili - Ayet Numaraları İçin */
+/* Enhanced verse number background style */
 .verse-number-bg {
 display: inline-block;
-background-color: rgba(29, 161, 242, 0.15);
+background: linear-gradient(45deg, rgba(29, 161, 242, 0.2), rgba(29, 161, 242, 0.1));
 color: var(--highlight-dark);
 font-weight: bold;
 padding: 2px 6px;
@@ -2061,13 +2719,23 @@ border-radius: 4px;
 margin-right: 8px;
 min-width: 30px;
 text-align: center;
+transition: all 0.3s ease;
+}
+
+.verse-number-bg:hover {
+transform: scale(1.05);
+background: linear-gradient(45deg, rgba(29, 161, 242, 0.3), rgba(29, 161, 242, 0.2));
 }
 
 body.day-mode .verse-number-bg {
-background-color: rgba(29, 161, 242, 0.1);
+background: linear-gradient(45deg, rgba(29, 161, 242, 0.15), rgba(29, 161, 242, 0.08));
 }
 
-/* KAYDIRMA SORUNUNU DÜZELTME */
+/* Enhanced scroll behavior */
+html {
+scroll-behavior: smooth;
+}
+
 #verse-detail-panel {
 scroll-behavior: smooth;
 }
@@ -2076,47 +2744,107 @@ scroll-behavior: smooth;
 scroll-behavior: smooth;
 }
 
-/* Scroll container için düzeltme */
-.verse-content-container {
-position: relative;
-}
-
-/* Prevent scroll jumping */
-html {
-scroll-behavior: smooth;
-}
-
-/* Smooth scrolling for all elements */
-* {
-scroll-behavior: smooth;
-}
-
-/* Swipe indicator styles for mobile */
+/* Enhanced swipe indicator styles for mobile */
 .swipe-indicator {
 position: fixed;
 top: 50%;
 transform: translateY(-50%);
-background-color: rgba(29, 161, 242, 0.8);
+background: linear-gradient(45deg, rgba(29, 161, 242, 0.9), rgba(26, 145, 218, 0.9));
 color: white;
 padding: 10px 15px;
 border-radius: 25px;
 font-size: 0.9rem;
 z-index: 1000;
 opacity: 0;
-transition: opacity 0.3s ease;
+transition: all 0.3s ease;
 pointer-events: none;
+backdrop-filter: blur(10px);
+box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4);
 }
 
 .swipe-indicator.left {
 left: 20px;
+animation: slideInLeft 0.3s ease-out;
 }
 
 .swipe-indicator.right {
 right: 20px;
+animation: slideInRight 0.3s ease-out;
 }
 
 .swipe-indicator.show {
 opacity: 1;
+transform: translateY(-50%) scale(1.05);
+}
+
+/* True Black Mode Toggle in Settings */
+.theme-mode-options {
+display: flex;
+gap: 10px;
+align-items: center;
+}
+
+.theme-option {
+padding: 8px 16px;
+border: 1px solid var(--accent-dark);
+border-radius: 20px;
+background: none;
+color: var(--text-dark);
+cursor: pointer;
+transition: all 0.3s ease;
+font-size: 0.9rem;
+}
+
+body.day-mode .theme-option {
+border: 1px solid var(--accent-light);
+color: var(--text-light);
+}
+
+.theme-option.active {
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
+color: white;
+border-color: var(--highlight-dark);
+}
+
+.theme-option:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Enhanced loading animations */
+.loading-shimmer {
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+background-size: 200% 100%;
+animation: shimmer 1.5s infinite;
+}
+
+/* Enhanced notification styles */
+.notification {
+position: fixed;
+bottom: 20px;
+left: 50%;
+transform: translateX(-50%);
+background: linear-gradient(45deg, var(--highlight-dark), #1a91da);
+color: white;
+padding: 12px 24px;
+border-radius: 25px;
+z-index: 1000;
+font-size: 0.9rem;
+max-width: 300px;
+text-align: center;
+box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4);
+backdrop-filter: blur(10px);
+animation: slideInFromTop 0.4s ease-out;
+}
+
+.notification.error {
+background: linear-gradient(45deg, #e53e3e, #c53030);
+box-shadow: 0 8px 25px rgba(229, 62, 62, 0.4);
+}
+
+.notification.info {
+background: linear-gradient(45deg, #9c27b0, #7b1fa2);
+box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
 }
 </style>
 </head>
@@ -2133,6 +2861,9 @@ opacity: 1;
 </div>
 <div class="nav-item" id="favorites-nav-desktop">
 <i class="fas fa-star"></i>
+</div>
+<div class="nav-item" id="meal-writers-nav-desktop">
+<i class="fas fa-users"></i>
 </div>
 <div class="nav-item" id="podcasts-nav-desktop">
 <i class="fas fa-podcast"></i>
@@ -2154,17 +2885,17 @@ opacity: 1;
 <div class="content">
 <div class="controls">
 <div class="search-container">
-    <input type="text" id="search" placeholder="Sure, ayet veya kelime ara..." />
-    <i class="fas fa-search search-icon"></i>
+<input type="text" id="search" placeholder="Sure, ayet veya kelime ara..." />
+<i class="fas fa-search search-icon"></i>
 </div>
 <div class="controls-row">
-    <select id="author-select">
-        <option value="">Meal Seçin</option>
-    </select>
-    <button id="show-favorites"><i class="fas fa-star"></i> Favoriler</button>
+<select id="author-select">
+<option value="">Meal Seçin</option>
+</select>
+<button id="show-favorites"><i class="fas fa-star"></i> Favoriler</button>
 </div>
 <div id="loading-bar">
-    <div class="progress"></div>
+<div class="progress"></div>
 </div>
 </div>
 
@@ -2175,8 +2906,8 @@ opacity: 1;
 
 <div id="verse-panel">
 <h3>
-    <button id="close-panel"><i class="fas fa-arrow-left"></i></button>
-    <span id="panel-title"></span>
+<button id="close-panel"><i class="fas fa-arrow-left"></i></button>
+<span id="panel-title"></span>
 </h3>
 <div id="verses"></div>
 </div>
@@ -2184,74 +2915,111 @@ opacity: 1;
 <!-- YENİ TASARIM - Ayet Detay Paneli -->
 <div id="verse-detail-panel">
 <h3>
-    <button id="back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
-    <span id="verse-detail-title"></span>
+<button id="back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+<span id="verse-detail-title"></span>
 </h3>
 
 <!-- BÜYÜK EKRANLAR İÇİN YENİ LAYOUT -->
 <div class="verse-content-container">
-    <!-- Sol sidebar - Diğer Mealler (sadece büyük ekranlarda) -->
-    <div class="verse-left-sidebar">
-        <h4 class="sidebar-title">DİĞER MEALLER</h4>
-        <div id="other-translations" class="other-translations"></div>
+<!-- Sol sidebar - Diğer Mealler (sadece büyük ekranlarda) -->
+<div class="verse-left-sidebar">
+    <div class="sidebar-title">
+        DİĞER MEALLER
+        <button class="sort-authors-btn" id="sort-authors-btn">
+            <i class="fas fa-sort"></i> Sırala
+        </button>
     </div>
-    
-    <!-- Ana içerik -->
-    <div class="verse-main-content">
-        <!-- Meal (Türkçe çeviri) -->
-        <div class="verse-section">
-            <div id="selected-translation" class="selected-translation"></div>
-        </div>
-        
-        <!-- Arapça metin -->
-        <div class="verse-section">
-            <div id="arabic-text" class="arabic-text"></div>
-        </div>
-        
-        <!-- Türkçe okunuş -->
-        <div class="verse-section">
-            <div class="transcription">
-                <span class="transcription-label">T.:</span>
-                <span id="transcription-tr"></span>
-            </div>
-        </div>
-        
-        <!-- Navigasyon butonları -->
-        <div class="verse-navigation-buttons">
-            <button id="prev-verse-btn" class="nav-btn"><i class="fas fa-chevron-left"></i> Önceki</button>
-            <button id="next-verse-btn" class="nav-btn">Sonraki <i class="fas fa-chevron-right"></i></button>
-        </div>
+    <div id="other-translations" class="other-translations"></div>
+</div>
+
+<!-- Ana içerik -->
+<div class="verse-main-content">
+<!-- Meal (Türkçe çeviri) -->
+<div class="verse-section">
+    <div id="selected-translation" class="selected-translation"></div>
+</div>
+
+<!-- Arapça metin -->
+<div class="verse-section">
+    <div id="arabic-text" class="arabic-text"></div>
+</div>
+
+<!-- Türkçe okunuş -->
+<div class="verse-section">
+    <div class="transcription">
+        <span class="transcription-label">T.:</span>
+        <span id="transcription-tr"></span>
     </div>
-    
-    <!-- Sağ sidebar - Kelime Analizi (sadece büyük ekranlarda) -->
-    <div class="verse-right-sidebar">
-        <h4 class="sidebar-title">KELİME ANALİZİ</h4>
-        <div class="word-analysis">
-            <div id="word-list" class="word-list"></div>
-            <div id="word-detail" class="word-detail"></div>
-        </div>
-    </div>
+</div>
+
+<!-- Navigasyon butonları -->
+<div class="verse-navigation-buttons">
+    <button id="prev-verse-btn" class="nav-btn"><i class="fas fa-chevron-left"></i> Önceki</button>
+    <button id="next-verse-btn" class="nav-btn">Sonraki <i class="fas fa-chevron-right"></i></button>
+</div>
+</div>
+
+<!-- Sağ sidebar - Kelime Analizi (sadece büyük ekranlarda) -->
+<div class="verse-right-sidebar">
+<h4 class="sidebar-title">KELİME ANALİZİ</h4>
+<div class="word-analysis">
+    <div id="word-list" class="word-list"></div>
+    <div id="word-detail" class="word-detail"></div>
+</div>
+</div>
 </div>
 
 <!-- MOBİL İÇİN SEKMELER -->
 <div class="tab-container">
-    <div class="tab-buttons">
-        <button class="tab-button active" data-tab="other-translations">DİĞER MEALLER</button>
-        <button class="tab-button" data-tab="word-analysis">Kelime Analizi</button>
-    </div>
-    
-    <!-- Diğer Mealler sekmesi -->
-    <div class="tab-content active" id="other-translations-tab">
-        <div id="other-translations-mobile" class="other-translations"></div>
-    </div>
-    
-    <!-- Kelime Analizi sekmesi -->
-    <div class="tab-content" id="word-analysis-tab">
-        <div class="word-analysis">
-            <div id="word-list-mobile" class="word-list"></div>
-            <div id="word-detail-mobile" class="word-detail"></div>
-        </div>
-    </div>
+<div class="tab-buttons">
+<div class="tab-header">
+    <button class="tab-button active" data-tab="other-translations">
+        DİĞER MEALLER
+    </button>
+    <button class="sort-authors-btn" id="sort-authors-btn-mobile">
+        <i class="fas fa-sort"></i>
+    </button>
+</div>
+<button class="tab-button" data-tab="word-analysis">Kelime Analizi</button>
+</div>
+
+<!-- Diğer Mealler sekmesi -->
+<div class="tab-content active" id="other-translations-tab">
+<div id="other-translations-mobile" class="other-translations"></div>
+</div>
+
+<!-- Kelime Analizi sekmesi -->
+<div class="tab-content" id="word-analysis-tab">
+<div class="word-analysis">
+    <div id="word-list-mobile" class="word-list"></div>
+    <div id="word-detail-mobile" class="word-detail"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Yazar Sıralama Paneli -->
+<div class="author-sort-panel" id="author-sort-panel">
+<div class="author-sort-content">
+<div class="author-sort-header">
+<h3 class="author-sort-title">Meal Yazarları Sıralaması</h3>
+<button class="close-sort-panel" id="close-sort-panel">
+    <i class="fas fa-times"></i>
+</button>
+</div>
+
+<div class="author-list" id="author-list">
+<!-- Yazarlar dinamik olarak buraya eklenecek -->
+</div>
+
+<div class="sort-actions">
+<button class="sort-btn reset-sort-btn" id="reset-sort-btn">
+    <i class="fas fa-undo"></i> Sıfırla
+</button>
+<button class="sort-btn save-sort-btn" id="save-sort-btn">
+    <i class="fas fa-save"></i> Kaydet
+</button>
+</div>
 </div>
 </div>
 
@@ -2265,8 +3033,8 @@ opacity: 1;
 <h2><i class="fas fa-podcast"></i> Podcastler</h2>
 
 <div class="podcast-container">
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3RRKc1JEyzLSkBjfut5EwH?utm_source=generator" width="100%" height="156" title="Sadece Kuran Podcast" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3RRKc1JEyzLSkBjfut5EwH?utm_source=generator" width="100%" height="156" title="Sadece Kuran Podcast" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
 </div>
 </div>
 
@@ -2275,210 +3043,211 @@ opacity: 1;
 <h2><i class="fas fa-cog"></i> Ayarlar</h2>
 
 <div class="settings-section">
-    <h3>Görünüm</h3>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Tema Modu</span>
-            <span>Koyu veya açık tema seçin</span>
-        </div>
-        <label class="toggle-switch">
-            <input type="checkbox" id="theme-mode-toggle">
-            <span class="toggle-slider"></span>
-        </label>
-    </div>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Tema Rengi</span>
-            <span>Uygulamanın vurgu rengini seçin</span>
-        </div>
-        <div class="color-options">
-            <div class="color-option active" style="background-color: #1da1f2;" data-color="#1da1f2"></div>
-            <div class="color-option" style="background-color: #4caf50;" data-color="#4caf50"></div>
-            <div class="color-option" style="background-color: #f44336;" data-color="#f44336"></div>
-            <div class="color-option" style="background-color: #9c27b0;" data-color="#9c27b0"></div>
-            <div class="color-option" style="background-color: #ff9800;" data-color="#ff9800"></div>
-            <div class="color-option" style="background-color: #7b7675;" data-color="#7b7675"></div>
-        </div>
-    </div>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Yazı Boyutu</span>
-            <span>Ayet metinlerinin boyutunu ayarlayın</span>
-        </div>
-        <div class="font-size-control">
-            <button class="font-size-btn" id="decrease-font"><i class="fas fa-minus"></i></button>
-            <span class="font-size-value" id="font-size-value">100%</span>
-            <button class="font-size-btn" id="increase-font"><i class="fas fa-plus"></i></button>
-        </div>
-    </div>
-    
-    <!-- Ayet Numarası Stili Ayarı -->
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Ayet Numarası Stili</span>
-            <span>Ayet numaralarının görünümünü seçin</span>
-        </div>
-        <div class="custom-select">
-            <select id="verse-number-style">
-                <option value="default">Varsayılan</option>
-                <option value="bg" selected>Soluk Arka Plan</option>
-                <option value="bold">Kalın ve Renkli</option>
-                <option value="underline">Altı Çizgili</option>
-            </select>
-        </div>
-    </div>
-    
-    <!-- Arapça Metin Görünümü Ayarı -->
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Arapça Metin Görünümü</span>
-            <span>Arapça metin gösterim tercihini seçin</span>
-        </div>
-        <div class="custom-select">
-            <select id="arabic-display-mode">
-                <option value="always">Her Zaman Göster</option>
-                <option value="tab" selected>Sekme Olarak Göster</option>
-                <option value="never">Gösterme</option>
-            </select>
-        </div>
-    </div>
+<h3>Görünüm</h3>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Tema Modu</span>
+    <span>Koyu, açık veya tam siyah tema seçin</span>
+</div>
+<div class="theme-mode-options">
+    <button class="theme-option" id="light-theme" data-theme="day">Açık</button>
+    <button class="theme-option active" id="dark-theme" data-theme="night">Koyu</button>
+    <button class="theme-option" id="black-theme" data-theme="black">Tam Siyah</button>
+</div>
+</div>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Tema Rengi</span>
+    <span>Uygulamanın vurgu rengini seçin</span>
+</div>
+<div class="color-options">
+    <div class="color-option active" style="background-color: #1da1f2;" data-color="#1da1f2"></div>
+    <div class="color-option" style="background-color: #4caf50;" data-color="#4caf50"></div>
+    <div class="color-option" style="background-color: #f44336;" data-color="#f44336"></div>
+    <div class="color-option" style="background-color: #9c27b0;" data-color="#9c27b0"></div>
+    <div class="color-option" style="background-color: #ff9800;" data-color="#ff9800"></div>
+    <div class="color-option" style="background-color: #7b7675;" data-color="#7b7675"></div>
+</div>
+</div>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Yazı Boyutu</span>
+    <span>Ayet metinlerinin boyutunu ayarlayın</span>
+</div>
+<div class="font-size-control">
+    <button class="font-size-btn" id="decrease-font"><i class="fas fa-minus"></i></button>
+    <span class="font-size-value" id="font-size-value">100%</span>
+    <button class="font-size-btn" id="increase-font"><i class="fas fa-plus"></i></button>
+</div>
+</div>
+
+<!-- Ayet Numarası Stili Ayarı -->
+<div class="setting-item">
+<div class="setting-label">
+    <span>Ayet Numarası Stili</span>
+    <span>Ayet numaralarının görünümünü seçin</span>
+</div>
+<div class="custom-select">
+    <select id="verse-number-style">
+        <option value="default">Varsayılan</option>
+        <option value="bg" selected>Soluk Arka Plan</option>
+        <option value="bold">Kalın ve Renkli</option>
+        <option value="underline">Altı Çizgili</option>
+    </select>
+</div>
+</div>
+
+<!-- Arapça Metin Görünümü Ayarı -->
+<div class="setting-item">
+<div class="setting-label">
+    <span>Arapça Metin Görünümü</span>
+    <span>Arapça metin gösterim tercihini seçin</span>
+</div>
+<div class="custom-select">
+    <select id="arabic-display-mode">
+        <option value="always">Her Zaman Göster</option>
+        <option value="tab" selected>Sekme Olarak Göster</option>
+        <option value="never">Gösterme</option>
+    </select>
+</div>
+</div>
 </div>
 
 <div class="settings-section">
-    <h3>Okuma Ayarları</h3>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Varsayılan Meal</span>
-            <span>Tercih ettiğiniz meali seçin</span>
-        </div>
-        <div class="custom-select">
-            <select id="default-author">
-                <option value="Mehmet Okuyan">Mehmet Okuyan</option>
-                <option value="Mustafa İslamoğlu">Mustafa İslamoğlu</option>
-                <option value="Yaşar Nuri Öztürk">Yaşar Nuri Öztürk</option>
-                <option value="Edip Yüksel">Edip Yüksel</option>
-                <option value="Diyanet Vakfı">Diyanet Vakfı</option>
-            </select>
-        </div>
-    </div>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Otomatik Kaydırma</span>
-            <span>Uzun surelerde otomatik kaydırma</span>
-        </div>
-        <label class="toggle-switch">
-            <input type="checkbox" id="auto-scroll-toggle">
-            <span class="toggle-slider"></span>
-        </label>
-    </div>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Kaydırma Hızı</span>
-            <span>Otomatik kaydırma hızını ayarlayın</span>
-        </div>
-        <div class="range-slider">
-            <input type="range" min="1" max="10" value="5" id="scroll-speed">
-        </div>
-    </div>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Kelime Analizi</span>
-            <span>Ayet detayında kelime analizi göster</span>
-        </div>
-        <label class="toggle-switch">
-            <input type="checkbox" id="word-analysis-toggle" checked>
-            <span class="toggle-slider"></span>
-        </label>
-    </div>
+<h3>Okuma Ayarları</h3>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Varsayılan Meal</span>
+    <span>Tercih ettiğiniz meali seçin</span>
+</div>
+<div class="custom-select">
+    <select id="default-author">
+        <option value="Mehmet Okuyan">Mehmet Okuyan</option>
+        <option value="Mustafa İslamoğlu">Mustafa İslamoğlu</option>
+        <option value="Yaşar Nuri Öztürk">Yaşar Nuri Öztürk</option>
+        <option value="Edip Yüksel">Edip Yüksel</option>
+        <option value="Diyanet Vakfı">Diyanet Vakfı</option>
+    </select>
+</div>
+</div>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Otomatik Kaydırma</span>
+    <span>Uzun surelerde otomatik kaydırma</span>
+</div>
+<label class="toggle-switch">
+    <input type="checkbox" id="auto-scroll-toggle">
+    <span class="toggle-slider"></span>
+</label>
+</div>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Kaydırma Hızı</span>
+    <span>Otomatik kaydırma hızını ayarlayın</span>
+</div>
+<div class="range-slider">
+    <input type="range" min="1" max="10" value="5" id="scroll-speed">
+</div>
+</div>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Kelime Analizi</span>
+    <span>Ayet detayında kelime analizi göster</span>
+</div>
+<label class="toggle-switch">
+    <input type="checkbox" id="word-analysis-toggle" checked>
+    <span class="toggle-slider"></span>
+</label>
+</div>
 </div>
 
 <div class="settings-section">
-    <h3>Bildirimler</h3>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Günlük Ayet Bildirimleri</span>
-            <span>Her gün rastgele bir ayet bildirimi alın</span>
-        </div>
-        <label class="toggle-switch">
-            <input type="checkbox" id="daily-verse-toggle">
-            <span class="toggle-slider"></span>
-        </label>
-    </div>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Bildirim Zamanı</span>
-            <span>Günlük ayet bildiriminin zamanını seçin</span>
-        </div>
-        <div class="custom-select">
-            <select id="notification-time">
-                <option value="morning">Sabah (08:00)</option>
-                <option value="noon">Öğle (12:00)</option>
-                <option value="evening">Akşam (18:00)</option>
-                <option value="night">Gece (21:00)</option>
-            </select>
-        </div>
-    </div>
+<h3>Bildirimler</h3>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Günlük Ayet Bildirimleri</span>
+    <span>Her gün rastgele bir ayet bildirimi alın</span>
+</div>
+<label class="toggle-switch">
+    <input type="checkbox" id="daily-verse-toggle">
+    <span class="toggle-slider"></span>
+</label>
+</div>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Bildirim Zamanı</span>
+    <span>Günlük ayet bildiriminin zamanını seçin</span>
+</div>
+<div class="custom-select">
+    <select id="notification-time">
+        <option value="morning">Sabah (08:00)</option>
+        <option value="noon">Öğle (12:00)</option>
+        <option value="evening">Akşam (18:00)</option>
+        <option value="night">Gece (21:00)</option>
+    </select>
+</div>
+</div>
 </div>
 
 <div class="settings-section">
-    <h3>Veri ve Gizlilik</h3>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Çevrimdışı Kullanım</span>
-            <span>İnternetsiz kullanım için verileri kaydet</span>
-        </div>
-        <label class="toggle-switch">
-            <input type="checkbox" id="offline-toggle" checked>
-            <span class="toggle-slider"></span>
-        </label>
-    </div>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Arama Geçmişi</span>
-            <span>Arama geçmişinizi kaydet</span>
-        </div>
-        <label class="toggle-switch">
-            <input type="checkbox" id="search-history-toggle" checked>
-            <span class="toggle-slider"></span>
-        </label>
-    </div>
-    
-    <button class="settings-btn" id="clear-data-btn">
-        <i class="fas fa-trash-alt"></i> Tüm Verileri Temizle
-    </button>
+<h3>Veri ve Gizlilik</h3>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Çevrimdışı Kullanım</span>
+    <span>İnternetsiz kullanım için verileri kaydet</span>
+</div>
+<label class="toggle-switch">
+    <input type="checkbox" id="offline-toggle" checked>
+    <span class="toggle-slider"></span>
+</label>
+</div>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Arama Geçmişi</span>
+    <span>Arama geçmişinizi kaydet</span>
+</div>
+<label class="toggle-switch">
+    <input type="checkbox" id="search-history-toggle" checked>
+    <span class="toggle-slider"></span>
+</label>
+</div>
+
+<button class="settings-btn" id="clear-data-btn">
+<i class="fas fa-trash-alt"></i> Tüm Verileri Temizle
+</button>
 </div>
 
 <div class="settings-section">
-    <h3>Hakkında</h3>
-    
-    <button class="settings-btn" id="app-btn">
-        <svg class="button-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <!-- Örnek bir Android simgesi SVG'si -->
-            <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.86 3.11c-.2.2-.2.51 0 .71.2.2.51.2.71 0l1.3-1.3C10.66 2.19 11.32 2 12 2c.68 0 1.34.19 1.91.54zM12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8z"/>
-        </svg> Mobil Uygulama İNDİR
-    </button>
-    
-    <div class="setting-item">
-        <div class="setting-label">
-            <span>Uygulama Versiyonu</span>
-            <span>v1.3.0</span>
-        </div>
-    </div>
-    
-    <button class="settings-btn" id="feedback-btn">
-        <i class="fas fa-comment-alt"></i> Geri Bildirim Gönder
-    </button>
+<h3>Hakkında</h3>
+
+<button class="settings-btn" id="app-btn">
+<svg class="button-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <!-- Örnek bir Android simgesi SVG'si -->
+    <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.86 3.11c-.2.2-.2.51 0 .71.2.2.51.2.71 0l1.3-1.3C10.66 2.19 11.32 2 12 2c.68 0 1.34.19 1.91.54zM12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8z"/>
+</svg> Mobil Uygulama İNDİR
+</button>
+
+<div class="setting-item">
+<div class="setting-label">
+    <span>Uygulama Versiyonu</span>
+    <span>v1.3.0</span>
+</div>
+</div>
+
+<button class="settings-btn" id="feedback-btn">
+<i class="fas fa-comment-alt"></i> Geri Bildirim Gönder
+</button>
 </div>
 </div>
 </div>
@@ -2497,8 +3266,8 @@ opacity: 1;
 <div class="search-page-container">
 <div class="search-page-main">
 <div class="search-page-input-container">
-    <input type="text" id="search-page-input" placeholder="Sure, ayet veya kelime ara..." autofocus />
-    <i class="fas fa-search search-page-icon"></i>
+<input type="text" id="search-page-input" placeholder="Sure, ayet veya kelime ara..." autofocus />
+<i class="fas fa-search search-page-icon"></i>
 </div>
 <div id="search-results"></div>
 </div>
@@ -2506,14 +3275,14 @@ opacity: 1;
 <div class="search-page-sidebar">
 <h3>Örnek Aramalar</h3>
 <div class="example-searches">
-    <div class="example-search"><i class="fas fa-hashtag"></i> islam</div>
-    <div class="example-search"><i class="fas fa-hashtag"></i> iman</div>
-    <div class="example-search"><i class="fas fa-hashtag"></i> rahmet</div>
-    <div class="example-search"><i class="fas fa-hashtag"></i> tevhid</div>
-    <div class="example-search"><i class="fas fa-hashtag"></i> sabır</div>
-    <div class="example-search"><i class="fas fa-hashtag"></i> şükür</div>
-    <div class="example-search"><i class="fas fa-hashtag"></i> dua</div>
-    <div class="example-search"><i class="fas fa-hashtag"></i> namaz</div>
+<div class="example-search"><i class="fas fa-hashtag"></i> islam</div>
+<div class="example-search"><i class="fas fa-hashtag"></i> iman</div>
+<div class="example-search"><i class="fas fa-hashtag"></i> rahmet</div>
+<div class="example-search"><i class="fas fa-hashtag"></i> tevhid</div>
+<div class="example-search"><i class="fas fa-hashtag"></i> sabır</div>
+<div class="example-search"><i class="fas fa-hashtag"></i> şükür</div>
+<div class="example-search"><i class="fas fa-hashtag"></i> dua</div>
+<div class="example-search"><i class="fas fa-hashtag"></i> namaz</div>
 </div>
 </div>
 </div>
@@ -2561,12 +3330,31 @@ let dataLoaded = false;
 let currentSurahIndex = 0;
 let currentVerseIndex = 0;
 
-// Touch/Swipe variables
+// Touch/Swipe variables - SADECE AYET PANELİ İÇİN
 let touchStartX = 0;
 let touchStartY = 0;
 let touchEndX = 0;
 let touchEndY = 0;
 let isSwipeDetected = false;
+let isInVerseDetailPanel = false;
+
+// Mobile scroll detection variables - YENİ EKLENEN
+let isScrolling = false;
+let scrollTimeout = null;
+let lastScrollY = 0;
+let scrollThreshold = 10;
+
+// Mobile long press variables
+let longPressTimer = null;
+let isLongPress = false;
+let longPressTarget = null;
+
+// Author sorting variables
+let authorOrder = JSON.parse(localStorage.getItem("authorOrder") || "[]");
+let originalAuthorOrder = [];
+
+// Notification variables
+let notificationPermissionGranted = false;
 
 // Sure isimleri haritası
 const surahNames = {
@@ -2585,7 +3373,7 @@ const surahNames = {
 };
 
 // Tema ve ayarlar değişkenleri
-let isDayMode = localStorage.getItem("theme") === "day";
+let currentTheme = localStorage.getItem("theme") || "night";
 let highlightColor = localStorage.getItem("highlightColor") || "#1da1f2";
 let fontSize = parseInt(localStorage.getItem("fontSize") || "100");
 let defaultAuthor = localStorage.getItem("defaultAuthor") || "Mehmet Okuyan";
@@ -2607,7 +3395,7 @@ return surahNames[id] || `Sure ${id}`;
 function getSurahIdByName(name) {
 for (const [id, surahName] of Object.entries(surahNames)) {
 if (surahName.toLowerCase() === name.toLowerCase()) {
-    return parseInt(id);
+return parseInt(id);
 }
 }
 return null;
@@ -2644,13 +3432,21 @@ const fragment = document.createDocumentFragment();
 
 data.surahs.forEach(surah => {
 surah.verses.forEach(verse => {
-    verse.translations.forEach(trans => {
-        authorsSet.add(trans.author);
-    });
+verse.translations.forEach(trans => {
+authorsSet.add(trans.author);
+});
 });
 });
 
 const authors = Array.from(authorsSet);
+originalAuthorOrder = [...authors];
+
+// Eğer kaydedilmiş sıralama yoksa, orijinal sıralamayı kullan
+if (authorOrder.length === 0) {
+authorOrder = [...authors];
+localStorage.setItem("authorOrder", JSON.stringify(authorOrder));
+}
+
 authors.forEach(author => {
 const option = document.createElement("option");
 option.value = author;
@@ -2662,6 +3458,344 @@ fragment.appendChild(option);
 select.appendChild(fragment);
 }
 
+// Mobile scroll detection - YENİ EKLENEN FONKSİYONLAR
+function setupMobileScrollDetection() {
+if (window.innerWidth > 768) return; // Only on mobile
+
+const versesContainer = document.getElementById("verses");
+if (!versesContainer) return;
+
+versesContainer.addEventListener('scroll', handleScroll, { passive: true });
+versesContainer.addEventListener('touchstart', handleScrollTouchStart, { passive: true });
+versesContainer.addEventListener('touchmove', handleScrollTouchMove, { passive: true });
+versesContainer.addEventListener('touchend', handleScrollTouchEnd, { passive: true });
+}
+
+function handleScroll() {
+if (window.innerWidth > 768) return; // Only on mobile
+
+isScrolling = true;
+disableVerseClicks();
+
+// Clear existing timeout
+if (scrollTimeout) {
+clearTimeout(scrollTimeout);
+}
+
+// Set timeout to re-enable clicks after scrolling stops
+scrollTimeout = setTimeout(() => {
+isScrolling = false;
+enableVerseClicks();
+}, 150); // 150ms after scroll stops
+}
+
+function handleScrollTouchStart(e) {
+if (window.innerWidth > 768) return; // Only on mobile
+
+lastScrollY = e.touches[0].clientY;
+}
+
+function handleScrollTouchMove(e) {
+if (window.innerWidth > 768) return; // Only on mobile
+
+const currentY = e.touches[0].clientY;
+const deltaY = Math.abs(currentY - lastScrollY);
+
+// If significant vertical movement detected, disable verse clicks
+if (deltaY > scrollThreshold) {
+isScrolling = true;
+disableVerseClicks();
+}
+}
+
+function handleScrollTouchEnd() {
+if (window.innerWidth > 768) return; // Only on mobile
+
+// Re-enable clicks after a short delay
+setTimeout(() => {
+isScrolling = false;
+enableVerseClicks();
+}, 100);
+}
+
+function disableVerseClicks() {
+const verses = document.querySelectorAll('.verse');
+verses.forEach(verse => {
+verse.classList.add('scroll-disabled');
+});
+}
+
+function enableVerseClicks() {
+const verses = document.querySelectorAll('.verse');
+verses.forEach(verse => {
+verse.classList.remove('scroll-disabled');
+});
+}
+
+// Mobile long press functionality - GÜNCELLENDİ
+function setupMobileLongPress() {
+document.addEventListener('touchstart', handleMobileTouchStart, { passive: false });
+document.addEventListener('touchend', handleMobileTouchEnd, { passive: false });
+document.addEventListener('touchmove', handleMobileTouchMove, { passive: false });
+}
+
+function handleMobileTouchStart(e) {
+if (window.innerWidth > 768) return; // Only on mobile
+
+const verse = e.target.closest('.verse');
+if (!verse || verse.closest('#favorites-list') || verse.classList.contains('scroll-disabled')) return; // Skip if scrolling or in favorites
+
+longPressTarget = verse;
+isLongPress = false;
+
+longPressTimer = setTimeout(() => {
+if (!isScrolling && longPressTarget && !longPressTarget.classList.contains('scroll-disabled')) {
+    isLongPress = true;
+    showVerseActions(verse);
+    // Haptic feedback if available
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+}
+}, 500); // 500ms for long press
+}
+
+function handleMobileTouchEnd(e) {
+if (longPressTimer) {
+clearTimeout(longPressTimer);
+longPressTimer = null;
+}
+
+if (!isLongPress && longPressTarget && !isScrolling && !longPressTarget.classList.contains('scroll-disabled')) {
+// Normal tap - hide any visible actions and handle verse click
+hideAllVerseActions();
+
+// Handle normal verse click
+const verse = longPressTarget;
+if (verse && !e.target.closest('button') && !e.target.closest('a')) {
+const index = parseInt(verse.dataset.index);
+const surahId = parseInt(verse.dataset.surahId);
+const surah = verse.dataset.surah;
+
+if (index !== undefined && surahId && surah) {
+    const surahIndex = quranData.findIndex(s => s.sure === surah);
+    if (surahIndex !== -1) {
+        const ayet = quranData[surahIndex].ayetler[index];
+        displayVerseDetail(surah, ayet, index, surahId);
+    }
+}
+}
+}
+
+longPressTarget = null;
+isLongPress = false;
+}
+
+function handleMobileTouchMove(e) {
+if (longPressTimer) {
+clearTimeout(longPressTimer);
+longPressTimer = null;
+}
+}
+
+function showVerseActions(verse) {
+// Hide all other verse actions first
+hideAllVerseActions();
+
+const actions = verse.querySelector('.verse-actions');
+if (actions) {
+actions.classList.add('show');
+
+// Hide after 3 seconds
+setTimeout(() => {
+actions.classList.remove('show');
+}, 3000);
+}
+}
+
+function hideAllVerseActions() {
+document.querySelectorAll('.verse-actions.show').forEach(actions => {
+actions.classList.remove('show');
+});
+}
+
+// Author sorting functionality
+function setupAuthorSorting() {
+const sortBtn = document.getElementById('sort-authors-btn');
+const sortBtnMobile = document.getElementById('sort-authors-btn-mobile');
+const sortPanel = document.getElementById('author-sort-panel');
+const closeSortPanel = document.getElementById('close-sort-panel');
+const authorList = document.getElementById('author-list');
+const saveSortBtn = document.getElementById('save-sort-btn');
+const resetSortBtn = document.getElementById('reset-sort-btn');
+
+if (sortBtn) {
+sortBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+showAuthorSortPanel();
+});
+}
+
+if (sortBtnMobile) {
+sortBtnMobile.addEventListener('click', (e) => {
+e.stopPropagation();
+showAuthorSortPanel();
+});
+}
+
+if (closeSortPanel) {
+closeSortPanel.addEventListener('click', hideAuthorSortPanel);
+}
+
+if (sortPanel) {
+sortPanel.addEventListener('click', (e) => {
+if (e.target === sortPanel) {
+    hideAuthorSortPanel();
+}
+});
+}
+
+if (saveSortBtn) {
+saveSortBtn.addEventListener('click', saveAuthorOrder);
+}
+
+if (resetSortBtn) {
+resetSortBtn.addEventListener('click', resetAuthorOrder);
+}
+
+// Setup drag and drop
+setupDragAndDrop();
+}
+
+function showAuthorSortPanel() {
+const sortPanel = document.getElementById('author-sort-panel');
+const authorList = document.getElementById('author-list');
+
+// Populate author list
+populateAuthorList();
+
+sortPanel.style.display = 'flex';
+document.body.style.overflow = 'hidden';
+}
+
+function hideAuthorSortPanel() {
+const sortPanel = document.getElementById('author-sort-panel');
+sortPanel.style.display = 'none';
+document.body.style.overflow = '';
+}
+
+function populateAuthorList() {
+const authorList = document.getElementById('author-list');
+authorList.innerHTML = '';
+
+const currentOrder = [...authorOrder];
+
+currentOrder.forEach((author, index) => {
+const authorItem = document.createElement('div');
+authorItem.className = 'author-item';
+authorItem.draggable = true;
+authorItem.dataset.author = author;
+authorItem.dataset.index = index;
+
+authorItem.innerHTML = `
+<span class="author-name">${author}</span>
+<i class="fas fa-grip-vertical drag-handle"></i>
+`;
+
+authorList.appendChild(authorItem);
+});
+}
+
+function setupDragAndDrop() {
+let draggedElement = null;
+let draggedIndex = null;
+
+document.addEventListener('dragstart', (e) => {
+if (e.target.classList.contains('author-item')) {
+draggedElement = e.target;
+draggedIndex = parseInt(e.target.dataset.index);
+e.target.classList.add('dragging');
+e.dataTransfer.effectAllowed = 'move';
+}
+});
+
+document.addEventListener('dragend', (e) => {
+if (e.target.classList.contains('author-item')) {
+e.target.classList.remove('dragging');
+draggedElement = null;
+draggedIndex = null;
+}
+});
+
+document.addEventListener('dragover', (e) => {
+e.preventDefault();
+const authorList = document.getElementById('author-list');
+if (authorList && authorList.contains(e.target)) {
+e.dataTransfer.dropEffect = 'move';
+}
+});
+
+document.addEventListener('drop', (e) => {
+e.preventDefault();
+const targetItem = e.target.closest('.author-item');
+const authorList = document.getElementById('author-list');
+
+if (targetItem && draggedElement && authorList.contains(targetItem)) {
+const targetIndex = parseInt(targetItem.dataset.index);
+
+if (draggedIndex !== targetIndex) {
+    // Reorder the array
+    const draggedAuthor = authorOrder[draggedIndex];
+    authorOrder.splice(draggedIndex, 1);
+    authorOrder.splice(targetIndex, 0, draggedAuthor);
+    
+    // Repopulate the list
+    populateAuthorList();
+}
+}
+});
+}
+
+function saveAuthorOrder() {
+localStorage.setItem("authorOrder", JSON.stringify(authorOrder));
+showNotification("Yazar sıralaması kaydedildi!", "success");
+hideAuthorSortPanel();
+
+// Refresh the current verse detail if open
+const verseDetailPanel = document.getElementById('verse-detail-panel');
+if (verseDetailPanel.classList.contains('active')) {
+refreshOtherTranslations();
+}
+}
+
+function resetAuthorOrder() {
+authorOrder = [...originalAuthorOrder];
+populateAuthorList();
+showNotification("Sıralama sıfırlandı", "info");
+}
+
+function refreshOtherTranslations() {
+// This function will be called to refresh the translations with new order
+// Implementation depends on current verse data
+const verseDetailPanel = document.getElementById('verse-detail-panel');
+if (verseDetailPanel.classList.contains('active')) {
+// Get current verse data and refresh
+const title = document.getElementById('verse-detail-title').textContent;
+const match = title.match(/(.+) - Ayet (\d+)/);
+if (match) {
+const sureName = match[1];
+const verseId = parseInt(match[2]);
+const surahIndex = quranData.findIndex(s => s.sure === sureName);
+if (surahIndex !== -1) {
+    const verseIndex = verseId - 1;
+    const surahId = quranData[surahIndex].id;
+    const ayet = quranData[surahIndex].ayetler[verseIndex];
+    displayVerseDetail(sureName, ayet, verseIndex, surahId);
+}
+}
+}
+}
+
 async function loadQuranData(author) {
 const cacheKey = `quranData_${author}`;
 const cachedData = localStorage.getItem(cacheKey);
@@ -2671,81 +3805,81 @@ showLoading();
 
 if (cachedData && checkStorageAvailability()) {
 try {
-    const parsedCache = JSON.parse(cachedData);
-    const now = Date.now();
-    
-    if (parsedCache.timestamp && (now - parsedCache.timestamp < cacheExpiry)) {
-        quranData = parsedCache.data;
-        displaySurahs(quranData);
-        dataLoaded = true;
-        hideLoading();
-        
-        setTimeout(() => {
-            checkUrlHash();
-        }, 100);
-        return;
-    }
+const parsedCache = JSON.parse(cachedData);
+const now = Date.now();
+
+if (parsedCache.timestamp && (now - parsedCache.timestamp < cacheExpiry)) {
+quranData = parsedCache.data;
+displaySurahs(quranData);
+dataLoaded = true;
+hideLoading();
+
+setTimeout(() => {
+    checkUrlHash();
+}, 100);
+return;
+}
 } catch (e) {
-    console.warn("Önbellek verisi ayrıştırılamadı:", e);
+console.warn("Önbellek verisi ayrıştırılamadı:", e);
 }
 }
 
 try {
 const response = await fetch("kuran_mealleri.json");
 if (!response.ok) {
-    throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
+throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
 }
 jsonData = await response.json();
 
 quranData = jsonData.surahs.map(surah => ({
-    sure: getSurahName(surah.id),
-    ayetler: surah.verses.map(verse => {
-        const translation = verse.translations.find(t => t.author === author);
-        return translation ? `${verse.verse_id}. ${translation.text}` : `${verse.verse_id}. Çeviri bulunamadı`;
-    }),
-    id: surah.id
+sure: getSurahName(surah.id),
+ayetler: surah.verses.map(verse => {
+const translation = verse.translations.find(t => t.author === author);
+return translation ? `${verse.verse_id}. ${translation.text}` : `${verse.verse_id}. Çeviri bulunamadı`;
+}),
+id: surah.id
 }));
 
 displaySurahs(quranData);
 dataLoaded = true;
 
 setTimeout(() => {
-    checkUrlHash();
+checkUrlHash();
 }, 100);
 
 if (checkStorageAvailability()) {
-    try {
-        localStorage.setItem(
-            cacheKey,
-            JSON.stringify({
-                data: quranData,
-                timestamp: Date.now()
-            })
-        );
-    } catch (storageError) {
-        console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
-        try {
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && key.startsWith('quranData_') && key !== cacheKey) {
-                    localStorage.removeItem(key);
-                }
-            }
-            localStorage.setItem(
-                cacheKey,
-                JSON.stringify({
-                    data: quranData,
-                    timestamp: Date.now()
-                })
-            );
-        } catch (e) {
-            console.warn("Önbellek temizleme başarısız:", e);
+try {
+localStorage.setItem(
+    cacheKey,
+    JSON.stringify({
+        data: quranData,
+        timestamp: Date.now()
+    })
+);
+} catch (storageError) {
+console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
+try {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('quranData_') && key !== cacheKey) {
+            localStorage.removeItem(key);
         }
     }
+    localStorage.setItem(
+        cacheKey,
+        JSON.stringify({
+            data: quranData,
+            timestamp: Date.now()
+        })
+    );
+} catch (e) {
+    console.warn("Önbellek temizleme başarısız:", e);
+}
+}
 }
 } catch (error) {
 console.error("JSON yüklenirken hata:", error);
-alert("Kuran mealleri yüklenirken bir hata oluştu: " + error.message);
+showNotification("Kuran mealleri yüklenirken bir hata oluştu: " + error.message, "error");
 } finally {
 hideLoading();
 }
@@ -2758,15 +3892,15 @@ const cacheExpiry = 604800000;
 
 if (cachedData && checkStorageAvailability()) {
 try {
-    const parsedCache = JSON.parse(cachedData);
-    const now = Date.now();
-    
-    if (parsedCache.timestamp && (now - parsedCache.timestamp < cacheExpiry)) {
-        allSurahsData = parsedCache.data;
-        return allSurahsData;
-    }
+const parsedCache = JSON.parse(cachedData);
+const now = Date.now();
+
+if (parsedCache.timestamp && (now - parsedCache.timestamp < cacheExpiry)) {
+allSurahsData = parsedCache.data;
+return allSurahsData;
+}
 } catch (e) {
-    console.warn("Önbellek verisi ayrıştırılamadı:", e);
+console.warn("Önbellek verisi ayrıştırılamadı:", e);
 }
 }
 
@@ -2774,23 +3908,23 @@ try {
 showLoading();
 const response = await fetch("all_surahs_data.json");
 if (!response.ok) {
-    throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
+throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
 }
 
 allSurahsData = await response.json();
 
 if (checkStorageAvailability()) {
-    try {
-        localStorage.setItem(
-            cacheKey,
-            JSON.stringify({
-                data: allSurahsData,
-                timestamp: Date.now()
-            })
-        );
-    } catch (storageError) {
-        console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
-    }
+try {
+localStorage.setItem(
+    cacheKey,
+    JSON.stringify({
+        data: allSurahsData,
+        timestamp: Date.now()
+    })
+);
+} catch (storageError) {
+console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
+}
 }
 
 return allSurahsData;
@@ -2820,32 +3954,33 @@ function processBatch() {
 const endIndex = Math.min(currentIndex + batchSize, data.length);
 
 for (let i = currentIndex; i < endIndex; i++) {
-    const sure = data[i];
-    const surahDiv = document.createElement("div");
-    surahDiv.className = "surah";
-    
-    const surahLink = document.createElement("a");
-    surahLink.href = `#${sure.id}`;
-    surahLink.className = "verse-link";
-    surahLink.innerHTML = `<h2>${sure.sure}</h2>`;
-    
-    surahDiv.appendChild(surahLink);
-    surahDiv.dataset.index = i;
-    surahDiv.dataset.id = sure.id;
-    
-    fragment.appendChild(surahDiv);
+const sure = data[i];
+const surahDiv = document.createElement("div");
+surahDiv.className = "surah";
+surahDiv.style.setProperty('--index', i);
+
+const surahLink = document.createElement("a");
+surahLink.href = `#${sure.id}`;
+surahLink.className = "verse-link";
+surahLink.innerHTML = `<h2>${sure.sure}</h2>`;
+
+surahDiv.appendChild(surahLink);
+surahDiv.dataset.index = i;
+surahDiv.dataset.id = sure.id;
+
+fragment.appendChild(surahDiv);
 }
 
 if (currentIndex === 0) {
-    surahsDiv.appendChild(fragment);
+surahsDiv.appendChild(fragment);
 } else {
-    surahsDiv.appendChild(fragment.cloneNode(true));
+surahsDiv.appendChild(fragment.cloneNode(true));
 }
 
 currentIndex = endIndex;
 
 if (currentIndex < data.length) {
-    requestAnimationFrame(processBatch);
+requestAnimationFrame(processBatch);
 }
 }
 
@@ -2854,12 +3989,12 @@ processBatch();
 surahsDiv.addEventListener("click", (e) => {
 const surahDiv = e.target.closest('.surah');
 if (surahDiv) {
-    const index = parseInt(surahDiv.dataset.index);
-    const sure = data[index];
-    displayVerses(sure.sure, sure.ayetler, sure.id);
-    surahsDiv.style.display = "none";
-    document.querySelector('.controls').style.display = "none";
-    document.getElementById("main-search-results").classList.remove("active");
+const index = parseInt(surahDiv.dataset.index);
+const sure = data[index];
+displayVerses(sure.sure, sure.ayetler, sure.id);
+surahsDiv.style.display = "none";
+document.querySelector('.controls').style.display = "none";
+document.getElementById("main-search-results").classList.remove("active");
 }
 });
 }
@@ -2888,51 +4023,51 @@ if (numberMatch || surahVerseMatch) {
 let surahId, verseId;
 
 if (numberMatch) {
-    surahId = parseInt(numberMatch[1]);
-    verseId = parseInt(numberMatch[2]);
+surahId = parseInt(numberMatch[1]);
+verseId = parseInt(numberMatch[2]);
 } else if (surahVerseMatch) {
-    const surahNameInput = surahVerseMatch[1].trim().toLowerCase();
-    verseId = parseInt(surahVerseMatch[2]);
-    surahId = Object.keys(surahNames).find(
-        (key) => surahNames[key].toLowerCase() === surahNameInput
-    );
+const surahNameInput = surahVerseMatch[1].trim().toLowerCase();
+verseId = parseInt(surahVerseMatch[2]);
+surahId = Object.keys(surahNames).find(
+(key) => surahNames[key].toLowerCase() === surahNameInput
+);
 }
 
 if (surahId && verseId) {
-    const surahIndex = surahId - 1;
-    if (surahIndex >= 0 && surahIndex < quranData.length) {
-        const sure = quranData[surahIndex];
-        const ayet = sure.ayetler[verseId - 1];
-        if (ayet) {
-            const verseElement = document.createElement("div");
-            verseElement.className = "verse-result";
-            
-            const verseLink = document.createElement("a");
-            verseLink.href = `#${surahId}-${verseId}`;
-            verseLink.className = "verse-link";
-            verseLink.textContent = `${sure.sure}: ${ayet}`;
-            
-            verseElement.appendChild(verseLink);
-            verseElement.dataset.surah = sure.sure;
-            verseElement.dataset.verseIndex = verseId - 1;
-            verseElement.dataset.surahId = surahId;
-            fragment.appendChild(verseElement);
-            resultsDiv.appendChild(fragment);
-            resultsDiv.classList.add("active");
-            document.getElementById("surahs").style.display = "none";
-            return;
-        } else {
-            resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
-            resultsDiv.classList.add("active");
-            document.getElementById("surahs").style.display = "none";
-            return;
-        }
-    } else {
-        resultsDiv.innerHTML = "<p>Belirtilen sure bulunamadı.</p>";
-        resultsDiv.classList.add("active");
-        document.getElementById("surahs").style.display = "none";
-        return;
-    }
+const surahIndex = surahId - 1;
+if (surahIndex >= 0 && surahIndex < quranData.length) {
+const sure = quranData[surahIndex];
+const ayet = sure.ayetler[verseId - 1];
+if (ayet) {
+    const verseElement = document.createElement("div");
+    verseElement.className = "verse-result";
+    
+    const verseLink = document.createElement("a");
+    verseLink.href = `#${surahId}-${verseId}`;
+    verseLink.className = "verse-link";
+    verseLink.textContent = `${sure.sure}: ${ayet}`;
+    
+    verseElement.appendChild(verseLink);
+    verseElement.dataset.surah = sure.sure;
+    verseElement.dataset.verseIndex = verseId - 1;
+    verseElement.dataset.surahId = surahId;
+    fragment.appendChild(verseElement);
+    resultsDiv.appendChild(fragment);
+    resultsDiv.classList.add("active");
+    document.getElementById("surahs").style.display = "none";
+    return;
+} else {
+    resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
+    resultsDiv.classList.add("active");
+    document.getElementById("surahs").style.display = "none";
+    return;
+}
+} else {
+resultsDiv.innerHTML = "<p>Belirtilen sure bulunamadı.</p>";
+resultsDiv.classList.add("active");
+document.getElementById("surahs").style.display = "none";
+return;
+}
 }
 }
 
@@ -2940,37 +4075,39 @@ let resultCount = 0;
 
 quranData.forEach((sure, surahIndex) => {
 if (sure.sure.toLowerCase().includes(searchTerm.toLowerCase())) {
-    const surahElement = document.createElement("div");
-    surahElement.className = "verse-result";
-    
-    const surahLink = document.createElement("a");
-    surahLink.href = `#${sure.id}`;
-    surahLink.className = "verse-link";
-    surahLink.innerHTML = `<h2>${highlightText(sure.sure, searchTerm)}</h2>`;
-    
-    surahElement.appendChild(surahLink);
-    surahElement.dataset.index = surahIndex;
-    fragment.appendChild(surahElement);
-    resultCount++;
+const surahElement = document.createElement("div");
+surahElement.className = "verse-result";
+surahElement.style.setProperty('--i', resultCount);
+
+const surahLink = document.createElement("a");
+surahLink.href = `#${sure.id}`;
+surahLink.className = "verse-link";
+surahLink.innerHTML = `<h2>${highlightText(sure.sure, searchTerm)}</h2>`;
+
+surahElement.appendChild(surahLink);
+surahElement.dataset.index = surahIndex;
+fragment.appendChild(surahElement);
+resultCount++;
 }
 
 sure.ayetler.forEach((ayet, verseIndex) => {
-    if (ayet.toLowerCase().includes(searchTerm.toLowerCase())) {
-        const verseElement = document.createElement("div");
-        verseElement.className = "verse-result";
-        
-        const verseLink = document.createElement("a");
-        verseLink.href = `#${sure.id}-${verseIndex + 1}`;
-        verseLink.className = "verse-link";
-        verseLink.innerHTML = `${sure.sure}: ${highlightText(ayet, searchTerm)}`;
-        
-        verseElement.appendChild(verseLink);
-        verseElement.dataset.surah = sure.sure;
-        verseElement.dataset.verseIndex = verseIndex;
-        verseElement.dataset.surahId = sure.id;
-        fragment.appendChild(verseElement);
-        resultCount++;
-    }
+if (ayet.toLowerCase().includes(searchTerm.toLowerCase())) {
+const verseElement = document.createElement("div");
+verseElement.className = "verse-result";
+verseElement.style.setProperty('--i', resultCount);
+
+const verseLink = document.createElement("a");
+verseLink.href = `#${sure.id}-${verseIndex + 1}`;
+verseLink.className = "verse-link";
+verseLink.innerHTML = `${sure.sure}: ${highlightText(ayet, searchTerm)}`;
+
+verseElement.appendChild(verseLink);
+verseElement.dataset.surah = sure.sure;
+verseElement.dataset.verseIndex = verseIndex;
+verseElement.dataset.surahId = sure.id;
+fragment.appendChild(verseElement);
+resultCount++;
+}
 });
 });
 
@@ -2986,23 +4123,23 @@ document.getElementById("surahs").style.display = "none";
 resultsDiv.addEventListener("click", (e) => {
 const verseResult = e.target.closest('.verse-result');
 if (verseResult) {
-    if (verseResult.dataset.index) {
-        const index = parseInt(verseResult.dataset.index);
-        const sure = quranData[index];
-        displayVerses(sure.sure, sure.ayetler, sure.id);
-        resultsDiv.classList.remove("active");
-        document.getElementById("surahs").style.display = "none";
-        document.querySelector('.controls').style.display = "none";
-    } else {
-        const surah = verseResult.dataset.surah;
-        const verseIndex = parseInt(verseResult.dataset.verseIndex);
-        const surahId = parseInt(verseResult.dataset.surahId);
-        const surahIndex = quranData.findIndex(s => s.sure === surah);
-        const ayet = quranData[surahIndex].ayetler[verseIndex];
-        displayVerseDetail(surah, ayet, verseIndex, surahId);
-        resultsDiv.classList.remove("active");
-        document.querySelector('.controls').style.display = "none";
-    }
+if (verseResult.dataset.index) {
+const index = parseInt(verseResult.dataset.index);
+const sure = quranData[index];
+displayVerses(sure.sure, sure.ayetler, sure.id);
+resultsDiv.classList.remove("active");
+document.getElementById("surahs").style.display = "none";
+document.querySelector('.controls').style.display = "none";
+} else {
+const surah = verseResult.dataset.surah;
+const verseIndex = parseInt(verseResult.dataset.verseIndex);
+const surahId = parseInt(verseResult.dataset.surahId);
+const surahIndex = quranData.findIndex(s => s.sure === surah);
+const ayet = quranData[surahIndex].ayetler[verseIndex];
+displayVerseDetail(surah, ayet, verseIndex, surahId);
+resultsDiv.classList.remove("active");
+document.querySelector('.controls').style.display = "none";
+}
 }
 });
 }
@@ -3019,45 +4156,45 @@ if (numberMatch || surahVerseMatch) {
 let surahId, verseId;
 
 if (numberMatch) {
-    surahId = parseInt(numberMatch[1]);
-    verseId = parseInt(numberMatch[2]);
+surahId = parseInt(numberMatch[1]);
+verseId = parseInt(numberMatch[2]);
 } else if (surahVerseMatch) {
-    const surahNameInput = surahVerseMatch[1].trim().toLowerCase();
-    verseId = parseInt(surahVerseMatch[2]);
-    surahId = Object.keys(surahNames).find(
-        (key) => surahNames[key].toLowerCase() === surahNameInput
-    );
+const surahNameInput = surahVerseMatch[1].trim().toLowerCase();
+verseId = parseInt(surahVerseMatch[2]);
+surahId = Object.keys(surahNames).find(
+(key) => surahNames[key].toLowerCase() === surahNameInput
+);
 }
 
 if (surahId && verseId) {
-    const surahIndex = surahId - 1;
-    if (surahIndex >= 0 && surahIndex < quranData.length) {
-        const sure = quranData[surahIndex];
-        const ayet = sure.ayetler[verseId - 1];
-        if (ayet) {
-            const verseElement = document.createElement("div");
-            verseElement.className = "verse-result";
-            
-            const verseLink = document.createElement("a");
-            verseLink.href = `#${surahId}-${verseId}`;
-            verseLink.className = "verse-link";
-            verseLink.textContent = `${sure.sure}: ${ayet}`;
-            
-            verseElement.appendChild(verseLink);
-            verseElement.dataset.surah = sure.sure;
-            verseElement.dataset.verseIndex = verseId - 1;
-            verseElement.dataset.surahId = surahId;
-            fragment.appendChild(verseElement);
-            resultsDiv.appendChild(fragment);
-            return;
-        } else {
-            resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
-            return;
-        }
-    } else {
-        resultsDiv.innerHTML = "<p>Belirtilen sure bulunamadı.</p>";
-        return;
-    }
+const surahIndex = surahId - 1;
+if (surahIndex >= 0 && surahIndex < quranData.length) {
+const sure = quranData[surahIndex];
+const ayet = sure.ayetler[verseId - 1];
+if (ayet) {
+    const verseElement = document.createElement("div");
+    verseElement.className = "verse-result";
+    
+    const verseLink = document.createElement("a");
+    verseLink.href = `#${surahId}-${verseId}`;
+    verseLink.className = "verse-link";
+    verseLink.textContent = `${sure.sure}: ${ayet}`;
+    
+    verseElement.appendChild(verseLink);
+    verseElement.dataset.surah = sure.sure;
+    verseElement.dataset.verseIndex = verseId - 1;
+    verseElement.dataset.surahId = surahId;
+    fragment.appendChild(verseElement);
+    resultsDiv.appendChild(fragment);
+    return;
+} else {
+    resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
+    return;
+}
+} else {
+resultsDiv.innerHTML = "<p>Belirtilen sure bulunamadı.</p>";
+return;
+}
 }
 }
 
@@ -3065,37 +4202,39 @@ let resultCount = 0;
 
 quranData.forEach((sure, surahIndex) => {
 if (sure.sure.toLowerCase().includes(searchTerm.toLowerCase())) {
-    const surahElement = document.createElement("div");
-    surahElement.className = "verse-result";
-    
-    const surahLink = document.createElement("a");
-    surahLink.href = `#${sure.id}`;
-    surahLink.className = "verse-link";
-    surahLink.innerHTML = `<h2>${highlightText(sure.sure, searchTerm)}</h2>`;
-    
-    surahElement.appendChild(surahLink);
-    surahElement.dataset.index = surahIndex;
-    fragment.appendChild(surahElement);
-    resultCount++;
+const surahElement = document.createElement("div");
+surahElement.className = "verse-result";
+surahElement.style.setProperty('--i', resultCount);
+
+const surahLink = document.createElement("a");
+surahLink.href = `#${sure.id}`;
+surahLink.className = "verse-link";
+surahLink.innerHTML = `<h2>${highlightText(sure.sure, searchTerm)}</h2>`;
+
+surahElement.appendChild(surahLink);
+surahElement.dataset.index = surahIndex;
+fragment.appendChild(surahElement);
+resultCount++;
 }
 
 sure.ayetler.forEach((ayet, verseIndex) => {
-    if (ayet.toLowerCase().includes(searchTerm.toLowerCase())) {
-        const verseElement = document.createElement("div");
-        verseElement.className = "verse-result";
-        
-        const verseLink = document.createElement("a");
-        verseLink.href = `#${sure.id}-${verseIndex + 1}`;
-        verseLink.className = "verse-link";
-        verseLink.innerHTML = `${sure.sure}: ${highlightText(ayet, searchTerm)}`;
-        
-        verseElement.appendChild(verseLink);
-        verseElement.dataset.surah = sure.sure;
-        verseElement.dataset.verseIndex = verseIndex;
-        verseElement.dataset.surahId = sure.id;
-        fragment.appendChild(verseElement);
-        resultCount++;
-    }
+if (ayet.toLowerCase().includes(searchTerm.toLowerCase())) {
+const verseElement = document.createElement("div");
+verseElement.className = "verse-result";
+verseElement.style.setProperty('--i', resultCount);
+
+const verseLink = document.createElement("a");
+verseLink.href = `#${sure.id}-${verseIndex + 1}`;
+verseLink.className = "verse-link";
+verseLink.innerHTML = `${sure.sure}: ${highlightText(ayet, searchTerm)}`;
+
+verseElement.appendChild(verseLink);
+verseElement.dataset.surah = sure.sure;
+verseElement.dataset.verseIndex = verseIndex;
+verseElement.dataset.surahId = sure.id;
+fragment.appendChild(verseElement);
+resultCount++;
+}
 });
 });
 
@@ -3108,23 +4247,23 @@ resultsDiv.appendChild(fragment);
 resultsDiv.addEventListener("click", (e) => {
 const verseResult = e.target.closest('.verse-result');
 if (verseResult) {
-    if (verseResult.dataset.index) {
-        const index = parseInt(verseResult.dataset.index);
-        const sure = quranData[index];
-        displayVerses(sure.sure, sure.ayetler, sure.id);
-        document.getElementById("search-page").classList.remove("active");
-        document.getElementById("surahs").style.display = "none";
-        document.querySelector('.controls').style.display = "none";
-    } else {
-        const surah = verseResult.dataset.surah;
-        const verseIndex = parseInt(verseResult.dataset.verseIndex);
-        const surahId = parseInt(verseResult.dataset.surahId);
-        const surahIndex = quranData.findIndex(s => s.sure === surah);
-        const ayet = quranData[surahIndex].ayetler[verseIndex];
-        displayVerseDetail(surah, ayet, verseIndex, surahId);
-        document.getElementById("search-page").classList.remove("active");
-        document.querySelector('.controls').style.display = "none";
-    }
+if (verseResult.dataset.index) {
+const index = parseInt(verseResult.dataset.index);
+const sure = quranData[index];
+displayVerses(sure.sure, sure.ayetler, sure.id);
+document.getElementById("search-page").classList.remove("active");
+document.getElementById("surahs").style.display = "none";
+document.querySelector('.controls').style.display = "none";
+} else {
+const surah = verseResult.dataset.surah;
+const verseIndex = parseInt(verseResult.dataset.verseIndex);
+const surahId = parseInt(verseResult.dataset.surahId);
+const surahIndex = quranData.findIndex(s => s.sure === surah);
+const ayet = quranData[surahIndex].ayetler[verseIndex];
+displayVerseDetail(surah, ayet, verseIndex, surahId);
+document.getElementById("search-page").classList.remove("active");
+document.querySelector('.controls').style.display = "none";
+}
 }
 });
 }
@@ -3139,14 +4278,14 @@ const verseContent = verseMatch[2];
 const verseLink = `<a href="#${surahId}-${verseNumber}" class="verse-link">${verseNumber}</a>`;
 
 switch(verseNumberStyle) {
-    case 'bg':
-        return `<span class="verse-number-bg">${verseLink}</span> ${verseContent}`;
-    case 'bold':
-        return `<span style="color: var(--highlight-dark); font-weight: bold; margin-right: 5px;">${verseLink}.</span> ${verseContent}`;
-    case 'underline':
-        return `<span style="color: var(--highlight-dark); font-weight: bold; border-bottom: 2px solid var(--highlight-dark); padding-bottom: 2px; margin-right: 5px;">${verseLink}.</span> ${verseContent}`;
-    default:
-        return `${verseLink}. ${verseContent}`;
+case 'bg':
+return `<span class="verse-number-bg">${verseLink}</span> ${verseContent}`;
+case 'bold':
+return `<span style="color: var(--highlight-dark); font-weight: bold; margin-right: 5px;">${verseLink}.</span> ${verseContent}`;
+case 'underline':
+return `<span style="color: var(--highlight-dark); font-weight: bold; border-bottom: 2px solid var(--highlight-dark); padding-bottom: 2px; margin-right: 5px;">${verseLink}.</span> ${verseContent}`;
+default:
+return `${verseLink}. ${verseContent}`;
 }
 }
 
@@ -3186,42 +4325,43 @@ function processBatch() {
 const endIndex = Math.min(currentIndex + batchSize, sortedAyetler.length);
 
 for (let i = currentIndex; i < endIndex; i++) {
-    const ayet = sortedAyetler[i];
-    const isFavorite = favorites.some((f) => f.surah === sureName && f.verse === ayet);
-    const verseElement = document.createElement("p");
-    verseElement.className = "verse";
-    verseElement.dataset.verse = ayet;
-    verseElement.dataset.surah = sureName;
-    verseElement.dataset.index = i;
-    verseElement.dataset.surahId = surahId;
-    
-    const verseNumber = ayet.match(/^(\d+)\./);
-    const verseId = verseNumber ? verseNumber[1] : (i + 1);
-    
-    const formattedVerse = formatVerseNumber(ayet, surahId, verseId);
-    
-    verseElement.innerHTML = `
-        <span>${formattedVerse}</span>
-        <span class="verse-actions">
-            <button class="favorite-btn ${isFavorite ? "active" : ""}" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-star"></i></button>
-            <button class="share-btn" data-verse="${ayet}" data-surah="${sureName}" data-surah-id="${surahId}" data-verse-id="${verseId}"><i class="fas fa-share-alt"></i></button>
-            <button class="copy-url-btn" data-surah-id="${surahId}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
-        </span>
-    `;
-    
-    fragment.appendChild(verseElement);
+const ayet = sortedAyetler[i];
+const isFavorite = favorites.some((f) => f.surah === sureName && f.verse === ayet);
+const verseElement = document.createElement("p");
+verseElement.className = "verse";
+verseElement.style.setProperty('--index', i);
+verseElement.dataset.verse = ayet;
+verseElement.dataset.surah = sureName;
+verseElement.dataset.index = i;
+verseElement.dataset.surahId = surahId;
+
+const verseNumber = ayet.match(/^(\d+)\./);
+const verseId = verseNumber ? verseNumber[1] : (i + 1);
+
+const formattedVerse = formatVerseNumber(ayet, surahId, verseId);
+
+verseElement.innerHTML = `
+<span>${formattedVerse}</span>
+<span class="verse-actions">
+    <button class="favorite-btn ${isFavorite ? "active" : ""}" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-star"></i></button>
+    <button class="share-btn" data-verse="${ayet}" data-surah="${sureName}" data-surah-id="${surahId}" data-verse-id="${verseId}"><i class="fas fa-share-alt"></i></button>
+    <button class="copy-url-btn" data-surah-id="${surahId}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
+</span>
+`;
+
+fragment.appendChild(verseElement);
 }
 
 if (currentIndex === 0) {
-    versesDiv.appendChild(fragment);
+versesDiv.appendChild(fragment);
 } else {
-    versesDiv.appendChild(fragment.cloneNode(true));
+versesDiv.appendChild(fragment.cloneNode(true));
 }
 
 currentIndex = endIndex;
 
 if (currentIndex < sortedAyetler.length) {
-    requestAnimationFrame(processBatch);
+requestAnimationFrame(processBatch);
 }
 }
 
@@ -3236,29 +4376,35 @@ const copyUrlBtn = e.target.closest('.copy-url-btn');
 const verse = e.target.closest('.verse');
 
 if (favoriteBtn) {
-    e.stopPropagation();
-    const verse = favoriteBtn.dataset.verse;
-    const surah = favoriteBtn.dataset.surah;
-    toggleFavorite(surah, verse, favoriteBtn);
+e.stopPropagation();
+const verse = favoriteBtn.dataset.verse;
+const surah = favoriteBtn.dataset.surah;
+toggleFavorite(surah, verse, favoriteBtn);
 } else if (shareBtn) {
-    e.stopPropagation();
-    const verse = shareBtn.dataset.verse;
-    const surah = shareBtn.dataset.surah;
-    const surahId = shareBtn.dataset.surahId;
-    const verseId = shareBtn.dataset.verseId;
-    shareVerse(surah, verse, surahId, verseId);
+e.stopPropagation();
+const verse = shareBtn.dataset.verse;
+const surah = shareBtn.dataset.surah;
+const surahId = shareBtn.dataset.surahId;
+const verseId = shareBtn.dataset.verseId;
+shareVerse(surah, verse, surahId, verseId);
 } else if (copyUrlBtn) {
-    e.stopPropagation();
-    const surahId = copyUrlBtn.dataset.surahId;
-    const verseId = copyUrlBtn.dataset.verseId;
-    copyVerseUrl(surahId, verseId);
+e.stopPropagation();
+const surahId = copyUrlBtn.dataset.surahId;
+const verseId = copyUrlBtn.dataset.verseId;
+copyVerseUrl(surahId, verseId);
 } else if (verse && !e.target.closest('button') && !e.target.closest('a')) {
-    e.stopPropagation();
-    const index = parseInt(verse.dataset.index);
-    const surahId = parseInt(verse.dataset.surahId);
-    displayVerseDetail(sureName, sortedAyetler[index], index, surahId);
+// Mobile: only handle click if not scrolling and not on mobile or if actions are not visible
+if (window.innerWidth > 768 || (!isScrolling && !verse.classList.contains('scroll-disabled') && !verse.querySelector('.verse-actions.show'))) {
+e.stopPropagation();
+const index = parseInt(verse.dataset.index);
+const surahId = parseInt(verse.dataset.surahId);
+displayVerseDetail(sureName, sortedAyetler[index], index, surahId);
+}
 }
 });
+
+// Setup mobile scroll detection for this verses container
+setupMobileScrollDetection();
 }
 
 async function displayVerseDetail(sureName, selectedVerse, verseIndex, surahId) {
@@ -3275,6 +4421,9 @@ const allTranslations = verseData.translations;
 currentSurahIndex = surahIndex;
 currentVerseIndex = verseIndex;
 
+// Set flag for swipe detection
+isInVerseDetailPanel = true;
+
 window.location.hash = `${surahId}-${verseData.verse_id}`;
 currentSurahId = surahId;
 currentVerseId = verseData.verse_id;
@@ -3284,87 +4433,102 @@ title.textContent = `${sureName} - Ayet ${verseData.verse_id}`;
 const verseContent = selectedVerse.replace(/^\d+\.\s+/, '');
 selectedTranslation.innerHTML = verseContent;
 
+// Sort translations according to saved author order
+const sortedTranslations = allTranslations
+.filter(t => t.author !== selectedAuthor)
+.sort((a, b) => {
+const aIndex = authorOrder.indexOf(a.author);
+const bIndex = authorOrder.indexOf(b.author);
+
+// If author not in order, put at end
+if (aIndex === -1 && bIndex === -1) return 0;
+if (aIndex === -1) return 1;
+if (bIndex === -1) return -1;
+
+return aIndex - bIndex;
+});
+
 otherTranslations.innerHTML = "";
 if (otherTranslationsMobile) {
 otherTranslationsMobile.innerHTML = "";
 }
 
-allTranslations
-.filter(t => t.author !== selectedAuthor)
-.forEach((t, index) => {
-    const textWithoutNumber = t.text.replace(/^\d+\.\s+/, '');
-    
-    const translationItem = document.createElement("div");
-    translationItem.className = "translation-item";
-    
-    const floatingLabel = document.createElement("div");
-    floatingLabel.className = "floating-label";
-    floatingLabel.textContent = t.author;
-    
-    const translationText = document.createElement("div");
-    translationText.className = "translation-text";
-    translationText.textContent = textWithoutNumber;
-    
-    translationItem.appendChild(floatingLabel);
-    translationItem.appendChild(translationText);
-    otherTranslations.appendChild(translationItem);
-    
-    if (otherTranslationsMobile) {
-        const mobileTranslationItem = translationItem.cloneNode(true);
-        otherTranslationsMobile.appendChild(mobileTranslationItem);
-    }
+sortedTranslations.forEach((t, index) => {
+const textWithoutNumber = t.text.replace(/^\d+\.\s+/, '');
+
+const translationItem = document.createElement("div");
+translationItem.className = "translation-item";
+translationItem.style.setProperty('--index', index);
+
+const floatingLabel = document.createElement("div");
+floatingLabel.className = "floating-label";
+floatingLabel.textContent = t.author;
+
+const translationText = document.createElement("div");
+translationText.className = "translation-text";
+translationText.textContent = textWithoutNumber;
+
+translationItem.appendChild(floatingLabel);
+translationItem.appendChild(translationText);
+otherTranslations.appendChild(translationItem);
+
+if (otherTranslationsMobile) {
+const mobileTranslationItem = translationItem.cloneNode(true);
+otherTranslationsMobile.appendChild(mobileTranslationItem);
+}
 });
 
 if (allSurahsData) {
 try {
-    const detailedSurah = allSurahsData.surahs.find(s => s.id === surahId);
-    if (detailedSurah) {
-        const detailedVerse = detailedSurah.verses.find(v => v.verse_number === verseData.verse_id);
-        if (detailedVerse) {
-            document.getElementById("arabic-text").textContent = detailedVerse.text;
-            document.getElementById("transcription-tr").textContent = detailedVerse.transcription_tr;
+const detailedSurah = allSurahsData.surahs.find(s => s.id === surahId);
+if (detailedSurah) {
+const detailedVerse = detailedSurah.verses.find(v => v.verse_number === verseData.verse_id);
+if (detailedVerse) {
+    document.getElementById("arabic-text").textContent = detailedVerse.text;
+    document.getElementById("transcription-tr").textContent = detailedVerse.transcription_tr;
+    
+    if (showWordAnalysis && detailedVerse.words) {
+        const wordList = document.getElementById("word-list");
+        const wordListMobile = document.getElementById("word-list-mobile");
+        
+        wordList.innerHTML = "";
+        if (wordListMobile) {
+            wordListMobile.innerHTML = "";
+        }
+        
+        detailedVerse.words.forEach((word, index) => {
+            const wordItem = document.createElement("div");
+            wordItem.className = "word-item";
+            wordItem.style.setProperty('--index', index);
+            wordItem.dataset.index = index;
             
-            if (showWordAnalysis && detailedVerse.words) {
-                const wordList = document.getElementById("word-list");
-                const wordListMobile = document.getElementById("word-list-mobile");
-                
-                wordList.innerHTML = "";
-                if (wordListMobile) {
-                    wordListMobile.innerHTML = "";
-                }
-                
-                detailedVerse.words.forEach((word, index) => {
-                    const wordItem = document.createElement("div");
-                    wordItem.className = "word-item";
-                    wordItem.dataset.index = index;
-                    
-                    wordItem.innerHTML = `
-                        <div class="word-arabic">${word.arabic}</div>
-                        <div class="word-translation">${word.translation_tr}</div>
-                    `;
-                    
-                    wordList.appendChild(wordItem);
-                    
-                    if (wordListMobile) {
-                        const mobileWordItem = wordItem.cloneNode(true);
-                        wordListMobile.appendChild(mobileWordItem);
-                    }
-                });
-                
-                wordList.addEventListener("click", (e) => {
-                    handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail");
-                });
-                
-                if (wordListMobile) {
-                    wordListMobile.addEventListener("click", (e) => {
-                        handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail-mobile");
-                    });
-                }
+            wordItem.innerHTML = `
+                <div class="word-arabic">${word.arabic}</div>
+                <div class="word-translation">${word.translation_tr}</div>
+            `;
+            
+            wordList.appendChild(wordItem);
+            
+            if (wordListMobile) {
+                const mobileWordItem = wordItem.cloneNode(true);
+                wordListMobile.appendChild(mobileWordItem);
             }
+        });
+        
+        wordList.addEventListener("click", (e) => {
+            handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail");
+        });
+        
+        if (wordListMobile) {
+            wordListMobile.addEventListener("click", (e) => {
+                handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail-mobile");
+            });
         }
     }
+}
+}
 } catch (error) {
-    console.error("Detaylı ayet verisi yüklenirken hata:", error);
+console.error("Detaylı ayet verisi yüklenirken hata:", error);
 }
 }
 
@@ -3399,60 +4563,60 @@ const word = detailedVerse.words[index];
 
 const wordDetail = document.getElementById(wordDetailId);
 wordDetail.innerHTML = `
-    <div class="word-detail-row">
-        <div class="word-detail-label">Arapça:</div>
-        <div class="word-detail-value">${word.arabic}</div>
-    </div>
-    <div class="word-detail-row">
-        <div class="word-detail-label">Türkçe:</div>
-        <div class="word-detail-value">${word.translation_tr}</div>
-    </div>
-    <div class="word-detail-row">
-        <div class="word-detail-label">İngilizce:</div>
-        <div class="word-detail-value">${word.translation_en}</div>
-    </div>
-    <div class="word-detail-row">
-        <div class="word-detail-label">Türkçe Okunuş:</div>
-        <div class="word-detail-value">${word.transcription_tr}</div>
-    </div>
-    <div class="word-detail-row">
-        <div class="word-detail-label">İngilizce Okunuş:</div>
-        <div class="word-detail-value">${word.transcription_en}</div>
-    </div>
+<div class="word-detail-row">
+<div class="word-detail-label">Arapça:</div>
+<div class="word-detail-value">${word.arabic}</div>
+</div>
+<div class="word-detail-row">
+<div class="word-detail-label">Türkçe:</div>
+<div class="word-detail-value">${word.translation_tr}</div>
+</div>
+<div class="word-detail-row">
+<div class="word-detail-label">İngilizce:</div>
+<div class="word-detail-value">${word.translation_en}</div>
+</div>
+<div class="word-detail-row">
+<div class="word-detail-label">Türkçe Okunuş:</div>
+<div class="word-detail-value">${word.transcription_tr}</div>
+</div>
+<div class="word-detail-row">
+<div class="word-detail-label">İngilizce Okunuş:</div>
+<div class="word-detail-value">${word.transcription_en}</div>
+</div>
 `;
 
 if (word.root) {
-    wordDetail.innerHTML += `
-        <div class="root-info">
-            <div class="word-detail-row">
-                <div class="word-detail-label">Kök (Latin):</div>
-                <div class="word-detail-value">${word.root.latin}</div>
-            </div>
-            <div class="word-detail-row">
-                <div class="word-detail-label">Kök (Arapça):</div>
-                <div class="word-detail-value">${word.root.arabic}</div>
-            </div>
-            <div class="word-detail-row">
-                <div class="word-detail-label">Kök Anlamı:</div>
-                <div class="word-detail-value">${word.root.meaning || 'Belirtilmemiş'}</div>
-            </div>
-        </div>
-    `;
+wordDetail.innerHTML += `
+<div class="root-info">
+    <div class="word-detail-row">
+        <div class="word-detail-label">Kök (Latin):</div>
+        <div class="word-detail-value">${word.root.latin}</div>
+    </div>
+    <div class="word-detail-row">
+        <div class="word-detail-label">Kök (Arapça):</div>
+        <div class="word-detail-value">${word.root.arabic}</div>
+    </div>
+    <div class="word-detail-row">
+        <div class="word-detail-label">Kök Anlamı:</div>
+        <div class="word-detail-value">${word.root.meaning || 'Belirtilmemiş'}</div>
+    </div>
+</div>
+`;
 }
 
 if (allSurahsData) {
-    wordDetail.innerHTML += `
-        <div class="other-occurrences">
-            <h4 class="occurrences-title">Bu Kelimenin Geçtiği Diğer Ayetler</h4>
-            <div id="word-occurrences-${wordDetailId}" class="word-occurrences">
-                <div class="loading-occurrences">Aranıyor...</div>
-            </div>
-        </div>
-    `;
-    
-    setTimeout(() => {
-        findWordOccurrences(word.arabic, surahId, verseId, `word-occurrences-${wordDetailId}`);
-    }, 100);
+wordDetail.innerHTML += `
+<div class="other-occurrences">
+    <h4 class="occurrences-title">Bu Kelimenin Geçtiği Diğer Ayetler</h4>
+    <div id="word-occurrences-${wordDetailId}" class="word-occurrences">
+        <div class="loading-occurrences">Aranıyor...</div>
+    </div>
+</div>
+`;
+
+setTimeout(() => {
+findWordOccurrences(word.arabic, surahId, verseId, `word-occurrences-${wordDetailId}`);
+}, 100);
 }
 
 wordDetail.classList.add("active");
@@ -3468,44 +4632,44 @@ let totalFound = 0;
 
 allSurahsData.surahs.forEach(surah => {
 surah.verses.forEach(verse => {
-    if (surah.id === currentSurahId && verse.verse_number === currentVerseId) {
-        return;
-    }
-    
-    if (verse.text && verse.text.includes(wordArabic)) {
-        occurrences.push({
-            surahId: surah.id,
-            surahName: getSurahName(surah.id),
-            verseId: verse.verse_number,
-            text: verse.text
-        });
-        totalFound++;
-        
-        if (totalFound >= 10) {
-            return;
-        }
-    }
+if (surah.id === currentSurahId && verse.verse_number === currentVerseId) {
+return;
+}
+
+if (verse.text && verse.text.includes(wordArabic)) {
+occurrences.push({
+    surahId: surah.id,
+    surahName: getSurahName(surah.id),
+    verseId: verse.verse_number,
+    text: verse.text
 });
+totalFound++;
 
 if (totalFound >= 10) {
     return;
+}
+}
+});
+
+if (totalFound >= 10) {
+return;
 }
 });
 
 if (occurrences.length > 0) {
 let html = '';
-occurrences.forEach(occurrence => {
-    html += `
-        <div class="occurrence-item">
-            <a href="#${occurrence.surahId}-${occurrence.verseId}" class="occurrence-link">
-                ${occurrence.surahName} ${occurrence.verseId}
-            </a>
-        </div>
-    `;
+occurrences.forEach((occurrence, index) => {
+html += `
+<div class="occurrence-item" style="--index: ${index}">
+    <a href="#${occurrence.surahId}-${occurrence.verseId}" class="occurrence-link">
+        ${occurrence.surahName} ${occurrence.verseId}
+    </a>
+</div>
+`;
 });
 
 if (totalFound >= 10) {
-    html += `<div class="more-occurrences">ve daha fazla...</div>`;
+html += `<div class="more-occurrences">ve daha fazla...</div>`;
 }
 
 occurrencesDiv.innerHTML = html;
@@ -3517,21 +4681,21 @@ occurrencesDiv.innerHTML = `<div class="no-occurrences">Bu kelime başka ayette 
 function setupTabEvents() {
 document.querySelectorAll('.tab-button').forEach(button => {
 button.addEventListener('click', () => {
-    document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    button.classList.add('active');
-    
-    const tabId = button.getAttribute('data-tab');
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    document.getElementById(`${tabId}-tab`).classList.add('active');
+document.querySelectorAll('.tab-button').forEach(btn => {
+btn.classList.remove('active');
+});
+button.classList.add('active');
+
+const tabId = button.getAttribute('data-tab');
+document.querySelectorAll('.tab-content').forEach(content => {
+content.classList.remove('active');
+});
+document.getElementById(`${tabId}-tab`).classList.add('active');
 });
 });
 }
 
-// Swipe functionality for mobile
+// Swipe functionality for mobile - SADECE AYET PANELİNDE
 function setupSwipeEvents() {
 const verseDetailPanel = document.getElementById("verse-detail-panel");
 if (!verseDetailPanel) return;
@@ -3543,6 +4707,7 @@ verseDetailPanel.addEventListener('touchend', handleTouchEnd, { passive: true })
 
 function handleTouchStart(e) {
 if (window.innerWidth > 768) return; // Only on mobile
+if (!isInVerseDetailPanel) return; // Only in verse detail panel
 
 touchStartX = e.touches[0].clientX;
 touchStartY = e.touches[0].clientY;
@@ -3551,6 +4716,7 @@ isSwipeDetected = false;
 
 function handleTouchMove(e) {
 if (window.innerWidth > 768) return; // Only on mobile
+if (!isInVerseDetailPanel) return; // Only in verse detail panel
 if (!touchStartX || !touchStartY) return;
 
 touchEndX = e.touches[0].clientX;
@@ -3561,25 +4727,26 @@ const deltaY = touchEndY - touchStartY;
 
 // Check if it's a horizontal swipe (more horizontal than vertical)
 if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-    const swipeLeftIndicator = document.getElementById('swipe-left');
-    const swipeRightIndicator = document.getElementById('swipe-right');
-    
-    if (deltaX > 0) {
-        // Swiping right - show previous indicator
-        swipeLeftIndicator.classList.add('show');
-        swipeRightIndicator.classList.remove('show');
-    } else {
-        // Swiping left - show next indicator
-        swipeRightIndicator.classList.add('show');
-        swipeLeftIndicator.classList.remove('show');
-    }
-    
-    isSwipeDetected = true;
+const swipeLeftIndicator = document.getElementById('swipe-left');
+const swipeRightIndicator = document.getElementById('swipe-right');
+
+if (deltaX > 0) {
+// Swiping right - show previous indicator
+swipeLeftIndicator.classList.add('show');
+swipeRightIndicator.classList.remove('show');
+} else {
+// Swiping left - show next indicator
+swipeRightIndicator.classList.add('show');
+swipeLeftIndicator.classList.remove('show');
+}
+
+isSwipeDetected = true;
 }
 }
 
 function handleTouchEnd(e) {
 if (window.innerWidth > 768) return; // Only on mobile
+if (!isInVerseDetailPanel) return; // Only in verse detail panel
 if (!touchStartX || !touchStartY) return;
 
 const swipeLeftIndicator = document.getElementById('swipe-left');
@@ -3587,24 +4754,34 @@ const swipeRightIndicator = document.getElementById('swipe-right');
 
 // Hide indicators
 setTimeout(() => {
-    swipeLeftIndicator.classList.remove('show');
-    swipeRightIndicator.classList.remove('show');
+swipeLeftIndicator.classList.remove('show');
+swipeRightIndicator.classList.remove('show');
 }, 200);
 
 if (isSwipeDetected) {
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
-    
-    // Check if it's a horizontal swipe (more horizontal than vertical)
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 100) {
-        if (deltaX > 0) {
-            // Swiped right - go to previous verse
+const deltaX = touchEndX - touchStartX;
+const deltaY = touchEndY - touchStartY;
+
+// Check if it's a horizontal swipe (more horizontal than vertical)
+if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 100) {
+// Add swipe animation to current verse
+const currentVerse = document.querySelector('#verse-detail-panel .selected-translation');
+if (currentVerse) {
+    if (deltaX > 0) {
+        // Swiped right - go to previous verse
+        currentVerse.classList.add('swipe-right');
+        setTimeout(() => {
             navigateVerse(currentSurahIndex, currentVerseIndex, -1);
-        } else {
-            // Swiped left - go to next verse
+        }, 150);
+    } else {
+        // Swiped left - go to next verse
+        currentVerse.classList.add('swipe-left');
+        setTimeout(() => {
             navigateVerse(currentSurahIndex, currentVerseIndex, 1);
-        }
+        }, 150);
     }
+}
+}
 }
 
 // Reset touch coordinates
@@ -3633,8 +4810,26 @@ const newSureName = getSurahName(jsonData.surahs[newSurahIndex].id);
 const newVerse = quranData[newSurahIndex].ayetler[newVerseIndex];
 const newSurahId = jsonData.surahs[newSurahIndex].id;
 
+// Add slide-in animation for new verse
 requestAnimationFrame(() => {
+const newVerseElement = document.querySelector('#verse-detail-panel .selected-translation');
+if (newVerseElement) {
+if (direction > 0) {
+    newVerseElement.classList.add('slide-in-left');
+} else {
+    newVerseElement.classList.add('slide-in-right');
+}
+}
+
 displayVerseDetail(newSureName, newVerse, newVerseIndex, newSurahId);
+
+// Remove animation classes after animation completes
+setTimeout(() => {
+const verseElement = document.querySelector('#verse-detail-panel .selected-translation');
+if (verseElement) {
+    verseElement.classList.remove('swipe-left', 'swipe-right', 'slide-in-left', 'slide-in-right');
+}
+}, 300);
 });
 }
 
@@ -3652,13 +4847,13 @@ const verseMatch = verse.match(/^(\d+)\./);
 const verseId = verseMatch ? parseInt(verseMatch[1]) : 1;
 
 const surahId = getSurahIdByName(surah) || 
-               quranData.find(s => s.sure === surah)?.id || 1;
+       quranData.find(s => s.sure === surah)?.id || 1;
 
 favorites.push({ 
-    surah, 
-    verse,
-    surahId,
-    verseId
+surah, 
+verse,
+surahId,
+verseId
 });
 localStorage.setItem("favorites", JSON.stringify(favorites));
 button.classList.add("active");
@@ -3683,26 +4878,27 @@ favoritesList.innerHTML = "<p style='text-align: center; margin: 40px 0; font-si
 const fragment = document.createDocumentFragment();
 
 favorites.forEach((f, index) => {
-    const verseElement = document.createElement("p");
-    verseElement.className = "verse";
-    verseElement.dataset.surah = f.surah;
-    verseElement.dataset.verse = f.verse;
-    verseElement.dataset.surahId = f.surahId || getSurahIdByName(f.surah);
-    
-    const verseMatch = f.verse.match(/^(\d+)\./);
-    const verseId = verseMatch ? verseMatch[1] : "1";
-    verseElement.dataset.verseId = verseId;
-    
-    const formattedVerse = formatVerseNumber(f.verse, f.surahId || getSurahIdByName(f.surah), verseId);
-    
-    verseElement.innerHTML = `
-        <span><strong>${f.surah}:</strong> ${formattedVerse}</span>
-        <span class="verse-actions">
-            <button class="favorite-btn active" data-verse="${f.verse}" data-surah="${f.surah}" title="Favorilerden kaldır"><i class="fas fa-trash-alt"></i></button>
-            <button class="copy-url-btn" data-surah-id="${f.surahId || getSurahIdByName(f.surah)}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
-        </span>
-    `;
-    fragment.appendChild(verseElement);
+const verseElement = document.createElement("p");
+verseElement.className = "verse";
+verseElement.style.setProperty('--index', index);
+verseElement.dataset.surah = f.surah;
+verseElement.dataset.verse = f.verse;
+verseElement.dataset.surahId = f.surahId || getSurahIdByName(f.surah);
+
+const verseMatch = f.verse.match(/^(\d+)\./);
+const verseId = verseMatch ? verseMatch[1] : "1";
+verseElement.dataset.verseId = verseId;
+
+const formattedVerse = formatVerseNumber(f.verse, f.surahId || getSurahIdByName(f.surah), verseId);
+
+verseElement.innerHTML = `
+<span><strong>${f.surah}:</strong> ${formattedVerse}</span>
+<span class="verse-actions">
+    <button class="favorite-btn active" data-verse="${f.verse}" data-surah="${f.surah}" title="Favorilerden kaldır"><i class="fas fa-trash-alt"></i></button>
+    <button class="copy-url-btn" data-surah-id="${f.surahId || getSurahIdByName(f.surah)}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
+</span>
+`;
+fragment.appendChild(verseElement);
 });
 
 favoritesList.appendChild(fragment);
@@ -3714,29 +4910,29 @@ const copyUrlBtn = e.target.closest('.copy-url-btn');
 const verse = e.target.closest('.verse');
 
 if (favoriteBtn) {
-    e.stopPropagation();
-    const verse = favoriteBtn.dataset.verse;
-    const surah = favoriteBtn.dataset.surah;
-    toggleFavorite(surah, verse, favoriteBtn);
+e.stopPropagation();
+const verse = favoriteBtn.dataset.verse;
+const surah = favoriteBtn.dataset.surah;
+toggleFavorite(surah, verse, favoriteBtn);
 } else if (copyUrlBtn) {
-    e.stopPropagation();
-    const surahId = copyUrlBtn.dataset.surahId;
-    const verseId = copyUrlBtn.dataset.verseId;
-    copyVerseUrl(surahId, verseId);
+e.stopPropagation();
+const surahId = copyUrlBtn.dataset.surahId;
+const verseId = copyUrlBtn.dataset.verseId;
+copyVerseUrl(surahId, verseId);
 } else if (verse && !e.target.closest('button') && !e.target.closest('a')) {
-    e.stopPropagation();
-    const surah = verse.dataset.surah;
-    const verseText = verse.dataset.verse;
-    const surahId = parseInt(verse.dataset.surahId);
-    const verseId = parseInt(verse.dataset.verseId);
-    
-    const surahIndex = quranData.findIndex(s => s.sure === surah);
-    if (surahIndex === -1) return;
-    
-    const verseIndex = verseId - 1;
-    
-    displayVerseDetail(surah, verseText, verseIndex, surahId);
-    favoritesDiv.style.display = "none";
+e.stopPropagation();
+const surah = verse.dataset.surah;
+const verseText = verse.dataset.verse;
+const surahId = parseInt(verse.dataset.surahId);
+const verseId = parseInt(verse.dataset.verseId);
+
+const surahIndex = quranData.findIndex(s => s.sure === surah);
+if (surahIndex === -1) return;
+
+const verseIndex = verseId - 1;
+
+displayVerseDetail(surah, verseText, verseIndex, surahId);
+favoritesDiv.style.display = "none";
 }
 });
 }
@@ -3748,21 +4944,21 @@ ${url}`;
 
 if (navigator.share) {
 navigator
-    .share({
-        title: "Sadece Kuran",
-        text: text,
-        url: url
-    })
-    .catch((err) => console.log("Paylaşım hatası:", err));
+.share({
+title: "Sadece Kuran",
+text: text,
+url: url
+})
+.catch((err) => console.log("Paylaşım hatası:", err));
 } else {
 navigator.clipboard.writeText(text)
-    .then(() => {
-        showNotification('Metin kopyalandı');
-    })
-    .catch(err => {
-        console.error('Kopyalama hatası:', err);
-        alert("Paylaşım desteklenmiyor, metni manuel kopyalayın: " + text);
-    });
+.then(() => {
+showNotification('Metin kopyalandı');
+})
+.catch(err => {
+console.error('Kopyalama hatası:', err);
+showNotification("Paylaşım desteklenmiyor, metni manuel kopyalayın: " + text, "error");
+});
 }
 }
 
@@ -3771,25 +4967,17 @@ const url = `${window.location.origin}${window.location.pathname}#${surahId}-${v
 
 navigator.clipboard.writeText(url)
 .then(() => {
-    showNotification('URL kopyalandı');
+showNotification('URL kopyalandı');
 })
 .catch(err => {
-    console.error('URL kopyalama hatası:', err);
-    alert("URL kopyalanamadı: " + url);
+console.error('URL kopyalama hatası:', err);
+showNotification("URL kopyalanamadı: " + url, "error");
 });
 }
 
 function showNotification(message, type = 'success') {
 const notification = document.createElement('div');
-notification.style.position = 'fixed';
-notification.style.bottom = '20px';
-notification.style.left = '50%';
-notification.style.transform = 'translateX(-50%)';
-notification.style.background = type === 'success' ? 'rgba(29, 161, 242, 0.9)' : 'rgba(229, 62, 62, 0.9)';
-notification.style.color = 'white';
-notification.style.padding = '10px 20px';
-notification.style.borderRadius = '5px';
-notification.style.zIndex = '1000';
+notification.className = `notification ${type}`;
 notification.textContent = message;
 document.body.appendChild(notification);
 
@@ -3797,9 +4985,94 @@ setTimeout(() => {
 notification.style.opacity = '0';
 notification.style.transition = 'opacity 0.5s ease';
 setTimeout(() => {
-    document.body.removeChild(notification);
+if (document.body.contains(notification)) {
+document.body.removeChild(notification);
+}
 }, 500);
 }, 2000);
+}
+
+// Notification permission and scheduling
+function requestNotificationPermission() {
+if ('Notification' in window && Notification.permission !== 'granted') {
+Notification.requestPermission().then(function(permission) {
+if (permission === 'granted') {
+notificationPermissionGranted = true;
+showNotification("Bildirimler etkinleştirildi!", "success");
+scheduleNotifications();
+} else {
+showNotification("Bildirim izni reddedildi", "error");
+}
+});
+} else if (Notification.permission === 'granted') {
+notificationPermissionGranted = true;
+scheduleNotifications();
+}
+}
+
+function scheduleNotifications() {
+if (!notificationPermissionGranted || !dailyVerse) return;
+
+// Clear existing notifications
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.ready.then(registration => {
+registration.getNotifications().then(notifications => {
+    notifications.forEach(notification => notification.close());
+});
+});
+}
+
+// Schedule new notification
+const now = new Date();
+const notificationHour = getNotificationHour();
+const nextNotification = new Date(now);
+nextNotification.setHours(notificationHour, 0, 0, 0);
+
+if (nextNotification <= now) {
+nextNotification.setDate(nextNotification.getDate() + 1);
+}
+
+const timeUntilNotification = nextNotification.getTime() - now.getTime();
+
+setTimeout(() => {
+sendDailyVerseNotification();
+// Schedule for next day
+setInterval(sendDailyVerseNotification, 24 * 60 * 60 * 1000);
+}, timeUntilNotification);
+}
+
+function getNotificationHour() {
+switch(notificationTime) {
+case 'morning': return 8;
+case 'noon': return 12;
+case 'evening': return 18;
+case 'night': return 21;
+default: return 8;
+}
+}
+
+function sendDailyVerseNotification() {
+if (!notificationPermissionGranted || !dailyVerse || !quranData.length) return;
+
+// Get random verse
+const randomSurah = quranData[Math.floor(Math.random() * quranData.length)];
+const randomVerse = randomSurah.ayetler[Math.floor(Math.random() * randomSurah.ayetler.length)];
+
+const notification = new Notification('Günlük Ayet - Sadece Kuran', {
+body: `${randomSurah.sure}: ${randomVerse.substring(0, 100)}...`,
+icon: '/logokuran2.jpg',
+badge: '/logokuran2.jpg',
+tag: 'daily-verse',
+requireInteraction: false
+});
+
+notification.onclick = function() {
+window.focus();
+const verseMatch = randomVerse.match(/^(\d+)\./);
+const verseId = verseMatch ? parseInt(verseMatch[1]) : 1;
+window.location.hash = `${randomSurah.id}-${verseId}`;
+notification.close();
+};
 }
 
 window.addEventListener('hashchange', async function() {
@@ -3809,7 +5082,10 @@ await checkUrlHash();
 async function checkUrlHash() {
 const hash = window.location.hash.substring(1);
 
-if (!hash) return;
+if (!hash) {
+isInVerseDetailPanel = false;
+return;
+}
 
 if (!dataLoaded || !jsonData.surahs || jsonData.surahs.length === 0) {
 setTimeout(checkUrlHash, 200);
@@ -3818,12 +5094,15 @@ return;
 
 if (hash === 'search') {
 showSearch();
+isInVerseDetailPanel = false;
 return;
 } else if (hash === 'favorites') {
 showFavorites();
+isInVerseDetailPanel = false;
 return;
 } else if (hash === 'settings') {
 showSettings();
+isInVerseDetailPanel = false;
 return;
 }
 
@@ -3843,20 +5122,20 @@ if (currentSurahId === surahId && currentVerseId === verseId) return;
 const surahIndex = surahId - 1;
 
 if (surahIndex >= 0 && surahIndex < quranData.length) {
-    const sure = quranData[surahIndex];
-    const verseIndex = verseId - 1;
-    
-    if (verseIndex >= 0 && verseIndex < sure.ayetler.length) {
-        const ayet = sure.ayetler[verseIndex];
-        displayVerseDetail(sure.sure, ayet, verseIndex, surahId);
-        
-        document.getElementById("surahs").style.display = "none";
-        document.getElementById("favorites").style.display = "none";
-        document.getElementById("podcasts").style.display = "none";
-        document.getElementById("settings").style.display = "none";
-        document.getElementById("search-page").classList.remove("active");
-        document.querySelector('.controls').style.display = "none";
-    }
+const sure = quranData[surahIndex];
+const verseIndex = verseId - 1;
+
+if (verseIndex >= 0 && verseIndex < sure.ayetler.length) {
+const ayet = sure.ayetler[verseIndex];
+displayVerseDetail(sure.sure, ayet, verseIndex, surahId);
+
+document.getElementById("surahs").style.display = "none";
+document.getElementById("favorites").style.display = "none";
+document.getElementById("podcasts").style.display = "none";
+document.getElementById("settings").style.display = "none";
+document.getElementById("search-page").classList.remove("active");
+document.querySelector('.controls').style.display = "none";
+}
 }
 } else if (surahMatch) {
 const surahId = parseInt(surahMatch[1]);
@@ -3866,16 +5145,17 @@ if (currentSurahId === surahId && currentVerseId === 0) return;
 const surahIndex = surahId - 1;
 
 if (surahIndex >= 0 && surahIndex < quranData.length) {
-    const sure = quranData[surahIndex];
-    displayVerses(sure.sure, sure.ayetler, surahId);
-    
-    document.getElementById("surahs").style.display = "none";
-    document.getElementById("verse-detail-panel").classList.remove("active");
-    document.getElementById("favorites").style.display = "none";
-    document.getElementById("podcasts").style.display = "none";
-    document.getElementById("settings").style.display = "none";
-    document.getElementById("search-page").classList.remove("active");
-    document.querySelector('.controls').style.display = "none";
+const sure = quranData[surahIndex];
+displayVerses(sure.sure, sure.ayetler, surahId);
+
+document.getElementById("surahs").style.display = "none";
+document.getElementById("verse-detail-panel").classList.remove("active");
+document.getElementById("favorites").style.display = "none";
+document.getElementById("podcasts").style.display = "none";
+document.getElementById("settings").style.display = "none";
+document.getElementById("search-page").classList.remove("active");
+document.querySelector('.controls').style.display = "none";
+isInVerseDetailPanel = false;
 }
 }
 }
@@ -3904,13 +5184,247 @@ const verseDetailPanel = document.getElementById("verse-detail-panel");
 if (!verseDetailPanel.classList.contains('active')) return;
 
 if (e.key === 'ArrowLeft') {
-    e.preventDefault();
-    navigateVerse(currentSurahIndex, currentVerseIndex, -1);
+e.preventDefault();
+navigateVerse(currentSurahIndex, currentVerseIndex, -1);
 } else if (e.key === 'ArrowRight') {
-    e.preventDefault();
-    navigateVerse(currentSurahIndex, currentVerseIndex, 1);
+e.preventDefault();
+navigateVerse(currentSurahIndex, currentVerseIndex, 1);
 }
 });
+}
+
+// Theme functions
+function applyTheme(theme) {
+document.body.classList.remove('day-mode', 'black-mode');
+
+if (theme === 'day') {
+document.body.classList.add('day-mode');
+} else if (theme === 'black') {
+document.body.classList.add('black-mode');
+}
+
+currentTheme = theme;
+localStorage.setItem("theme", theme);
+updateThemeButton();
+updateThemeOptions();
+}
+
+function updateThemeButton() {
+const themeToggle = document.getElementById("theme-toggle");
+if (currentTheme === "day") {
+themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+} else if (currentTheme === "black") {
+themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+} else {
+themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+}
+}
+
+function updateThemeOptions() {
+document.querySelectorAll('.theme-option').forEach(option => {
+option.classList.remove('active');
+});
+
+const activeOption = document.querySelector(`[data-theme="${currentTheme}"]`);
+if (activeOption) {
+activeOption.classList.add('active');
+}
+}
+
+function toggleTheme() {
+if (currentTheme === 'night') {
+applyTheme('day');
+} else if (currentTheme === 'day') {
+applyTheme('black');
+} else {
+applyTheme('night');
+}
+}
+
+function loadTheme() {
+applyTheme(currentTheme);
+}
+
+function applySettings() {
+applyHighlightColor(highlightColor);
+updateFontSize();
+
+if (defaultAuthor && defaultAuthor !== selectedAuthor) {
+selectedAuthor = defaultAuthor;
+const authorSelect = document.getElementById("author-select");
+if (authorSelect.querySelector(`option[value="${defaultAuthor}"]`)) {
+authorSelect.value = defaultAuthor;
+loadQuranData(defaultAuthor);
+}
+}
+
+document.getElementById("verse-number-style").value = verseNumberStyle;
+document.getElementById("arabic-display-mode").value = arabicDisplayMode;
+document.getElementById("word-analysis-toggle").checked = showWordAnalysis;
+
+// Load notification settings
+document.getElementById("daily-verse-toggle").checked = dailyVerse;
+document.getElementById("notification-time").value = notificationTime;
+document.getElementById("auto-scroll-toggle").checked = autoScroll;
+document.getElementById("scroll-speed").value = scrollSpeed;
+document.getElementById("offline-toggle").checked = offlineMode;
+document.getElementById("search-history-toggle").checked = searchHistory;
+}
+
+function applyHighlightColor(color) {
+document.documentElement.style.setProperty('--highlight-dark', color);
+document.documentElement.style.setProperty('--highlight-light', color);
+}
+
+function updateFontSize() {
+document.getElementById("font-size-value").textContent = fontSize + "%";
+document.documentElement.style.setProperty('--verse-font-size', fontSize + "%");
+}
+
+function setupSettingsEventListeners() {
+// Theme option buttons
+document.querySelectorAll('.theme-option').forEach(option => {
+option.addEventListener('click', function() {
+const theme = this.dataset.theme;
+applyTheme(theme);
+});
+});
+
+document.querySelectorAll(".color-option").forEach(option => {
+option.addEventListener("click", function() {
+document.querySelectorAll(".color-option").forEach(opt => opt.classList.remove("active"));
+this.classList.add("active");
+highlightColor = this.dataset.color;
+localStorage.setItem("highlightColor", highlightColor);
+applyHighlightColor(highlightColor);
+});
+});
+
+document.getElementById("decrease-font").addEventListener("click", function() {
+if (fontSize > 70) {
+fontSize -= 10;
+updateFontSize();
+localStorage.setItem("fontSize", fontSize);
+}
+});
+
+document.getElementById("increase-font").addEventListener("click", function() {
+if (fontSize < 150) {
+fontSize += 10;
+updateFontSize();
+localStorage.setItem("fontSize", fontSize);
+}
+});
+
+document.getElementById("verse-number-style").addEventListener("change", function(e) {
+verseNumberStyle = e.target.value;
+localStorage.setItem("verseNumberStyle", verseNumberStyle);
+showNotification("Ayet numarası stili değiştirildi");
+});
+
+document.getElementById("arabic-display-mode").addEventListener("change", function(e) {
+arabicDisplayMode = e.target.value;
+localStorage.setItem("arabicDisplayMode", arabicDisplayMode);
+showNotification("Arapça metin görünümü değiştirildi");
+});
+
+document.getElementById("word-analysis-toggle").addEventListener("change", function(e) {
+showWordAnalysis = e.target.checked;
+localStorage.setItem("showWordAnalysis", showWordAnalysis);
+showNotification("Kelime analizi görünümü " + (showWordAnalysis ? "etkinleştirildi" : "devre dışı bırakıldı"));
+});
+
+document.getElementById("default-author").addEventListener("change", function(e) {
+defaultAuthor = e.target.value;
+localStorage.setItem("defaultAuthor", defaultAuthor);
+showNotification("Varsayılan meal değiştirildi: " + defaultAuthor);
+
+if (defaultAuthor !== selectedAuthor) {
+selectedAuthor = defaultAuthor;
+document.getElementById("author-select").value = defaultAuthor;
+loadQuranData(defaultAuthor);
+}
+});
+
+document.getElementById("auto-scroll-toggle").addEventListener("change", function(e) {
+autoScroll = e.target.checked;
+localStorage.setItem("autoScroll", autoScroll);
+});
+
+document.getElementById("scroll-speed").addEventListener("input", function(e) {
+scrollSpeed = e.target.value;
+localStorage.setItem("scrollSpeed", scrollSpeed);
+});
+
+document.getElementById("daily-verse-toggle").addEventListener("change", function(e) {
+dailyVerse = e.target.checked;
+localStorage.setItem("dailyVerse", dailyVerse);
+if (dailyVerse) {
+requestNotificationPermission();
+} else {
+// Clear scheduled notifications
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.ready.then(registration => {
+    registration.getNotifications().then(notifications => {
+        notifications.forEach(notification => notification.close());
+    });
+});
+}
+}
+});
+
+document.getElementById("notification-time").addEventListener("change", function(e) {
+notificationTime = e.target.value;
+localStorage.setItem("notificationTime", notificationTime);
+if (dailyVerse && notificationPermissionGranted) {
+scheduleNotifications();
+}
+});
+
+document.getElementById("offline-toggle").addEventListener("change", function(e) {
+offlineMode = e.target.checked;
+localStorage.setItem("offlineMode", offlineMode);
+});
+
+document.getElementById("search-history-toggle").addEventListener("change", function(e) {
+searchHistory = e.target.checked;
+localStorage.setItem("searchHistory", searchHistory);
+if (!searchHistory) {
+localStorage.removeItem("searchHistoryData");
+}
+});
+
+document.getElementById("clear-data-btn").addEventListener("click", function() {
+if (confirm("Tüm uygulama verilerini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.")) {
+clearAllData();
+}
+});
+
+document.getElementById("feedback-btn").addEventListener("click", function() {
+window.location.href = "mailto:info@sadecekuran.com.tr?subject=Sadece Kuran Uygulama Geri Bildirimi";
+});
+
+document.getElementById("app-btn").addEventListener("click", function() {
+showNotification("Mobil uygulama yakında mağazalarda!", "info");
+});
+
+document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+}
+
+function clearAllData() {
+const themeValue = localStorage.getItem("theme");
+const highlightValue = localStorage.getItem("highlightColor");
+const verseNumberStyleValue = localStorage.getItem("verseNumberStyle");
+localStorage.clear();
+localStorage.setItem("theme", themeValue);
+localStorage.setItem("highlightColor", highlightValue);
+localStorage.setItem("verseNumberStyle", verseNumberStyleValue);
+
+showNotification("Tüm veriler temizlendi");
+
+setTimeout(() => {
+window.location.reload();
+}, 1500);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -3918,7 +5432,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 try {
 const response = await fetch("kuran_mealleri.json");
 if (!response.ok) {
-    throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
+throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
 }
 jsonData = await response.json();
 loadAuthors(jsonData);
@@ -3929,22 +5443,30 @@ allSurahsData = await loadAllSurahsData();
 loadTheme();
 applySettings();
 setupKeyboardNavigation();
+setupMobileLongPress();
+setupAuthorSorting();
+
+// Initialize notifications if enabled
+if (dailyVerse) {
+requestNotificationPermission();
+}
 } catch (error) {
 console.error("Başlangıçta hata:", error);
-alert("Uygulama başlatılırken bir hata oluştu: " + error.message);
+showNotification("Uygulama başlatılırken bir hata oluştu: " + error.message, "error");
 }
 
 document.getElementById("author-select").addEventListener("change", async (e) => {
 selectedAuthor = e.target.value;
 if (selectedAuthor) {
-    await loadQuranData(selectedAuthor);
-    document.getElementById("surahs").style.display = "block";
-    document.getElementById("verse-panel").classList.remove("active");
-    document.getElementById("verse-detail-panel").classList.remove("active");
-    document.getElementById("favorites").style.display = "none";
-    document.getElementById("podcasts").style.display = "none";
-    document.getElementById("settings").style.display = "none";
-    document.querySelector('.controls').style.display = "flex";
+await loadQuranData(selectedAuthor);
+document.getElementById("surahs").style.display = "block";
+document.getElementById("verse-panel").classList.remove("active");
+document.getElementById("verse-detail-panel").classList.remove("active");
+document.getElementById("favorites").style.display = "none";
+document.getElementById("podcasts").style.display = "none";
+document.getElementById("settings").style.display = "none";
+document.querySelector('.controls').style.display = "flex";
+isInVerseDetailPanel = false;
 }
 });
 
@@ -3958,15 +5480,16 @@ const versePanel = document.getElementById("verse-panel");
 const favoritesDiv = document.getElementById("favorites");
 
 panel.classList.remove("active");
+isInVerseDetailPanel = false;
 
 if (favoritesDiv.style.display === "block") {
-    favoritesDiv.style.display = "block";
+favoritesDiv.style.display = "block";
 } else {
-    versePanel.classList.add("active");
-    if (currentSurahId > 0) {
-        window.location.hash = `${currentSurahId}`;
-        currentVerseId = 0;
-    }
+versePanel.classList.add("active");
+if (currentSurahId > 0) {
+window.location.hash = `${currentSurahId}`;
+currentVerseId = 0;
+}
 }
 });
 
@@ -3991,11 +5514,12 @@ document.getElementById("search-page").classList.remove("active");
 history.pushState("", document.title, window.location.pathname);
 });
 
-document.querySelectorAll(".example-search").forEach(item => {
+document.querySelectorAll(".example-search").forEach((item, index) => {
+item.style.setProperty('--index', index);
 item.addEventListener("click", () => {
-    const searchTerm = item.textContent.replace(/[#\s]/g, '').trim();
-    document.getElementById("search-page-input").value = searchTerm;
-    displaySearchResults(searchTerm);
+const searchTerm = item.textContent.replace(/[#\s]/g, '').trim();
+document.getElementById("search-page-input").value = searchTerm;
+displaySearchResults(searchTerm);
 });
 });
 
@@ -4005,6 +5529,11 @@ showFavorites();
 
 document.getElementById("favorites-nav").addEventListener("click", () => {
 showFavorites();
+});
+
+// Meal writers navigation - BÜYÜK EKRANLAR İÇİN
+document.getElementById("meal-writers-nav-desktop").addEventListener("click", () => {
+window.location.href = "mealyazarlar.html";
 });
 
 document.getElementById("podcasts-nav-desktop").addEventListener("click", () => {
@@ -4053,6 +5582,7 @@ updateActiveTab('home');
 history.pushState("", document.title, window.location.pathname);
 currentSurahId = 0;
 currentVerseId = 0;
+isInVerseDetailPanel = false;
 
 displaySurahs(quranData);
 }
@@ -4063,6 +5593,7 @@ document.getElementById("search-page-input").focus();
 updateActiveTab('search');
 document.querySelector('.controls').style.display = "none";
 window.location.hash = "search";
+isInVerseDetailPanel = false;
 }
 
 function showFavorites() {
@@ -4076,6 +5607,7 @@ displayFavorites();
 updateActiveTab('favorites');
 document.querySelector('.controls').style.display = "none";
 window.location.hash = "favorites";
+isInVerseDetailPanel = false;
 }
 
 function showPodcasts() {
@@ -4091,6 +5623,7 @@ document.querySelector('.controls').style.display = "none";
 history.pushState("", document.title, window.location.pathname);
 currentSurahId = 0;
 currentVerseId = 0;
+isInVerseDetailPanel = false;
 }
 
 function showSettings() {
@@ -4103,6 +5636,7 @@ document.getElementById("settings").style.display = "block";
 updateActiveTab('settings');
 document.querySelector('.controls').style.display = "none";
 window.location.hash = "settings";
+isInVerseDetailPanel = false;
 }
 
 function debounce(func, wait) {
@@ -4119,6 +5653,7 @@ if (searchTerm === "") {
 document.getElementById("main-search-results").classList.remove("active");
 document.getElementById("surahs").style.display = "grid";
 document.getElementById("verse-detail-panel").classList.remove("active");
+isInVerseDetailPanel = false;
 } else {
 displayMainSearchResults(searchTerm);
 }
@@ -4137,207 +5672,6 @@ displaySearchResults(searchTerm);
 }, 300);
 
 document.getElementById("search-page-input").addEventListener("input", debouncedPageSearch);
-
-function toggleTheme() {
-document.body.classList.toggle("day-mode");
-localStorage.setItem("theme", document.body.classList.contains("day-mode") ? "day" : "night");
-updateThemeButton();
-
-isDayMode = document.body.classList.contains("day-mode");
-
-document.getElementById("theme-mode-toggle").checked = isDayMode;
-}
-
-function loadTheme() {
-const theme = localStorage.getItem("theme") || "night";
-if (theme === "day") {
-document.body.classList.add("day-mode");
-}
-updateThemeButton();
-}
-
-function updateThemeButton() {
-const themeToggle = document.getElementById("theme-toggle");
-if (document.body.classList.contains("day-mode")) {
-themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-} else {
-themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-}
-}
-
-function applySettings() {
-applyHighlightColor(highlightColor);
-
-updateFontSize();
-
-if (defaultAuthor && defaultAuthor !== selectedAuthor) {
-selectedAuthor = defaultAuthor;
-const authorSelect = document.getElementById("author-select");
-if (authorSelect.querySelector(`option[value="${defaultAuthor}"]`)) {
-    authorSelect.value = defaultAuthor;
-    loadQuranData(defaultAuthor);
-}
-}
-
-document.getElementById("verse-number-style").value = verseNumberStyle;
-
-document.getElementById("arabic-display-mode").value = arabicDisplayMode;
-
-document.getElementById("word-analysis-toggle").checked = showWordAnalysis;
-}
-
-function applyHighlightColor(color) {
-document.documentElement.style.setProperty('--highlight-dark', color);
-document.documentElement.style.setProperty('--highlight-light', color);
-}
-
-function updateFontSize() {
-document.getElementById("font-size-value").textContent = fontSize + "%";
-document.documentElement.style.setProperty('--verse-font-size', fontSize + "%");
-}
-
-function setupSettingsEventListeners() {
-document.getElementById("theme-mode-toggle").addEventListener("change", function(e) {
-isDayMode = e.target.checked;
-localStorage.setItem("theme", isDayMode ? "day" : "night");
-document.body.classList.toggle("day-mode", isDayMode);
-document.getElementById("theme-toggle").innerHTML = isDayMode ? 
-    '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-});
-
-document.querySelectorAll(".color-option").forEach(option => {
-option.addEventListener("click", function() {
-    document.querySelectorAll(".color-option").forEach(opt => opt.classList.remove("active"));
-    this.classList.add("active");
-    highlightColor = this.dataset.color;
-    localStorage.setItem("highlightColor", highlightColor);
-    applyHighlightColor(highlightColor);
-});
-});
-
-document.getElementById("decrease-font").addEventListener("click", function() {
-if (fontSize > 70) {
-    fontSize -= 10;
-    updateFontSize();
-    localStorage.setItem("fontSize", fontSize);
-}
-});
-
-document.getElementById("increase-font").addEventListener("click", function() {
-if (fontSize < 150) {
-    fontSize += 10;
-    updateFontSize();
-    localStorage.setItem("fontSize", fontSize);
-}
-});
-
-document.getElementById("verse-number-style").addEventListener("change", function(e) {
-verseNumberStyle = e.target.value;
-localStorage.setItem("verseNumberStyle", verseNumberStyle);
-showNotification("Ayet numarası stili değiştirildi");
-});
-
-document.getElementById("arabic-display-mode").addEventListener("change", function(e) {
-arabicDisplayMode = e.target.value;
-localStorage.setItem("arabicDisplayMode", arabicDisplayMode);
-showNotification("Arapça metin görünümü değiştirildi");
-});
-
-document.getElementById("word-analysis-toggle").addEventListener("change", function(e) {
-showWordAnalysis = e.target.checked;
-localStorage.setItem("showWordAnalysis", showWordAnalysis);
-showNotification("Kelime analizi görünümü " + (showWordAnalysis ? "etkinleştirildi" : "devre dışı bırakıldı"));
-});
-
-document.getElementById("default-author").addEventListener("change", function(e) {
-defaultAuthor = e.target.value;
-localStorage.setItem("defaultAuthor", defaultAuthor);
-showNotification("Varsayılan meal değiştirildi: " + defaultAuthor);
-
-if (defaultAuthor !== selectedAuthor) {
-    selectedAuthor = defaultAuthor;
-    document.getElementById("author-select").value = defaultAuthor;
-    loadQuranData(defaultAuthor);
-}
-});
-
-document.getElementById("auto-scroll-toggle").addEventListener("change", function(e) {
-autoScroll = e.target.checked;
-localStorage.setItem("autoScroll", autoScroll);
-});
-
-document.getElementById("scroll-speed").addEventListener("input", function(e) {
-scrollSpeed = e.target.value;
-localStorage.setItem("scrollSpeed", scrollSpeed);
-});
-
-document.getElementById("daily-verse-toggle").addEventListener("change", function(e) {
-dailyVerse = e.target.checked;
-localStorage.setItem("dailyVerse", dailyVerse);
-if (dailyVerse) {
-    requestNotificationPermission();
-}
-});
-
-document.getElementById("notification-time").addEventListener("change", function(e) {
-notificationTime = e.target.value;
-localStorage.setItem("notificationTime", notificationTime);
-});
-
-document.getElementById("offline-toggle").addEventListener("change", function(e) {
-offlineMode = e.target.checked;
-localStorage.setItem("offlineMode", offlineMode);
-});
-
-document.getElementById("search-history-toggle").addEventListener("change", function(e) {
-searchHistory = e.target.checked;
-localStorage.setItem("searchHistory", searchHistory);
-if (!searchHistory) {
-    localStorage.removeItem("searchHistoryData");
-}
-});
-
-document.getElementById("clear-data-btn").addEventListener("click", function() {
-if (confirm("Tüm uygulama verilerini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.")) {
-    clearAllData();
-}
-});
-
-document.getElementById("feedback-btn").addEventListener("click", function() {
-window.location.href = "mailto:info@sadecekuran.com.tr?subject=Sadece Kuran Uygulama Geri Bildirimi";
-});
-document.getElementById("app-btn").addEventListener("click", function() {
-showNotification("Mobil uygulama yakında mağazalarda!", "info");
-});
-
-document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
-}
-
-function requestNotificationPermission() {
-if (Notification && Notification.permission !== "granted") {
-Notification.requestPermission().then(function(permission) {
-    if (permission === "granted") {
-        showNotification("Bildirimler etkinleştirildi!");
-    }
-});
-}
-}
-
-function clearAllData() {
-const themeValue = localStorage.getItem("theme");
-const highlightValue = localStorage.getItem("highlightColor");
-const verseNumberStyleValue = localStorage.getItem("verseNumberStyle");
-localStorage.clear();
-localStorage.setItem("theme", themeValue);
-localStorage.setItem("highlightColor", highlightValue);
-localStorage.setItem("verseNumberStyle", verseNumberStyleValue);
-
-showNotification("Tüm veriler temizlendi");
-
-setTimeout(() => {
-window.location.reload();
-}, 1500);
-}
 </script>
 </body>
 </html>
