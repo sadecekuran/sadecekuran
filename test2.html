@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kur'an Dinle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f3f3f3;
+      padding: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    audio {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 500px;
+    }
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kur'an Dinle</h1>
+  
+  <label for="sure">Sûre Seç:</label>
+  <select id="sure">
+    <option value="1">Fatiha</option>
+    <option value="2">Bakara</option>
+    <option value="3">Al-i İmran</option>
+    <option value="4">Nisa</option>
+    <!-- Diğer sureleri buraya ekleyebilirsin -->
+  </select>
+
+  <button onclick="playAudio()">Oynat</button>
+
+  <audio id="audioPlayer" controls>
+    <source id="audioSource" src="https://api.sadecekuran.com.tr/1.mp3" type="audio/mpeg">
+    Tarayıcınız ses öğesini desteklemiyor.
+  </audio>
+
+  <script>
+    function playAudio() {
+      const sureNo = document.getElementById('sure').value;
+      const audio = document.getElementById('audioPlayer');
+      const source = document.getElementById('audioSource');
+      source.src = `https://api.sadecekuran.com.tr/${sureNo}.mp3`;
+      audio.load();
+      audio.play();
+    }
+  </script>
+</body>
+</html>
