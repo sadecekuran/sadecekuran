@@ -981,8 +981,8 @@ color: #e53e3e;
 /* Mobile Audio Player Adjustments - ENHANCED */
 @media (max-width: 768px) {
 .audio-player {
-padding: 20px 15px;
-padding-bottom: 120px; /* Space for bottom navigation */
+padding: 14px 30px;
+padding-bottom: -3px; /* Space for bottom navigation */
 }
 
 .audio-player-content {
@@ -1144,7 +1144,7 @@ opacity: 1;
 .surah {
 flex-direction: row;
 align-items: center;
-gap: 10px;
+gap: 25px;
 }
 
 .surah h2 {
@@ -7233,7 +7233,7 @@ showHome();
 document.getElementById("home-btn").addEventListener("click", () => {
 // Mobile için /mekaller.html'e yönlendir
 if (window.innerWidth <= 768) {
-window.location.href = "/mekaller.html";
+window.location.href = "/makaleler.html";
 } else {
 showHome();
 }
