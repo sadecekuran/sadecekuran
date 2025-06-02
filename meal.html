@@ -623,7 +623,7 @@ opacity: 0.5;
 cursor: not-allowed;
 }
 
-/* Audio Player Styles */
+/* Audio Player Styles - ENHANCED FOR MOBILE */
 .audio-player {
 position: fixed;
 bottom: 0;
@@ -631,7 +631,7 @@ left: 0;
 right: 0;
 background: linear-gradient(135deg, var(--secondary-dark), var(--accent-dark));
 border-top: 1px solid var(--accent-dark);
-padding: 12px 15px;
+padding: 15px 20px;
 z-index: 100;
 transform: translateY(100%);
 transition: transform 0.3s var(--transition-function);
@@ -664,7 +664,7 @@ transform: translateY(0);
 .audio-player-content {
 display: flex;
 align-items: center;
-gap: 12px;
+gap: 15px;
 max-width: 1200px;
 margin: 0 auto;
 }
@@ -675,10 +675,10 @@ min-width: 0;
 }
 
 .audio-title {
-font-size: 0.9rem;
+font-size: 1rem;
 font-weight: 600;
 color: var(--text-dark);
-margin-bottom: 2px;
+margin-bottom: 4px;
 white-space: nowrap;
 overflow: hidden;
 text-overflow: ellipsis;
@@ -697,7 +697,7 @@ color: var(--text-eye);
 }
 
 .audio-subtitle {
-font-size: 0.75rem;
+font-size: 0.8rem;
 color: var(--text-dark);
 opacity: 0.7;
 white-space: nowrap;
@@ -720,23 +720,23 @@ color: var(--text-eye);
 .audio-controls-main {
 display: flex;
 align-items: center;
-gap: 8px;
+gap: 12px;
 }
 
 .audio-control-btn {
 background: none;
 border: none;
 color: var(--text-dark);
-font-size: 1.1rem;
+font-size: 1.3rem;
 cursor: pointer;
-padding: 10px;
+padding: 12px;
 border-radius: 50%;
 display: flex;
 align-items: center;
 justify-content: center;
 transition: all 0.2s var(--transition-function);
-width: 44px;
-height: 44px;
+width: 50px;
+height: 50px;
 }
 
 body.day-mode .audio-control-btn {
@@ -774,9 +774,9 @@ color: var(--highlight-eye);
 .audio-play-btn {
 background-color: var(--highlight-dark);
 color: white;
-font-size: 1.3rem;
-width: 50px;
-height: 50px;
+font-size: 1.5rem;
+width: 60px;
+height: 60px;
 }
 
 body.black-mode .audio-play-btn {
@@ -804,15 +804,15 @@ background-color: var(--highlight-eye);
 flex: 1;
 display: flex;
 flex-direction: column;
-gap: 6px;
-min-width: 150px;
+gap: 8px;
+min-width: 200px;
 }
 
 .audio-progress {
 width: 100%;
-height: 6px;
+height: 8px;
 background-color: var(--accent-dark);
-border-radius: 3px;
+border-radius: 4px;
 overflow: hidden;
 cursor: pointer;
 position: relative;
@@ -833,7 +833,7 @@ background-color: var(--accent-eye);
 .audio-progress-bar {
 height: 100%;
 background-color: var(--highlight-dark);
-border-radius: 3px;
+border-radius: 4px;
 width: 0%;
 transition: width 0.1s ease;
 position: relative;
@@ -850,11 +850,11 @@ background-color: var(--highlight-eye);
 .audio-progress-bar::after {
 content: '';
 position: absolute;
-right: -6px;
+right: -8px;
 top: 50%;
 transform: translateY(-50%);
-width: 12px;
-height: 12px;
+width: 16px;
+height: 16px;
 background-color: var(--highlight-dark);
 border-radius: 50%;
 opacity: 0;
@@ -876,7 +876,7 @@ opacity: 1;
 .audio-time {
 display: flex;
 justify-content: space-between;
-font-size: 0.7rem;
+font-size: 0.75rem;
 color: var(--text-dark);
 opacity: 0.7;
 }
@@ -896,14 +896,14 @@ color: var(--text-eye);
 .audio-volume {
 display: flex;
 align-items: center;
-gap: 6px;
+gap: 8px;
 }
 
 .volume-slider {
-width: 60px;
-height: 4px;
+width: 80px;
+height: 6px;
 background-color: var(--accent-dark);
-border-radius: 2px;
+border-radius: 3px;
 outline: none;
 cursor: pointer;
 -webkit-appearance: none;
@@ -923,8 +923,8 @@ background-color: var(--accent-eye);
 
 .volume-slider::-webkit-slider-thumb {
 -webkit-appearance: none;
-width: 12px;
-height: 12px;
+width: 16px;
+height: 16px;
 border-radius: 50%;
 background-color: var(--highlight-dark);
 cursor: pointer;
@@ -939,8 +939,8 @@ background-color: var(--highlight-eye);
 }
 
 .volume-slider::-moz-range-thumb {
-width: 12px;
-height: 12px;
+width: 16px;
+height: 16px;
 border-radius: 50%;
 background-color: var(--highlight-dark);
 cursor: pointer;
@@ -958,7 +958,7 @@ background-color: var(--highlight-eye);
 .audio-close-btn {
 color: var(--text-dark);
 opacity: 0.7;
-font-size: 1rem;
+font-size: 1.2rem;
 }
 
 body.day-mode .audio-close-btn {
@@ -978,16 +978,16 @@ opacity: 1;
 color: #e53e3e;
 }
 
-/* Mobile Audio Player Adjustments */
+/* Mobile Audio Player Adjustments - ENHANCED */
 @media (max-width: 768px) {
 .audio-player {
-padding: 10px 15px;
-padding-bottom: 100px; /* Space for bottom navigation */
+padding: 20px 15px;
+padding-bottom: 120px; /* Space for bottom navigation */
 }
 
 .audio-player-content {
 flex-direction: column;
-gap: 8px;
+gap: 15px;
 }
 
 .audio-info {
@@ -998,11 +998,23 @@ order: 1;
 .audio-controls-main {
 order: 2;
 justify-content: center;
+gap: 20px;
 }
 
 .audio-progress-container {
 order: 3;
 min-width: auto;
+width: 100%;
+}
+
+.audio-progress {
+height: 12px; /* Bigger progress bar */
+}
+
+.audio-progress-bar::after {
+width: 20px;
+height: 20px;
+right: -10px;
 }
 
 .audio-volume {
@@ -1011,33 +1023,38 @@ display: none; /* Hide volume on mobile */
 
 .audio-close-btn {
 position: absolute;
-top: 10px;
+top: 15px;
 right: 15px;
 }
 
 .audio-title {
-font-size: 0.85rem;
+font-size: 1.1rem;
 }
 
 .audio-subtitle {
-font-size: 0.7rem;
+font-size: 0.85rem;
 }
 
 .audio-control-btn {
-width: 40px;
-height: 40px;
-font-size: 1rem;
+width: 55px;
+height: 55px;
+font-size: 1.4rem;
 }
 
 .audio-play-btn {
-width: 46px;
-height: 46px;
-font-size: 1.2rem;
+width: 70px;
+height: 70px;
+font-size: 1.8rem;
+}
+
+.audio-time {
+font-size: 0.85rem;
+margin-top: 5px;
 }
 
 /* Adjust content padding when audio player is active */
 body.audio-playing .content {
-padding-bottom: 140px;
+padding-bottom: 200px;
 }
 }
 
@@ -2365,7 +2382,7 @@ body.eye-mode .reset-sort-btn:hover {
 background-color: var(--highlight-eye);
 }
 
-/* Favorites - YENİ TASARIM */
+/* Favorites - YENİ TASARIM VE DÜZELTİLMİŞ FONKSİYON */
 #favorites {
 background-color: var(--secondary-dark);
 border-radius: 12px;
@@ -4888,7 +4905,7 @@ stopAudio();
 });
 
 audioElement.addEventListener('loadstart', () => {
-showNotification('Ses dosyası yükleniyor...', 'info');
+
 });
 
 audioElement.addEventListener('canplay', () => {
@@ -4977,7 +4994,6 @@ isAudioPlaying = true;
 updateAudioButtons();
 updateAudioPlayerButtons();
 document.body.classList.add('audio-playing');
-showNotification(`${getSurahName(surahId)} suresi çalınıyor...`, 'info');
 }).catch((error) => {
 console.error('Audio play error:', error);
 showNotification('Ses dosyası çalınamadı', 'error');
