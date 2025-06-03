@@ -981,8 +981,8 @@ color: #e53e3e;
 /* Mobile Audio Player Adjustments - ENHANCED */
 @media (max-width: 768px) {
 .audio-player {
-padding: 20px 15px;
-padding-bottom: 120px; /* Space for bottom navigation */
+padding: 14px 30px;
+padding-bottom: -3px; /* Space for bottom navigation */
 }
 
 .audio-player-content {
@@ -1065,11 +1065,11 @@ padding-bottom: 120px;
 }
 }
 
-/* Surah List */
+/* Surah List - FIXED GRID LAYOUT */
 #surahs {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-gap: 15px;
+display: grid !important;
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+gap: 15px !important;
 margin-bottom: 20px;
 }
 
@@ -1144,7 +1144,7 @@ opacity: 1;
 .surah {
 flex-direction: row;
 align-items: center;
-gap: 10px;
+gap: 25px;
 }
 
 .surah h2 {
@@ -1157,8 +1157,8 @@ position: static;
 }
 
 #surahs {
-grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-gap: 12px;
+grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+gap: 12px !important;
 }
 }
 
@@ -1893,12 +1893,14 @@ display: block;
 }
 
 /* Navigasyon butonları mobilde - KÜÇÜLTÜLDÜ VE SAĞ TARAFA HİZALANDI */
-.verse-navigation-buttons {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin: 20px 0;
-gap: 8px;
+@media (max-width: 1023px) {
+  .verse-navigation-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 20px 0;
+    gap: 8px;
+  }
 }
 
 .verse-navigation-audio {
@@ -2382,7 +2384,7 @@ body.eye-mode .reset-sort-btn:hover {
 background-color: var(--highlight-eye);
 }
 
-/* Favorites - YENİ TASARIM VE DÜZELTİLMİŞ FONKSİYON */
+/* Favorites - ENHANCED FUNCTIONALITY */
 #favorites {
 background-color: var(--secondary-dark);
 border-radius: 12px;
@@ -4363,7 +4365,7 @@ DİĞER MEALLER
 <div class="verse-navigation-buttons">
 <div class="verse-navigation-audio">
 <button id="verse-audio-btn" class="audio-btn" title="Ayeti dinle">
-    <i class="fas fa-play"></i>
+    OYNAT<i class="fas fa-play"></i>
 </button>
 </div>
 <button id="prev-verse-btn" class="nav-btn"><i class="fas fa-chevron-left"></i> Önceki</button>
@@ -4386,13 +4388,13 @@ DİĞER MEALLER
 <div class="tab-buttons">
 <div class="tab-header">
 <button class="tab-button active" data-tab="other-translations">
-DİĞER MEALLER
+MEALLER
 </button>
 <button class="sort-authors-btn" id="sort-authors-btn-mobile">
 <i class="fas fa-sort"></i>
 </button>
 </div>
-<button class="tab-button" data-tab="word-analysis">Kelime Analizi</button>
+<button class="tab-button" data-tab="word-analysis">KELİME ANALİZİ</button>
 </div>
 
 <!-- Diğer Mealler sekmesi -->
@@ -4445,7 +4447,7 @@ DİĞER MEALLER
 <h2><i class="fas fa-podcast"></i> Podcastler</h2>
 
 <div class="podcast-container">
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3RRKc1JEyzLSkBjfut5EwH?utm_source=generator" width="100%" height="156" title="Sadece Kuran Podcast" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3RRKc1JEyzLSkBjfut5EwH?utm_source=generator" width="100%" height="156" title="Sadece Kuran Podcast" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 </div>
 </div>
@@ -5991,7 +5993,7 @@ resultCount++;
 }
 
 sure.ayetler.forEach((ayet, verseIndex) => {
-if (ayet.toLowerCase().includes(searchTerm.toLowerCase())) {
+if (ayet.toLowerCase().includes(searchTerm.toLowerCase()) && resultCount < 50) {
 const verseElement = document.createElement("div");
 verseElement.className = "verse-result";
 
@@ -6011,9 +6013,17 @@ resultCount++;
 });
 
 if (resultCount === 0) {
-resultsDiv.innerHTML = "<p>Sonuç bulunamadı.</p>";
+resultsDiv.innerHTML = "<p>Arama sonucu bulunamadı.</p>";
 } else {
 resultsDiv.appendChild(fragment);
+if (resultCount >= 50) {
+const moreResults = document.createElement("p");
+moreResults.textContent = "Daha fazla sonuç var. Aramanızı daraltın.";
+moreResults.style.fontStyle = "italic";
+moreResults.style.textAlign = "center";
+moreResults.style.marginTop = "20px";
+resultsDiv.appendChild(moreResults);
+}
 }
 
 resultsDiv.classList.add("active");
@@ -6022,719 +6032,522 @@ document.getElementById("surahs").style.display = "none";
 resultsDiv.addEventListener("click", (e) => {
 const verseResult = e.target.closest('.verse-result');
 if (verseResult) {
-if (verseResult.dataset.index) {
-const index = parseInt(verseResult.dataset.index);
-const sure = quranData[index];
-displayVerses(sure.sure, sure.ayetler, sure.id);
-resultsDiv.classList.remove("active");
-document.getElementById("surahs").style.display = "none";
-document.querySelector('.controls').style.display = "none";
-} else {
 const surah = verseResult.dataset.surah;
 const verseIndex = parseInt(verseResult.dataset.verseIndex);
 const surahId = parseInt(verseResult.dataset.surahId);
+
+if (surah && verseIndex !== undefined && surahId) {
 const surahIndex = quranData.findIndex(s => s.sure === surah);
+if (surahIndex !== -1) {
 const ayet = quranData[surahIndex].ayetler[verseIndex];
 displayVerseDetail(surah, ayet, verseIndex, surahId);
+}
+} else {
+const index = parseInt(verseResult.dataset.index);
+if (index !== undefined) {
+const sure = quranData[index];
+displayVerses(sure.sure, sure.ayetler, sure.id);
 resultsDiv.classList.remove("active");
 document.querySelector('.controls').style.display = "none";
 }
 }
-});
-}
-
-function displaySearchResults(searchTerm, container = "#search-results") {
-const resultsDiv = document.querySelector(container);
-resultsDiv.innerHTML = "";
-const fragment = document.createDocumentFragment();
-
-const numberMatch = searchTerm.match(/^(\d+)\s+(\d+)$/);
-const surahVerseMatch = searchTerm.match(/^([a-zA-ZçÇğĞıİöÖşŞüÜ\s-]+)\s+(\d+)$/i);
-
-if (numberMatch || surahVerseMatch) {
-let surahId, verseId;
-
-if (numberMatch) {
-surahId = parseInt(numberMatch[1]);
-verseId = parseInt(numberMatch[2]);
-} else if (surahVerseMatch) {
-const surahNameInput = surahVerseMatch[1].trim().toLowerCase();
-verseId = parseInt(surahVerseMatch[2]);
-surahId = Object.keys(surahNames).find(
-(key) => surahNames[key].toLowerCase() === surahNameInput
-);
-}
-
-if (surahId && verseId) {
-const surahIndex = surahId - 1;
-if (surahIndex >= 0 && surahIndex < quranData.length) {
-const sure = quranData[surahIndex];
-const ayet = sure.ayetler[verseId - 1];
-if (ayet) {
-const verseElement = document.createElement("div");
-verseElement.className = "verse-result";
-
-const verseLink = document.createElement("a");
-verseLink.href = `#${surahId}-${verseId}`;
-verseLink.className = "verse-link";
-verseLink.textContent = `${sure.sure}: ${ayet}`;
-
-verseElement.appendChild(verseLink);
-verseElement.dataset.surah = sure.sure;
-verseElement.dataset.verseIndex = verseId - 1;
-verseElement.dataset.surahId = surahId;
-fragment.appendChild(verseElement);
-resultsDiv.appendChild(fragment);
-return;
-} else {
-resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
-return;
-}
-} else {
-resultsDiv.innerHTML = "<p>Belirtilen sure bulunamadı.</p>";
-return;
-}
-}
-}
-
-let resultCount = 0;
-
-quranData.forEach((sure, surahIndex) => {
-if (sure.sure.toLowerCase().includes(searchTerm.toLowerCase())) {
-const surahElement = document.createElement("div");
-surahElement.className = "verse-result";
-
-const surahLink = document.createElement("a");
-surahLink.href = `#${sure.id}`;
-surahLink.className = "verse-link";
-surahLink.innerHTML = `<h2>${highlightText(sure.sure, searchTerm)}</h2>`;
-
-surahElement.appendChild(surahLink);
-surahElement.dataset.index = surahIndex;
-fragment.appendChild(surahElement);
-resultCount++;
-}
-
-sure.ayetler.forEach((ayet, verseIndex) => {
-if (ayet.toLowerCase().includes(searchTerm.toLowerCase())) {
-const verseElement = document.createElement("div");
-verseElement.className = "verse-result";
-
-const verseLink = document.createElement("a");
-verseLink.href = `#${sure.id}-${verseIndex + 1}`;
-verseLink.className = "verse-link";
-verseLink.innerHTML = `${sure.sure}: ${highlightText(ayet, searchTerm)}`;
-
-verseElement.appendChild(verseLink);
-verseElement.dataset.surah = sure.sure;
-verseElement.dataset.verseIndex = verseIndex;
-verseElement.dataset.surahId = sure.id;
-fragment.appendChild(verseElement);
-resultCount++;
-}
-});
-});
-
-if (resultCount === 0) {
-resultsDiv.innerHTML = "<p>Sonuç bulunamadı.</p>";
-} else {
-resultsDiv.appendChild(fragment);
-}
-
-resultsDiv.addEventListener("click", (e) => {
-const verseResult = e.target.closest('.verse-result');
-if (verseResult) {
-if (verseResult.dataset.index) {
-const index = parseInt(verseResult.dataset.index);
-const sure = quranData[index];
-displayVerses(sure.sure, sure.ayetler, sure.id);
-document.getElementById("search-page").classList.remove("active");
-document.getElementById("surahs").style.display = "none";
-document.querySelector('.controls').style.display = "none";
-} else {
-const surah = verseResult.dataset.surah;
-const verseIndex = parseInt(verseResult.dataset.verseIndex);
-const surahId = parseInt(verseResult.dataset.surahId);
-const surahIndex = quranData.findIndex(s => s.sure === surah);
-const ayet = quranData[surahIndex].ayetler[verseIndex];
-displayVerseDetail(surah, ayet, verseIndex, surahId);
-document.getElementById("search-page").classList.remove("active");
-document.querySelector('.controls').style.display = "none";
-}
 }
 });
 }
 
-function formatVerseNumber(verseText, surahId, verseId) {
-const verseMatch = verseText.match(/^(\d+\.)\s(.+)$/);
-
-if (verseMatch) {
-const verseNumber = verseMatch[1].replace('.', '');
-const verseContent = verseMatch[2];
-
-const verseLink = `<a href="#${surahId}-${verseNumber}" class="verse-link">${verseNumber}</a>`;
-
-switch(verseNumberStyle) {
-case 'bg':
-return `<span class="verse-number-bg">${verseLink}</span> ${verseContent}`;
-case 'bold':
-return `<span style="color: var(--highlight-dark); font-weight: bold; margin-right: 5px;">${verseLink}.</span> ${verseContent}`;
-case 'underline':
-return `<span style="color: var(--highlight-dark); font-weight: bold; border-bottom: 2px solid var(--highlight-dark); padding-bottom: 2px; margin-right: 5px;">${verseLink}.</span> ${verseContent}`;
-default:
-return `${verseLink}. ${verseContent}`;
-}
-}
-
-return verseText;
-}
-
-function displayVerses(sureName, ayetler, surahId) {
-const panel = document.getElementById("verse-panel");
-const panelTitle = document.getElementById("panel-title");
+function displayVerses(sureName, verses, surahId) {
 const versesDiv = document.getElementById("verses");
-const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+const panelTitle = document.getElementById("panel-title");
+const versePanel = document.getElementById("verse-panel");
 
-window.location.hash = `${surahId}`;
 currentSurahId = surahId;
-currentVerseId = 0;
+currentSurahIndex = quranData.findIndex(s => s.sure === sureName);
 
 panelTitle.textContent = sureName;
 versesDiv.innerHTML = "";
 
-// Update audio button for current surah
-updateAudioButtons();
-
-const sortedAyetler = [...ayetler].sort((a, b) => {
-const aNumMatch = a.match(/^(\d+)\./);
-const bNumMatch = b.match(/^(\d+)\./);
-
-if (!aNumMatch || !bNumMatch) return 0;
-
-const aNum = parseInt(aNumMatch[1]);
-const bNum = parseInt(bNumMatch[1]);
-
-return aNum - bNum;
-});
-
 const fragment = document.createDocumentFragment();
-const batchSize = 30;
-let currentIndex = 0;
 
-function processBatch() {
-const endIndex = Math.min(currentIndex + batchSize, sortedAyetler.length);
+verses.forEach((verse, index) => {
+const verseDiv = document.createElement("div");
+verseDiv.className = "verse";
+verseDiv.dataset.index = index;
+verseDiv.dataset.surah = sureName;
+verseDiv.dataset.surahId = surahId;
 
-for (let i = currentIndex; i < endIndex; i++) {
-const ayet = sortedAyetler[i];
-const isFavorite = favorites.some((f) => f.surah === sureName && f.verse === ayet);
-const verseElement = document.createElement("p");
-verseElement.className = "verse";
-verseElement.dataset.verse = ayet;
-verseElement.dataset.surah = sureName;
-verseElement.dataset.index = i;
-verseElement.dataset.surahId = surahId;
+const verseLink = document.createElement("a");
+verseLink.href = `#${surahId}-${index + 1}`;
+verseLink.className = "verse-link";
 
-const verseNumber = ayet.match(/^(\d+)\./);
-const verseId = verseNumber ? verseNumber[1] : (i + 1);
+let verseText = verse;
+if (verseNumberStyle === "bg") {
+const verseNumber = index + 1;
+const verseContent = verse.replace(/^\d+\.\s*/, '');
+verseText = `<span class="verse-number-bg">${verseNumber}</span>${verseContent}`;
+}
 
-const formattedVerse = formatVerseNumber(ayet, surahId, verseId);
+verseLink.innerHTML = verseText;
 
-verseElement.innerHTML = `
-<span>${formattedVerse}</span>
-<span class="verse-actions">
-<button class="favorite-btn ${isFavorite ? "active" : ""}" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-star"></i></button>
-<button class="share-btn" data-verse="${ayet}" data-surah="${sureName}" data-surah-id="${surahId}" data-verse-id="${verseId}"><i class="fas fa-share-alt"></i></button>
-<button class="copy-url-btn" data-surah-id="${surahId}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
-</span>
+const verseActions = document.createElement("div");
+verseActions.className = "verse-actions";
+verseActions.innerHTML = `
+<button class="favorite-btn" data-surah="${sureName}" data-verse="${index}" data-surah-id="${surahId}" title="Favorilere ekle">
+<i class="fas fa-star"></i>
+</button>
+<button class="copy-url-btn" data-surah-id="${surahId}" data-verse="${index + 1}" title="Linki kopyala">
+<i class="fas fa-link"></i>
+</button>
 `;
 
-fragment.appendChild(verseElement);
-}
+verseDiv.appendChild(verseLink);
+verseDiv.appendChild(verseActions);
+fragment.appendChild(verseDiv);
+});
 
-if (currentIndex === 0) {
 versesDiv.appendChild(fragment);
-} else {
-versesDiv.appendChild(fragment.cloneNode(true));
-}
+versePanel.style.display = "block";
 
-currentIndex = endIndex;
-
-if (currentIndex < sortedAyetler.length) {
-requestAnimationFrame(processBatch);
-}
-}
-
-processBatch();
-
-panel.classList.add("active");
+// Setup mobile scroll detection for this panel
+setupMobileScrollDetection();
 
 versesDiv.addEventListener("click", (e) => {
 const favoriteBtn = e.target.closest('.favorite-btn');
-const shareBtn = e.target.closest('.share-btn');
-const copyUrlBtn = e.target.closest('.copy-url-btn');
-const verse = e.target.closest('.verse');
-
 if (favoriteBtn) {
 e.stopPropagation();
-const verse = favoriteBtn.dataset.verse;
-const surah = favoriteBtn.dataset.surah;
-toggleFavorite(surah, verse, favoriteBtn);
-} else if (shareBtn) {
+toggleFavorite(favoriteBtn);
+return;
+}
+
+const copyBtn = e.target.closest('.copy-url-btn');
+if (copyBtn) {
 e.stopPropagation();
-const verse = shareBtn.dataset.verse;
-const surah = shareBtn.dataset.surah;
-const surahId = shareBtn.dataset.surahId;
-const verseId = shareBtn.dataset.verseId;
-shareVerse(surah, verse, surahId, verseId);
-} else if (copyUrlBtn) {
-e.stopPropagation();
-const surahId = copyUrlBtn.dataset.surahId;
-const verseId = copyUrlBtn.dataset.verseId;
+const surahId = copyBtn.dataset.surahId;
+const verseId = copyBtn.dataset.verse;
 copyVerseUrl(surahId, verseId);
-} else if (verse && !e.target.closest('button') && !e.target.closest('a')) {
-// Mobile: only handle click if not scrolling and not on mobile or if actions are not visible
-if (window.innerWidth > 768 || (!isScrolling && !verse.classList.contains('scroll-disabled') && !verse.querySelector('.verse-actions.show'))) {
-e.stopPropagation();
-const index = parseInt(verse.dataset.index);
-const surahId = parseInt(verse.dataset.surahId);
-displayVerseDetail(sureName, sortedAyetler[index], index, surahId);
+return;
+}
+
+const verseDiv = e.target.closest('.verse');
+if (verseDiv && !e.target.closest('button') && !e.target.closest('a') && !verseDiv.classList.contains('scroll-disabled')) {
+const index = parseInt(verseDiv.dataset.index);
+const surah = verseDiv.dataset.surah;
+const surahId = parseInt(verseDiv.dataset.surahId);
+
+if (index !== undefined && surah && surahId) {
+const surahIndex = quranData.findIndex(s => s.sure === surah);
+if (surahIndex !== -1) {
+const ayet = quranData[surahIndex].ayetler[index];
+displayVerseDetail(surah, ayet, index, surahId);
+}
 }
 }
 });
 
-// Setup mobile scroll detection for this verses container
-setupMobileScrollDetection();
+updateFavoriteButtons();
 }
 
-async function displayVerseDetail(sureName, selectedVerse, verseIndex, surahId) {
-const panel = document.getElementById("verse-detail-panel");
-const title = document.getElementById("verse-detail-title");
+async function displayVerseDetail(sureName, verse, verseIndex, surahId) {
+const verseDetailPanel = document.getElementById("verse-detail-panel");
+const verseDetailTitle = document.getElementById("verse-detail-title");
 const selectedTranslation = document.getElementById("selected-translation");
+const arabicText = document.getElementById("arabic-text");
+const transcriptionTr = document.getElementById("transcription-tr");
 const otherTranslations = document.getElementById("other-translations");
 const otherTranslationsMobile = document.getElementById("other-translations-mobile");
-const surahIndex = jsonData.surahs.findIndex(s => getSurahName(s.id) === sureName);
-const verseData = jsonData.surahs[surahIndex].verses[verseIndex];
-const allTranslations = verseData.translations;
 
-// Store current navigation state
-currentSurahIndex = surahIndex;
+currentSurahId = surahId;
 currentVerseIndex = verseIndex;
-
-// Set flag for swipe detection
+currentSurahIndex = quranData.findIndex(s => s.sure === sureName);
 isInVerseDetailPanel = true;
 
-window.location.hash = `${surahId}-${verseData.verse_id}`;
-currentSurahId = surahId;
-currentVerseId = verseData.verse_id;
+verseDetailTitle.textContent = `${sureName} - Ayet ${verseIndex + 1}`;
 
-title.textContent = `${sureName} - Ayet ${verseData.verse_id}`;
+// Update URL
+const newUrl = `#${surahId}-${verseIndex + 1}`;
+history.pushState(null, null, newUrl);
 
-const verseContent = selectedVerse.replace(/^\d+\.\s+/, '');
-selectedTranslation.innerHTML = verseContent;
-
-// Update audio button for current surah
-updateAudioButtons();
-
-// Sort translations according to saved author order
-const sortedTranslations = allTranslations
-.filter(t => t.author !== selectedAuthor)
-.sort((a, b) => {
-const aIndex = authorOrder.indexOf(a.author);
-const bIndex = authorOrder.indexOf(b.author);
-
-// If author not in order, put at end
-if (aIndex === -1 && bIndex === -1) return 0;
-if (aIndex === -1) return 1;
-if (bIndex === -1) return -1;
-
-return aIndex - bIndex;
-});
-
-otherTranslations.innerHTML = "";
-if (otherTranslationsMobile) {
-otherTranslationsMobile.innerHTML = "";
+// Ana çeviri (seçili yazar)
+let mainTranslation = verse;
+if (verseNumberStyle === "bg") {
+const verseNumber = verseIndex + 1;
+const verseContent = verse.replace(/^\d+\.\s*/, '');
+mainTranslation = `<span class="verse-number-bg">${verseNumber}</span>${verseContent}`;
+} else {
+mainTranslation = verse;
 }
+selectedTranslation.innerHTML = mainTranslation;
 
-sortedTranslations.forEach((t, index) => {
-const textWithoutNumber = t.text.replace(/^\d+\.\s+/, '');
-
-const translationItem = document.createElement("div");
-translationItem.className = "translation-item";
-
-const floatingLabel = document.createElement("div");
-floatingLabel.className = "floating-label";
-floatingLabel.textContent = t.author;
-
-const translationText = document.createElement("div");
-translationText.className = "translation-text";
-translationText.textContent = textWithoutNumber;
-
-translationItem.appendChild(floatingLabel);
-translationItem.appendChild(translationText);
-otherTranslations.appendChild(translationItem);
-
-if (otherTranslationsMobile) {
-const mobileTranslationItem = translationItem.cloneNode(true);
-otherTranslationsMobile.appendChild(mobileTranslationItem);
+// Diğer çevirileri yükle
+if (!allSurahsData) {
+await loadAllSurahsData();
 }
-});
 
 if (allSurahsData) {
-try {
-const detailedSurah = allSurahsData.surahs.find(s => s.id === surahId);
-if (detailedSurah) {
-const detailedVerse = detailedSurah.verses.find(v => v.verse_number === verseData.verse_id);
-if (detailedVerse) {
-document.getElementById("arabic-text").textContent = detailedVerse.text;
-document.getElementById("transcription-tr").textContent = detailedVerse.transcription_tr;
-
-if (showWordAnalysis && detailedVerse.words) {
- const wordList = document.getElementById("word-list");
- const wordListMobile = document.getElementById("word-list-mobile");
- 
- wordList.innerHTML = "";
- if (wordListMobile) {
-     wordListMobile.innerHTML = "";
- }
- 
- detailedVerse.words.forEach((word, index) => {
-     const wordItem = document.createElement("div");
-     wordItem.className = "word-item";
-     wordItem.dataset.index = index;
-     
-     wordItem.innerHTML = `
-         <div class="word-arabic">${word.arabic}</div>
-         <div class="word-translation">${word.translation_tr}</div>
-     `;
-     
-     wordList.appendChild(wordItem);
-     
-     if (wordListMobile) {
-         const mobileWordItem = wordItem.cloneNode(true);
-         wordListMobile.appendChild(mobileWordItem);
-     }
- });
- 
- wordList.addEventListener("click", (e) => {
-     handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail");
- });
- 
- if (wordListMobile) {
-     wordListMobile.addEventListener("click", (e) => {
-         handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail-mobile");
-     });
- }
-}
-}
-}
-} catch (error) {
-console.error("Detaylı ayet verisi yüklenirken hata:", error);
-}
+const surahData = allSurahsData.surahs.find(s => s.id === surahId);
+if (surahData) {
+const verseData = surahData.verses.find(v => v.verse_id === verseIndex + 1);
+if (verseData) {
+// Arapça metin
+if (verseData.arabic) {
+arabicText.textContent = verseData.arabic;
+arabicText.style.display = arabicDisplayMode === "never" ? "none" : "block";
+} else {
+arabicText.style.display = "none";
 }
 
-panel.classList.add("active");
-document.getElementById("verse-panel").classList.remove("active");
-document.getElementById("surahs").style.display = "none";
-document.getElementById("favorites").style.display = "none";
-document.getElementById("podcasts").style.display = "none";
-document.getElementById("settings").style.display = "none";
+// Türkçe okunuş
+if (verseData.transcription_tr) {
+transcriptionTr.textContent = verseData.transcription_tr;
+} else {
+transcriptionTr.textContent = "Türkçe okunuş mevcut değil";
+}
 
+// Diğer çeviriler
+displayOtherTranslations(verseData.translations, otherTranslations);
+displayOtherTranslations(verseData.translations, otherTranslationsMobile);
+
+// Kelime analizi
+if (showWordAnalysis && verseData.word_analysis) {
+displayWordAnalysis(verseData.word_analysis);
+}
+}
+}
+} else {
+arabicText.style.display = "none";
+transcriptionTr.textContent = "Detaylı veri yüklenemedi";
+otherTranslations.innerHTML = "<p>Diğer çeviriler yüklenemedi</p>";
+otherTranslationsMobile.innerHTML = "<p>Diğer çeviriler yüklenemedi</p>";
+}
+
+// Navigasyon butonlarını güncelle
+updateNavigationButtons();
+
+// Paneli göster
+document.getElementById("verse-panel").style.display = "none";
+verseDetailPanel.classList.add("active");
+verseDetailPanel.style.display = "block";
+
+// Scroll to top
+verseDetailPanel.scrollTop = 0;
+
+// Setup swipe gestures for mobile
+setupSwipeGestures();
+}
+
+function displayOtherTranslations(translations, container) {
+if (!container) return;
+
+container.innerHTML = "";
+
+// Seçili yazarı filtrele
+const otherTranslations = translations.filter(t => t.author !== selectedAuthor);
+
+// Yazar sıralamasına göre sırala
+const sortedTranslations = otherTranslations.sort((a, b) => {
+const indexA = authorOrder.indexOf(a.author);
+const indexB = authorOrder.indexOf(b.author);
+
+if (indexA === -1 && indexB === -1) return 0;
+if (indexA === -1) return 1;
+if (indexB === -1) return -1;
+return indexA - indexB;
+});
+
+const fragment = document.createDocumentFragment();
+
+sortedTranslations.forEach(translation => {
+const translationDiv = document.createElement("div");
+translationDiv.className = "translation-item";
+
+const label = document.createElement("div");
+label.className = "floating-label";
+label.textContent = translation.author;
+
+const text = document.createElement("p");
+text.className = "translation-text";
+text.style.fontSize = `calc(${fontSize}% * 0.01 * 1rem)`;
+text.textContent = translation.text;
+
+translationDiv.appendChild(label);
+translationDiv.appendChild(text);
+fragment.appendChild(translationDiv);
+});
+
+container.appendChild(fragment);
+}
+
+function displayWordAnalysis(wordAnalysis) {
+const wordList = document.getElementById("word-list");
+const wordListMobile = document.getElementById("word-list-mobile");
+
+if (!wordAnalysis || !Array.isArray(wordAnalysis)) {
+if (wordList) wordList.innerHTML = "<p>Kelime analizi mevcut değil</p>";
+if (wordListMobile) wordListMobile.innerHTML = "<p>Kelime analizi mevcut değil</p>";
+return;
+}
+
+const fragment = document.createDocumentFragment();
+
+wordAnalysis.forEach((word, index) => {
+const wordItem = document.createElement("div");
+wordItem.className = "word-item";
+wordItem.dataset.wordIndex = index;
+
+const arabicDiv = document.createElement("div");
+arabicDiv.className = "word-arabic";
+arabicDiv.textContent = word.arabic || word.word || "N/A";
+
+const translationDiv = document.createElement("div");
+translationDiv.className = "word-translation";
+translationDiv.textContent = word.translation || word.meaning || "Çeviri yok";
+
+wordItem.appendChild(arabicDiv);
+wordItem.appendChild(translationDiv);
+
+wordItem.addEventListener("click", () => {
+showWordDetail(word, wordItem);
+});
+
+fragment.appendChild(wordItem);
+});
+
+if (wordList) {
+wordList.innerHTML = "";
+wordList.appendChild(fragment.cloneNode(true));
+}
+
+if (wordListMobile) {
+wordListMobile.innerHTML = "";
+wordListMobile.appendChild(fragment.cloneNode(true));
+}
+}
+
+function showWordDetail(word, wordElement) {
+const wordDetail = document.getElementById("word-detail");
+const wordDetailMobile = document.getElementById("word-detail-mobile");
+
+// Hide all other word details first
+document.querySelectorAll('.word-detail.active').forEach(detail => {
+detail.classList.remove('active');
+});
+
+const detailContent = `
+<div class="word-detail-row">
+<span class="word-detail-label">Arapça:</span>
+<span class="word-detail-value">${word.arabic || word.word || "N/A"}</span>
+</div>
+<div class="word-detail-row">
+<span class="word-detail-label">Çeviri:</span>
+<span class="word-detail-value">${word.translation || word.meaning || "Çeviri yok"}</span>
+</div>
+<div class="word-detail-row">
+<span class="word-detail-label">Kök:</span>
+<span class="word-detail-value">${word.root || "Bilinmiyor"}</span>
+</div>
+<div class="word-detail-row">
+<span class="word-detail-label">Tür:</span>
+<span class="word-detail-value">${word.type || word.pos || "Bilinmiyor"}</span>
+</div>
+${word.grammar ? `
+<div class="word-detail-row">
+<span class="word-detail-label">Gramer:</span>
+<span class="word-detail-value">${word.grammar}</span>
+</div>
+` : ''}
+`;
+
+if (wordDetail) {
+wordDetail.innerHTML = detailContent;
+wordDetail.classList.add('active');
+}
+
+if (wordDetailMobile) {
+wordDetailMobile.innerHTML = detailContent;
+wordDetailMobile.classList.add('active');
+}
+
+// Scroll to word detail on mobile
+if (window.innerWidth <= 1023 && wordDetailMobile) {
+setTimeout(() => {
+wordDetailMobile.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}, 100);
+}
+}
+
+function updateNavigationButtons() {
 const prevBtn = document.getElementById("prev-verse-btn");
 const nextBtn = document.getElementById("next-verse-btn");
 
-const oldPrevClick = prevBtn.onclick;
-const oldNextClick = nextBtn.onclick;
-
-if (oldPrevClick) prevBtn.removeEventListener("click", oldPrevClick);
-if (oldNextClick) nextBtn.removeEventListener("click", oldNextClick);
-
-prevBtn.onclick = () => navigateVerse(currentSurahIndex, currentVerseIndex, -1);
-nextBtn.onclick = () => navigateVerse(currentSurahIndex, currentVerseIndex, 1);
-
-setupTabEvents();
-setupSwipeEvents();
+if (prevBtn) {
+prevBtn.disabled = currentVerseIndex <= 0;
 }
 
-function handleWordClick(e, detailedVerse, surahId, verseId, wordDetailId) {
-const wordItem = e.target.closest('.word-item');
-if (wordItem) {
-const index = parseInt(wordItem.dataset.index);
-const word = detailedVerse.words[index];
-
-const wordDetail = document.getElementById(wordDetailId);
-wordDetail.innerHTML = `
-<div class="word-detail-row">
-<div class="word-detail-label">Arapça:</div>
-<div class="word-detail-value">${word.arabic}</div>
-</div>
-<div class="word-detail-row">
-<div class="word-detail-label">Türkçe:</div>
-<div class="word-detail-value">${word.translation_tr}</div>
-</div>
-<div class="word-detail-row">
-<div class="word-detail-label">İngilizce:</div>
-<div class="word-detail-value">${word.translation_en}</div>
-</div>
-<div class="word-detail-row">
-<div class="word-detail-label">Türkçe Okunuş:</div>
-<div class="word-detail-value">${word.transcription_tr}</div>
-</div>
-<div class="word-detail-row">
-<div class="word-detail-label">İngilizce Okunuş:</div>
-<div class="word-detail-value">${word.transcription_en}</div>
-</div>
-`;
-
-if (word.root) {
-wordDetail.innerHTML += `
-<div class="root-info">
-<div class="word-detail-row">
- <div class="word-detail-label">Kök (Latin):</div>
- <div class="word-detail-value">${word.root.latin}</div>
-</div>
-<div class="word-detail-row">
- <div class="word-detail-label">Kök (Arapça):</div>
- <div class="word-detail-value">${word.root.arabic}</div>
-</div>
-<div class="word-detail-row">
- <div class="word-detail-label">Kök Anlamı:</div>
- <div class="word-detail-value">${word.root.meaning || 'Belirtilmemiş'}</div>
-</div>
-</div>
-`;
-}
-
-if (allSurahsData) {
-wordDetail.innerHTML += `
-<div class="other-occurrences">
-<h4 class="occurrences-title">Bu Kelimenin Geçtiği Diğer Ayetler</h4>
-<div id="word-occurrences-${wordDetailId}" class="word-occurrences">
- <div class="loading-occurrences">Aranıyor...</div>
-</div>
-</div>
-`;
-
-setTimeout(() => {
-findWordOccurrences(word.arabic, surahId, verseId, `word-occurrences-${wordDetailId}`);
-}, 100);
-}
-
-wordDetail.classList.add("active");
+if (nextBtn) {
+const currentSurah = quranData[currentSurahIndex];
+nextBtn.disabled = currentVerseIndex >= currentSurah.ayetler.length - 1;
 }
 }
 
-function findWordOccurrences(wordArabic, currentSurahId, currentVerseId, containerId) {
-const occurrencesDiv = document.getElementById(containerId);
-if (!occurrencesDiv) return;
+function setupSwipeGestures() {
+if (window.innerWidth > 768) return; // Only on mobile
 
-const occurrences = [];
-let totalFound = 0;
-
-allSurahsData.surahs.forEach(surah => {
-surah.verses.forEach(verse => {
-if (surah.id === currentSurahId && verse.verse_number === currentVerseId) {
-return;
-}
-
-if (verse.text && verse.text.includes(wordArabic)) {
-occurrences.push({
-surahId: surah.id,
-surahName: getSurahName(surah.id),
-verseId: verse.verse_number,
-text: verse.text
-});
-totalFound++;
-
-if (totalFound >= 10) {
-return;
-}
-}
-});
-
-if (totalFound >= 10) {
-return;
-}
-});
-
-if (occurrences.length > 0) {
-let html = '';
-occurrences.forEach(occurrence => {
-html += `
-<div class="occurrence-item">
-<a href="#${occurrence.surahId}-${occurrence.verseId}" class="occurrence-link">
- ${occurrence.surahName} ${occurrence.verseId}
-</a>
-</div>
-`;
-});
-
-if (totalFound >= 10) {
-html += `<div class="more-occurrences">ve daha fazla...</div>`;
-}
-
-occurrencesDiv.innerHTML = html;
-} else {
-occurrencesDiv.innerHTML = `<div class="no-occurrences">Bu kelime başka ayette bulunamadı.</div>`;
-}
-}
-
-function setupTabEvents() {
-document.querySelectorAll('.tab-button').forEach(button => {
-button.addEventListener('click', () => {
-document.querySelectorAll('.tab-button').forEach(btn => {
-btn.classList.remove('active');
-});
-button.classList.add('active');
-
-const tabId = button.getAttribute('data-tab');
-document.querySelectorAll('.tab-content').forEach(content => {
-content.classList.remove('active');
-});
-document.getElementById(`${tabId}-tab`).classList.add('active');
-});
-});
-}
-
-// Swipe functionality for mobile - SADECE AYET PANELİNDE
-function setupSwipeEvents() {
 const verseDetailPanel = document.getElementById("verse-detail-panel");
 if (!verseDetailPanel) return;
 
-verseDetailPanel.addEventListener('touchstart', handleTouchStart, { passive: true });
-verseDetailPanel.addEventListener('touchmove', handleTouchMove, { passive: true });
-verseDetailPanel.addEventListener('touchend', handleTouchEnd, { passive: true });
+verseDetailPanel.addEventListener('touchstart', handleSwipeStart, { passive: true });
+verseDetailPanel.addEventListener('touchmove', handleSwipeMove, { passive: true });
+verseDetailPanel.addEventListener('touchend', handleSwipeEnd, { passive: true });
 }
 
-function handleTouchStart(e) {
-if (window.innerWidth > 768) return; // Only on mobile
-if (!isInVerseDetailPanel) return; // Only in verse detail panel
+function handleSwipeStart(e) {
+if (!isInVerseDetailPanel) return;
 
 touchStartX = e.touches[0].clientX;
 touchStartY = e.touches[0].clientY;
 isSwipeDetected = false;
 }
 
-function handleTouchMove(e) {
-if (window.innerWidth > 768) return; // Only on mobile
-if (!isInVerseDetailPanel) return; // Only in verse detail panel
-if (!touchStartX || !touchStartY) return;
+function handleSwipeMove(e) {
+if (!isInVerseDetailPanel) return;
 
 touchEndX = e.touches[0].clientX;
 touchEndY = e.touches[0].clientY;
 
-const deltaX = touchEndX - touchStartX;
-const deltaY = touchEndY - touchStartY;
+const deltaX = Math.abs(touchEndX - touchStartX);
+const deltaY = Math.abs(touchEndY - touchStartY);
 
-// Check if it's a horizontal swipe (more horizontal than vertical)
-if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-const swipeLeftIndicator = document.getElementById('swipe-left');
-const swipeRightIndicator = document.getElementById('swipe-right');
-
-if (deltaX > 0) {
-// Swiping right - show previous indicator
-swipeLeftIndicator.classList.add('show');
-swipeRightIndicator.classList.remove('show');
-} else {
-// Swiping left - show next indicator
-swipeRightIndicator.classList.add('show');
-swipeLeftIndicator.classList.remove('show');
-}
-
+// Only detect horizontal swipes
+if (deltaX > 50 && deltaX > deltaY * 2) {
 isSwipeDetected = true;
 }
 }
 
-function handleTouchEnd(e) {
-if (window.innerWidth > 768) return; // Only on mobile
-if (!isInVerseDetailPanel) return; // Only in verse detail panel
-if (!touchStartX || !touchStartY) return;
+function handleSwipeEnd(e) {
+if (!isInVerseDetailPanel || !isSwipeDetected) return;
 
-const swipeLeftIndicator = document.getElementById('swipe-left');
-const swipeRightIndicator = document.getElementById('swipe-right');
-
-// Hide indicators
-setTimeout(() => {
-swipeLeftIndicator.classList.remove('show');
-swipeRightIndicator.classList.remove('show');
-}, 200);
-
-if (isSwipeDetected) {
 const deltaX = touchEndX - touchStartX;
-const deltaY = touchEndY - touchStartY;
+const deltaY = Math.abs(touchEndY - touchStartY);
 
-// Check if it's a horizontal swipe (more horizontal than vertical)
-if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 100) {
+// Minimum swipe distance and ensure it's more horizontal than vertical
+if (Math.abs(deltaX) > 100 && Math.abs(deltaX) > deltaY * 2) {
 if (deltaX > 0) {
-// Swiped right - go to previous verse
-navigateVerse(currentSurahIndex, currentVerseIndex, -1);
+// Swipe right - previous verse
+navigateToPreviousVerse();
+showSwipeIndicator('left');
 } else {
-// Swiped left - go to next verse
-navigateVerse(currentSurahIndex, currentVerseIndex, 1);
-}
+// Swipe left - next verse
+navigateToNextVerse();
+showSwipeIndicator('right');
 }
 }
 
-// Reset touch coordinates
-touchStartX = 0;
-touchStartY = 0;
-touchEndX = 0;
-touchEndY = 0;
 isSwipeDetected = false;
 }
 
-function navigateVerse(surahIndex, verseIndex, direction) {
-let newSurahIndex = surahIndex;
-let newVerseIndex = verseIndex + direction;
-
-if (newVerseIndex < 0) {
-newSurahIndex--;
-if (newSurahIndex < 0) newSurahIndex = jsonData.surahs.length - 1;
-newVerseIndex = jsonData.surahs[newSurahIndex].verses.length - 1;
-} else if (newVerseIndex >= jsonData.surahs[surahIndex].verses.length) {
-newSurahIndex++;
-if (newSurahIndex >= jsonData.surahs.length) newSurahIndex = 0;
-newVerseIndex = 0;
+function showSwipeIndicator(direction) {
+const indicator = document.getElementById(`swipe-${direction}`);
+if (indicator) {
+indicator.classList.add('show');
+setTimeout(() => {
+indicator.classList.remove('show');
+}, 1000);
+}
 }
 
-const newSureName = getSurahName(jsonData.surahs[newSurahIndex].id);
-const newVerse = quranData[newSurahIndex].ayetler[newVerseIndex];
-const newSurahId = jsonData.surahs[newSurahIndex].id;
+function navigateToPreviousVerse() {
+if (currentVerseIndex > 0) {
+const currentSurah = quranData[currentSurahIndex];
+const newVerseIndex = currentVerseIndex - 1;
+const ayet = currentSurah.ayetler[newVerseIndex];
+displayVerseDetail(currentSurah.sure, ayet, newVerseIndex, currentSurahId);
+}
+}
 
-requestAnimationFrame(() => {
-displayVerseDetail(newSureName, newVerse, newVerseIndex, newSurahId);
+function navigateToNextVerse() {
+const currentSurah = quranData[currentSurahIndex];
+if (currentVerseIndex < currentSurah.ayetler.length - 1) {
+const newVerseIndex = currentVerseIndex + 1;
+const ayet = currentSurah.ayetler[newVerseIndex];
+displayVerseDetail(currentSurah.sure, ayet, newVerseIndex, currentSurahId);
+}
+}
+
+function setupTabSwitching() {
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabButtons.forEach(button => {
+button.addEventListener('click', () => {
+const targetTab = button.dataset.tab;
+
+// Remove active class from all buttons and contents
+tabButtons.forEach(btn => btn.classList.remove('active'));
+tabContents.forEach(content => content.classList.remove('active'));
+
+// Add active class to clicked button and corresponding content
+button.classList.add('active');
+const targetContent = document.getElementById(`${targetTab}-tab`);
+if (targetContent) {
+targetContent.classList.add('active');
+}
+});
 });
 }
 
-function toggleFavorite(surah, verse, button) {
+function toggleFavorite(button) {
+const surah = button.dataset.surah;
+const verseIndex = parseInt(button.dataset.verse);
+const surahId = parseInt(button.dataset.surahId);
+
 let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-const isFavorite = favorites.some((f) => f.surah === surah && f.verse === verse);
+const favoriteKey = `${surahId}-${verseIndex}`;
 
-if (isFavorite) {
-favorites = favorites.filter((f) => !(f.surah === surah && f.verse === verse));
-localStorage.setItem("favorites", JSON.stringify(favorites));
+const existingIndex = favorites.findIndex(fav => fav.key === favoriteKey);
+
+if (existingIndex > -1) {
+favorites.splice(existingIndex, 1);
 button.classList.remove("active");
-showNotification("Favorilerden kaldırıldı", "info");
+button.title = "Favorilere ekle";
+showNotification("Favorilerden çıkarıldı", "info");
 } else {
-const verseMatch = verse.match(/^(\d+)\./);
-const verseId = verseMatch ? parseInt(verseMatch[1]) : 1;
-
-const surahId = getSurahIdByName(surah) || 
-quranData.find(s => s.sure === surah)?.id || 1;
-
-favorites.push({ 
-surah, 
-verse,
-surahId,
-verseId
+const surahIndex = quranData.findIndex(s => s.sure === surah);
+if (surahIndex !== -1) {
+const verse = quranData[surahIndex].ayetler[verseIndex];
+favorites.push({
+key: favoriteKey,
+surah: surah,
+verse: verse,
+verseIndex: verseIndex,
+surahId: surahId,
+timestamp: Date.now()
 });
-localStorage.setItem("favorites", JSON.stringify(favorites));
 button.classList.add("active");
+button.title = "Favorilerden çıkar";
 showNotification("Favorilere eklendi", "success");
 }
-
-if (document.getElementById("favorites").style.display === "block") {
-displayFavorites();
 }
+
+localStorage.setItem("favorites", JSON.stringify(favorites));
+updateFavoriteButtons();
+}
+
+function updateFavoriteButtons() {
+const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+const favoriteKeys = favorites.map(fav => fav.key);
+
+document.querySelectorAll('.favorite-btn').forEach(btn => {
+const surahId = parseInt(btn.dataset.surahId);
+const verseIndex = parseInt(btn.dataset.verse);
+const favoriteKey = `${surahId}-${verseIndex}`;
+
+if (favoriteKeys.includes(favoriteKey)) {
+btn.classList.add("active");
+btn.title = "Favorilerden çıkar";
+} else {
+btn.classList.remove("active");
+btn.title = "Favorilere ekle";
+}
+});
 }
 
 function displayFavorites() {
@@ -6745,780 +6558,905 @@ const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 favoritesList.innerHTML = "";
 
 if (favorites.length === 0) {
-favoritesList.innerHTML = "<p style='text-align: center; margin: 40px 0; font-size: 1.1rem; opacity: 0.7;'>Henüz favori ayet eklenmemiş.</p>";
+favoritesList.innerHTML = "<p style='text-align: center; opacity: 0.7; font-style: italic;'>Henüz favori ayet eklenmemiş.</p>";
 } else {
 const fragment = document.createDocumentFragment();
 
-favorites.forEach((f, index) => {
-const verseElement = document.createElement("p");
-verseElement.className = "verse";
-verseElement.dataset.surah = f.surah;
-verseElement.dataset.verse = f.verse;
-verseElement.dataset.surahId = f.surahId || getSurahIdByName(f.surah);
+favorites.sort((a, b) => b.timestamp - a.timestamp).forEach(favorite => {
+const verseDiv = document.createElement("div");
+verseDiv.className = "verse";
+verseDiv.dataset.surah = favorite.surah;
+verseDiv.dataset.verseIndex = favorite.verseIndex;
+verseDiv.dataset.surahId = favorite.surahId;
 
-const verseMatch = f.verse.match(/^(\d+)\./);
-const verseId = verseMatch ? verseMatch[1] : "1";
-verseElement.dataset.verseId = verseId;
+const verseLink = document.createElement("a");
+verseLink.href = `#${favorite.surahId}-${favorite.verseIndex + 1}`;
+verseLink.className = "verse-link";
 
-const formattedVerse = formatVerseNumber(f.verse, f.surahId || getSurahIdByName(f.surah), verseId);
+let verseText = favorite.verse;
+if (verseNumberStyle === "bg") {
+const verseNumber = favorite.verseIndex + 1;
+const verseContent = favorite.verse.replace(/^\d+\.\s*/, '');
+verseText = `<span class="verse-number-bg">${verseNumber}</span>${verseContent}`;
+}
 
-verseElement.innerHTML = `
-<span><strong>${f.surah}:</strong> ${formattedVerse}</span>
-<span class="verse-actions">
-<button class="favorite-btn active" data-verse="${f.verse}" data-surah="${f.surah}" title="Favorilerden kaldır"><i class="fas fa-trash-alt"></i></button>
-<button class="copy-url-btn" data-surah-id="${f.surahId || getSurahIdByName(f.surah)}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
-</span>
+verseLink.innerHTML = `${favorite.surah}: ${verseText}`;
+
+const verseActions = document.createElement("div");
+verseActions.className = "verse-actions";
+verseActions.innerHTML = `
+<button class="favorite-btn active" data-surah="${favorite.surah}" data-verse="${favorite.verseIndex}" data-surah-id="${favorite.surahId}" title="Favorilerden çıkar">
+<i class="fas fa-star"></i>
+</button>
+<button class="copy-url-btn" data-surah-id="${favorite.surahId}" data-verse="${favorite.verseIndex + 1}" title="Linki kopyala">
+<i class="fas fa-link"></i>
+</button>
 `;
-fragment.appendChild(verseElement);
+
+verseDiv.appendChild(verseLink);
+verseDiv.appendChild(verseActions);
+fragment.appendChild(verseDiv);
 });
 
 favoritesList.appendChild(fragment);
 }
 
+favoritesDiv.style.display = "block";
+
 favoritesList.addEventListener("click", (e) => {
 const favoriteBtn = e.target.closest('.favorite-btn');
-const copyUrlBtn = e.target.closest('.copy-url-btn');
-const verse = e.target.closest('.verse');
-
 if (favoriteBtn) {
 e.stopPropagation();
-const verse = favoriteBtn.dataset.verse;
-const surah = favoriteBtn.dataset.surah;
-toggleFavorite(surah, verse, favoriteBtn);
-} else if (copyUrlBtn) {
+toggleFavorite(favoriteBtn);
+setTimeout(() => displayFavorites(), 100);
+return;
+}
+
+const copyBtn = e.target.closest('.copy-url-btn');
+if (copyBtn) {
 e.stopPropagation();
-const surahId = copyUrlBtn.dataset.surahId;
-const verseId = copyUrlBtn.dataset.verseId;
+const surahId = copyBtn.dataset.surahId;
+const verseId = copyBtn.dataset.verse;
 copyVerseUrl(surahId, verseId);
-} else if (verse && !e.target.closest('button') && !e.target.closest('a')) {
-e.stopPropagation();
-const surah = verse.dataset.surah;
-const verseText = verse.dataset.verse;
-const surahId = parseInt(verse.dataset.surahId);
-const verseId = parseInt(verse.dataset.verseId);
+return;
+}
 
+const verseDiv = e.target.closest('.verse');
+if (verseDiv && !e.target.closest('button') && !e.target.closest('a')) {
+const surah = verseDiv.dataset.surah;
+const verseIndex = parseInt(verseDiv.dataset.verseIndex);
+const surahId = parseInt(verseDiv.dataset.surahId);
+
+if (surah && verseIndex !== undefined && surahId) {
 const surahIndex = quranData.findIndex(s => s.sure === surah);
-if (surahIndex === -1) return;
-
-const verseIndex = verseId - 1;
-
-displayVerseDetail(surah, verseText, verseIndex, surahId);
+if (surahIndex !== -1) {
+const ayet = quranData[surahIndex].ayetler[verseIndex];
+displayVerseDetail(surah, ayet, verseIndex, surahId);
 favoritesDiv.style.display = "none";
 }
-});
 }
-
-function shareVerse(surah, verse, surahId, verseId) {
-const url = `${window.location.origin}${window.location.pathname}#${surahId}-${verseId}`;
-const text = `${surah}: ${verse} - Sadece Kuran
-${url}`;
-
-if (navigator.share) {
-navigator
-.share({
-title: "Sadece Kuran",
-text: text,
-url: url
-})
-.catch((err) => console.log("Paylaşım hatası:", err));
-} else {
-navigator.clipboard.writeText(text)
-.then(() => {
-showNotification('Metin kopyalandı');
-})
-.catch(err => {
-console.error('Kopyalama hatası:', err);
-showNotification("Paylaşım desteklenmiyor, metni manuel kopyalayın: " + text, "error");
-});
 }
+});
 }
 
 function copyVerseUrl(surahId, verseId) {
 const url = `${window.location.origin}${window.location.pathname}#${surahId}-${verseId}`;
 
-navigator.clipboard.writeText(url)
-.then(() => {
-showNotification('URL kopyalandı');
-})
-.catch(err => {
-console.error('URL kopyalama hatası:', err);
-showNotification("URL kopyalanamadı: " + url, "error");
+if (navigator.clipboard && navigator.clipboard.writeText) {
+navigator.clipboard.writeText(url).then(() => {
+showNotification("Ayet linki kopyalandı!", "success");
+}).catch(() => {
+fallbackCopyTextToClipboard(url);
 });
-}
-
-function showNotification(message, type = 'success') {
-const notification = document.createElement('div');
-notification.style.position = 'fixed';
-notification.style.bottom = '20px';
-notification.style.left = '50%';
-notification.style.transform = 'translateX(-50%)';
-notification.style.background = type === 'success' ? 'rgba(29, 161, 242, 0.9)' : 
-                     type === 'error' ? 'rgba(229, 62, 62, 0.9)' : 
-                     'rgba(156, 39, 176, 0.9)';
-notification.style.color = 'white';
-notification.style.padding = '10px 20px';
-notification.style.borderRadius = '5px';
-notification.style.zIndex = '1000';
-notification.style.fontSize = '0.9rem';
-notification.style.maxWidth = '300px';
-notification.style.textAlign = 'center';
-notification.textContent = message;
-document.body.appendChild(notification);
-
-setTimeout(() => {
-notification.style.opacity = '0';
-notification.style.transition = 'opacity 0.5s ease';
-setTimeout(() => {
-if (document.body.contains(notification)) {
-document.body.removeChild(notification);
-}
-}, 500);
-}, 2000);
-}
-
-// Notification permission and scheduling
-function requestNotificationPermission() {
-if ('Notification' in window && Notification.permission !== 'granted') {
-Notification.requestPermission().then(function(permission) {
-if (permission === 'granted') {
-notificationPermissionGranted = true;
-showNotification("Bildirimler etkinleştirildi!", "success");
-scheduleNotifications();
 } else {
-showNotification("Bildirim izni reddedildi", "error");
-}
-});
-} else if (Notification.permission === 'granted') {
-notificationPermissionGranted = true;
-scheduleNotifications();
+fallbackCopyTextToClipboard(url);
 }
 }
 
-function scheduleNotifications() {
-if (!notificationPermissionGranted || !dailyVerse) return;
+function fallbackCopyTextToClipboard(text) {
+const textArea = document.createElement("textarea");
+textArea.value = text;
+textArea.style.position = "fixed";
+textArea.style.left = "-999999px";
+textArea.style.top = "-999999px";
+document.body.appendChild(textArea);
+textArea.focus();
+textArea.select();
 
-// Clear existing notifications
-if ('serviceWorker' in navigator) {
-navigator.serviceWorker.ready.then(registration => {
-registration.getNotifications().then(notifications => {
-notifications.forEach(notification => notification.close());
-});
-});
+try {
+document.execCommand('copy');
+showNotification("Ayet linki kopyalandı!", "success");
+} catch (err) {
+showNotification("Link kopyalanamadı", "error");
 }
 
-// Schedule new notification
-const now = new Date();
-const notificationHour = getNotificationHour();
-const nextNotification = new Date(now);
-nextNotification.setHours(notificationHour, 0, 0, 0);
-
-if (nextNotification <= now) {
-nextNotification.setDate(nextNotification.getDate() + 1);
+document.body.removeChild(textArea);
 }
 
-const timeUntilNotification = nextNotification.getTime() - now.getTime();
-
-setTimeout(() => {
-sendDailyVerseNotification();
-// Schedule for next day
-setInterval(sendDailyVerseNotification, 24 * 60 * 60 * 1000);
-}, timeUntilNotification);
-}
-
-function getNotificationHour() {
-switch(notificationTime) {
-case 'morning': return 8;
-case 'noon': return 12;
-case 'evening': return 18;
-case 'night': return 21;
-default: return 8;
-}
-}
-
-function sendDailyVerseNotification() {
-if (!notificationPermissionGranted || !dailyVerse || !quranData.length) return;
-
-// Get random verse
-const randomSurah = quranData[Math.floor(Math.random() * quranData.length)];
-const randomVerse = randomSurah.ayetler[Math.floor(Math.random() * randomSurah.ayetler.length)];
-
-const notification = new Notification('Günlük Ayet - Sadece Kuran', {
-body: `${randomSurah.sure}: ${randomVerse.substring(0, 100)}...`,
-icon: '/logokuran2.jpg',
-badge: '/logokuran2.jpg',
-tag: 'daily-verse',
-requireInteraction: false
-});
-
-notification.onclick = function() {
-window.focus();
-const verseMatch = randomVerse.match(/^(\d+)\./);
-const verseId = verseMatch ? parseInt(verseMatch[1]) : 1;
-window.location.hash = `${randomSurah.id}-${verseId}`;
-notification.close();
-};
-}
-
-window.addEventListener('hashchange', async function() {
-await checkUrlHash();
-});
-
-async function checkUrlHash() {
+function checkUrlHash() {
 const hash = window.location.hash.substring(1);
+if (!hash) return;
 
-if (!hash) {
-isInVerseDetailPanel = false;
-return;
+const parts = hash.split('-');
+if (parts.length === 1) {
+// Sadece sure ID'si
+const surahId = parseInt(parts[0]);
+if (surahId >= 1 && surahId <= 114) {
+const surahIndex = quranData.findIndex(s => s.id === surahId);
+if (surahIndex !== -1) {
+const sure = quranData[surahIndex];
+displayVerses(sure.sure, sure.ayetler, sure.id);
+document.getElementById("surahs").style.display = "none";
+document.querySelector('.controls').style.display = "none";
 }
-
-if (!dataLoaded || !jsonData.surahs || jsonData.surahs.length === 0) {
-setTimeout(checkUrlHash, 200);
-return;
 }
+} else if (parts.length === 2) {
+// Sure ID'si ve ayet numarası
+const surahId = parseInt(parts[0]);
+const verseId = parseInt(parts[1]);
 
-if (hash === 'search') {
-showSearch();
-isInVerseDetailPanel = false;
-return;
-} else if (hash === 'favorites') {
-showFavorites();
-isInVerseDetailPanel = false;
-return;
-} else if (hash === 'settings') {
-showSettings();
-isInVerseDetailPanel = false;
-return;
-}
-
-const surahVerseMatch = hash.match(/^(\d+)-(\d+)$/);
-const surahMatch = hash.match(/^(\d+)$/);
-
-if (!allSurahsData) {
-allSurahsData = await loadAllSurahsData();
-}
-
-if (surahVerseMatch) {
-const surahId = parseInt(surahVerseMatch[1]);
-const verseId = parseInt(surahVerseMatch[2]);
-
-if (currentSurahId === surahId && currentVerseId === verseId) return;
-
-const surahIndex = surahId - 1;
-
-if (surahIndex >= 0 && surahIndex < quranData.length) {
+if (surahId >= 1 && surahId <= 114 && verseId >= 1) {
+const surahIndex = quranData.findIndex(s => s.id === surahId);
+if (surahIndex !== -1) {
 const sure = quranData[surahIndex];
 const verseIndex = verseId - 1;
 
 if (verseIndex >= 0 && verseIndex < sure.ayetler.length) {
 const ayet = sure.ayetler[verseIndex];
 displayVerseDetail(sure.sure, ayet, verseIndex, surahId);
-
 document.getElementById("surahs").style.display = "none";
-document.getElementById("favorites").style.display = "none";
-document.getElementById("podcasts").style.display = "none";
-document.getElementById("settings").style.display = "none";
-document.getElementById("search-page").classList.remove("active");
 document.querySelector('.controls').style.display = "none";
 }
 }
-} else if (surahMatch) {
-const surahId = parseInt(surahMatch[1]);
-
-if (currentSurahId === surahId && currentVerseId === 0) return;
-
-const surahIndex = surahId - 1;
-
-if (surahIndex >= 0 && surahIndex < quranData.length) {
-const sure = quranData[surahIndex];
-displayVerses(sure.sure, sure.ayetler, surahId);
-
-document.getElementById("surahs").style.display = "none";
-document.getElementById("verse-detail-panel").classList.remove("active");
-document.getElementById("favorites").style.display = "none";
-document.getElementById("podcasts").style.display = "none";
-document.getElementById("settings").style.display = "none";
-document.getElementById("search-page").classList.remove("active");
-document.querySelector('.controls').style.display = "none";
-isInVerseDetailPanel = false;
 }
 }
 }
 
-function updateActiveTab(id) {
+function showNotification(message, type = "info") {
+// Create notification element
+const notification = document.createElement("div");
+notification.className = `notification ${type}`;
+notification.textContent = message;
+
+// Style the notification
+Object.assign(notification.style, {
+position: "fixed",
+top: "20px",
+right: "20px",
+padding: "12px 20px",
+borderRadius: "8px",
+color: "white",
+fontWeight: "500",
+zIndex: "10000",
+transform: "translateX(100%)",
+transition: "transform 0.3s ease",
+maxWidth: "300px",
+wordWrap: "break-word"
+});
+
+// Set background color based on type
+switch(type) {
+case "success":
+notification.style.backgroundColor = "#4caf50";
+break;
+case "error":
+notification.style.backgroundColor = "#f44336";
+break;
+case "warning":
+notification.style.backgroundColor = "#ff9800";
+break;
+default:
+notification.style.backgroundColor = "#2196f3";
+}
+
+document.body.appendChild(notification);
+
+// Animate in
+setTimeout(() => {
+notification.style.transform = "translateX(0)";
+}, 10);
+
+// Animate out and remove
+setTimeout(() => {
+notification.style.transform = "translateX(100%)";
+setTimeout(() => {
+if (notification.parentNode) {
+notification.parentNode.removeChild(notification);
+}
+}, 300);
+}, 3000);
+}
+
+function setupNavigation() {
+// Desktop navigation
+const homeNavDesktop = document.getElementById("home-nav-desktop");
+const searchNavDesktop = document.getElementById("search-nav-desktop");
+const favoritesNavDesktop = document.getElementById("favorites-nav-desktop");
+const mealWritersNavDesktop = document.getElementById("meal-writers-nav-desktop");
+const podcastsNavDesktop = document.getElementById("podcasts-nav-desktop");
+const settingsNavDesktop = document.getElementById("settings-nav-desktop");
+
+// Mobile navigation
+const homeNav = document.getElementById("home-nav");
+const searchNav = document.getElementById("search-nav");
+const favoritesNav = document.getElementById("favorites-nav");
+const settingsNav = document.getElementById("settings-nav");
+const homeBtn = document.getElementById("home-btn");
+
+// Desktop navigation events
+if (homeNavDesktop) {
+homeNavDesktop.addEventListener("click", () => {
+showHome();
+setActiveNav("home", true);
+});
+}
+
+if (searchNavDesktop) {
+searchNavDesktop.addEventListener("click", () => {
+showSearchPage();
+setActiveNav("search", true);
+});
+}
+
+if (favoritesNavDesktop) {
+favoritesNavDesktop.addEventListener("click", () => {
+displayFavorites();
+hideAllSections();
+setActiveNav("favorites", true);
+});
+}
+
+if (mealWritersNavDesktop) {
+mealWritersNavDesktop.addEventListener("click", () => {
+showMealWriters();
+setActiveNav("meal-writers", true);
+});
+}
+
+if (podcastsNavDesktop) {
+podcastsNavDesktop.addEventListener("click", () => {
+showPodcasts();
+setActiveNav("podcasts", true);
+});
+}
+
+if (settingsNavDesktop) {
+settingsNavDesktop.addEventListener("click", () => {
+showSettings();
+setActiveNav("settings", true);
+});
+}
+
+// Mobile navigation events
+if (homeNav) {
+homeNav.addEventListener("click", () => {
+showHome();
+setActiveNav("home", false);
+});
+}
+
+if (searchNav) {
+searchNav.addEventListener("click", () => {
+showSearchPage();
+setActiveNav("search", false);
+});
+}
+
+if (favoritesNav) {
+favoritesNav.addEventListener("click", () => {
+displayFavorites();
+hideAllSections();
+setActiveNav("favorites", false);
+});
+}
+
+if (settingsNav) {
+settingsNav.addEventListener("click", () => {
+showSettings();
+setActiveNav("settings", false);
+});
+}
+
+if (homeBtn) {
+homeBtn.addEventListener("click", () => {
+showHome();
+setActiveNav("home", false);
+});
+}
+}
+
+function setActiveNav(activeItem, isDesktop) {
+if (isDesktop) {
+// Desktop navigation
 document.querySelectorAll('.sidebar .nav-item').forEach(item => {
 item.classList.remove('active');
 });
-if (document.getElementById(`${id}-nav-desktop`)) {
-document.getElementById(`${id}-nav-desktop`).classList.add('active');
-}
 
+const activeElement = document.getElementById(`${activeItem}-nav-desktop`);
+if (activeElement) {
+activeElement.classList.add('active');
+}
+} else {
+// Mobile navigation
 document.querySelectorAll('.bottom-nav-item').forEach(item => {
 item.classList.remove('active');
 });
-if (document.getElementById(`${id}-nav`)) {
-document.getElementById(`${id}-nav`).classList.add('active');
+
+const activeElement = document.getElementById(`${activeItem}-nav`);
+if (activeElement) {
+activeElement.classList.add('active');
 }
 }
-
-// Keyboard navigation
-function setupKeyboardNavigation() {
-document.addEventListener('keydown', function(e) {
-const verseDetailPanel = document.getElementById("verse-detail-panel");
-
-if (!verseDetailPanel.classList.contains('active')) return;
-
-if (e.key === 'ArrowLeft') {
-e.preventDefault();
-navigateVerse(currentSurahIndex, currentVerseIndex, -1);
-} else if (e.key === 'ArrowRight') {
-e.preventDefault();
-navigateVerse(currentSurahIndex, currentVerseIndex, 1);
 }
-});
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-try {
-const response = await fetch("kuran_mealleri.json");
-if (!response.ok) {
-throw new Error(`JSON dosyası yüklenemedi: ${response.status}`);
-}
-jsonData = await response.json();
-loadAuthors(jsonData);
-await loadQuranData(selectedAuthor);
-
-allSurahsData = await loadAllSurahsData();
-
-applyTheme(currentTheme);
-applySettings();
-setupKeyboardNavigation();
-setupMobileLongPress();
-setupAuthorSorting();
-initializeAudio();
-
-// Initialize notifications if enabled
-if (dailyVerse) {
-requestNotificationPermission();
-}
-} catch (error) {
-console.error("Başlangıçta hata:", error);
-showNotification("Uygulama başlatılırken bir hata oluştu: " + error.message, "error");
-}
-
-document.getElementById("author-select").addEventListener("change", async (e) => {
-selectedAuthor = e.target.value;
-if (selectedAuthor) {
-await loadQuranData(selectedAuthor);
-document.getElementById("surahs").style.display = "block";
-document.getElementById("verse-panel").classList.remove("active");
-document.getElementById("verse-detail-panel").classList.remove("active");
-document.getElementById("favorites").style.display = "none";
-document.getElementById("podcasts").style.display = "none";
-document.getElementById("settings").style.display = "none";
-document.querySelector('.controls').style.display = "flex";
-isInVerseDetailPanel = false;
-}
-});
-
-document.getElementById("close-panel").addEventListener("click", () => {
-showHome();
-});
-
-document.getElementById("back-btn").addEventListener("click", () => {
-const panel = document.getElementById("verse-detail-panel");
-const versePanel = document.getElementById("verse-panel");
-const favoritesDiv = document.getElementById("favorites");
-
-panel.classList.remove("active");
-isInVerseDetailPanel = false;
-
-if (favoritesDiv.style.display === "block") {
-favoritesDiv.style.display = "block";
-} else {
-versePanel.classList.add("active");
-if (currentSurahId > 0) {
-window.location.hash = `${currentSurahId}`;
-currentVerseId = 0;
-}
-}
-});
-
-// Audio event listeners
-document.getElementById("surah-audio-btn").addEventListener("click", () => {
-if (currentSurahId) {
-playAudio(currentSurahId);
-}
-});
-
-document.getElementById("verse-audio-btn").addEventListener("click", () => {
-if (currentSurahId) {
-playAudio(currentSurahId);
-}
-});
-
-document.getElementById("show-favorites").addEventListener("click", () => {
-showFavorites();
-});
-
-document.getElementById("back-to-surahs").addEventListener("click", () => {
-showHome();
-});
-
-document.getElementById("search-nav-desktop").addEventListener("click", () => {
-showSearch();
-});
-
-document.getElementById("search-nav").addEventListener("click", () => {
-showSearch();
-});
-
-document.querySelector(".search-page-back").addEventListener("click", () => {
-document.getElementById("search-page").classList.remove("active");
-history.pushState("", document.title, window.location.pathname);
-});
-
-document.querySelectorAll(".example-search").forEach(item => {
-item.addEventListener("click", () => {
-const searchTerm = item.textContent.replace(/[#\s]/g, '').trim();
-document.getElementById("search-page-input").value = searchTerm;
-displaySearchResults(searchTerm);
-});
-});
-
-document.getElementById("favorites-nav-desktop").addEventListener("click", () => {
-showFavorites();
-});
-
-document.getElementById("favorites-nav").addEventListener("click", () => {
-showFavorites();
-});
-
-// Meal writers navigation - BÜYÜK EKRANLAR İÇİN
-document.getElementById("meal-writers-nav-desktop").addEventListener("click", () => {
-window.location.href = "mealyazarlar.html";
-});
-
-document.getElementById("podcasts-nav-desktop").addEventListener("click", () => {
-showPodcasts();
-});
-
-document.getElementById("settings-nav-desktop").addEventListener("click", () => {
-showSettings();
-});
-
-document.getElementById("settings-nav").addEventListener("click", () => {
-showSettings();
-});
-
-document.getElementById("home-nav-desktop").addEventListener("click", () => {
-showHome();
-});
-
-document.getElementById("home-nav").addEventListener("click", () => {
-showHome();
-});
-
-document.getElementById("home-btn").addEventListener("click", () => {
-showHome();
-});
-
-setupSettingsEventListeners();
-});
 
 function showHome() {
-document.getElementById("search").value = "";
-
-document.getElementById("surahs").style.display = "block";
-document.querySelector('.controls').style.display = "flex";
-
-document.getElementById("verse-panel").classList.remove("active");
-document.getElementById("verse-detail-panel").classList.remove("active");
-document.getElementById("favorites").style.display = "none";
-document.getElementById("podcasts").style.display = "none";
-document.getElementById("settings").style.display = "none";
-document.getElementById("search-page").classList.remove("active");
+hideAllSections();
+document.getElementById("surahs").style.display = "grid";
+document.querySelector('.controls').style.display = "block";
 document.getElementById("main-search-results").classList.remove("active");
-
-updateActiveTab('home');
-
-history.pushState("", document.title, window.location.pathname);
-currentSurahId = 0;
-currentVerseId = 0;
 isInVerseDetailPanel = false;
-
-displaySurahs(quranData);
+history.pushState(null, null, window.location.pathname);
 }
 
-function showSearch() {
-document.getElementById("search-page").classList.add("active");
-document.getElementById("search-page-input").focus();
-updateActiveTab('search');
-document.querySelector('.controls').style.display = "none";
-window.location.hash = "search";
+function showSearchPage() {
+hideAllSections();
+const searchPage = document.getElementById("search-page");
+searchPage.classList.add("active");
 isInVerseDetailPanel = false;
+
+// Focus on search input
+setTimeout(() => {
+const searchInput = document.getElementById("search-page-input");
+if (searchInput) {
+searchInput.focus();
+}
+}, 100);
 }
 
-function showFavorites() {
-document.getElementById("surahs").style.display = "none";
-document.getElementById("verse-panel").classList.remove("active");
-document.getElementById("verse-detail-panel").classList.remove("active");
-document.getElementById("favorites").style.display = "block";
-document.getElementById("podcasts").style.display = "none";
-document.getElementById("settings").style.display = "none";
-displayFavorites();
-updateActiveTab('favorites');
-document.querySelector('.controls').style.display = "none";
-window.location.hash = "favorites";
-isInVerseDetailPanel = false;
+function showMealWriters() {
+// This would show a page about meal writers
+showNotification("Meal yazarları sayfası yakında eklenecek", "info");
 }
 
 function showPodcasts() {
-document.getElementById("surahs").style.display = "none";
-document.getElementById("verse-panel").classList.remove("active");
-document.getElementById("verse-detail-panel").classList.remove("active");
-document.getElementById("favorites").style.display = "none";
+hideAllSections();
 document.getElementById("podcasts").style.display = "block";
-document.getElementById("settings").style.display = "none";
-updateActiveTab('podcasts');
-
-document.querySelector('.controls').style.display = "none";
-history.pushState("", document.title, window.location.pathname);
-currentSurahId = 0;
-currentVerseId = 0;
 isInVerseDetailPanel = false;
 }
 
 function showSettings() {
+hideAllSections();
+document.getElementById("settings").style.display = "block";
+isInVerseDetailPanel = false;
+}
+
+function hideAllSections() {
 document.getElementById("surahs").style.display = "none";
-document.getElementById("verse-panel").classList.remove("active");
+document.querySelector('.controls').style.display = "none";
+document.getElementById("main-search-results").classList.remove("active");
+document.getElementById("verse-panel").style.display = "none";
 document.getElementById("verse-detail-panel").classList.remove("active");
+document.getElementById("verse-detail-panel").style.display = "none";
 document.getElementById("favorites").style.display = "none";
 document.getElementById("podcasts").style.display = "none";
-document.getElementById("settings").style.display = "block";
-updateActiveTab('settings');
-document.querySelector('.controls').style.display = "none";
-window.location.hash = "settings";
-isInVerseDetailPanel = false;
+document.getElementById("settings").style.display = "none";
+document.getElementById("search-page").classList.remove("active");
 }
 
-function debounce(func, wait) {
-let timeout;
-return function(...args) {
-clearTimeout(timeout);
-timeout = setTimeout(() => func.apply(this, args), wait);
-};
+function setupSearchPage() {
+const searchPageInput = document.getElementById("search-page-input");
+const searchPageBack = document.querySelector(".search-page-back");
+const searchResults = document.getElementById("search-results");
+const exampleSearches = document.querySelectorAll(".example-search");
+
+if (searchPageBack) {
+searchPageBack.addEventListener("click", () => {
+showHome();
+setActiveNav("home", window.innerWidth > 768);
+});
 }
 
-const debouncedSearch = debounce(function(e) {
-const searchTerm = e.target.value.trim();
-if (searchTerm === "") {
-document.getElementById("main-search-results").classList.remove("active");
-document.getElementById("surahs").style.display = "grid";
-document.getElementById("verse-detail-panel").classList.remove("active");
-isInVerseDetailPanel = false;
-} else {
-displayMainSearchResults(searchTerm);
-}
-document.getElementById("verse-panel").classList.remove("active");
+if (searchPageInput) {
+let searchTimeout;
+searchPageInput.addEventListener("input", (e) => {
+clearTimeout(searchTimeout);
+searchTimeout = setTimeout(() => {
+performDetailedSearch(e.target.value);
 }, 300);
+});
+}
 
-document.getElementById("search").addEventListener("input", debouncedSearch);
+exampleSearches.forEach(example => {
+example.addEventListener("click", () => {
+const searchTerm = example.textContent.replace('#', '').trim();
+if (searchPageInput) {
+searchPageInput.value = searchTerm;
+performDetailedSearch(searchTerm);
+}
+});
+});
+}
 
-const debouncedPageSearch = debounce(function(e) {
-const searchTerm = e.target.value.trim();
-if (searchTerm === "") {
-document.getElementById("search-results").innerHTML = "<p>Arama yapmak için bir kelime yazın.</p>";
+function performDetailedSearch(searchTerm) {
+const searchResults = document.getElementById("search-results");
+searchResults.innerHTML = "";
+
+if (!searchTerm || searchTerm.length < 2) {
+return;
+}
+
+const fragment = document.createDocumentFragment();
+let resultCount = 0;
+const maxResults = 100;
+
+// Search through all verses
+quranData.forEach((sure, surahIndex) => {
+sure.ayetler.forEach((ayet, verseIndex) => {
+if (ayet.toLowerCase().includes(searchTerm.toLowerCase()) && resultCount < maxResults) {
+const verseElement = document.createElement("div");
+verseElement.className = "verse-result";
+
+const verseLink = document.createElement("a");
+verseLink.href = `#${sure.id}-${verseIndex + 1}`;
+verseLink.className = "verse-link";
+verseLink.innerHTML = `${sure.sure} ${verseIndex + 1}: ${highlightText(ayet, searchTerm)}`;
+
+verseElement.appendChild(verseLink);
+verseElement.dataset.surah = sure.sure;
+verseElement.dataset.verseIndex = verseIndex;
+verseElement.dataset.surahId = sure.id;
+fragment.appendChild(verseElement);
+resultCount++;
+}
+});
+});
+
+if (resultCount === 0) {
+searchResults.innerHTML = "<p>Arama sonucu bulunamadı.</p>";
 } else {
-displaySearchResults(searchTerm);
-}
-}, 300);
-
-document.getElementById("search-page-input").addEventListener("input", debouncedPageSearch);
-
-function applySettings() {
-applyHighlightColor(highlightColor);
-
-updateFontSize();
-
-if (defaultAuthor && defaultAuthor !== selectedAuthor) {
-selectedAuthor = defaultAuthor;
-const authorSelect = document.getElementById("author-select");
-if (authorSelect.querySelector(`option[value="${defaultAuthor}"]`)) {
-authorSelect.value = defaultAuthor;
-loadQuranData(defaultAuthor);
+searchResults.appendChild(fragment);
+if (resultCount >= maxResults) {
+const moreResults = document.createElement("p");
+moreResults.textContent = `${maxResults} sonuç gösteriliyor. Daha fazla sonuç için aramanızı daraltın.`;
+moreResults.style.fontStyle = "italic";
+moreResults.style.textAlign = "center";
+moreResults.style.marginTop = "20px";
+searchResults.appendChild(moreResults);
 }
 }
 
-document.getElementById("verse-number-style").value = verseNumberStyle;
+// Add click event listener
+searchResults.addEventListener("click", (e) => {
+const verseResult = e.target.closest('.verse-result');
+if (verseResult) {
+const surah = verseResult.dataset.surah;
+const verseIndex = parseInt(verseResult.dataset.verseIndex);
+const surahId = parseInt(verseResult.dataset.surahId);
 
-document.getElementById("arabic-display-mode").value = arabicDisplayMode;
-
-document.getElementById("word-analysis-toggle").checked = showWordAnalysis;
-
-// Load notification settings
-document.getElementById("daily-verse-toggle").checked = dailyVerse;
-document.getElementById("notification-time").value = notificationTime;
-document.getElementById("auto-scroll-toggle").checked = autoScroll;
-document.getElementById("scroll-speed").value = scrollSpeed;
-document.getElementById("offline-toggle").checked = offlineMode;
-document.getElementById("search-history-toggle").checked = searchHistory;
+if (surah && verseIndex !== undefined && surahId) {
+const surahIndex = quranData.findIndex(s => s.sure === surah);
+if (surahIndex !== -1) {
+const ayet = quranData[surahIndex].ayetler[verseIndex];
+displayVerseDetail(surah, ayet, verseIndex, surahId);
+showHome();
+setActiveNav("home", window.innerWidth > 768);
+}
+}
+}
+});
 }
 
-function applyHighlightColor(color) {
-document.documentElement.style.setProperty('--highlight-dark', color);
-document.documentElement.style.setProperty('--highlight-light', color);
-}
-
-function updateFontSize() {
-document.getElementById("font-size-value").textContent = fontSize + "%";
-document.documentElement.style.setProperty('--verse-font-size', fontSize + "%");
-}
-
-function setupSettingsEventListeners() {
+function setupSettings() {
 // Theme selection
 document.querySelectorAll('.theme-option').forEach(option => {
-option.addEventListener('click', function() {
-const theme = this.dataset.theme;
+option.addEventListener('click', () => {
+const theme = option.dataset.theme;
 applyTheme(theme);
 });
 });
 
-document.querySelectorAll(".color-option").forEach(option => {
-option.addEventListener("click", function() {
-document.querySelectorAll(".color-option").forEach(opt => opt.classList.remove("active"));
-this.classList.add("active");
-highlightColor = this.dataset.color;
-localStorage.setItem("highlightColor", highlightColor);
-applyHighlightColor(highlightColor);
+// Color selection
+document.querySelectorAll('.color-option').forEach(option => {
+option.addEventListener('click', () => {
+const color = option.dataset.color;
+setHighlightColor(color);
 });
 });
 
-document.getElementById("decrease-font").addEventListener("click", function() {
+// Font size controls
+const decreaseFontBtn = document.getElementById('decrease-font');
+const increaseFontBtn = document.getElementById('increase-font');
+const fontSizeValue = document.getElementById('font-size-value');
+
+if (decreaseFontBtn) {
+decreaseFontBtn.addEventListener('click', () => {
 if (fontSize > 70) {
 fontSize -= 10;
 updateFontSize();
-localStorage.setItem("fontSize", fontSize);
 }
 });
+}
 
-document.getElementById("increase-font").addEventListener("click", function() {
+if (increaseFontBtn) {
+increaseFontBtn.addEventListener('click', () => {
 if (fontSize < 150) {
 fontSize += 10;
 updateFontSize();
-localStorage.setItem("fontSize", fontSize);
 }
 });
+}
 
-document.getElementById("verse-number-style").addEventListener("change", function(e) {
+// Settings toggles and selects
+const verseNumberStyleSelect = document.getElementById('verse-number-style');
+const arabicDisplaySelect = document.getElementById('arabic-display-mode');
+const defaultAuthorSelect = document.getElementById('default-author');
+const autoScrollToggle = document.getElementById('auto-scroll-toggle');
+const scrollSpeedSlider = document.getElementById('scroll-speed');
+const wordAnalysisToggle = document.getElementById('word-analysis-toggle');
+const dailyVerseToggle = document.getElementById('daily-verse-toggle');
+const notificationTimeSelect = document.getElementById('notification-time');
+const offlineToggle = document.getElementById('offline-toggle');
+const searchHistoryToggle = document.getElementById('search-history-toggle');
+const clearDataBtn = document.getElementById('clear-data-btn');
+const feedbackBtn = document.getElementById('feedback-btn');
+const appBtn = document.getElementById('app-btn');
+
+if (verseNumberStyleSelect) {
+verseNumberStyleSelect.value = verseNumberStyle;
+verseNumberStyleSelect.addEventListener('change', (e) => {
 verseNumberStyle = e.target.value;
-localStorage.setItem("verseNumberStyle", verseNumberStyle);
-showNotification("Ayet numarası stili değiştirildi");
+localStorage.setItem('verseNumberStyle', verseNumberStyle);
+showNotification('Ayet numarası stili güncellendi', 'success');
 });
-
-document.getElementById("arabic-display-mode").addEventListener("change", function(e) {
-arabicDisplayMode = e.target.value;
-localStorage.setItem("arabicDisplayMode", arabicDisplayMode);
-showNotification("Arapça metin görünümü değiştirildi");
-});
-
-document.getElementById("word-analysis-toggle").addEventListener("change", function(e) {
-showWordAnalysis = e.target.checked;
-localStorage.setItem("showWordAnalysis", showWordAnalysis);
-showNotification("Kelime analizi görünümü " + (showWordAnalysis ? "etkinleştirildi" : "devre dışı bırakıldı"));
-});
-
-document.getElementById("default-author").addEventListener("change", function(e) {
-defaultAuthor = e.target.value;
-localStorage.setItem("defaultAuthor", defaultAuthor);
-showNotification("Varsayılan meal değiştirildi: " + defaultAuthor);
-
-if (defaultAuthor !== selectedAuthor) {
-selectedAuthor = defaultAuthor;
-document.getElementById("author-select").value = defaultAuthor;
-loadQuranData(defaultAuthor);
 }
-});
 
-document.getElementById("auto-scroll-toggle").addEventListener("change", function(e) {
+if (arabicDisplaySelect) {
+arabicDisplaySelect.value = arabicDisplayMode;
+arabicDisplaySelect.addEventListener('change', (e) => {
+arabicDisplayMode = e.target.value;
+localStorage.setItem('arabicDisplayMode', arabicDisplayMode);
+showNotification('Arapça metin görünümü güncellendi', 'success');
+});
+}
+
+if (defaultAuthorSelect) {
+defaultAuthorSelect.value = defaultAuthor;
+defaultAuthorSelect.addEventListener('change', (e) => {
+defaultAuthor = e.target.value;
+selectedAuthor = defaultAuthor;
+localStorage.setItem('defaultAuthor', defaultAuthor);
+document.getElementById('author-select').value = selectedAuthor;
+showNotification('Varsayılan meal güncellendi', 'success');
+});
+}
+
+if (autoScrollToggle) {
+autoScrollToggle.checked = autoScroll;
+autoScrollToggle.addEventListener('change', (e) => {
 autoScroll = e.target.checked;
-localStorage.setItem("autoScroll", autoScroll);
+localStorage.setItem('autoScroll', autoScroll);
 });
+}
 
-document.getElementById("scroll-speed").addEventListener("input", function(e) {
-scrollSpeed = e.target.value;
-localStorage.setItem("scrollSpeed", scrollSpeed);
+if (scrollSpeedSlider) {
+scrollSpeedSlider.value = scrollSpeed;
+scrollSpeedSlider.addEventListener('input', (e) => {
+scrollSpeed = parseInt(e.target.value);
+localStorage.setItem('scrollSpeed', scrollSpeed);
 });
+}
 
-document.getElementById("daily-verse-toggle").addEventListener("change", function(e) {
+if (wordAnalysisToggle) {
+wordAnalysisToggle.checked = showWordAnalysis;
+wordAnalysisToggle.addEventListener('change', (e) => {
+showWordAnalysis = e.target.checked;
+localStorage.setItem('showWordAnalysis', showWordAnalysis);
+});
+}
+
+if (dailyVerseToggle) {
+dailyVerseToggle.checked = dailyVerse;
+dailyVerseToggle.addEventListener('change', (e) => {
 dailyVerse = e.target.checked;
-localStorage.setItem("dailyVerse", dailyVerse);
+localStorage.setItem('dailyVerse', dailyVerse);
 if (dailyVerse) {
 requestNotificationPermission();
-} else {
-// Clear scheduled notifications
-if ('serviceWorker' in navigator) {
-navigator.serviceWorker.ready.then(registration => {
-registration.getNotifications().then(notifications => {
- notifications.forEach(notification => notification.close());
-});
-});
-}
 }
 });
+}
 
-document.getElementById("notification-time").addEventListener("change", function(e) {
+if (notificationTimeSelect) {
+notificationTimeSelect.value = notificationTime;
+notificationTimeSelect.addEventListener('change', (e) => {
 notificationTime = e.target.value;
-localStorage.setItem("notificationTime", notificationTime);
-if (dailyVerse && notificationPermissionGranted) {
-scheduleNotifications();
-}
+localStorage.setItem('notificationTime', notificationTime);
 });
+}
 
-document.getElementById("offline-toggle").addEventListener("change", function(e) {
+if (offlineToggle) {
+offlineToggle.checked = offlineMode;
+offlineToggle.addEventListener('change', (e) => {
 offlineMode = e.target.checked;
-localStorage.setItem("offlineMode", offlineMode);
+localStorage.setItem('offlineMode', offlineMode);
 });
-
-document.getElementById("search-history-toggle").addEventListener("change", function(e) {
-searchHistory = e.target.checked;
-localStorage.setItem("searchHistory", searchHistory);
-if (!searchHistory) {
-localStorage.removeItem("searchHistoryData");
 }
-});
 
-document.getElementById("clear-data-btn").addEventListener("click", function() {
-if (confirm("Tüm uygulama verilerini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.")) {
+if (searchHistoryToggle) {
+searchHistoryToggle.checked = searchHistory;
+searchHistoryToggle.addEventListener('change', (e) => {
+searchHistory = e.target.checked;
+localStorage.setItem('searchHistory', searchHistory);
+});
+}
+
+if (clearDataBtn) {
+clearDataBtn.addEventListener('click', () => {
+if (confirm('Tüm veriler silinecek. Emin misiniz?')) {
 clearAllData();
 }
 });
+}
 
-document.getElementById("feedback-btn").addEventListener("click", function() {
-window.location.href = "mailto:info@sadecekuran.com.tr?subject=Sadece Kuran Uygulama Geri Bildirimi";
+if (feedbackBtn) {
+feedbackBtn.addEventListener('click', () => {
+window.open('mailto:feedback@sadecekuran.com.tr?subject=Sadece Kuran Geri Bildirim', '_blank');
 });
+}
 
-document.getElementById("app-btn").addEventListener("click", function() {
-showNotification("Mobil uygulama yakında mağazalarda!", "info");
+if (appBtn) {
+appBtn.addEventListener('click', () => {
+showNotification('Mobil uygulama yakında mağazalarda!', 'info');
 });
+}
 
-document.getElementById("theme-toggle").addEventListener("click", cycleTheme);
+// Initialize settings display
+updateFontSizeDisplay();
+updateThemeSelection();
+updateColorSelection();
+}
+
+function setHighlightColor(color) {
+highlightColor = color;
+localStorage.setItem('highlightColor', color);
+
+// Update CSS custom properties
+document.documentElement.style.setProperty('--highlight-dark', color);
+document.documentElement.style.setProperty('--highlight-light', color);
+
+// Update color selection
+updateColorSelection();
+showNotification('Tema rengi güncellendi', 'success');
+}
+
+function updateColorSelection() {
+document.querySelectorAll('.color-option').forEach(option => {
+option.classList.remove('active');
+if (option.dataset.color === highlightColor) {
+option.classList.add('active');
+}
+});
+}
+
+function updateFontSize() {
+document.documentElement.style.setProperty('--verse-font-size', `${fontSize}%`);
+localStorage.setItem('fontSize', fontSize);
+updateFontSizeDisplay();
+}
+
+function updateFontSizeDisplay() {
+const fontSizeValue = document.getElementById('font-size-value');
+if (fontSizeValue) {
+fontSizeValue.textContent = `${fontSize}%`;
+}
+}
+
+function requestNotificationPermission() {
+if ('Notification' in window) {
+Notification.requestPermission().then(permission => {
+if (permission === 'granted') {
+notificationPermissionGranted = true;
+showNotification('Bildirim izni verildi', 'success');
+} else {
+showNotification('Bildirim izni reddedildi', 'warning');
+}
+});
+}
 }
 
 function clearAllData() {
-const themeValue = localStorage.getItem("currentTheme");
-const highlightValue = localStorage.getItem("highlightColor");
-const verseNumberStyleValue = localStorage.getItem("verseNumberStyle");
-localStorage.clear();
-localStorage.setItem("currentTheme", themeValue);
-localStorage.setItem("highlightColor", highlightValue);
-localStorage.setItem("verseNumberStyle", verseNumberStyleValue);
+// Clear localStorage
+const keysToKeep = ['currentTheme', 'highlightColor'];
+const allKeys = Object.keys(localStorage);
 
-showNotification("Tüm veriler temizlendi");
+allKeys.forEach(key => {
+if (!keysToKeep.includes(key)) {
+localStorage.removeItem(key);
+}
+});
 
+// Reset variables to defaults
+fontSize = 100;
+verseNumberStyle = 'bg';
+arabicDisplayMode = 'tab';
+showWordAnalysis = true;
+defaultAuthor = 'Mehmet Okuyan';
+selectedAuthor = defaultAuthor;
+autoScroll = false;
+scrollSpeed = 5;
+dailyVerse = false;
+notificationTime = 'morning';
+offlineMode = true;
+searchHistory = true;
+authorOrder = [];
+
+// Reload the page
+showNotification('Tüm veriler temizlendi. Sayfa yenileniyor...', 'success');
 setTimeout(() => {
 window.location.reload();
-}, 1500);
+}, 2000);
+}
+
+function initializeApp() {
+// Apply saved theme
+applyTheme(currentTheme);
+
+// Apply saved highlight color
+if (highlightColor !== '#1da1f2') {
+setHighlightColor(highlightColor);
+}
+
+// Apply saved font size
+updateFontSize();
+
+// Set default author
+selectedAuthor = defaultAuthor;
+
+// Initialize audio
+initializeAudio();
+
+// Setup event listeners
+setupNavigation();
+setupSearchPage();
+setupSettings();
+setupTabSwitching();
+setupAuthorSorting();
+setupMobileLongPress();
+
+// Load initial data
+loadQuranData(selectedAuthor);
+
+// Setup main search
+const searchInput = document.getElementById("search");
+const authorSelect = document.getElementById("author-select");
+const showFavoritesBtn = document.getElementById("show-favorites");
+const backToSurahsBtn = document.getElementById("back-to-surahs");
+const closePanelBtn = document.getElementById("close-panel");
+const backBtn = document.getElementById("back-btn");
+const themeToggle = document.getElementById("theme-toggle");
+const prevVerseBtn = document.getElementById("prev-verse-btn");
+const nextVerseBtn = document.getElementById("next-verse-btn");
+const surahAudioBtn = document.getElementById("surah-audio-btn");
+const verseAudioBtn = document.getElementById("verse-audio-btn");
+
+if (searchInput) {
+let searchTimeout;
+searchInput.addEventListener("input", (e) => {
+clearTimeout(searchTimeout);
+searchTimeout = setTimeout(() => {
+displayMainSearchResults(e.target.value);
+}, 300);
+});
+}
+
+if (authorSelect) {
+authorSelect.addEventListener("change", async (e) => {
+selectedAuthor = e.target.value;
+if (selectedAuthor) {
+await loadQuranData(selectedAuthor);
+}
+});
+}
+
+if (showFavoritesBtn) {
+showFavoritesBtn.addEventListener("click", () => {
+displayFavorites();
+hideAllSections();
+setActiveNav("favorites", window.innerWidth > 768);
+});
+}
+
+if (backToSurahsBtn) {
+backToSurahsBtn.addEventListener("click", () => {
+showHome();
+setActiveNav("home", window.innerWidth > 768);
+});
+}
+
+if (closePanelBtn) {
+closePanelBtn.addEventListener("click", () => {
+showHome();
+setActiveNav("home", window.innerWidth > 768);
+});
+}
+
+if (backBtn) {
+backBtn.addEventListener("click", () => {
+const versePanel = document.getElementById("verse-panel");
+const verseDetailPanel = document.getElementById("verse-detail-panel");
+
+verseDetailPanel.classList.remove("active");
+verseDetailPanel.style.display = "none";
+versePanel.style.display = "block";
+isInVerseDetailPanel = false;
+
+// Update URL to surah only
+const newUrl = `#${currentSurahId}`;
+history.pushState(null, null, newUrl);
+});
+}
+
+if (themeToggle) {
+themeToggle.addEventListener("click", cycleTheme);
+}
+
+if (prevVerseBtn) {
+prevVerseBtn.addEventListener("click", navigateToPreviousVerse);
+}
+
+if (nextVerseBtn) {
+nextVerseBtn.addEventListener("click", navigateToNextVerse);
+}
+
+if (surahAudioBtn) {
+surahAudioBtn.addEventListener("click", () => {
+if (currentSurahId) {
+playAudio(currentSurahId);
+}
+});
+}
+
+if (verseAudioBtn) {
+verseAudioBtn.addEventListener("click", () => {
+if (currentSurahId) {
+playAudio(currentSurahId);
+}
+});
+}
+
+// Handle browser back/forward
+window.addEventListener('popstate', () => {
+if (dataLoaded) {
+checkUrlHash();
+}
+});
+
+// Handle page visibility change for audio
+document.addEventListener('visibilitychange', () => {
+if (document.hidden && isAudioPlaying) {
+// Page is hidden, keep audio playing
+} else if (!document.hidden) {
+// Page is visible again
+updateAudioButtons();
+}
+});
+
+// Prevent default link behavior for verse links
+document.addEventListener('click', (e) => {
+const verseLink = e.target.closest('.verse-link');
+if (verseLink) {
+e.preventDefault();
+// The hash will be handled by the existing click handlers
+}
+});
+
+console.log("Sadece Kuran uygulaması başlatıldı");
+}
+
+// Initialize the app when DOM is loaded
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+initializeApp();
 }
 </script>
 </body>

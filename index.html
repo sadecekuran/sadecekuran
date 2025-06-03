@@ -543,6 +543,528 @@ body.eye-mode #loading-bar .progress {
 background: var(--highlight-eye);
 }
 
+/* Audio Controls Styles */
+.audio-controls {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.audio-btn {
+background: none;
+border: 1px solid var(--accent-dark);
+color: var(--text-dark);
+font-size: 0.9rem;
+cursor: pointer;
+padding: 8px 12px;
+border-radius: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+transition: all 0.2s var(--transition-function);
+min-width: 40px;
+height: 36px;
+}
+
+body.day-mode .audio-btn {
+border-color: var(--accent-light);
+color: var(--text-light);
+}
+
+body.black-mode .audio-btn {
+border-color: var(--accent-black);
+color: var(--text-black);
+}
+
+body.eye-mode .audio-btn {
+border-color: var(--accent-eye);
+color: var(--text-eye);
+}
+
+.audio-btn:hover {
+background-color: var(--accent-dark);
+border-color: var(--highlight-dark);
+}
+
+body.day-mode .audio-btn:hover {
+background-color: var(--accent-light);
+border-color: var(--highlight-light);
+}
+
+body.black-mode .audio-btn:hover {
+background-color: var(--accent-black);
+border-color: var(--highlight-black);
+}
+
+body.eye-mode .audio-btn:hover {
+background-color: var(--accent-eye);
+border-color: var(--highlight-eye);
+}
+
+.audio-btn.playing {
+background-color: var(--highlight-dark);
+border-color: var(--highlight-dark);
+color: white;
+}
+
+body.black-mode .audio-btn.playing {
+background-color: var(--highlight-black);
+border-color: var(--highlight-black);
+}
+
+body.eye-mode .audio-btn.playing {
+background-color: var(--highlight-eye);
+border-color: var(--highlight-eye);
+}
+
+.audio-btn:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+}
+
+/* Audio Player Styles - ENHANCED FOR MOBILE */
+.audio-player {
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(135deg, var(--secondary-dark), var(--accent-dark));
+border-top: 1px solid var(--accent-dark);
+padding: 15px 20px;
+z-index: 100;
+transform: translateY(100%);
+transition: transform 0.3s var(--transition-function);
+backdrop-filter: blur(10px);
+box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.day-mode .audio-player {
+background: linear-gradient(135deg, var(--secondary-light), var(--accent-light));
+border-top: 1px solid var(--accent-light);
+box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+}
+
+body.black-mode .audio-player {
+background: linear-gradient(135deg, var(--secondary-black), var(--accent-black));
+border-top: 1px solid var(--accent-black);
+box-shadow: 0 -5px 20px rgba(255, 255, 255, 0.1);
+}
+
+body.eye-mode .audio-player {
+background: linear-gradient(135deg, var(--secondary-eye), var(--accent-eye));
+border-top: 1px solid var(--accent-eye);
+box-shadow: 0 -5px 20px rgba(255, 255, 255, 0.05);
+}
+
+.audio-player.active {
+transform: translateY(0);
+}
+
+.audio-player-content {
+display: flex;
+align-items: center;
+gap: 15px;
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.audio-info {
+flex: 1;
+min-width: 0;
+}
+
+.audio-title {
+font-size: 1rem;
+font-weight: 600;
+color: var(--text-dark);
+margin-bottom: 4px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+body.day-mode .audio-title {
+color: var(--text-light);
+}
+
+body.black-mode .audio-title {
+color: var(--text-black);
+}
+
+body.eye-mode .audio-title {
+color: var(--text-eye);
+}
+
+.audio-subtitle {
+font-size: 0.8rem;
+color: var(--text-dark);
+opacity: 0.7;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+body.day-mode .audio-subtitle {
+color: var(--text-light);
+}
+
+body.black-mode .audio-subtitle {
+color: var(--text-black);
+}
+
+body.eye-mode .audio-subtitle {
+color: var(--text-eye);
+}
+
+.audio-controls-main {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.audio-control-btn {
+background: none;
+border: none;
+color: var(--text-dark);
+font-size: 1.3rem;
+cursor: pointer;
+padding: 12px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s var(--transition-function);
+width: 50px;
+height: 50px;
+}
+
+body.day-mode .audio-control-btn {
+color: var(--text-light);
+}
+
+body.black-mode .audio-control-btn {
+color: var(--text-black);
+}
+
+body.eye-mode .audio-control-btn {
+color: var(--text-eye);
+}
+
+.audio-control-btn:hover {
+background-color: var(--accent-dark);
+color: var(--highlight-dark);
+}
+
+body.day-mode .audio-control-btn:hover {
+background-color: var(--accent-light);
+color: var(--highlight-light);
+}
+
+body.black-mode .audio-control-btn:hover {
+background-color: var(--accent-black);
+color: var(--highlight-black);
+}
+
+body.eye-mode .audio-control-btn:hover {
+background-color: var(--accent-eye);
+color: var(--highlight-eye);
+}
+
+.audio-play-btn {
+background-color: var(--highlight-dark);
+color: white;
+font-size: 1.5rem;
+width: 60px;
+height: 60px;
+}
+
+body.black-mode .audio-play-btn {
+background-color: var(--highlight-black);
+}
+
+body.eye-mode .audio-play-btn {
+background-color: var(--highlight-eye);
+}
+
+.audio-play-btn:hover {
+background-color: var(--highlight-dark);
+transform: scale(1.05);
+}
+
+body.black-mode .audio-play-btn:hover {
+background-color: var(--highlight-black);
+}
+
+body.eye-mode .audio-play-btn:hover {
+background-color: var(--highlight-eye);
+}
+
+.audio-progress-container {
+flex: 1;
+display: flex;
+flex-direction: column;
+gap: 8px;
+min-width: 200px;
+}
+
+.audio-progress {
+width: 100%;
+height: 8px;
+background-color: var(--accent-dark);
+border-radius: 4px;
+overflow: hidden;
+cursor: pointer;
+position: relative;
+}
+
+body.day-mode .audio-progress {
+background-color: var(--accent-light);
+}
+
+body.black-mode .audio-progress {
+background-color: var(--accent-black);
+}
+
+body.eye-mode .audio-progress {
+background-color: var(--accent-eye);
+}
+
+.audio-progress-bar {
+height: 100%;
+background-color: var(--highlight-dark);
+border-radius: 4px;
+width: 0%;
+transition: width 0.1s ease;
+position: relative;
+}
+
+body.black-mode .audio-progress-bar {
+background-color: var(--highlight-black);
+}
+
+body.eye-mode .audio-progress-bar {
+background-color: var(--highlight-eye);
+}
+
+.audio-progress-bar::after {
+content: '';
+position: absolute;
+right: -8px;
+top: 50%;
+transform: translateY(-50%);
+width: 16px;
+height: 16px;
+background-color: var(--highlight-dark);
+border-radius: 50%;
+opacity: 0;
+transition: opacity 0.2s ease;
+}
+
+body.black-mode .audio-progress-bar::after {
+background-color: var(--highlight-black);
+}
+
+body.eye-mode .audio-progress-bar::after {
+background-color: var(--highlight-eye);
+}
+
+.audio-progress:hover .audio-progress-bar::after {
+opacity: 1;
+}
+
+.audio-time {
+display: flex;
+justify-content: space-between;
+font-size: 0.75rem;
+color: var(--text-dark);
+opacity: 0.7;
+}
+
+body.day-mode .audio-time {
+color: var(--text-light);
+}
+
+body.black-mode .audio-time {
+color: var(--text-black);
+}
+
+body.eye-mode .audio-time {
+color: var(--text-eye);
+}
+
+.audio-volume {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.volume-slider {
+width: 80px;
+height: 6px;
+background-color: var(--accent-dark);
+border-radius: 3px;
+outline: none;
+cursor: pointer;
+-webkit-appearance: none;
+}
+
+body.day-mode .volume-slider {
+background-color: var(--accent-light);
+}
+
+body.black-mode .volume-slider {
+background-color: var(--accent-black);
+}
+
+body.eye-mode .volume-slider {
+background-color: var(--accent-eye);
+}
+
+.volume-slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background-color: var(--highlight-dark);
+cursor: pointer;
+}
+
+body.black-mode .volume-slider::-webkit-slider-thumb {
+background-color: var(--highlight-black);
+}
+
+body.eye-mode .volume-slider::-webkit-slider-thumb {
+background-color: var(--highlight-eye);
+}
+
+.volume-slider::-moz-range-thumb {
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background-color: var(--highlight-dark);
+cursor: pointer;
+border: none;
+}
+
+body.black-mode .volume-slider::-moz-range-thumb {
+background-color: var(--highlight-black);
+}
+
+body.eye-mode .volume-slider::-moz-range-thumb {
+background-color: var(--highlight-eye);
+}
+
+.audio-close-btn {
+color: var(--text-dark);
+opacity: 0.7;
+font-size: 1.2rem;
+}
+
+body.day-mode .audio-close-btn {
+color: var(--text-light);
+}
+
+body.black-mode .audio-close-btn {
+color: var(--text-black);
+}
+
+body.eye-mode .audio-close-btn {
+color: var(--text-eye);
+}
+
+.audio-close-btn:hover {
+opacity: 1;
+color: #e53e3e;
+}
+
+/* Mobile Audio Player Adjustments - ENHANCED */
+@media (max-width: 768px) {
+.audio-player {
+padding: 14px 30px;
+padding-bottom: -3px; /* Space for bottom navigation */
+}
+
+.audio-player-content {
+flex-direction: column;
+gap: 15px;
+}
+
+.audio-info {
+text-align: center;
+order: 1;
+}
+
+.audio-controls-main {
+order: 2;
+justify-content: center;
+gap: 20px;
+}
+
+.audio-progress-container {
+order: 3;
+min-width: auto;
+width: 100%;
+}
+
+.audio-progress {
+height: 12px; /* Bigger progress bar */
+}
+
+.audio-progress-bar::after {
+width: 20px;
+height: 20px;
+right: -10px;
+}
+
+.audio-volume {
+display: none; /* Hide volume on mobile */
+}
+
+.audio-close-btn {
+position: absolute;
+top: 15px;
+right: 15px;
+}
+
+.audio-title {
+font-size: 1.1rem;
+}
+
+.audio-subtitle {
+font-size: 0.85rem;
+}
+
+.audio-control-btn {
+width: 55px;
+height: 55px;
+font-size: 1.4rem;
+}
+
+.audio-play-btn {
+width: 70px;
+height: 70px;
+font-size: 1.8rem;
+}
+
+.audio-time {
+font-size: 0.85rem;
+margin-top: 5px;
+}
+
+/* Adjust content padding when audio player is active */
+body.audio-playing .content {
+padding-bottom: 200px;
+}
+}
+
+/* Desktop Audio Player Adjustments */
+@media (min-width: 769px) {
+body.audio-playing .content {
+padding-bottom: 120px;
+}
+}
+
 /* Surah List */
 #surahs {
 display: grid;
@@ -558,6 +1080,10 @@ border-radius: 12px;
 cursor: pointer;
 transition: all 0.2s var(--transition-function);
 border: 1px solid var(--accent-dark);
+position: relative;
+display: flex;
+align-items: center;
+justify-content: space-between;
 }
 
 body.day-mode .surah {
@@ -598,7 +1124,42 @@ border-color: var(--highlight-eye);
 .surah h2 {
 font-size: 1.1rem;
 font-weight: 500;
-margin-bottom: 5px;
+margin: 0;
+flex: 1;
+}
+
+.surah-audio-controls {
+display: flex;
+align-items: center;
+opacity: 0;
+transition: opacity 0.2s var(--transition-function);
+}
+
+.surah:hover .surah-audio-controls {
+opacity: 1;
+}
+
+/* Mobile için sure audio controls her zaman görünür */
+@media (max-width: 768px) {
+.surah {
+flex-direction: row;
+align-items: center;
+gap: 25px;
+}
+
+.surah h2 {
+flex: 1;
+}
+
+.surah-audio-controls {
+opacity: 1;
+position: static;
+}
+
+#surahs {
+grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+gap: 12px;
+}
 }
 
 .verse-result {
@@ -695,6 +1256,33 @@ border-bottom: 1px solid var(--accent-black);
 
 body.eye-mode #verse-panel h3 {
 border-bottom: 1px solid var(--accent-eye);
+}
+
+.verse-panel-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 20px;
+padding-bottom: 10px;
+border-bottom: 1px solid var(--accent-dark);
+}
+
+body.day-mode .verse-panel-header {
+border-bottom: 1px solid var(--accent-light);
+}
+
+body.black-mode .verse-panel-header {
+border-bottom: 1px solid var(--accent-black);
+}
+
+body.eye-mode .verse-panel-header {
+border-bottom: 1px solid var(--accent-eye);
+}
+
+.verse-panel-title {
+display: flex;
+align-items: center;
+gap: 10px;
 }
 
 #close-panel {
@@ -1134,8 +1722,16 @@ border-bottom-color: var(--highlight-eye);
 .verse-navigation-buttons {
 display: flex;
 justify-content: flex-end;
+align-items: center;
 gap: 15px;
 margin: 20px 0;
+}
+
+.verse-navigation-audio {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-right: auto;
 }
 
 .nav-btn {
@@ -1297,10 +1893,19 @@ display: block;
 }
 
 /* Navigasyon butonları mobilde - KÜÇÜLTÜLDÜ VE SAĞ TARAFA HİZALANDI */
-.verse-navigation-buttons {
+@media (max-width: 1023px) {
+  .verse-navigation-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 20px 0;
+    gap: 8px;
+  }
+}
+
+.verse-navigation-audio {
 display: flex;
-justify-content: flex-end;
-margin: 20px 0;
+align-items: center;
 gap: 8px;
 }
 
@@ -1779,7 +2384,7 @@ body.eye-mode .reset-sort-btn:hover {
 background-color: var(--highlight-eye);
 }
 
-/* Favorites - YENİ TASARIM */
+/* Favorites - YENİ TASARIM VE DÜZELTİLMİŞ FONKSİYON */
 #favorites {
 background-color: var(--secondary-dark);
 border-radius: 12px;
@@ -3021,10 +3626,6 @@ padding: 15px;
 padding-bottom: 80px;
 }
 
-#surahs {
-grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-}
-
 .search-page-container {
 flex-direction: column;
 }
@@ -3707,10 +4308,17 @@ opacity: 1;
 <div id="surahs"></div>
 
 <div id="verse-panel">
-<h3>
+<div class="verse-panel-header">
+<div class="verse-panel-title">
 <button id="close-panel"><i class="fas fa-arrow-left"></i></button>
 <span id="panel-title"></span>
-</h3>
+</div>
+<div class="audio-controls">
+<button id="surah-audio-btn" class="audio-btn" title="Sureyi dinle">
+<i class="fas fa-play"></i>
+</button>
+</div>
+</div>
 <div id="verses"></div>
 </div>
 
@@ -3725,39 +4333,43 @@ opacity: 1;
 <div class="verse-content-container">
 <!-- Sol sidebar - Diğer Mealler (sadece büyük ekranlarda) -->
 <div class="verse-left-sidebar">
-    <div class="sidebar-title">
-        DİĞER MEALLER
-        <button class="sort-authors-btn" id="sort-authors-btn">
-            <i class="fas fa-sort"></i> Sırala
-        </button>
-    </div>
-    <div id="other-translations" class="other-translations"></div>
+<div class="sidebar-title">
+DİĞER MEALLER
+<button class="sort-authors-btn" id="sort-authors-btn">
+    <i class="fas fa-sort"></i> Sırala
+</button>
+</div>
+<div id="other-translations" class="other-translations"></div>
 </div>
 
 <!-- Ana içerik -->
-<div class="verse-main-content">
-<!-- Meal (Türkçe çeviri) -->
+<div class="verse-main-content"><!-- Meal (Türkçe çeviri) -->
 <div class="verse-section">
-    <div id="selected-translation" class="selected-translation"></div>
+<div id="selected-translation" class="selected-translation"></div>
 </div>
 
 <!-- Arapça metin -->
 <div class="verse-section">
-    <div id="arabic-text" class="arabic-text"></div>
+<div id="arabic-text" class="arabic-text"></div>
 </div>
 
 <!-- Türkçe okunuş -->
 <div class="verse-section">
-    <div class="transcription">
-        <span class="transcription-label">T.:</span>
-        <span id="transcription-tr"></span>
-    </div>
+<div class="transcription">
+<span class="transcription-label">T.:</span>
+<span id="transcription-tr"></span>
+</div>
 </div>
 
 <!-- Navigasyon butonları -->
 <div class="verse-navigation-buttons">
-    <button id="prev-verse-btn" class="nav-btn"><i class="fas fa-chevron-left"></i> Önceki</button>
-    <button id="next-verse-btn" class="nav-btn">Sonraki <i class="fas fa-chevron-right"></i></button>
+<div class="verse-navigation-audio">
+<button id="verse-audio-btn" class="audio-btn" title="Ayeti dinle">
+    OYNAT<i class="fas fa-play"></i>
+</button>
+</div>
+<button id="prev-verse-btn" class="nav-btn"><i class="fas fa-chevron-left"></i> Önceki</button>
+<button id="next-verse-btn" class="nav-btn">Sonraki <i class="fas fa-chevron-right"></i></button>
 </div>
 </div>
 
@@ -3765,8 +4377,8 @@ opacity: 1;
 <div class="verse-right-sidebar">
 <h4 class="sidebar-title">KELİME ANALİZİ</h4>
 <div class="word-analysis">
-    <div id="word-list" class="word-list"></div>
-    <div id="word-detail" class="word-detail"></div>
+<div id="word-list" class="word-list"></div>
+<div id="word-detail" class="word-detail"></div>
 </div>
 </div>
 </div>
@@ -3775,14 +4387,14 @@ opacity: 1;
 <div class="tab-container">
 <div class="tab-buttons">
 <div class="tab-header">
-    <button class="tab-button active" data-tab="other-translations">
-        DİĞER MEALLER
-    </button>
-    <button class="sort-authors-btn" id="sort-authors-btn-mobile">
-        <i class="fas fa-sort"></i>
-    </button>
+<button class="tab-button active" data-tab="other-translations">
+MEALLER
+</button>
+<button class="sort-authors-btn" id="sort-authors-btn-mobile">
+<i class="fas fa-sort"></i>
+</button>
 </div>
-<button class="tab-button" data-tab="word-analysis">Kelime Analizi</button>
+<button class="tab-button" data-tab="word-analysis">KELİME ANALİZİ</button>
 </div>
 
 <!-- Diğer Mealler sekmesi -->
@@ -3793,8 +4405,8 @@ opacity: 1;
 <!-- Kelime Analizi sekmesi -->
 <div class="tab-content" id="word-analysis-tab">
 <div class="word-analysis">
-    <div id="word-list-mobile" class="word-list"></div>
-    <div id="word-detail-mobile" class="word-detail"></div>
+<div id="word-list-mobile" class="word-list"></div>
+<div id="word-detail-mobile" class="word-detail"></div>
 </div>
 </div>
 </div>
@@ -3806,7 +4418,7 @@ opacity: 1;
 <div class="author-sort-header">
 <h3 class="author-sort-title">Meal Yazarları Sıralaması</h3>
 <button class="close-sort-panel" id="close-sort-panel">
-    <i class="fas fa-times"></i>
+<i class="fas fa-times"></i>
 </button>
 </div>
 
@@ -3816,10 +4428,10 @@ opacity: 1;
 
 <div class="sort-actions">
 <button class="sort-btn reset-sort-btn" id="reset-sort-btn">
-    <i class="fas fa-undo"></i> Sıfırla
+<i class="fas fa-undo"></i> Sıfırla
 </button>
 <button class="sort-btn save-sort-btn" id="save-sort-btn">
-    <i class="fas fa-save"></i> Kaydet
+<i class="fas fa-save"></i> Kaydet
 </button>
 </div>
 </div>
@@ -3835,7 +4447,7 @@ opacity: 1;
 <h2><i class="fas fa-podcast"></i> Podcastler</h2>
 
 <div class="podcast-container">
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3RRKc1JEyzLSkBjfut5EwH?utm_source=generator" width="100%" height="156" title="Sadece Kuran Podcast" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3RRKc1JEyzLSkBjfut5EwH?utm_source=generator" width="100%" height="156" title="Sadece Kuran Podcast" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 </div>
 </div>
@@ -3849,80 +4461,80 @@ opacity: 1;
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Tema Modu</span>
-    <span>Karanlık, tam siyah, göz dostu veya açık tema seçin</span>
+<span>Tema Modu</span>
+<span>Karanlık, tam siyah, göz dostu veya açık tema seçin</span>
 </div>
 <div class="theme-mode-selection">
-    <div class="theme-option" data-theme="dark">
-        <i class="fas fa-moon"></i> Karanlık
-    </div>
-    <div class="theme-option" data-theme="black">
-        <i class="fas fa-circle"></i> Tam Siyah
-    </div>
-    <div class="theme-option" data-theme="eye">
-        <i class="fas fa-eye"></i> Göz Dostu
-    </div>
-    <div class="theme-option" data-theme="day">
-        <i class="fas fa-sun"></i> Açık
-    </div>
+<div class="theme-option" data-theme="dark">
+<i class="fas fa-moon"></i> Karanlık
+</div>
+<div class="theme-option" data-theme="black">
+<i class="fas fa-circle"></i> Tam Siyah
+</div>
+<div class="theme-option" data-theme="eye">
+<i class="fas fa-eye"></i> Göz Dostu
+</div>
+<div class="theme-option" data-theme="day">
+<i class="fas fa-sun"></i> Açık
+</div>
 </div>
 </div>
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Tema Rengi</span>
-    <span>Uygulamanın vurgu rengini seçin</span>
+<span>Tema Rengi</span>
+<span>Uygulamanın vurgu rengini seçin</span>
 </div>
 <div class="color-options">
-    <div class="color-option active" style="background-color: #1da1f2;" data-color="#1da1f2"></div>
-    <div class="color-option" style="background-color: #4caf50;" data-color="#4caf50"></div>
-    <div class="color-option" style="background-color: #f44336;" data-color="#f44336"></div>
-    <div class="color-option" style="background-color: #9c27b0;" data-color="#9c27b0"></div>
-    <div class="color-option" style="background-color: #ff9800;" data-color="#ff9800"></div>
-    <div class="color-option" style="background-color: #7b7675;" data-color="#7b7675"></div>
+<div class="color-option active" style="background-color: #1da1f2;" data-color="#1da1f2"></div>
+<div class="color-option" style="background-color: #4caf50;" data-color="#4caf50"></div>
+<div class="color-option" style="background-color: #f44336;" data-color="#f44336"></div>
+<div class="color-option" style="background-color: #9c27b0;" data-color="#9c27b0"></div>
+<div class="color-option" style="background-color: #ff9800;" data-color="#ff9800"></div>
+<div class="color-option" style="background-color: #7b7675;" data-color="#7b7675"></div>
 </div>
 </div>
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Yazı Boyutu</span>
-    <span>Ayet metinlerinin boyutunu ayarlayın</span>
+<span>Yazı Boyutu</span>
+<span>Ayet metinlerinin boyutunu ayarlayın</span>
 </div>
 <div class="font-size-control">
-    <button class="font-size-btn" id="decrease-font"><i class="fas fa-minus"></i></button>
-    <span class="font-size-value" id="font-size-value">100%</span>
-    <button class="font-size-btn" id="increase-font"><i class="fas fa-plus"></i></button>
+<button class="font-size-btn" id="decrease-font"><i class="fas fa-minus"></i></button>
+<span class="font-size-value" id="font-size-value">100%</span>
+<button class="font-size-btn" id="increase-font"><i class="fas fa-plus"></i></button>
 </div>
 </div>
 
 <!-- Ayet Numarası Stili Ayarı -->
 <div class="setting-item">
 <div class="setting-label">
-    <span>Ayet Numarası Stili</span>
-    <span>Ayet numaralarının görünümünü seçin</span>
+<span>Ayet Numarası Stili</span>
+<span>Ayet numaralarının görünümünü seçin</span>
 </div>
 <div class="custom-select">
-    <select id="verse-number-style">
-        <option value="default">Varsayılan</option>
-        <option value="bg" selected>Soluk Arka Plan</option>
-        <option value="bold">Kalın ve Renkli</option>
-        <option value="underline">Altı Çizgili</option>
-    </select>
+<select id="verse-number-style">
+<option value="default">Varsayılan</option>
+<option value="bg" selected>Soluk Arka Plan</option>
+<option value="bold">Kalın ve Renkli</option>
+<option value="underline">Altı Çizgili</option>
+</select>
 </div>
 </div>
 
 <!-- Arapça Metin Görünümü Ayarı -->
 <div class="setting-item">
 <div class="setting-label">
-    <span>Arapça Metin Görünümü</span>
-    <span>Arapça metin gösterim tercihini seçin</span>
+<span>Arapça Metin Görünümü</span>
+<span>Arapça metin gösterim tercihini seçin</span>
 </div>
 <div class="custom-select">
-    <select id="arabic-display-mode">
-        <option value="always">Her Zaman Göster</option>
-        <option value="tab" selected>Sekme Olarak Göster</option>
-        <option value="never">Gösterme</option>
-    </select>
+<select id="arabic-display-mode">
+<option value="always">Her Zaman Göster</option>
+<option value="tab" selected>Sekme Olarak Göster</option>
+<option value="never">Gösterme</option>
+</select>
 </div>
 </div>
 </div>
@@ -3932,49 +4544,49 @@ opacity: 1;
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Varsayılan Meal</span>
-    <span>Tercih ettiğiniz meali seçin</span>
+<span>Varsayılan Meal</span>
+<span>Tercih ettiğiniz meali seçin</span>
 </div>
 <div class="custom-select">
-    <select id="default-author">
-        <option value="Mehmet Okuyan">Mehmet Okuyan</option>
-        <option value="Mustafa İslamoğlu">Mustafa İslamoğlu</option>
-        <option value="Yaşar Nuri Öztürk">Yaşar Nuri Öztürk</option>
-        <option value="Edip Yüksel">Edip Yüksel</option>
-        <option value="Diyanet Vakfı">Diyanet Vakfı</option>
-    </select>
+<select id="default-author">
+<option value="Mehmet Okuyan">Mehmet Okuyan</option>
+<option value="Mustafa İslamoğlu">Mustafa İslamoğlu</option>
+<option value="Yaşar Nuri Öztürk">Yaşar Nuri Öztürk</option>
+<option value="Edip Yüksel">Edip Yüksel</option>
+<option value="Diyanet Vakfı">Diyanet Vakfı</option>
+</select>
 </div>
 </div>
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Otomatik Kaydırma</span>
-    <span>Uzun surelerde otomatik kaydırma</span>
+<span>Otomatik Kaydırma</span>
+<span>Uzun surelerde otomatik kaydırma</span>
 </div>
 <label class="toggle-switch">
-    <input type="checkbox" id="auto-scroll-toggle">
-    <span class="toggle-slider"></span>
+<input type="checkbox" id="auto-scroll-toggle">
+<span class="toggle-slider"></span>
 </label>
 </div>
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Kaydırma Hızı</span>
-    <span>Otomatik kaydırma hızını ayarlayın</span>
+<span>Kaydırma Hızı</span>
+<span>Otomatik kaydırma hızını ayarlayın</span>
 </div>
 <div class="range-slider">
-    <input type="range" min="1" max="10" value="5" id="scroll-speed">
+<input type="range" min="1" max="10" value="5" id="scroll-speed">
 </div>
 </div>
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Kelime Analizi</span>
-    <span>Ayet detayında kelime analizi göster</span>
+<span>Kelime Analizi</span>
+<span>Ayet detayında kelime analizi göster</span>
 </div>
 <label class="toggle-switch">
-    <input type="checkbox" id="word-analysis-toggle" checked>
-    <span class="toggle-slider"></span>
+<input type="checkbox" id="word-analysis-toggle" checked>
+<span class="toggle-slider"></span>
 </label>
 </div>
 </div>
@@ -3984,27 +4596,27 @@ opacity: 1;
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Günlük Ayet Bildirimleri</span>
-    <span>Her gün rastgele bir ayet bildirimi alın</span>
+<span>Günlük Ayet Bildirimleri</span>
+<span>Her gün rastgele bir ayet bildirimi alın</span>
 </div>
 <label class="toggle-switch">
-    <input type="checkbox" id="daily-verse-toggle">
-    <span class="toggle-slider"></span>
+<input type="checkbox" id="daily-verse-toggle">
+<span class="toggle-slider"></span>
 </label>
 </div>
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Bildirim Zamanı</span>
-    <span>Günlük ayet bildiriminin zamanını seçin</span>
+<span>Bildirim Zamanı</span>
+<span>Günlük ayet bildiriminin zamanını seçin</span>
 </div>
 <div class="custom-select">
-    <select id="notification-time">
-        <option value="morning">Sabah (08:00)</option>
-        <option value="noon">Öğle (12:00)</option>
-        <option value="evening">Akşam (18:00)</option>
-        <option value="night">Gece (21:00)</option>
-    </select>
+<select id="notification-time">
+    <option value="morning">Sabah (08:00)</option>
+    <option value="noon">Öğle (12:00)</option>
+    <option value="evening">Akşam (18:00)</option>
+    <option value="night">Gece (21:00)</option>
+</select>
 </div>
 </div>
 </div>
@@ -4014,23 +4626,23 @@ opacity: 1;
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Çevrimdışı Kullanım</span>
-    <span>İnternetsiz kullanım için verileri kaydet</span>
+<span>Çevrimdışı Kullanım</span>
+<span>İnternetsiz kullanım için verileri kaydet</span>
 </div>
 <label class="toggle-switch">
-    <input type="checkbox" id="offline-toggle" checked>
-    <span class="toggle-slider"></span>
+<input type="checkbox" id="offline-toggle" checked>
+<span class="toggle-slider"></span>
 </label>
 </div>
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Arama Geçmişi</span>
-    <span>Arama geçmişinizi kaydet</span>
+<span>Arama Geçmişi</span>
+<span>Arama geçmişinizi kaydet</span>
 </div>
 <label class="toggle-switch">
-    <input type="checkbox" id="search-history-toggle" checked>
-    <span class="toggle-slider"></span>
+<input type="checkbox" id="search-history-toggle" checked>
+<span class="toggle-slider"></span>
 </label>
 </div>
 
@@ -4044,15 +4656,15 @@ opacity: 1;
 
 <button class="settings-btn" id="app-btn">
 <svg class="button-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <!-- Örnek bir Android simgesi SVG'si -->
-    <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.86 3.11c-.2.2-.2.51 0 .71.2.2.51.2.71 0l1.3-1.3C10.66 2.19 11.32 2 12 2c.68 0 1.34.19 1.91.54zM12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8z"/>
+<!-- Örnek bir Android simgesi SVG'si -->
+<path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.86 3.11c-.2.2-.2.51 0 .71.2.2.51.2.71 0l1.3-1.3C10.66 2.19 11.32 2 12 2c.68 0 1.34.19 1.91.54zM12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8z"/>
 </svg> Mobil Uygulama İNDİR
 </button>
 
 <div class="setting-item">
 <div class="setting-label">
-    <span>Uygulama Versiyonu</span>
-    <span>v1.3.0</span>
+<span>Uygulama Versiyonu</span>
+<span>v1.3.0</span>
 </div>
 </div>
 
@@ -4118,6 +4730,49 @@ opacity: 1;
 </div>
 </div>
 
+<!-- Audio Player -->
+<div class="audio-player" id="audio-player">
+<div class="audio-player-content">
+<div class="audio-info">
+<div class="audio-title" id="audio-title">Sure Adı</div>
+<div class="audio-subtitle" id="audio-subtitle">Sesli Kuran</div>
+</div>
+
+<div class="audio-controls-main">
+<button class="audio-control-btn" id="audio-prev-btn" title="Önceki Sure">
+<i class="fas fa-step-backward"></i>
+</button>
+<button class="audio-control-btn audio-play-btn" id="audio-play-pause-btn" title="Oynat/Duraklat">
+<i class="fas fa-play"></i>
+</button>
+<button class="audio-control-btn" id="audio-next-btn" title="Sonraki Sure">
+<i class="fas fa-step-forward"></i>
+</button>
+</div>
+
+<div class="audio-progress-container">
+<div class="audio-progress" id="audio-progress">
+<div class="audio-progress-bar" id="audio-progress-bar"></div>
+</div>
+<div class="audio-time">
+<span id="audio-current-time">0:00</span>
+<span id="audio-duration">0:00</span>
+</div>
+</div>
+
+<div class="audio-volume">
+<button class="audio-control-btn" id="audio-volume-btn" title="Ses">
+<i class="fas fa-volume-up"></i>
+</button>
+<input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="100">
+</div>
+
+<button class="audio-control-btn audio-close-btn" id="audio-close-btn" title="Kapat">
+<i class="fas fa-times"></i>
+</button>
+</div>
+</div>
+
 <!-- Swipe indicators for mobile -->
 <div class="swipe-indicator left" id="swipe-left">
 <i class="fas fa-chevron-left"></i> Önceki
@@ -4125,6 +4780,9 @@ opacity: 1;
 <div class="swipe-indicator right" id="swipe-right">
 Sonraki <i class="fas fa-chevron-right"></i>
 </div>
+
+<!-- Audio element for playing recitations -->
+<audio id="audio-element" preload="none"></audio>
 
 <script>
 let quranData = [];
@@ -4140,6 +4798,15 @@ let dataLoaded = false;
 // Navigation variables
 let currentSurahIndex = 0;
 let currentVerseIndex = 0;
+
+// Audio variables
+let audioElement = null;
+let audioPlayer = null;
+let currentAudioSurah = null;
+let isAudioPlaying = false;
+let currentAudioTime = 0;
+let audioDuration = 0;
+let audioVolume = 1;
 
 // Touch/Swipe variables - SADECE AYET PANELİ İÇİN
 let touchStartX = 0;
@@ -4198,6 +4865,352 @@ let searchHistory = localStorage.getItem("searchHistory") !== "false";
 // URL hash işlemleri için değişkenler
 let currentSurahId = 0;
 let currentVerseId = 0;
+
+// Audio functions
+function initializeAudio() {
+audioElement = document.getElementById('audio-element');
+audioPlayer = document.getElementById('audio-player');
+
+if (!audioElement) {
+audioElement = document.createElement('audio');
+audioElement.id = 'audio-element';
+audioElement.preload = 'none';
+document.body.appendChild(audioElement);
+}
+
+// Audio event listeners
+audioElement.addEventListener('loadedmetadata', () => {
+audioDuration = audioElement.duration;
+updateAudioTime();
+});
+
+audioElement.addEventListener('timeupdate', () => {
+currentAudioTime = audioElement.currentTime;
+updateAudioProgress();
+updateAudioTime();
+});
+
+audioElement.addEventListener('ended', () => {
+stopAudio();
+// Auto play next surah if available
+if (currentAudioSurah < totalSurahs) {
+setTimeout(() => {
+playAudio(currentAudioSurah + 1);
+}, 1000);
+}
+});
+
+audioElement.addEventListener('error', (e) => {
+console.error('Audio error:', e);
+showNotification('Ses dosyası yüklenemedi', 'error');
+stopAudio();
+});
+
+audioElement.addEventListener('loadstart', () => {
+
+});
+
+audioElement.addEventListener('canplay', () => {
+hideAudioLoading();
+});
+
+// Audio player controls
+setupAudioPlayerControls();
+}
+
+function setupAudioPlayerControls() {
+const playPauseBtn = document.getElementById('audio-play-pause-btn');
+const prevBtn = document.getElementById('audio-prev-btn');
+const nextBtn = document.getElementById('audio-next-btn');
+const closeBtn = document.getElementById('audio-close-btn');
+const volumeBtn = document.getElementById('audio-volume-btn');
+const volumeSlider = document.getElementById('volume-slider');
+const progressBar = document.getElementById('audio-progress');
+
+if (playPauseBtn) {
+playPauseBtn.addEventListener('click', toggleAudioPlayPause);
+}
+
+if (prevBtn) {
+prevBtn.addEventListener('click', () => {
+if (currentAudioSurah > 1) {
+playAudio(currentAudioSurah - 1);
+}
+});
+}
+
+if (nextBtn) {
+nextBtn.addEventListener('click', () => {
+if (currentAudioSurah < totalSurahs) {
+playAudio(currentAudioSurah + 1);
+}
+});
+}
+
+if (closeBtn) {
+closeBtn.addEventListener('click', () => {
+stopAudio();
+hideAudioPlayer();
+});
+}
+
+if (volumeBtn) {
+volumeBtn.addEventListener('click', toggleMute);
+}
+
+if (volumeSlider) {
+volumeSlider.addEventListener('input', (e) => {
+const volume = e.target.value / 100;
+setAudioVolume(volume);
+});
+}
+
+if (progressBar) {
+progressBar.addEventListener('click', (e) => {
+const rect = progressBar.getBoundingClientRect();
+const clickX = e.clientX - rect.left;
+const percentage = clickX / rect.width;
+seekAudio(percentage);
+});
+}
+}
+
+function playAudio(surahId) {
+if (isAudioPlaying && currentAudioSurah === surahId) {
+toggleAudioPlayPause();
+return;
+}
+
+stopAudio();
+
+const audioUrl = `https://api.sadecekuran.com.tr/${surahId}.mp3`;
+audioElement.src = audioUrl;
+currentAudioSurah = surahId;
+
+// Update audio player info
+updateAudioPlayerInfo(surahId);
+showAudioPlayer();
+
+audioElement.play().then(() => {
+isAudioPlaying = true;
+updateAudioButtons();
+updateAudioPlayerButtons();
+document.body.classList.add('audio-playing');
+}).catch((error) => {
+console.error('Audio play error:', error);
+showNotification('Ses dosyası çalınamadı', 'error');
+stopAudio();
+hideAudioPlayer();
+});
+}
+
+function stopAudio() {
+if (audioElement) {
+audioElement.pause();
+audioElement.currentTime = 0;
+}
+isAudioPlaying = false;
+currentAudioSurah = null;
+currentAudioTime = 0;
+updateAudioButtons();
+updateAudioPlayerButtons();
+document.body.classList.remove('audio-playing');
+}
+
+function toggleAudioPlayPause() {
+if (!audioElement || !currentAudioSurah) return;
+
+if (isAudioPlaying) {
+audioElement.pause();
+isAudioPlaying = false;
+} else {
+audioElement.play().then(() => {
+isAudioPlaying = true;
+}).catch((error) => {
+console.error('Audio play error:', error);
+showNotification('Ses dosyası çalınamadı', 'error');
+});
+}
+
+updateAudioButtons();
+updateAudioPlayerButtons();
+}
+
+function setAudioVolume(volume) {
+audioVolume = Math.max(0, Math.min(1, volume));
+if (audioElement) {
+audioElement.volume = audioVolume;
+}
+
+const volumeSlider = document.getElementById('volume-slider');
+const volumeBtn = document.getElementById('audio-volume-btn');
+
+if (volumeSlider) {
+volumeSlider.value = audioVolume * 100;
+}
+
+if (volumeBtn) {
+const icon = volumeBtn.querySelector('i');
+if (audioVolume === 0) {
+icon.className = 'fas fa-volume-mute';
+} else if (audioVolume < 0.5) {
+icon.className = 'fas fa-volume-down';
+} else {
+icon.className = 'fas fa-volume-up';
+}
+}
+}
+
+function toggleMute() {
+if (audioVolume > 0) {
+setAudioVolume(0);
+} else {
+setAudioVolume(1);
+}
+}
+
+function seekAudio(percentage) {
+if (audioElement && audioDuration) {
+const newTime = audioDuration * percentage;
+audioElement.currentTime = newTime;
+currentAudioTime = newTime;
+updateAudioProgress();
+updateAudioTime();
+}
+}
+
+function updateAudioProgress() {
+if (audioDuration > 0) {
+const percentage = (currentAudioTime / audioDuration) * 100;
+const progressBar = document.getElementById('audio-progress-bar');
+if (progressBar) {
+progressBar.style.width = percentage + '%';
+}
+}
+}
+
+function updateAudioTime() {
+const currentTimeEl = document.getElementById('audio-current-time');
+const durationEl = document.getElementById('audio-duration');
+
+if (currentTimeEl) {
+currentTimeEl.textContent = formatTime(currentAudioTime);
+}
+
+if (durationEl) {
+durationEl.textContent = formatTime(audioDuration);
+}
+}
+
+function formatTime(seconds) {
+if (isNaN(seconds) || seconds < 0) return '0:00';
+
+const minutes = Math.floor(seconds / 60);
+const remainingSeconds = Math.floor(seconds % 60);
+return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
+
+function updateAudioPlayerInfo(surahId) {
+const titleEl = document.getElementById('audio-title');
+const subtitleEl = document.getElementById('audio-subtitle');
+
+if (titleEl) {
+titleEl.textContent = getSurahName(surahId);
+}
+
+if (subtitleEl) {
+subtitleEl.textContent = 'Sesli Kuran';
+}
+}
+
+function showAudioPlayer() {
+if (audioPlayer) {
+audioPlayer.classList.add('active');
+}
+}
+
+function hideAudioPlayer() {
+if (audioPlayer) {
+audioPlayer.classList.remove('active');
+}
+document.body.classList.remove('audio-playing');
+}
+
+function hideAudioLoading() {
+// Hide any loading indicators
+}
+
+function updateAudioButtons() {
+// Update surah audio button
+const surahAudioBtn = document.getElementById('surah-audio-btn');
+if (surahAudioBtn) {
+const icon = surahAudioBtn.querySelector('i');
+if (isAudioPlaying && currentAudioSurah === currentSurahId) {
+icon.className = 'fas fa-pause';
+surahAudioBtn.classList.add('playing');
+surahAudioBtn.title = 'Duraklat';
+} else {
+icon.className = 'fas fa-play';
+surahAudioBtn.classList.remove('playing');
+surahAudioBtn.title = 'Sureyi dinle';
+}
+}
+
+// Update verse audio button
+const verseAudioBtn = document.getElementById('verse-audio-btn');
+if (verseAudioBtn) {
+const icon = verseAudioBtn.querySelector('i');
+if (isAudioPlaying && currentAudioSurah === currentSurahId) {
+icon.className = 'fas fa-pause';
+verseAudioBtn.classList.add('playing');
+verseAudioBtn.title = 'Duraklat';
+} else {
+icon.className = 'fas fa-play';
+verseAudioBtn.classList.remove('playing');
+verseAudioBtn.title = 'Ayeti dinle';
+}
+}
+
+// Update surah list audio buttons
+document.querySelectorAll('.surah-audio-btn').forEach(btn => {
+const surahId = parseInt(btn.dataset.surahId);
+const icon = btn.querySelector('i');
+if (isAudioPlaying && currentAudioSurah === surahId) {
+icon.className = 'fas fa-pause';
+btn.classList.add('playing');
+btn.title = 'Duraklat';
+} else {
+icon.className = 'fas fa-play';
+btn.classList.remove('playing');
+btn.title = 'Dinle';
+}
+});
+}
+
+function updateAudioPlayerButtons() {
+const playPauseBtn = document.getElementById('audio-play-pause-btn');
+const prevBtn = document.getElementById('audio-prev-btn');
+const nextBtn = document.getElementById('audio-next-btn');
+
+if (playPauseBtn) {
+const icon = playPauseBtn.querySelector('i');
+if (isAudioPlaying) {
+icon.className = 'fas fa-pause';
+playPauseBtn.title = 'Duraklat';
+} else {
+icon.className = 'fas fa-play';
+playPauseBtn.title = 'Oynat';
+}
+}
+
+if (prevBtn) {
+prevBtn.disabled = !currentAudioSurah || currentAudioSurah <= 1;
+}
+
+if (nextBtn) {
+nextBtn.disabled = !currentAudioSurah || currentAudioSurah >= totalSurahs;
+}
+}
 
 function getSurahName(id) {
 return surahNames[id] || `Sure ${id}`;
@@ -4424,12 +5437,12 @@ isLongPress = false;
 
 longPressTimer = setTimeout(() => {
 if (!isScrolling && longPressTarget && !longPressTarget.classList.contains('scroll-disabled')) {
-    isLongPress = true;
-    showVerseActions(verse);
-    // Haptic feedback if available
-    if (navigator.vibrate) {
-        navigator.vibrate(50);
-    }
+isLongPress = true;
+showVerseActions(verse);
+// Haptic feedback if available
+if (navigator.vibrate) {
+    navigator.vibrate(50);
+}
 }
 }, 500); // 500ms for long press
 }
@@ -4452,11 +5465,11 @@ const surahId = parseInt(verse.dataset.surahId);
 const surah = verse.dataset.surah;
 
 if (index !== undefined && surahId && surah) {
-    const surahIndex = quranData.findIndex(s => s.sure === surah);
-    if (surahIndex !== -1) {
-        const ayet = quranData[surahIndex].ayetler[index];
-        displayVerseDetail(surah, ayet, index, surahId);
-    }
+const surahIndex = quranData.findIndex(s => s.sure === surah);
+if (surahIndex !== -1) {
+    const ayet = quranData[surahIndex].ayetler[index];
+    displayVerseDetail(surah, ayet, index, surahId);
+}
 }
 }
 }
@@ -4524,7 +5537,7 @@ closeSortPanel.addEventListener('click', hideAuthorSortPanel);
 if (sortPanel) {
 sortPanel.addEventListener('click', (e) => {
 if (e.target === sortPanel) {
-    hideAuthorSortPanel();
+hideAuthorSortPanel();
 }
 });
 }
@@ -4618,13 +5631,13 @@ if (targetItem && draggedElement && authorList.contains(targetItem)) {
 const targetIndex = parseInt(targetItem.dataset.index);
 
 if (draggedIndex !== targetIndex) {
-    // Reorder the array
-    const draggedAuthor = authorOrder[draggedIndex];
-    authorOrder.splice(draggedIndex, 1);
-    authorOrder.splice(targetIndex, 0, draggedAuthor);
-    
-    // Repopulate the list
-    populateAuthorList();
+// Reorder the array
+const draggedAuthor = authorOrder[draggedIndex];
+authorOrder.splice(draggedIndex, 1);
+authorOrder.splice(targetIndex, 0, draggedAuthor);
+
+// Repopulate the list
+populateAuthorList();
 }
 }
 });
@@ -4661,10 +5674,10 @@ const sureName = match[1];
 const verseId = parseInt(match[2]);
 const surahIndex = quranData.findIndex(s => s.sure === sureName);
 if (surahIndex !== -1) {
-    const verseIndex = verseId - 1;
-    const surahId = quranData[surahIndex].id;
-    const ayet = quranData[surahIndex].ayetler[verseIndex];
-    displayVerseDetail(sureName, ayet, verseIndex, surahId);
+const verseIndex = verseId - 1;
+const surahId = quranData[surahIndex].id;
+const ayet = quranData[surahIndex].ayetler[verseIndex];
+displayVerseDetail(sureName, ayet, verseIndex, surahId);
 }
 }
 }
@@ -4689,7 +5702,7 @@ dataLoaded = true;
 hideLoading();
 
 setTimeout(() => {
-    checkUrlHash();
+checkUrlHash();
 }, 100);
 return;
 }
@@ -4724,30 +5737,30 @@ checkUrlHash();
 if (checkStorageAvailability()) {
 try {
 localStorage.setItem(
+cacheKey,
+JSON.stringify({
+    data: quranData,
+    timestamp: Date.now()
+})
+);
+} catch (storageError) {
+console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
+try {
+for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('quranData_') && key !== cacheKey) {
+        localStorage.removeItem(key);
+    }
+}
+localStorage.setItem(
     cacheKey,
     JSON.stringify({
         data: quranData,
         timestamp: Date.now()
     })
 );
-} catch (storageError) {
-console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
-try {
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith('quranData_') && key !== cacheKey) {
-            localStorage.removeItem(key);
-        }
-    }
-    localStorage.setItem(
-        cacheKey,
-        JSON.stringify({
-            data: quranData,
-            timestamp: Date.now()
-        })
-    );
 } catch (e) {
-    console.warn("Önbellek temizleme başarısız:", e);
+console.warn("Önbellek temizleme başarısız:", e);
 }
 }
 }
@@ -4790,11 +5803,11 @@ allSurahsData = await response.json();
 if (checkStorageAvailability()) {
 try {
 localStorage.setItem(
-    cacheKey,
-    JSON.stringify({
-        data: allSurahsData,
-        timestamp: Date.now()
-    })
+cacheKey,
+JSON.stringify({
+    data: allSurahsData,
+    timestamp: Date.now()
+})
 );
 } catch (storageError) {
 console.warn("localStorage'a yazma sırasında hata oluştu:", storageError);
@@ -4837,7 +5850,16 @@ surahLink.href = `#${sure.id}`;
 surahLink.className = "verse-link";
 surahLink.innerHTML = `<h2>${sure.sure}</h2>`;
 
+const audioControls = document.createElement("div");
+audioControls.className = "surah-audio-controls";
+audioControls.innerHTML = `
+<button class="audio-btn surah-audio-btn" data-surah-id="${sure.id}" title="Dinle">
+<i class="fas fa-play"></i>
+</button>
+`;
+
 surahDiv.appendChild(surahLink);
+surahDiv.appendChild(audioControls);
 surahDiv.dataset.index = i;
 surahDiv.dataset.id = sure.id;
 
@@ -4860,8 +5882,16 @@ requestAnimationFrame(processBatch);
 processBatch();
 
 surahsDiv.addEventListener("click", (e) => {
+const audioBtn = e.target.closest('.surah-audio-btn');
+if (audioBtn) {
+e.stopPropagation();
+const surahId = parseInt(audioBtn.dataset.surahId);
+playAudio(surahId);
+return;
+}
+
 const surahDiv = e.target.closest('.surah');
-if (surahDiv) {
+if (surahDiv && !e.target.closest('.surah-audio-controls')) {
 const index = parseInt(surahDiv.dataset.index);
 const sure = data[index];
 displayVerses(sure.sure, sure.ayetler, sure.id);
@@ -4912,28 +5942,28 @@ if (surahIndex >= 0 && surahIndex < quranData.length) {
 const sure = quranData[surahIndex];
 const ayet = sure.ayetler[verseId - 1];
 if (ayet) {
-    const verseElement = document.createElement("div");
-    verseElement.className = "verse-result";
-    
-    const verseLink = document.createElement("a");
-    verseLink.href = `#${surahId}-${verseId}`;
-    verseLink.className = "verse-link";
-    verseLink.textContent = `${sure.sure}: ${ayet}`;
-    
-    verseElement.appendChild(verseLink);
-    verseElement.dataset.surah = sure.sure;
-    verseElement.dataset.verseIndex = verseId - 1;
-    verseElement.dataset.surahId = surahId;
-    fragment.appendChild(verseElement);
-    resultsDiv.appendChild(fragment);
-    resultsDiv.classList.add("active");
-    document.getElementById("surahs").style.display = "none";
-    return;
+const verseElement = document.createElement("div");
+verseElement.className = "verse-result";
+
+const verseLink = document.createElement("a");
+verseLink.href = `#${surahId}-${verseId}`;
+verseLink.className = "verse-link";
+verseLink.textContent = `${sure.sure}: ${ayet}`;
+
+verseElement.appendChild(verseLink);
+verseElement.dataset.surah = sure.sure;
+verseElement.dataset.verseIndex = verseId - 1;
+verseElement.dataset.surahId = surahId;
+fragment.appendChild(verseElement);
+resultsDiv.appendChild(fragment);
+resultsDiv.classList.add("active");
+document.getElementById("surahs").style.display = "none";
+return;
 } else {
-    resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
-    resultsDiv.classList.add("active");
-    document.getElementById("surahs").style.display = "none";
-    return;
+resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
+resultsDiv.classList.add("active");
+document.getElementById("surahs").style.display = "none";
+return;
 }
 } else {
 resultsDiv.innerHTML = "<p>Belirtilen sure bulunamadı.</p>";
@@ -5043,24 +6073,24 @@ if (surahIndex >= 0 && surahIndex < quranData.length) {
 const sure = quranData[surahIndex];
 const ayet = sure.ayetler[verseId - 1];
 if (ayet) {
-    const verseElement = document.createElement("div");
-    verseElement.className = "verse-result";
-    
-    const verseLink = document.createElement("a");
-    verseLink.href = `#${surahId}-${verseId}`;
-    verseLink.className = "verse-link";
-    verseLink.textContent = `${sure.sure}: ${ayet}`;
-    
-    verseElement.appendChild(verseLink);
-    verseElement.dataset.surah = sure.sure;
-    verseElement.dataset.verseIndex = verseId - 1;
-    verseElement.dataset.surahId = surahId;
-    fragment.appendChild(verseElement);
-    resultsDiv.appendChild(fragment);
-    return;
+const verseElement = document.createElement("div");
+verseElement.className = "verse-result";
+
+const verseLink = document.createElement("a");
+verseLink.href = `#${surahId}-${verseId}`;
+verseLink.className = "verse-link";
+verseLink.textContent = `${sure.sure}: ${ayet}`;
+
+verseElement.appendChild(verseLink);
+verseElement.dataset.surah = sure.sure;
+verseElement.dataset.verseIndex = verseId - 1;
+verseElement.dataset.surahId = surahId;
+fragment.appendChild(verseElement);
+resultsDiv.appendChild(fragment);
+return;
 } else {
-    resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
-    return;
+resultsDiv.innerHTML = "<p>Belirtilen ayet bulunamadı.</p>";
+return;
 }
 } else {
 resultsDiv.innerHTML = "<p>Belirtilen sure bulunamadı.</p>";
@@ -5174,6 +6204,9 @@ currentVerseId = 0;
 panelTitle.textContent = sureName;
 versesDiv.innerHTML = "";
 
+// Update audio button for current surah
+updateAudioButtons();
+
 const sortedAyetler = [...ayetler].sort((a, b) => {
 const aNumMatch = a.match(/^(\d+)\./);
 const bNumMatch = b.match(/^(\d+)\./);
@@ -5211,9 +6244,9 @@ const formattedVerse = formatVerseNumber(ayet, surahId, verseId);
 verseElement.innerHTML = `
 <span>${formattedVerse}</span>
 <span class="verse-actions">
-    <button class="favorite-btn ${isFavorite ? "active" : ""}" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-star"></i></button>
-    <button class="share-btn" data-verse="${ayet}" data-surah="${sureName}" data-surah-id="${surahId}" data-verse-id="${verseId}"><i class="fas fa-share-alt"></i></button>
-    <button class="copy-url-btn" data-surah-id="${surahId}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
+<button class="favorite-btn ${isFavorite ? "active" : ""}" data-verse="${ayet}" data-surah="${sureName}"><i class="fas fa-star"></i></button>
+<button class="share-btn" data-verse="${ayet}" data-surah="${sureName}" data-surah-id="${surahId}" data-verse-id="${verseId}"><i class="fas fa-share-alt"></i></button>
+<button class="copy-url-btn" data-surah-id="${surahId}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
 </span>
 `;
 
@@ -5301,6 +6334,9 @@ title.textContent = `${sureName} - Ayet ${verseData.verse_id}`;
 const verseContent = selectedVerse.replace(/^\d+\.\s+/, '');
 selectedTranslation.innerHTML = verseContent;
 
+// Update audio button for current surah
+updateAudioButtons();
+
 // Sort translations according to saved author order
 const sortedTranslations = allTranslations
 .filter(t => t.author !== selectedAuthor)
@@ -5351,46 +6387,46 @@ const detailedSurah = allSurahsData.surahs.find(s => s.id === surahId);
 if (detailedSurah) {
 const detailedVerse = detailedSurah.verses.find(v => v.verse_number === verseData.verse_id);
 if (detailedVerse) {
-    document.getElementById("arabic-text").textContent = detailedVerse.text;
-    document.getElementById("transcription-tr").textContent = detailedVerse.transcription_tr;
+document.getElementById("arabic-text").textContent = detailedVerse.text;
+document.getElementById("transcription-tr").textContent = detailedVerse.transcription_tr;
+
+if (showWordAnalysis && detailedVerse.words) {
+const wordList = document.getElementById("word-list");
+const wordListMobile = document.getElementById("word-list-mobile");
+
+wordList.innerHTML = "";
+if (wordListMobile) {
+    wordListMobile.innerHTML = "";
+}
+
+detailedVerse.words.forEach((word, index) => {
+    const wordItem = document.createElement("div");
+    wordItem.className = "word-item";
+    wordItem.dataset.index = index;
     
-    if (showWordAnalysis && detailedVerse.words) {
-        const wordList = document.getElementById("word-list");
-        const wordListMobile = document.getElementById("word-list-mobile");
-        
-        wordList.innerHTML = "";
-        if (wordListMobile) {
-            wordListMobile.innerHTML = "";
-        }
-        
-        detailedVerse.words.forEach((word, index) => {
-            const wordItem = document.createElement("div");
-            wordItem.className = "word-item";
-            wordItem.dataset.index = index;
-            
-            wordItem.innerHTML = `
-                <div class="word-arabic">${word.arabic}</div>
-                <div class="word-translation">${word.translation_tr}</div>
-            `;
-            
-            wordList.appendChild(wordItem);
-            
-            if (wordListMobile) {
-                const mobileWordItem = wordItem.cloneNode(true);
-                wordListMobile.appendChild(mobileWordItem);
-            }
-        });
-        
-        wordList.addEventListener("click", (e) => {
-            handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail");
-        });
-        
-        if (wordListMobile) {
-            wordListMobile.addEventListener("click", (e) => {
-                handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail-mobile");
-            });
-        }
+    wordItem.innerHTML = `
+        <div class="word-arabic">${word.arabic}</div>
+        <div class="word-translation">${word.translation_tr}</div>
+    `;
+    
+    wordList.appendChild(wordItem);
+    
+    if (wordListMobile) {
+        const mobileWordItem = wordItem.cloneNode(true);
+        wordListMobile.appendChild(mobileWordItem);
     }
+});
+
+wordList.addEventListener("click", (e) => {
+    handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail");
+});
+
+if (wordListMobile) {
+    wordListMobile.addEventListener("click", (e) => {
+        handleWordClick(e, detailedVerse, surahId, verseData.verse_id, "word-detail-mobile");
+    });
+}
+}
 }
 }
 } catch (error) {
@@ -5454,18 +6490,18 @@ wordDetail.innerHTML = `
 if (word.root) {
 wordDetail.innerHTML += `
 <div class="root-info">
-    <div class="word-detail-row">
-        <div class="word-detail-label">Kök (Latin):</div>
-        <div class="word-detail-value">${word.root.latin}</div>
-    </div>
-    <div class="word-detail-row">
-        <div class="word-detail-label">Kök (Arapça):</div>
-        <div class="word-detail-value">${word.root.arabic}</div>
-    </div>
-    <div class="word-detail-row">
-        <div class="word-detail-label">Kök Anlamı:</div>
-        <div class="word-detail-value">${word.root.meaning || 'Belirtilmemiş'}</div>
-    </div>
+<div class="word-detail-row">
+<div class="word-detail-label">Kök (Latin):</div>
+<div class="word-detail-value">${word.root.latin}</div>
+</div>
+<div class="word-detail-row">
+<div class="word-detail-label">Kök (Arapça):</div>
+<div class="word-detail-value">${word.root.arabic}</div>
+</div>
+<div class="word-detail-row">
+<div class="word-detail-label">Kök Anlamı:</div>
+<div class="word-detail-value">${word.root.meaning || 'Belirtilmemiş'}</div>
+</div>
 </div>
 `;
 }
@@ -5473,10 +6509,10 @@ wordDetail.innerHTML += `
 if (allSurahsData) {
 wordDetail.innerHTML += `
 <div class="other-occurrences">
-    <h4 class="occurrences-title">Bu Kelimenin Geçtiği Diğer Ayetler</h4>
-    <div id="word-occurrences-${wordDetailId}" class="word-occurrences">
-        <div class="loading-occurrences">Aranıyor...</div>
-    </div>
+<h4 class="occurrences-title">Bu Kelimenin Geçtiği Diğer Ayetler</h4>
+<div id="word-occurrences-${wordDetailId}" class="word-occurrences">
+<div class="loading-occurrences">Aranıyor...</div>
+</div>
 </div>
 `;
 
@@ -5504,15 +6540,15 @@ return;
 
 if (verse.text && verse.text.includes(wordArabic)) {
 occurrences.push({
-    surahId: surah.id,
-    surahName: getSurahName(surah.id),
-    verseId: verse.verse_number,
-    text: verse.text
+surahId: surah.id,
+surahName: getSurahName(surah.id),
+verseId: verse.verse_number,
+text: verse.text
 });
 totalFound++;
 
 if (totalFound >= 10) {
-    return;
+return;
 }
 }
 });
@@ -5527,9 +6563,9 @@ let html = '';
 occurrences.forEach(occurrence => {
 html += `
 <div class="occurrence-item">
-    <a href="#${occurrence.surahId}-${occurrence.verseId}" class="occurrence-link">
-        ${occurrence.surahName} ${occurrence.verseId}
-    </a>
+<a href="#${occurrence.surahId}-${occurrence.verseId}" class="occurrence-link">
+${occurrence.surahName} ${occurrence.verseId}
+</a>
 </div>
 `;
 });
@@ -5631,11 +6667,11 @@ const deltaY = touchEndY - touchStartY;
 // Check if it's a horizontal swipe (more horizontal than vertical)
 if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 100) {
 if (deltaX > 0) {
-    // Swiped right - go to previous verse
-    navigateVerse(currentSurahIndex, currentVerseIndex, -1);
+// Swiped right - go to previous verse
+navigateVerse(currentSurahIndex, currentVerseIndex, -1);
 } else {
-    // Swiped left - go to next verse
-    navigateVerse(currentSurahIndex, currentVerseIndex, 1);
+// Swiped left - go to next verse
+navigateVerse(currentSurahIndex, currentVerseIndex, 1);
 }
 }
 }
@@ -5685,7 +6721,7 @@ const verseMatch = verse.match(/^(\d+)\./);
 const verseId = verseMatch ? parseInt(verseMatch[1]) : 1;
 
 const surahId = getSurahIdByName(surah) || 
-       quranData.find(s => s.sure === surah)?.id || 1;
+quranData.find(s => s.sure === surah)?.id || 1;
 
 favorites.push({ 
 surah, 
@@ -5697,6 +6733,15 @@ localStorage.setItem("favorites", JSON.stringify(favorites));
 button.classList.add("active");
 showNotification("Favorilere eklendi", "success");
 }
+
+// Update all favorite buttons for the same verse
+document.querySelectorAll(`.favorite-btn[data-verse="${verse}"][data-surah="${surah}"]`).forEach(btn => {
+if (isFavorite) {
+btn.classList.remove("active");
+} else {
+btn.classList.add("active");
+}
+});
 
 if (document.getElementById("favorites").style.display === "block") {
 displayFavorites();
@@ -5731,8 +6776,8 @@ const formattedVerse = formatVerseNumber(f.verse, f.surahId || getSurahIdByName(
 verseElement.innerHTML = `
 <span><strong>${f.surah}:</strong> ${formattedVerse}</span>
 <span class="verse-actions">
-    <button class="favorite-btn active" data-verse="${f.verse}" data-surah="${f.surah}" title="Favorilerden kaldır"><i class="fas fa-trash-alt"></i></button>
-    <button class="copy-url-btn" data-surah-id="${f.surahId || getSurahIdByName(f.surah)}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
+<button class="favorite-btn active" data-verse="${f.verse}" data-surah="${f.surah}" title="Favorilerden kaldır"><i class="fas fa-trash-alt"></i></button>
+<button class="copy-url-btn" data-surah-id="${f.surahId || getSurahIdByName(f.surah)}" data-verse-id="${verseId}" title="URL'yi kopyala"><i class="fas fa-link"></i></button>
 </span>
 `;
 fragment.appendChild(verseElement);
@@ -5819,8 +6864,8 @@ notification.style.bottom = '20px';
 notification.style.left = '50%';
 notification.style.transform = 'translateX(-50%)';
 notification.style.background = type === 'success' ? 'rgba(29, 161, 242, 0.9)' : 
-                            type === 'error' ? 'rgba(229, 62, 62, 0.9)' : 
-                            'rgba(156, 39, 176, 0.9)';
+                    type === 'error' ? 'rgba(229, 62, 62, 0.9)' : 
+                    'rgba(156, 39, 176, 0.9)';
 notification.style.color = 'white';
 notification.style.padding = '10px 20px';
 notification.style.borderRadius = '5px';
@@ -5867,7 +6912,7 @@ if (!notificationPermissionGranted || !dailyVerse) return;
 if ('serviceWorker' in navigator) {
 navigator.serviceWorker.ready.then(registration => {
 registration.getNotifications().then(notifications => {
-    notifications.forEach(notification => notification.close());
+notifications.forEach(notification => notification.close());
 });
 });
 }
@@ -6061,6 +7106,7 @@ applySettings();
 setupKeyboardNavigation();
 setupMobileLongPress();
 setupAuthorSorting();
+initializeAudio();
 
 // Initialize notifications if enabled
 if (dailyVerse) {
@@ -6106,6 +7152,19 @@ if (currentSurahId > 0) {
 window.location.hash = `${currentSurahId}`;
 currentVerseId = 0;
 }
+}
+});
+
+// Audio event listeners
+document.getElementById("surah-audio-btn").addEventListener("click", () => {
+if (currentSurahId) {
+playAudio(currentSurahId);
+}
+});
+
+document.getElementById("verse-audio-btn").addEventListener("click", () => {
+if (currentSurahId) {
+playAudio(currentSurahId);
 }
 });
 
@@ -6172,7 +7231,12 @@ showHome();
 });
 
 document.getElementById("home-btn").addEventListener("click", () => {
+// Mobile için /mekaller.html'e yönlendir
+if (window.innerWidth <= 768) {
+window.location.href = "/makaleler.html";
+} else {
 showHome();
+}
 });
 
 setupSettingsEventListeners();
@@ -6411,9 +7475,9 @@ requestNotificationPermission();
 // Clear scheduled notifications
 if ('serviceWorker' in navigator) {
 navigator.serviceWorker.ready.then(registration => {
-    registration.getNotifications().then(notifications => {
-        notifications.forEach(notification => notification.close());
-    });
+registration.getNotifications().then(notifications => {
+notifications.forEach(notification => notification.close());
+});
 });
 }
 }
@@ -6475,3 +7539,4 @@ window.location.reload();
 </script>
 </body>
 </html>
+
