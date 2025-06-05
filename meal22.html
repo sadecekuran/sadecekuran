@@ -6823,10 +6823,10 @@ const isSaved = savedVerses.some((s) => s.surah === sureName && s.verse === sele
 if (saveBtn) {
   if (isSaved) {
     saveBtn.classList.add('active');
-    saveBtn.innerHTML = '<i class="fas fa-bookmark"></i> Kaydedildi';
+    saveBtn.innerHTML = '<i class="fas fa-bookmark"></i> ';
   } else {
     saveBtn.classList.remove('active');
-    saveBtn.innerHTML = '<i class="fas fa-bookmark"></i> Kaydet';
+    saveBtn.innerHTML = '<i class="fas fa-bookmark"></i> ';
   }
 }
 
@@ -7234,10 +7234,10 @@ const detailSaveBtn = document.getElementById('verse-detail-save-btn');
 if (detailSaveBtn) {
   if (existingIndex !== -1) {
     detailSaveBtn.classList.remove('active');
-    detailSaveBtn.innerHTML = '<i class="fas fa-bookmark"></i> Kaydet';
+    detailSaveBtn.innerHTML = '<i class="fas fa-bookmark"></i> ';
   } else if (!currentEditingVerse) {
     detailSaveBtn.classList.add('active');
-    detailSaveBtn.innerHTML = '<i class="fas fa-bookmark"></i> Kaydedildi';
+    detailSaveBtn.innerHTML = '<i class="fas fa-bookmark"></i> ';
   }
 }
 }
