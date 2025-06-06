@@ -2,19 +2,747 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Popup Aç</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galactic URL Opener - Premium</title>
+  <style>
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #111111;
+      --text-primary: #ffffff;
+      --text-secondary: #cccccc;
+      --text-muted: #888888;
+      --border-color: #333333;
+      --accent-light: #ffffff;
+      --accent-dark: #000000;
+      --shadow-light: rgba(255, 255, 255, 0.1);
+      --shadow-dark: rgba(0, 0, 0, 0.5);
+      --gradient-primary: linear-gradient(135deg, #ffffff, #cccccc);
+      --gradient-secondary: linear-gradient(135deg, #333333, #111111);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Galaxy Animation Background */
+    .galaxy-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(ellipse at center, #111111 0%, #000000 100%);
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    .star:nth-child(odd) {
+      animation-delay: 1s;
+    }
+
+    .star:nth-child(3n) {
+      animation-delay: 2s;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .nebula {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 60% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 50%);
+      animation: nebula-drift 20s infinite linear;
+    }
+
+    @keyframes nebula-drift {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    /* Main Container */
+    .main-container {
+      width: 100%;
+      max-width: 900px;
+      z-index: 10;
+      position: relative;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    /* Input Section */
+    .input-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 
+        0 8px 32px var(--shadow-dark),
+        inset 0 1px 0 var(--shadow-light);
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .input-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .url-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-primary);
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .url-input:focus {
+      border-color: var(--text-primary);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .url-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .open-btn {
+      padding: 1rem 2rem;
+      background: var(--gradient-primary);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .open-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+    }
+
+    .open-btn:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    .open-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .open-btn:hover::before {
+      left: 100%;
+    }
+
+    /* Drop Area */
+    .drop-area {
+      border: 2px dashed var(--border-color);
+      border-radius: 16px;
+      padding: 3rem;
+      text-align: center;
+      background: var(--bg-secondary);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 1s ease-out 0.4s both;
+    }
+
+    .drop-area::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .drop-area:hover::before {
+      transform: translateX(100%);
+    }
+
+    .drop-area.hover {
+      border-color: var(--text-primary);
+      background: var(--bg-primary);
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    }
+
+    .drop-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+
+    .drop-text {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .drop-subtext {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* History Section */
+    .history-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 
+        0 8px 32px var(--shadow-dark),
+        inset 0 1px 0 var(--shadow-light);
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .history-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .clear-btn {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .clear-btn:hover {
+      border-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+
+    .history-list {
+      list-style: none;
+      max-height: 300px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-color) transparent;
+    }
+
+    .history-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .history-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .history-list::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+      background: var(--bg-primary);
+      border: 1px solid transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .history-item:hover {
+      border-color: var(--border-color);
+      transform: translateX(8px);
+      box-shadow: 0 4px 12px var(--shadow-dark);
+    }
+
+    .history-url {
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      flex: 1;
+      margin-right: 1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .delete-btn {
+      padding: 0.25rem 0.5rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.8rem;
+      opacity: 0;
+    }
+
+    .history-item:hover .delete-btn {
+      opacity: 1;
+    }
+
+    .delete-btn:hover {
+      border-color: #ff4444;
+      color: #ff4444;
+    }
+
+    /* Feedback */
+    .feedback {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 500;
+      transform: translateX(400px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .feedback.show {
+      transform: translateX(0);
+    }
+
+    .feedback.success {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-primary);
+    }
+
+    .feedback.error {
+      background: rgba(255, 68, 68, 0.1);
+      border: 1px solid rgba(255, 68, 68, 0.3);
+      color: #ff4444;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .input-container {
+        flex-direction: column;
+      }
+      
+      .drop-area {
+        padding: 2rem 1rem;
+      }
+      
+      .feedback {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        transform: translateY(-100px);
+      }
+      
+      .feedback.show {
+        transform: translateY(0);
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border-color);
+      border-radius: 50%;
+      border-top-color: var(--text-primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-  <button onclick="popupAc()">SadeceKuran.com.tr'yi Aç</button>
+  <!-- Galaxy Background -->
+  <div class="galaxy-bg"></div>
+  <div class="stars" id="stars"></div>
+  <div class="nebula"></div>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Header -->
+    <div class="header">
+      <h1 class="title">THE LENG URL OPENER</h1>
+      <p class="subtitle">Evrenin derinliklerinden URL'lerinizi açın</p>
+    </div>
+
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="input-container">
+        <input 
+          type="text" 
+          id="urlInput" 
+          class="url-input"
+          placeholder="https://example.com" 
+          aria-label="URL girin"
+          autocomplete="url"
+        >
+        <button class="open-btn" onclick="openUrl()" aria-label="URL'yi aç">
+          <span id="btnText">Aç</span>
+        </button>
+      </div>
+      
+      <!-- Drop Area -->
+      <div class="drop-area" id="dropArea" tabindex="0">
+        <div class="drop-icon">🌌</div>
+        <div class="drop-text">URL'yi buraya sürükleyin</div>
+        <div class="drop-subtext">veya yapıştırın</div>
+      </div>
+    </div>
+
+    <!-- History Section -->
+    <div class="history-section">
+      <div class="history-header">
+        <h3 class="history-title">Geçmiş</h3>
+        <button class="clear-btn" onclick="clearHistory()">Temizle</button>
+      </div>
+      <ul class="history-list" id="historyList"></ul>
+    </div>
+  </div>
+
+  <!-- Feedback -->
+  <div class="feedback" id="feedback"></div>
 
   <script>
-    function popupAc() {
-      window.open(
-        'https://www.sadecekuran.com.tr', // Açılacak adres
-        'kuranPopup',                     // Pencere adı
-        'width=1000,height=700,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes'
-      );
+    // Initialize stars
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const starCount = 100;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = Math.random() * 3 + 1 + 'px';
+        star.style.height = star.style.width;
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+      }
     }
+
+    // URL validation
+    function isValidUrl(string) {
+      try {
+        const url = new URL(string.startsWith('http') ? string : 'https://' + string);
+        return ['http:', 'https:'].includes(url.protocol);
+      } catch (_) {
+        return false;
+      }
+    }
+
+    // Show feedback
+    function showFeedback(message, type) {
+      const feedback = document.getElementById('feedback');
+      feedback.textContent = message;
+      feedback.className = `feedback ${type}`;
+      feedback.classList.add('show');
+      
+      setTimeout(() => {
+        feedback.classList.remove('show');
+      }, 4000);
+    }
+
+    // Open URL
+    async function openUrl(url = null) {
+      const input = document.getElementById('urlInput');
+      const btnText = document.getElementById('btnText');
+      const targetUrl = url || input.value.trim();
+      
+      if (!targetUrl) {
+        showFeedback('Lütfen bir URL girin', 'error');
+        input.focus();
+        return;
+      }
+
+      const finalUrl = targetUrl.startsWith('http') ? targetUrl : 'https://' + targetUrl;
+      
+      if (!isValidUrl(finalUrl)) {
+        showFeedback('Geçersiz URL formatı', 'error');
+        return;
+      }
+
+      // Show loading
+      btnText.innerHTML = '<div class="loading"></div>';
+      
+      try {
+        const popup = window.open(
+          finalUrl,
+          '_blank',
+          'width=1200,height=800,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes'
+        );
+        
+        if (!popup) {
+          throw new Error('Popup blocked');
+        }
+        
+        addToHistory(finalUrl);
+        showFeedback(`URL açıldı: ${finalUrl}`, 'success');
+        
+        if (!url) input.value = '';
+        
+      } catch (error) {
+        showFeedback('URL açılamadı. Popup engelleyici kontrol edin.', 'error');
+      } finally {
+        setTimeout(() => {
+          btnText.textContent = 'Aç';
+        }, 1000);
+      }
+    }
+
+    // History management
+    function loadHistory() {
+      const history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
+      const historyList = document.getElementById('historyList');
+      historyList.innerHTML = '';
+      
+      if (history.length === 0) {
+        historyList.innerHTML = '<li style="text-align: center; color: var(--text-muted); padding: 2rem;">Henüz geçmiş yok</li>';
+        return;
+      }
+      
+      history.forEach(url => {
+        const li = document.createElement('li');
+        li.className = 'history-item';
+        li.innerHTML = `
+          <span class="history-url" onclick="openUrl('${url}')" title="${url}">${url}</span>
+          <button class="delete-btn" onclick="removeFromHistory('${url}')" title="Sil">×</button>
+        `;
+        historyList.appendChild(li);
+      });
+    }
+
+    function addToHistory(url) {
+      let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
+      history = history.filter(item => item !== url);
+      history.unshift(url);
+      
+      if (history.length > 20) {
+        history = history.slice(0, 20);
+      }
+      
+      localStorage.setItem('urlHistory', JSON.stringify(history));
+      loadHistory();
+    }
+
+    function removeFromHistory(url) {
+      let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
+      history = history.filter(item => item !== url);
+      localStorage.setItem('urlHistory', JSON.stringify(history));
+      loadHistory();
+      showFeedback('URL geçmişten silindi', 'success');
+    }
+
+    function clearHistory() {
+      if (confirm('Tüm geçmişi silmek istediğinizden emin misiniz?')) {
+        localStorage.removeItem('urlHistory');
+        loadHistory();
+        showFeedback('Geçmiş temizlendi', 'success');
+      }
+    }
+
+    // Drag and drop functionality
+    const dropArea = document.getElementById('dropArea');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, preventDefaults, false);
+      document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function highlight() {
+      dropArea.classList.add('hover');
+    }
+
+    function unhighlight() {
+      dropArea.classList.remove('hover');
+    }
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const url = dt.getData('text/uri-list') || dt.getData('text/plain');
+      
+      if (url) {
+        openUrl(url.trim());
+      } else {
+        showFeedback('Geçerli bir URL bulunamadı', 'error');
+      }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.id === 'urlInput') {
+        openUrl();
+      }
+      
+      if (e.ctrlKey && e.key === 'v' && document.activeElement === dropArea) {
+        navigator.clipboard.readText().then(text => {
+          if (text && isValidUrl(text)) {
+            openUrl(text);
+          }
+        });
+      }
+    });
+
+    // Paste detection
+    document.addEventListener('paste', (e) => {
+      if (document.activeElement === dropArea) {
+        const paste = (e.clipboardData || window.clipboardData).getData('text');
+        if (paste && isValidUrl(paste)) {
+          openUrl(paste);
+        }
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      createStars();
+      loadHistory();
+      
+      // Focus input on load
+      document.getElementById('urlInput').focus();
+    });
+
+    // Auto-focus input when clicking anywhere
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.history-section') && !e.target.closest('button')) {
+        document.getElementById('urlInput').focus();
+      }
+    });
   </script>
 </body>
 </html>
