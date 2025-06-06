@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sadece Kuran - Kelime Kütüphanesi</title>
+  <style>
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #111111;
+      --bg-tertiary: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #cccccc;
+      --text-muted: #888888;
+      --border-color: #333333;
+      --accent-light: #ffffff;
+      --accent-dark: #000000;
+      --shadow-light: rgba(255, 255, 255, 0.1);
+      --shadow-dark: rgba(0, 0, 0, 0.5);
+      --gradient-primary: linear-gradient(135deg, #ffffff, #cccccc);
+      --gradient-secondary: linear-gradient(135deg, #333333, #111111);
+      --wire-color: #666666;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Galaxy Animation Background */
+    .galaxy-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(ellipse at center, #111111 0%, #000000 100%);
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 4s infinite ease-in-out;
+    }
+
+    .star:nth-child(odd) {
+      animation-delay: 1s;
+    }
+
+    .star:nth-child(3n) {
+      animation-delay: 2s;
+    }
+
+    .star:nth-child(4n) {
+      animation-delay: 3s;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { 
+        opacity: 0.2; 
+        transform: scale(1); 
+      }
+      50% { 
+        opacity: 0.8; 
+        transform: scale(1.1); 
+      }
+    }
+
+    .nebula {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
+        radial-gradient(circle at 60% 20%, rgba(255, 255, 255, 0.025) 0%, transparent 60%);
+      animation: nebula-drift 30s infinite linear;
+    }
+
+    @keyframes nebula-drift {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.05); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    /* Wire-frame Icons */
+    .icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      stroke: var(--wire-color);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .icon:hover {
+      stroke: var(--text-primary);
+      transform: scale(1.1);
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      z-index: 1000;
+      animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeIn 1s ease-out 0.2s both;
+      white-space: nowrap;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-search {
+      flex: 1;
+      max-width: 600px;
+      position: relative;
+      animation: fadeIn 1s ease-out 0.4s both;
+    }
+
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 3rem;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(0);
+    }
+
+    .search-input:focus {
+      border-color: var(--text-primary);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .search-input:focus + .search-icon {
+      stroke: var(--text-primary);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .nav-stats {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      animation: fadeIn 1s ease-out 0.6s both;
+      white-space: nowrap;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-top: 100px;
+      padding: 2rem;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 1s ease-out 0.8s both;
+    }
+
+    /* Home Page */
+    .home-page {
+      text-align: center;
+    }
+
+    .hero-section {
+      padding: 3rem 0 4rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0 4rem;
+      animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px var(--shadow-dark);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(0);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 30px var(--shadow-dark);
+      border-color: var(--wire-color);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover .stat-number {
+      transform: scale(1.1);
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Categories */
+    .categories-section {
+      animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      text-align: center;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+      text-align: left;
+    }
+
+    .category-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      color: inherit;
+      transform: translateX(0);
+      opacity: 0;
+      animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .category-card:nth-child(odd) {
+      animation-delay: 0.1s;
+    }
+
+    .category-card:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+
+    .category-card:hover {
+      border-color: var(--text-primary);
+      transform: translateX(8px) scale(1.02);
+      box-shadow: 0 8px 25px var(--shadow-dark);
+    }
+
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .category-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .category-arabic {
+      font-family: 'Amiri', 'Times New Roman', serif;
+      font-size: 1.5rem;
+      direction: rtl;
+    }
+
+    .category-count {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      background: var(--bg-tertiary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-count {
+      background: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .category-meaning {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+      opacity: 0.9;
+    }
+
+    /* Two Column Layout for Detail Pages */
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .main-column {
+      min-width: 0;
+    }
+
+    .sidebar-column {
+      position: sticky;
+      top: 120px;
+    }
+
+    /* Word/Root Pages */
+    .page-header {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px var(--shadow-dark);
+      animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      animation: fadeIn 0.8s ease-out 0.2s both;
+    }
+
+    .arabic-text {
+      font-family: 'Amiri', 'Times New Roman', serif;
+      font-size: 3rem;
+      direction: rtl;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .page-header:hover .arabic-text {
+      transform: scale(1.05);
+    }
+
+    .transcription {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+
+    .meaning {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+      transform: translateY(-1px);
+    }
+
+    /* Content Sections */
+    .content-section {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px var(--shadow-dark);
+      animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+    }
+
+    .content-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Sidebar Info Panel */
+    .info-panel {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px var(--shadow-dark);
+      animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+    }
+
+    .info-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .info-value {
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* Verses List */
+    .verses-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .verse-item {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      color: inherit;
+      transform: translateX(0);
+      opacity: 0;
+      animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .verse-item:nth-child(odd) {
+      animation-delay: 0.1s;
+    }
+
+    .verse-item:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+
+    .verse-item:hover {
+      border-color: var(--text-primary);
+      transform: translateX(8px) scale(1.01);
+      box-shadow: 0 6px 20px var(--shadow-dark);
+    }
+
+    .verse-reference {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .verse-arabic {
+      font-family: 'Amiri', 'Times New Roman', serif;
+      font-size: 1.4rem;
+      direction: rtl;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+      transition: all 0.3s ease;
+    }
+
+    .verse-item:hover .verse-arabic {
+      transform: scale(1.02);
+    }
+
+    .verse-translation {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* Words List */
+    .words-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .word-item {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      color: inherit;
+      transform: translateY(0);
+      opacity: 0;
+      animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .word-item:nth-child(odd) {
+      animation-delay: 0.1s;
+    }
+
+    .word-item:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+
+    .word-item:hover {
+      border-color: var(--text-primary);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 25px var(--shadow-dark);
+    }
+
+    .word-arabic {
+      font-family: 'Amiri', 'Times New Roman', serif;
+      font-size: 1.8rem;
+      direction: rtl;
+      margin-bottom: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .word-item:hover .word-arabic {
+      transform: scale(1.05);
+    }
+
+    .word-transcription {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-bottom: 0.75rem;
+    }
+
+    .word-meaning {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .word-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--bg-tertiary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 8px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .word-item:hover .word-count {
+      background: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    /* Search Results */
+    .search-results {
+      margin-top: 2rem;
+    }
+
+    .search-info {
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      text-align: center;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-secondary);
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .no-results-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--border-color);
+      border-top: 2px solid var(--text-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    .loading-text {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .detail-layout {
+        grid-template-columns: 1fr 300px;
+        gap: 1.5rem;
+      }
+      
+      .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+      
+      .words-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
+    @media (max-width: 968px) {
+      .detail-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .sidebar-column {
+        position: static;
+      }
+      
+      .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-search {
+        max-width: 100%;
+      }
+      
+      .main-content {
+        margin-top: 140px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem;
+      }
+      
+      .main-content {
+        padding: 1rem;
+        margin-top: 120px;
+      }
+      
+      .hero-section {
+        padding: 2rem 0 3rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .words-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .page-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      
+      .arabic-text {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        padding: 0.75rem;
+      }
+      
+      .main-content {
+        padding: 0.75rem;
+        margin-top: 120px;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      
+      .stats-grid {
+        gap: 0.75rem;
+      }
+      
+      .stat-card {
+        padding: 1.25rem 1rem;
+      }
+      
+      .stat-number {
+        font-size: 2rem;
+      }
+      
+      .stat-label {
+        font-size: 0.8rem;
+      }
+      
+      .page-header {
+        padding: 1.5rem;
+      }
+      
+      .arabic-text {
+        font-size: 2rem;
+      }
+      
+      .content-section {
+        padding: 1.5rem;
+      }
+      
+      .verse-item, .word-item, .category-card {
+        padding: 1.25rem;
+      }
+      
+      .search-input {
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Utility Classes */
+    .hidden {
+      display: none !important;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 1rem; }
+    .mb-3 { margin-bottom: 1.5rem; }
+    .mb-4 { margin-bottom: 2rem; }
+
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
+    .mt-4 { margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <!-- Galaxy Background -->
+  <div class="galaxy-bg"></div>
+  <div class="stars" id="stars"></div>
+  <div class="nebula"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#" class="logo" onclick="showHome()">SADECE KURAN</a>
+      <div class="nav-search">
+        <div class="search-container">
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Kelime, kök veya anlam ara..." 
+            id="searchInput"
+            oninput="handleSearch()"
+          >
+          <svg class="search-icon icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="nav-stats">
+        <span id="totalWords">0 Kelime</span>
+        <span id="totalRoots">0 Kök</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Home Page -->
+    <div id="homePage" class="home-page">
+      <div class="hero-section">
+        <h1 class="hero-title">Kuran Kelime Kütüphanesi</h1>
+        <p class="hero-subtitle">Kuran-ı Kerim'deki tüm kelimeleri köklerine göre keşfedin</p>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="statWords">0</div>
+            <div class="stat-label">Toplam Kelime</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="statRoots">0</div>
+            <div class="stat-label">Farklı Kök</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="statSurahs">114</div>
+            <div class="stat-label">Sure</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="statVerses">0</div>
+            <div class="stat-label">Ayet</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="categories-section">
+        <h2 class="section-title">Kök Kategorileri</h2>
+        <div class="categories-grid" id="categoriesGrid">
+          <!-- Categories will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Word Page -->
+    <div id="wordPage" class="hidden">
+      <div class="breadcrumb">
+        <a href="#" onclick="showHome()">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9,22 9,12 15,12 15,22"></polyline>
+          </svg>
+          Ana Sayfa
+        </a>
+        <span>›</span>
+        <a href="#" id="wordBreadcrumbRoot" onclick="showRoot(this.dataset.rootId)"></a>
+        <span>›</span>
+        <span id="wordBreadcrumbWord"></span>
+      </div>
+      
+      <div class="detail-layout">
+        <div class="main-column">
+          <div class="page-header">
+            <div class="page-title">
+              <div class="arabic-text" id="wordArabic"></div>
+            </div>
+            <div class="transcription" id="wordTranscription"></div>
+            <div class="meaning" id="wordMeaning"></div>
+          </div>
+
+          <div class="content-section">
+            <h3 class="content-title">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Bu Kelimenin Geçtiği Ayetler
+            </h3>
+            <div class="verses-list" id="wordVerses">
+              <!-- Verses will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar-column">
+          <div class="info-panel">
+            <h4 class="info-title">
+              <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              Kelime Bilgileri
+            </h4>
+            <div class="info-item">
+              <span class="info-label">Toplam Geçiş</span>
+              <span class="info-value" id="wordTotalCount">0</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Farklı Sure</span>
+              <span class="info-value" id="wordSurahCount">0</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Kök</span>
+              <span class="info-value" id="wordRootInfo">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Root Page -->
+    <div id="rootPage" class="hidden">
+      <div class="breadcrumb">
+        <a href="#" onclick="showHome()">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9,22 9,12 15,12 15,22"></polyline>
+          </svg>
+          Ana Sayfa
+        </a>
+        <span>›</span>
+        <span id="rootBreadcrumb"></span>
+      </div>
+      
+      <div class="detail-layout">
+        <div class="main-column">
+          <div class="page-header">
+            <div class="page-title">
+              <div class="arabic-text" id="rootArabic"></div>
+              <div>
+                <div id="rootLatin" style="font-size: 1.5rem; color: var(--text-secondary);"></div>
+              </div>
+            </div>
+            <div class="meaning" id="rootMeaning"></div>
+          </div>
+
+          <div class="content-section">
+            <h3 class="content-title">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10,9 9,9 8,9"></polyline>
+              </svg>
+              Bu Kökten Türeyen Kelimeler
+            </h3>
+            <div class="words-grid" id="rootWords">
+              <!-- Words will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar-column">
+          <div class="info-panel">
+            <h4 class="info-title">
+              <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              Kök Bilgileri
+            </h4>
+            <div class="info-item">
+              <span class="info-label">Türeyen Kelime</span>
+              <span class="info-value" id="rootWordCount">0</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Toplam Geçiş</span>
+              <span class="info-value" id="rootTotalCount">0</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Latin Kök</span>
+              <span class="info-value" id="rootLatinInfo">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Results -->
+    <div id="searchPage" class="hidden">
+      <div class="breadcrumb">
+        <a href="#" onclick="showHome()">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9,22 9,12 15,12 15,22"></polyline>
+          </svg>
+          Ana Sayfa
+        </a>
+        <span>›</span>
+        <span>Arama Sonuçları</span>
+      </div>
+      
+      <div class="page-header">
+        <div class="page-title">
+          <svg class="icon" viewBox="0 0 24 24" style="width: 2.5rem; height: 2.5rem;">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <span>Arama Sonuçları</span>
+        </div>
+        <div class="search-info" id="searchInfo"></div>
+      </div>
+
+      <div class="search-results" id="searchResults">
+        <!-- Search results will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div id="loadingPage" class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Kuran verileri yükleniyor...</div>
+    </div>
+  </main>
+
+  <script>
+    // Global variables
+    let quranData = null;
+    let wordsIndex = {};
+    let rootsIndex = {};
+    let searchIndex = {};
+    let currentPage = 'home';
+    let searchTimeout = null;
+
+    // Initialize stars with responsive count
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const screenWidth = window.innerWidth;
+      let starCount;
+      
+      if (screenWidth >= 1200) {
+        starCount = 150;
+      } else if (screenWidth >= 768) {
+        starCount = 100;
+      } else {
+        starCount = 50;
+      }
+      
+      starsContainer.innerHTML = '';
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = Math.random() * 2 + 1 + 'px';
+        star.style.height = star.style.width;
+        star.style.animationDelay = Math.random() * 4 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Load Quran data from JSON file
+    async function loadQuranData() {
+      try {
+        showLoading();
+        
+        // Load the actual JSON file
+        const response = await fetch('all_surahs_data.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Handle both possible JSON structures
+        quranData = data.surahs ? data : { surahs: data };
+        
+        processData();
+        updateStats();
+        hideLoading();
+        showHome();
+        
+      } catch (error) {
+        console.error('Error loading Quran data:', error);
+        hideLoading();
+        showError('Kuran verileri yüklenirken hata oluştu. Lütfen sayfayı yenileyin.');
+      }
+    }
+
+    // Show loading state
+    function showLoading() {
+      hideAllPages();
+      document.getElementById('loadingPage').classList.remove('hidden');
+    }
+
+    // Hide loading state
+    function hideLoading() {
+      document.getElementById('loadingPage').classList.add('hidden');
+    }
+
+    // Show error message
+    function showError(message) {
+      hideAllPages();
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'no-results';
+      errorDiv.innerHTML = `
+        <div class="no-results-icon">⚠️</div>
+        <h3>Hata</h3>
+        <p>${message}</p>
+      `;
+      document.querySelector('.main-content').appendChild(errorDiv);
+    }
+
+    // Process data and create indexes
+    function processData() {
+      wordsIndex = {};
+      rootsIndex = {};
+      searchIndex = {};
+
+      if (!quranData || !quranData.surahs) {
+        console.error('Invalid Quran data structure');
+        return;
+      }
+
+      quranData.surahs.forEach(surah => {
+        if (!surah.verses) return;
+        
+        surah.verses.forEach(verse => {
+          if (!verse.words) return;
+          
+          verse.words.forEach(word => {
+            const wordKey = `${word.arabic}_${word.transcription_tr || word.transcription_en || ''}`;
+            
+            // Word index
+            if (!wordsIndex[wordKey]) {
+              wordsIndex[wordKey] = {
+                arabic: word.arabic,
+                transcription: word.transcription_tr || word.transcription_en || '',
+                meaning: word.translation_tr || word.translation_en || '',
+                root: word.root,
+                verses: []
+              };
+            }
+            
+            wordsIndex[wordKey].verses.push({
+              surah_id: surah.id,
+              surah_name: surah.name,
+              verse_number: verse.verse_number,
+              verse_text: verse.text,
+              verse_translation: verse.translation_tr || verse.translation_en || ''
+            });
+
+            // Root index
+            if (word.root && word.root.latin) {
+              const rootKey = word.root.latin;
+              if (!rootsIndex[rootKey]) {
+                rootsIndex[rootKey] = {
+                  latin: word.root.latin,
+                  arabic: word.root.arabic || '',
+                  meaning: word.root.meaning || 'Anlam belirtilmemiş',
+                  words: new Set()
+                };
+              }
+              rootsIndex[rootKey].words.add(wordKey);
+            }
+
+            // Search index
+            const searchTerms = [
+              word.arabic,
+              word.transcription_tr,
+              word.transcription_en,
+              word.translation_tr,
+              word.translation_en,
+              word.root?.latin,
+              word.root?.arabic,
+              word.root?.meaning
+            ].filter(Boolean);
+
+            searchTerms.forEach(term => {
+              const normalizedTerm = term.toLowerCase().trim();
+              if (normalizedTerm) {
+                if (!searchIndex[normalizedTerm]) {
+                  searchIndex[normalizedTerm] = new Set();
+                }
+                searchIndex[normalizedTerm].add(wordKey);
+              }
+            });
+          });
+        });
+      });
+
+      // Convert Sets to Arrays for easier handling
+      Object.values(rootsIndex).forEach(root => {
+        root.words = Array.from(root.words);
+      });
+    }
+
+    // Update statistics
+    function updateStats() {
+      const totalWords = Object.keys(wordsIndex).length;
+      const totalRoots = Object.keys(rootsIndex).length;
+      const totalVerses = quranData.surahs.reduce((sum, surah) => sum + (surah.verse_count || 0), 0);
+
+      document.getElementById('totalWords').textContent = `${totalWords} Kelime`;
+      document.getElementById('totalRoots').textContent = `${totalRoots} Kök`;
+      document.getElementById('statWords').textContent = totalWords;
+      document.getElementById('statRoots').textContent = totalRoots;
+      document.getElementById('statVerses').textContent = totalVerses;
+    }
+
+    // Show home page
+    function showHome() {
+      hideAllPages();
+      document.getElementById('homePage').classList.remove('hidden');
+      currentPage = 'home';
+      window.location.hash = '';
+      
+      // Populate categories with animation delay
+      const categoriesGrid = document.getElementById('categoriesGrid');
+      categoriesGrid.innerHTML = '';
+      
+      // Sort roots by word count (descending)
+      const sortedRoots = Object.entries(rootsIndex)
+        .sort(([,a], [,b]) => b.words.length - a.words.length);
+      
+      sortedRoots.forEach(([rootKey, root], index) => {
+        setTimeout(() => {
+          const card = document.createElement('a');
+          card.className = 'category-card';
+          card.href = `#root-${rootKey}`;
+          card.onclick = (e) => {
+            e.preventDefault();
+            showRoot(rootKey);
+          };
+          
+          card.innerHTML = `
+            <div class="category-header">
+              <div class="category-name">
+                <span class="category-arabic">${root.arabic}</span>
+                <span>${root.latin}</span>
+              </div>
+              <div class="category-count">${root.words.length} kelime</div>
+            </div>
+            <div class="category-meaning">${root.meaning}</div>
+          `;
+          
+          categoriesGrid.appendChild(card);
+        }, index * 30); // Faster staggered animation for desktop
+      });
+    }
+
+    // Show word page
+    function showWord(wordKey) {
+      hideAllPages();
+      document.getElementById('wordPage').classList.remove('hidden');
+      currentPage = 'word';
+      window.location.hash = `word-${encodeURIComponent(wordKey)}`;
+      
+      const word = wordsIndex[wordKey];
+      if (!word) return;
+
+      document.getElementById('wordArabic').textContent = word.arabic;
+      document.getElementById('wordTranscription').textContent = word.transcription;
+      document.getElementById('wordMeaning').textContent = word.meaning;
+      
+      // Breadcrumb
+      if (word.root) {
+        document.getElementById('wordBreadcrumbRoot').textContent = word.root.latin;
+        document.getElementById('wordBreadcrumbRoot').dataset.rootId = word.root.latin;
+      }
+      document.getElementById('wordBreadcrumbWord').textContent = word.transcription;
+
+      // Update sidebar info
+      const uniqueSurahs = new Set(word.verses.map(v => v.surah_id));
+      document.getElementById('wordTotalCount').textContent = word.verses.length;
+      document.getElementById('wordSurahCount').textContent = uniqueSurahs.size;
+      document.getElementById('wordRootInfo').textContent = word.root ? word.root.latin : 'Yok';
+
+      // Verses with animation
+      const versesContainer = document.getElementById('wordVerses');
+      versesContainer.innerHTML = '';
+      
+      word.verses.forEach((verse, index) => {
+        setTimeout(() => {
+          const verseElement = document.createElement('a');
+          verseElement.className = 'verse-item';
+          verseElement.href = `/index.html#${verse.surah_id}-${verse.verse_number}`;
+          verseElement.onclick = (e) => {
+            e.preventDefault();
+            window.open(`/index.html#${verse.surah_id}-${verse.verse_number}`, '_blank');
+          };
+          
+          verseElement.innerHTML = `
+            <div class="verse-reference">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              ${verse.surah_name} ${verse.verse_number}
+            </div>
+            <div class="verse-arabic">${verse.verse_text}</div>
+            <div class="verse-translation">${verse.verse_translation}</div>
+          `;
+          
+          versesContainer.appendChild(verseElement);
+        }, index * 50);
+      });
+    }
+
+    // Show root page
+    function showRoot(rootKey) {
+      hideAllPages();
+      document.getElementById('rootPage').classList.remove('hidden');
+      currentPage = 'root';
+      window.location.hash = `root-${rootKey}`;
+      
+      const root = rootsIndex[rootKey];
+      if (!root) return;
+
+      document.getElementById('rootArabic').textContent = root.arabic;
+      document.getElementById('rootLatin').textContent = root.latin;
+      document.getElementById('rootMeaning').textContent = root.meaning;
+      document.getElementById('rootBreadcrumb').textContent = root.latin;
+
+      // Update sidebar info
+      const totalOccurrences = root.words.reduce((sum, wordKey) => {
+        return sum + wordsIndex[wordKey].verses.length;
+      }, 0);
+      
+      document.getElementById('rootWordCount').textContent = root.words.length;
+      document.getElementById('rootTotalCount').textContent = totalOccurrences;
+      document.getElementById('rootLatinInfo').textContent = root.latin;
+
+      // Words with animation
+      const wordsContainer = document.getElementById('rootWords');
+      wordsContainer.innerHTML = '';
+      
+      root.words.forEach((wordKey, index) => {
+        setTimeout(() => {
+          const word = wordsIndex[wordKey];
+          const wordElement = document.createElement('a');
+          wordElement.className = 'word-item';
+          wordElement.href = `#word-${encodeURIComponent(wordKey)}`;
+          wordElement.onclick = (e) => {
+            e.preventDefault();
+            showWord(wordKey);
+          };
+          
+          wordElement.innerHTML = `
+            <div class="word-arabic">${word.arabic}</div>
+            <div class="word-transcription">${word.transcription}</div>
+            <div class="word-meaning">${word.meaning}</div>
+            <div class="word-count">${word.verses.length} ayette geçer</div>
+          `;
+          
+          wordsContainer.appendChild(wordElement);
+        }, index * 40);
+      });
+    }
+
+    // Handle search
+    function handleSearch() {
+      const query = document.getElementById('searchInput').value.trim();
+      
+      if (searchTimeout) {
+        clearTimeout(searchTimeout);
+      }
+      
+      searchTimeout = setTimeout(() => {
+        if (query.length >= 2) {
+          performSearch(query);
+        } else if (query.length === 0) {
+          showHome();
+        }
+      }, 300);
+    }
+
+    // Perform search
+    function performSearch(query) {
+      hideAllPages();
+      document.getElementById('searchPage').classList.remove('hidden');
+      currentPage = 'search';
+      window.location.hash = `search-${encodeURIComponent(query)}`;
+      
+      const normalizedQuery = query.toLowerCase();
+      const results = new Set();
+      
+      // Search in index
+      Object.entries(searchIndex).forEach(([term, wordKeys]) => {
+        if (term.includes(normalizedQuery)) {
+          wordKeys.forEach(wordKey => results.add(wordKey));
+        }
+      });
+      
+      const resultsArray = Array.from(results);
+      
+      document.getElementById('searchInfo').textContent = 
+        `"${query}" için ${resultsArray.length} sonuç bulundu`;
+      
+      const resultsContainer = document.getElementById('searchResults');
+      resultsContainer.innerHTML = '';
+      
+      if (resultsArray.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class="no-results">
+            <div class="no-results-icon">🔍</div>
+            <h3>Sonuç bulunamadı</h3>
+            <p>Farklı kelimeler deneyebilirsiniz.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const wordsSection = document.createElement('div');
+      wordsSection.className = 'content-section';
+      wordsSection.innerHTML = `
+        <h3 class="content-title">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14,2 14,8 20,8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10,9 9,9 8,9"></polyline>
+          </svg>
+          Bulunan Kelimeler
+        </h3>
+        <div class="words-grid" id="searchWordsGrid"></div>
+      `;
+      
+      const wordsGrid = wordsSection.querySelector('#searchWordsGrid');
+      
+      resultsArray.forEach((wordKey, index) => {
+        setTimeout(() => {
+          const word = wordsIndex[wordKey];
+          const wordElement = document.createElement('a');
+          wordElement.className = 'word-item';
+          wordElement.href = `#word-${encodeURIComponent(wordKey)}`;
+          wordElement.onclick = (e) => {
+            e.preventDefault();
+            showWord(wordKey);
+          };
+          
+          wordElement.innerHTML = `
+            <div class="word-arabic">${word.arabic}</div>
+            <div class="word-transcription">${word.transcription}</div>
+            <div class="word-meaning">${word.meaning}</div>
+            <div class="word-count">${word.verses.length} ayette geçer</div>
+          `;
+          
+          wordsGrid.appendChild(wordElement);
+        }, index * 30);
+      });
+      
+      resultsContainer.appendChild(wordsSection);
+    }
+
+    // Hide all pages
+    function hideAllPages() {
+      document.getElementById('homePage').classList.add('hidden');
+      document.getElementById('wordPage').classList.add('hidden');
+      document.getElementById('rootPage').classList.add('hidden');
+      document.getElementById('searchPage').classList.add('hidden');
+      document.getElementById('loadingPage').classList.add('hidden');
+    }
+
+    // Handle URL hash changes
+    function handleHashChange() {
+      const hash = window.location.hash.slice(1);
+      
+      if (!hash) {
+        showHome();
+        return;
+      }
+      
+      if (hash.startsWith('word-')) {
+        const wordKey = decodeURIComponent(hash.slice(5));
+        showWord(wordKey);
+      } else if (hash.startsWith('root-')) {
+        const rootKey = hash.slice(5);
+        showRoot(rootKey);
+      } else if (hash.startsWith('search-')) {
+        const query = decodeURIComponent(hash.slice(7));
+        document.getElementById('searchInput').value = query;
+        performSearch(query);
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      createStars();
+      loadQuranData();
+      
+      // Handle hash changes
+      window.addEventListener('hashchange', handleHashChange);
+      
+      // Handle search input
+      document.getElementById('searchInput').addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          e.target.value = '';
+          showHome();
+        }
+      });
+
+      // Handle window resize for responsive stars and layout
+      window.addEventListener('resize', () => {
+        const starsContainer = document.getElementById('stars');
+        starsContainer.innerHTML = '';
+        createStars();
+      });
+    });
+  </script>
+</body>
+</html>
