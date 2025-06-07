@@ -356,7 +356,7 @@
 
     .home-hero {
         text-align: center;
-        padding: 2rem 0 3rem;
+        padding: 2rem 0 2rem;
         max-width: 800px;
         margin: 0 auto;
     }
@@ -377,6 +377,76 @@
         color: var(--text-secondary);
         margin-bottom: 2rem;
         animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+    }
+
+    .home-search {
+        max-width: 600px;
+        margin: 0 auto 3rem;
+        position: relative;
+        animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+    }
+
+    .home-search-input {
+        width: 100%;
+        padding: 1rem 3rem 1rem 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--border-color);
+        border-radius: 16px;
+        color: var(--text-primary);
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px var(--shadow-dark);
+    }
+
+    .home-search-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1), 0 8px 32px var(--shadow-dark);
+        transform: translateY(-2px);
+    }
+
+    .home-search-icon {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        pointer-events: none;
+    }
+
+    .home-search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        margin-top: 0.5rem;
+        max-height: 400px;
+        overflow-y: auto;
+        z-index: 100;
+        display: none;
+        box-shadow: 0 8px 32px var(--shadow-dark);
+    }
+
+    .home-search-results.active {
+        display: block;
+    }
+
+    .home-search-result {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .home-search-result:last-child {
+        border-bottom: none;
+    }
+
+    .home-search-result:hover {
+        background: var(--bg-tertiary);
     }
 
     .surahs-grid {
@@ -474,39 +544,6 @@
         display: flex;
         align-items: center;
         gap: 0.25rem;
-    }
-
-    .surah-actions {
-        position: absolute;
-        top: 0.75rem;
-        right: 0.75rem;
-        display: flex;
-        gap: 0.25rem;
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-
-    .surah-card:hover .surah-actions {
-        opacity: 1;
-    }
-
-    .play-btn {
-        background: var(--primary-color);
-        color: var(--bg-primary);
-        border: none;
-        padding: 0.4rem;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 2rem;
-        height: 2rem;
-    }
-
-    .play-btn:hover {
-        transform: scale(1.1);
     }
 
     .settings-page {
@@ -691,16 +728,18 @@
         left: 0;
         right: 0;
         background: var(--bg-secondary);
+        backdrop-filter: blur(20px);
         border-top: 1px solid var(--border-color);
         padding: 1rem;
-        box-shadow: 0 -4px 20px var(--shadow-dark);
+        box-shadow: 0 -8px 32px var(--shadow-dark);
         z-index: 1000;
         display: none;
-        backdrop-filter: blur(20px);
+        transition: all 0.3s ease;
     }
 
     .audio-player.active {
         display: block;
+        animation: slideInUp 0.3s ease;
     }
 
     .audio-controls {
@@ -713,35 +752,43 @@
     .audio-main-controls {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.75rem;
     }
 
     .audio-btn {
-        background: var(--bg-tertiary);
+        background: var(--bg-primary);
         border: 1px solid var(--border-color);
         color: var(--text-primary);
-        padding: 0.5rem;
-        border-radius: 50%;
+        padding: 0.75rem;
+        border-radius: 12px;
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
+        box-shadow: 0 2px 8px var(--shadow-dark);
     }
 
     .audio-btn:hover {
         background: var(--primary-color);
         color: var(--bg-primary);
-        transform: scale(1.1);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px var(--shadow-dark);
     }
 
     .audio-play-btn {
         background: var(--primary-color);
         color: var(--bg-primary);
-        width: 48px;
-        height: 48px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .audio-play-btn:hover {
+        transform: scale(1.05);
     }
 
     .audio-info {
@@ -751,12 +798,13 @@
     }
 
     .audio-title {
-        font-size: 1rem;
+        font-size: 1.1rem;
         font-weight: 600;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: var(--text-primary);
     }
 
     .audio-progress-container {
@@ -766,11 +814,12 @@
 
     .audio-progress {
         width: 100%;
-        height: 6px;
-        background: var(--border-color);
-        border-radius: 3px;
+        height: 8px;
+        background: var(--bg-tertiary);
+        border-radius: 4px;
         overflow: hidden;
         cursor: pointer;
+        border: 1px solid var(--border-color);
     }
 
     .audio-progress-bar {
@@ -778,54 +827,65 @@
         background: var(--primary-color);
         width: 0%;
         transition: width 0.1s ease;
+        border-radius: 4px;
     }
 
     .audio-time {
         display: flex;
         justify-content: space-between;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         color: var(--text-muted);
+        font-weight: 500;
     }
 
     .audio-volume-control {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        min-width: 120px;
+        gap: 0.75rem;
+        min-width: 140px;
     }
 
     .audio-volume-slider {
-        width: 80px;
-        height: 4px;
-        background: var(--border-color);
-        border-radius: 2px;
+        width: 100px;
+        height: 6px;
+        background: var(--bg-tertiary);
+        border-radius: 3px;
         outline: none;
         cursor: pointer;
         -webkit-appearance: none;
+        border: 1px solid var(--border-color);
     }
 
     .audio-volume-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         background: var(--primary-color);
         border-radius: 50%;
         cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .audio-close {
-        background: none;
-        border: none;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
         color: var(--text-secondary);
         cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 50%;
+        padding: 0.75rem;
+        border-radius: 12px;
         transition: all 0.3s ease;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .audio-close:hover {
-        background: var(--bg-tertiary);
-        color: var(--text-primary);
+        background: #dc2626;
+        color: white;
+        border-color: #dc2626;
+        transform: translateY(-2px);
     }
 
     .breadcrumb {
@@ -955,11 +1015,15 @@
         }
 
         .home-hero {
-            padding: 1rem 0 2rem;
+            padding: 1rem 0 1.5rem;
         }
 
         .home-hero h1 {
             font-size: 1.8rem;
+        }
+
+        .home-search {
+            margin-bottom: 2rem;
         }
 
         .surahs-grid {
@@ -1002,19 +1066,6 @@
             font-size: 0.7rem;
         }
 
-        .surah-actions {
-            position: static;
-            justify-content: center;
-            margin-top: 0.5rem;
-            opacity: 1;
-        }
-
-        .play-btn {
-            width: 1.5rem;
-            height: 1.5rem;
-            padding: 0.3rem;
-        }
-
         .theme-grid {
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 0.75rem;
@@ -1029,23 +1080,57 @@
             height: 30px;
         }
 
+        .audio-player {
+            padding: 0.75rem;
+        }
+
         .audio-controls {
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.5rem;
+            margin-bottom: 0;
         }
 
         .audio-main-controls {
             justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .audio-btn {
+            width: 40px;
+            height: 40px;
+            padding: 0.5rem;
+        }
+
+        .audio-play-btn {
+            width: 48px;
+            height: 48px;
         }
 
         .audio-info {
             margin: 0;
             text-align: center;
+            order: -1;
+        }
+
+        .audio-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
 
         .audio-volume-control {
             justify-content: center;
             min-width: auto;
+            gap: 0.5rem;
+        }
+
+        .audio-volume-slider {
+            width: 80px;
+        }
+
+        .audio-close {
+            width: 40px;
+            height: 40px;
+            padding: 0.5rem;
         }
     }
 
@@ -1075,6 +1160,29 @@
 
         .theme-grid {
             grid-template-columns: repeat(2, 1fr);
+        }
+
+        .audio-player {
+            padding: 0.5rem;
+        }
+
+        .audio-main-controls {
+            gap: 0.25rem;
+        }
+
+        .audio-btn {
+            width: 36px;
+            height: 36px;
+        }
+
+        .audio-play-btn {
+            width: 44px;
+            height: 44px;
+        }
+
+        .audio-close {
+            width: 36px;
+            height: 36px;
         }
     }
 
@@ -1152,22 +1260,26 @@
 
     .surah-play-btn {
         position: absolute;
-        top: 1rem;
-        right: 1rem;
+        top: 1.5rem;
+        right: 1.5rem;
         background: var(--primary-color);
         color: var(--bg-primary);
         border: none;
-        padding: 0.75rem;
+        padding: 1rem;
         border-radius: 50%;
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 60px;
+        height: 60px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
 
     .surah-play-btn:hover {
         transform: scale(1.1);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
     }
 
     .verses-container {
@@ -2075,38 +2187,6 @@
                                     translation_tr: "adıyla",
                                     translation_en: "In the name",
                                     root: null
-                                },
-                                {
-                                    arabic: "ٱللَّهِ",
-                                    transcription_tr: "allahi",
-                                    transcription_en: "allahi",
-                                    translation_tr: "Allah'ın",
-                                    translation_en: "of Allah",
-                                    root: null
-                                },
-                                {
-                                    arabic: "الرَّحْمٰنِ",
-                                    transcription_tr: "rahmanir",
-                                    transcription_en: "arrahmani",
-                                    translation_tr: "Rahman olan",
-                                    translation_en: "the Most Gracious",
-                                    root: {
-                                        latin: "Rhm",
-                                        arabic: "رحم",
-                                        meaning: "Merhamet etmek, acımak, şefkat göstermek"
-                                    }
-                                },
-                                {
-                                    arabic: "الرَّح۪يمِ",
-                                    transcription_tr: "rahim",
-                                    transcription_en: "arraheem",
-                                    translation_tr: "Rahim olan",
-                                    translation_en: "the Most Merciful",
-                                    root: {
-                                        latin: "Rhm",
-                                        arabic: "رحم",
-                                        meaning: "Merhamet etmek, acımak, şefkat göstermek"
-                                    }
                                 }
                             ]
                         }
@@ -2204,12 +2284,19 @@
                 if (e.target.classList.contains('save-modal')) {
                     this.closeSaveModal();
                 }
+                if (e.target.classList.contains('home-search-results')) {
+                    return;
+                }
+                if (!e.target.closest('.home-search')) {
+                    this.hideHomeSearchResults();
+                }
             });
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     this.toggleSearch();
                     this.closeSaveModal();
+                    this.hideHomeSearchResults();
                 }
                 if (e.ctrlKey && e.key === 'k') {
                     e.preventDefault();
@@ -2282,12 +2369,78 @@
                     <p>Kuran-ı Kerim'in Türkçe meali ve detaylı kelime analizi. Her kelimeyi kökü ile birlikte inceleyin, ayetleri derinlemesine anlayın.</p>
                 </div>
 
+                <div class="home-search">
+                    <input type="text" class="home-search-input" id="homeSearchInput" placeholder="Sure, ayet, kelime veya kök ara...">
+                    <svg class="icon home-search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <div class="home-search-results" id="homeSearchResults"></div>
+                </div>
+
                 <div class="surahs-grid" id="surahsGrid">
                     <!-- Surahs will be populated by JavaScript -->
                 </div>
             `;
 
             this.renderSurahsGrid();
+            this.setupHomeSearch();
+        }
+
+        setupHomeSearch() {
+            const homeSearchInput = document.getElementById('homeSearchInput');
+            let searchTimeout;
+            
+            homeSearchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    this.handleHomeSearch(e.target.value);
+                }, 300);
+            });
+
+            homeSearchInput.addEventListener('focus', () => {
+                if (homeSearchInput.value.length >= 2) {
+                    this.handleHomeSearch(homeSearchInput.value);
+                }
+            });
+        }
+
+        handleHomeSearch(query) {
+            const resultsContainer = document.getElementById('homeSearchResults');
+            
+            if (!query || query.length < 2) {
+                resultsContainer.classList.remove('active');
+                return;
+            }
+
+            const results = this.search(query);
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="home-search-result">
+                        <div style="text-align: center; color: var(--text-secondary);">Sonuç bulunamadı</div>
+                    </div>
+                `;
+                resultsContainer.classList.add('active');
+                return;
+            }
+
+            resultsContainer.innerHTML = results.slice(0, 8).map(result => `
+                <div class="home-search-result" onclick="window.location.hash='${result.url}'; app.hideHomeSearchResults();">
+                    <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem;">${result.type}</div>
+                    <div style="font-weight: 600; margin-bottom: 0.25rem;">${result.title}</div>
+                    <div style="font-size: 0.9rem; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${result.content}</div>
+                </div>
+            `).join('');
+            
+            resultsContainer.classList.add('active');
+        }
+
+        hideHomeSearchResults() {
+            const resultsContainer = document.getElementById('homeSearchResults');
+            if (resultsContainer) {
+                resultsContainer.classList.remove('active');
+            }
         }
 
         renderSurahsGrid() {
@@ -2298,41 +2451,32 @@
             }
 
             surahsGrid.innerHTML = this.data.map((surah, index) => `
-                <div class="surah-card" style="animation-delay: ${index * 0.02}s;">
-                    <div class="surah-actions">
-                        <button class="play-btn" onclick="app.playSurah(${surah.id})" title="Sureyi dinle">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <polygon points="5,3 19,12 5,21"></polygon>
-                            </svg>
-                        </button>
-                    </div>
-                    <a href="#sure-${surah.id}" style="text-decoration: none; color: inherit;">
-                        <div class="surah-header">
-                            <div class="surah-number">${surah.id}</div>
-                            <div class="surah-info">
-                                <div class="surah-name">${surah.name}</div>
-                                <div class="surah-arabic arabic">${surah.name_original}</div>
-                                <div class="surah-meta">
-                                    <div class="meta-item">
-                                        <svg class="icon" viewBox="0 0 24 24">
-                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                            <polyline points="14,2 14,8 20,8"></polyline>
-                                        </svg>
-                                        ${surah.verse_count} ayet
-                                    </div>
-                                    <div class="meta-item">
-                                        <svg class="icon" viewBox="0 0 24 24">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <line x1="2" y1="12" x2="6" y2="12"></line>
-                                            <line x1="18" y1="12" x2="22" y2="12"></line>
-                                        </svg>
-                                        ${surah.name_en}
-                                    </div>
+                <a href="#sure-${surah.id}" class="surah-card" style="animation-delay: ${index * 0.02}s;">
+                    <div class="surah-header">
+                        <div class="surah-number">${surah.id}</div>
+                        <div class="surah-info">
+                            <div class="surah-name">${surah.name}</div>
+                            <div class="surah-arabic arabic">${surah.name_original}</div>
+                            <div class="surah-meta">
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14,2 14,8 20,8"></polyline>
+                                    </svg>
+                                    ${surah.verse_count} ayet
+                                </div>
+                                <div class="meta-item">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                                    </svg>
+                                    ${surah.name_en}
                                 </div>
                             </div>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             `).join('');
         }
 
@@ -2641,46 +2785,12 @@
 
                         <div id="translations" class="tab-content">
                             <div class="translations-container">
-                                <div class="translation-item">
-                                    <div class="translation-author">Diyanet İşleri Başkanlığı</div>
-                                    <div class="translation-text">${verse.translation_tr || 'Meal bulunamadı'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Elmalılı Hamdi Yazır</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'elmali') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Süleyman Ateş</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'ates') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Mehmet Okuyan</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'okuyan') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Mustafa İslamoğlu</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'islamoglu') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Ömer Nasuhi Bilmen</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'bilmen') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Abdulbaki Gölpınarlı</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'golpinarli') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Yaşar Nuri Öztürk</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'ozturk') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Bayraktar Bayraklı</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'bayrakli') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
-                                <div class="translation-item">
-                                    <div class="translation-author">Edip Yüksel</div>
-                                    <div class="translation-text">${this.getAlternativeTranslation(verse, 'yuksel') || 'Bu meal henüz eklenmemiş'}</div>
-                                </div>
+                                ${this.getAllTranslations(verse).map(translation => `
+                                    <div class="translation-item">
+                                        <div class="translation-author">${translation.author}</div>
+                                        <div class="translation-text">${translation.text}</div>
+                                    </div>
+                                `).join('')}
                             </div>
                         </div>
                     </div>
@@ -2688,8 +2798,54 @@
             `;
         }
 
-        getAlternativeTranslation(verse, author) {
-            return verse.translation_tr;
+        getAllTranslations(verse) {
+            const translations = [];
+            
+            // Ana meal (Diyanet)
+            if (verse.translation_tr) {
+                translations.push({
+                    author: "Diyanet İşleri Başkanlığı",
+                    text: verse.translation_tr
+                });
+            }
+
+            // Diğer mealler - JSON'dan gelen tüm meal yazarları
+            const translationFields = [
+                { field: 'translation_elmali', author: 'Elmalılı Hamdi Yazır' },
+                { field: 'translation_ates', author: 'Süleyman Ateş' },
+                { field: 'translation_okuyan', author: 'Mehmet Okuyan' },
+                { field: 'translation_islamoglu', author: 'Mustafa İslamoğlu' },
+                { field: 'translation_bilmen', author: 'Ömer Nasuhi Bilmen' },
+                { field: 'translation_golpinarli', author: 'Abdulbaki Gölpınarlı' },
+                { field: 'translation_ozturk', author: 'Yaşar Nuri Öztürk' },
+                { field: 'translation_bayrakli', author: 'Bayraktar Bayraklı' },
+                { field: 'translation_yuksel', author: 'Edip Yüksel' },
+                { field: 'translation_saheeh', author: 'Saheeh International (İngilizce)' },
+                { field: 'translation_pickthall', author: 'Pickthall (İngilizce)' },
+                { field: 'translation_yusufali', author: 'Yusuf Ali (İngilizce)' },
+                { field: 'translation_shakir', author: 'Shakir (İngilizce)' },
+                { field: 'translation_wahiduddin', author: 'Wahiduddin Khan (İngilizce)' },
+                { field: 'translation_hilali', author: 'Hilali & Khan (İngilizce)' }
+            ];
+
+            translationFields.forEach(({ field, author }) => {
+                if (verse[field] && verse[field].trim()) {
+                    translations.push({
+                        author: author,
+                        text: verse[field]
+                    });
+                }
+            });
+
+            // Eğer hiç meal yoksa varsayılan mesaj
+            if (translations.length === 0) {
+                translations.push({
+                    author: "Bilgi",
+                    text: "Bu ayet için meal bulunamadı."
+                });
+            }
+
+            return translations;
         }
 
         renderSavedVerses() {
