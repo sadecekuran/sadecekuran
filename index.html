@@ -274,7 +274,7 @@ body {
     gap: 0.5rem;
 }
 
-.search-btn, .theme-btn, .saved-btn, .settings-btn {
+.search-btn, .theme-btn, .saved-btn, .settings-btn, .support-btn {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     padding: 0.5rem;
@@ -285,22 +285,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
 }
 
-.search-btn:hover, .theme-btn:hover, .saved-btn:hover, .settings-btn:hover {
+.search-btn:hover, .theme-btn:hover, .saved-btn:hover, .settings-btn:hover, .support-btn:hover {
     background: var(--bg-tertiary);
     color: var(--text-primary);
     border-color: var(--wire-color);
     transform: scale(1.05);
 }
 
-.saved-btn {
+.saved-btn, .support-btn {
     gap: 0.25rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
 }
 
-.saved-btn .icon {
+.saved-btn .icon, .support-btn .icon {
     margin: 0;
 }
 
@@ -450,6 +451,82 @@ body {
     font-size: calc(1.1rem * var(--font-size-multiplier));
     font-weight: 600;
     margin-bottom: 0.25rem;
+}
+
+.support-page {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.support-header {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.support-title {
+    font-size: 2rem;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.support-description {
+    color: var(--text-secondary);
+    font-size: calc(1.1rem * var(--font-size-multiplier));
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.donation-button {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    padding: 1.5rem 3rem;
+    border-radius: 16px;
+    text-decoration: none;
+    font-size: calc(1.2rem * var(--font-size-multiplier));
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px var(--shadow-dark);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.donation-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 40px var(--shadow-dark);
+}
+
+.donation-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('kader.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    border-radius: 16px;
+}
+
+.donation-button-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .settings-page {
@@ -1091,12 +1168,12 @@ body {
         font-size: 0.9rem;
     }
 
-    .saved-btn {
+    .saved-btn, .support-btn {
         padding: 0.4rem;
         font-size: 0;
     }
 
-    .saved-btn .icon {
+    .saved-btn .icon, .support-btn .icon {
         margin: 0;
     }
 
@@ -1357,6 +1434,19 @@ body {
     .font-size-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .donation-button {
+        padding: 1rem 2rem;
+        font-size: calc(1rem * var(--font-size-multiplier));
+    }
+
+    .support-header {
+        padding: 1rem;
+    }
+
+    .support-title {
+        font-size: 1.5rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1481,6 +1571,19 @@ body {
     .tab-button {
         padding: 0.5rem;
         font-size: calc(0.7rem * var(--font-size-multiplier));
+    }
+
+    .donation-button {
+        padding: 0.8rem 1.5rem;
+        font-size: calc(0.9rem * var(--font-size-multiplier));
+    }
+
+    .support-header {
+        padding: 0.8rem;
+    }
+
+    .support-title {
+        font-size: 1.3rem;
     }
 }
 
@@ -1795,7 +1898,7 @@ body {
     cursor: pointer;
     border-radius: 8px 8px 0 0;
     transition: all 0.3s ease;
-    font-size: calc(0.9rem * var(--font-size-multiplier));
+    font-size: calc(0.9rem *var(--font-size-multiplier));
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -2118,6 +2221,12 @@ body {
         </svg>
         <span>Kaydedilenler</span>
     </button>
+    <a href="#destekle" class="support-btn">
+        <svg class="icon icon-sm" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+        </svg>
+        <span>Destekle</span>
+    </a>
     <button class="settings-btn" onclick="app.showSettings()">
         <svg class="icon" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="3"></circle>
@@ -2616,12 +2725,18 @@ setupEventListeners() {
 
     const content = document.getElementById('content');
     content.addEventListener('touchstart', (e) => {
-        this.touchStartX = e.changedTouches[0].screenX;
+        // Sadece ayet sayfasında swipe özelliğini etkinleştir
+        if (this.currentSurahId && this.currentVerseNumber) {
+            this.touchStartX = e.changedTouches[0].screenX;
+        }
     });
 
     content.addEventListener('touchend', (e) => {
-        this.touchEndX = e.changedTouches[0].screenX;
-        this.handleSwipe();
+        // Sadece ayet sayfasında swipe özelliğini etkinleştir
+        if (this.currentSurahId && this.currentVerseNumber) {
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe();
+        }
     });
 
     document.addEventListener('click', (e) => {
@@ -2695,6 +2810,8 @@ handleRoute() {
         this.renderSavedVerses();
     } else if (hash === 'ayarlar') {
         this.renderSettings();
+    } else if (hash === 'destekle') {
+        this.renderSupportPage();
     }
 }
 
@@ -2722,6 +2839,65 @@ renderHome() {
     `;
 
     this.renderSurahsGrid();
+}
+
+renderSupportPage() {
+    const content = document.getElementById('content');
+    
+    content.innerHTML = `
+        <div class="support-page">
+            <div class="breadcrumb">
+                <a href="#" onclick="showHome()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                    </svg>
+                    Ana Sayfa
+                </a>
+                <span>›</span>
+                <span>Destekle</span>
+            </div>
+
+            <div class="support-header">
+                <h1 class="support-title">Projeyi Destekle</h1>
+                <p class="support-description">
+                    <strong>Hakikatin Tek Kaynağına Davet</strong>
+                    <br><br>
+                    Biz, İslam dininin yegâne kaynağının Allah’ın kelamı olan Kur’an-ı Kerim olduğuna inanan bir topluluğuz. Amacımız, dini; hurafelerden, uydurma rivayetlerden ve mezhep temelli insan yorumlarından arındırmak, Allah’ın indirdiği saf ve evrensel mesaja geri dönmektir.
+                    <br><br>
+                    Kur’an merkezli bir bilinç inşa etmek için büyük bir çaba içindeyiz. Bu çaba, yalnızca bir inanç meselesi değil; aynı zamanda doğru bilgiye ulaşma, sorgulama ve hakikati yaşama mücadelesidir.
+                    <br><br>
+                    Bu doğrultuda:
+                    <br><br>
+                    Eğitim içerikleri hazırlıyor,<br>
+                    Kitaplar, makaleler ve videolar üretiyor,<br>
+                    Gençlerimize rehber olacak dijital projeler geliştiriyoruz.
+                    <br><br>
+                    Toplumda yaygın olan yanlış dini algıları Kur’an ışığında sorgulayan, düşünen, araştıran bireylerin çoğalması için var gücümüzle çalışıyoruz. Fakat bu mücadelede yalnız değiliz — sizin desteğinizle daha da güçlü olabiliriz.
+                    <br><br>
+                    Siz de Kur’an’a dayalı bir İslam anlayışının yayılmasına katkıda bulunarak bu hakikat yolculuğunun bir parçası olun.
+                </p>
+
+                
+                <a href="https://www.patreon.com/sadecekuran/membership" target="_blank" class="donation-button">
+                    <div class="donation-button-content">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                        Patreon'da Destekle
+                    </div>
+                </a>
+                <p class="support-description">
+                    <br><br>
+                    info@sadecekuran.com.tr
+                    <br><br>
+                    sdckuran@hotmail.com
+                
+                </p>
+                
+            </div>
+        </div>
+    `;
 }
 
 renderSearchPage() {
