@@ -31,6 +31,7 @@
             --accent-color: #888888;
             --header-height: 60px;
             --navbar-bg: #111111;
+            --ripple-color: rgba(255, 255, 255, 0.3);
         }
 
         :root[data-theme="light"] {
@@ -54,6 +55,7 @@
             --accent-color: #64748b;
             --header-height: 60px;
             --navbar-bg: #f8fafc;
+            --ripple-color: rgba(37, 99, 235, 0.3);
         }
 
         :root[data-theme="sepia"] {
@@ -76,6 +78,7 @@
             --accent-color: #a0916f;
             --header-height: 60px;
             --navbar-bg: #f0e6d2;
+            --ripple-color: rgba(139, 69, 19, 0.3);
         }
 
         :root[data-theme="blue"] {
@@ -98,6 +101,7 @@
             --accent-color: #94a3b8;
             --header-height: 60px;
             --navbar-bg: #1e293b;
+            --ripple-color: rgba(59, 130, 246, 0.3);
         }
 
         :root[data-theme="green"] {
@@ -120,6 +124,7 @@
             --accent-color: #a7f3d0;
             --header-height: 60px;
             --navbar-bg: #065f46;
+            --ripple-color: rgba(16, 185, 129, 0.3);
         }
 
         :root[data-theme="purple"] {
@@ -142,6 +147,7 @@
             --accent-color: #d8b4fe;
             --header-height: 60px;
             --navbar-bg: #6b21a8;
+            --ripple-color: rgba(139, 92, 246, 0.3);
         }
 
         :root[data-theme="rose"] {
@@ -164,12 +170,43 @@
             --accent-color: #fbcfe8;
             --header-height: 60px;
             --navbar-bg: #9f1239;
+            --ripple-color: rgba(236, 72, 153, 0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            /* Mavi dokunma efektini kaldır */
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Ripple Effect için gerekli stiller */
+        .ripple-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--ripple-color);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         body {
@@ -265,6 +302,8 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
 
         .search-btn:hover, .theme-btn:hover, .categories-btn:hover, .about-btn:hover, .destekle-btn:hover {
@@ -350,6 +389,8 @@
             outline: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px var(--shadow-dark);
+            position: relative;
+            overflow: hidden;
         }
 
         .home-search-input:focus {
@@ -368,88 +409,88 @@
         }
 
         .articles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
-    gap: 1.5rem;
-    animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
-    position: relative;
-    z-index: 1;
-    justify-content: center;
-}
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
+            gap: 1.5rem;
+            animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+            position: relative;
+            z-index: 1;
+            justify-content: center;
+        }
 
-.article-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    text-decoration: none;
-    color: inherit;
-    transform: translateY(0);
-    opacity: 0;
-    animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    position: relative;
-    width: 320px;
-    height: 280px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
+        .article-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            transform: translateY(0);
+            opacity: 0;
+            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            position: relative;
+            width: 320px;
+            height: 280px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
 
-.article-image-container {
-    position: relative;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 20px;
-}
+        .article-image-container {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 20px;
+        }
 
-.article-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-    filter: brightness(0.7);
-}
+        .article-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            filter: brightness(0.7);
+        }
 
-.article-card:hover .article-image {
-    transform: scale(1.05);
-    filter: brightness(0.5);
-}
+        .article-card:hover .article-image {
+            transform: scale(1.05);
+            filter: brightness(0.5);
+        }
 
-.article-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-    padding: 2rem 1.5rem 1.5rem;
-    color: white;
-    backdrop-filter: blur(10px);
-    border-radius: 0 0 20px 20px;
-}
+        .article-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 2rem 1.5rem 1.5rem;
+            color: white;
+            backdrop-filter: blur(10px);
+            border-radius: 0 0 20px 20px;
+        }
 
-.article-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    line-height: 1.3;
-    color: white;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-height: 2.6rem;
-}
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            color: white;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 2.6rem;
+        }
 
-.article-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin-top: auto;
-}
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: auto;
+        }
 
         .article-detail {
             max-width: 800px;
@@ -457,63 +498,44 @@
         }
 
         .article-detail-header {
-    position: relative;
-    height: 400px;
-    border-radius: 24px;
-    margin-bottom: 2rem;
-    overflow: hidden;
-    animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-}
+            position: relative;
+            height: 400px;
+            border-radius: 24px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
 
-.article-detail-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.6);
-}
+        .article-detail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
 
-.article-detail-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-    padding: 3rem 2rem 2rem;
-    color: white;
-    backdrop-filter: blur(10px);
-}
-
-.article-detail-title {
-    font-size: calc(2.5rem * var(--font-size-multiplier));
-    font-weight: 700;
-    color: white;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-}
-
-.article-detail-meta {
-    display: flex;
-    justify-content: flex-start;
-    gap: 2rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-}
+        .article-detail-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 3rem 2rem 2rem;
+            color: white;
+            backdrop-filter: blur(10px);
+        }
 
         .article-detail-title {
             font-size: calc(2.5rem * var(--font-size-multiplier));
             font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: white;
             margin-bottom: 1rem;
             line-height: 1.2;
         }
 
         .article-detail-meta {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 2rem;
             margin-top: 1rem;
             flex-wrap: wrap;
@@ -539,29 +561,29 @@
         }
 
         .article-detail-content {
-    background: rgba(var(--bg-secondary-rgb), 0.8);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 2.5rem;
-    line-height: 1.8;
-    animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-}
+            background: rgba(var(--bg-secondary-rgb), 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            line-height: 1.8;
+            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
 
-.article-detail-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    pointer-events: none;
-    border-radius: 20px;
-}
+        .article-detail-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            pointer-events: none;
+            border-radius: 20px;
+        }
 
         .article-detail-content h2 {
             font-size: 1.75rem;
@@ -628,6 +650,8 @@
             transition: all 0.3s ease;
             padding: 0.25rem 0.5rem;
             border-radius: 6px;
+            position: relative;
+            overflow: hidden;
         }
 
         .breadcrumb a:hover {
@@ -672,6 +696,8 @@
             outline: none;
             transition: all 0.3s ease;
             margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .search-page-input:focus {
@@ -726,6 +752,8 @@
             text-decoration: none;
             color: inherit;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .category-card:hover {
@@ -879,6 +907,8 @@
             color: var(--text-secondary);
             text-decoration: none;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .social-link:hover {
@@ -1026,31 +1056,31 @@
         }
 
         @media (max-width: 768px) {
-    .articles-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        justify-items: center;
-    }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                justify-items: center;
+            }
 
-    .article-card {
-        width: 100%;
-        max-width: 252px;
-        height: 256px;
-    }
+            .article-card {
+                width: 100%;
+                max-width: 252px;
+                height: 256px;
+            }
 
-    .article-overlay {
-        padding: 1rem 0.75rem 0.75rem;
-    }
+            .article-overlay {
+                padding: 1rem 0.75rem 0.75rem;
+            }
 
-    .article-title {
-        font-size: 0.9rem;
-        -webkit-line-clamp: 3;
-        min-height: 2.7rem;
-    }
+            .article-title {
+                font-size: 0.9rem;
+                -webkit-line-clamp: 3;
+                min-height: 2.7rem;
+            }
 
-    .article-meta {
-        font-size: 0.7rem;
-    }
+            .article-meta {
+                font-size: 0.7rem;
+            }
 
             :root {
                 --font-size-multiplier: 1.1;
@@ -1168,30 +1198,31 @@
         }
 
         @media (max-width: 480px) {
-    .articles-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-    }
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
 
-    .article-card {
-        width: 100%;
-        max-width: 200px;
-        height: 200px;
-    }
+            .article-card {
+                width: 100%;
+                max-width: 200px;
+                height: 200px;
+            }
 
-    .article-overlay {
-        padding: 0.75rem 0.5rem 0.5rem;
-    }
+            .article-overlay {
+                padding: 0.75rem 0.5rem 0.5rem;
+            }
 
-    .article-title {
-        font-size: 0.8rem;
-        -webkit-line-clamp: 3;
-        min-height: 2.4rem;
-    }
+            .article-title {
+                font-size: 0.8rem;
+                -webkit-line-clamp: 3;
+                min-height: 2.4rem;
+            }
 
-    .article-meta {
-        font-size: 0.65rem;
-    }
+            .article-meta {
+                font-size: 0.65rem;
+            }
+            
             :root {
                 --font-size-multiplier: 1.2;
             }
@@ -1249,21 +1280,21 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <a href="#" class="logo" onclick="showHome()">SADECE KURAN</a>
+            <a href="#" class="logo ripple-container" onclick="showHome()">SADECE KURAN</a>
             <div class="header-actions">
-                <button class="search-btn" onclick="app.showSearchPage()">
+                <button class="search-btn ripple-container" onclick="app.showSearchPage()">
                     <svg class="icon" viewBox="0 0 24 24">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
                 </button>
-                <button class="categories-btn" onclick="app.showCategories()">
+                <button class="categories-btn ripple-container" onclick="app.showCategories()">
                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                         <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
                     </svg>
                     <span>Kategoriler</span>
                 </button>
-                <button class="about-btn" onclick="app.showAbout()">
+                <button class="about-btn ripple-container" onclick="app.showAbout()">
                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
@@ -1271,13 +1302,13 @@
                     </svg>
                     <span>Hakkında</span>
                 </button>
-                <button class="destekle-btn" onclick="app.showDestekle()">
+                <button class="destekle-btn ripple-container" onclick="app.showDestekle()">
                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
                     <span>Destekle</span>
                 </button>
-                <button class="theme-btn" onclick="app.toggleTheme()">
+                <button class="theme-btn ripple-container" onclick="app.toggleTheme()">
                     <svg class="icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -1302,6 +1333,47 @@
     </main>
 
     <script>
+        // Ripple Effect Fonksiyonu
+        function createRipple(event) {
+            const button = event.currentTarget;
+            
+            // Eğer element ripple-container sınıfına sahip değilse, ripple ekleme
+            if (!button.classList.contains('ripple-container')) {
+                return;
+            }
+
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            const rect = button.getBoundingClientRect();
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - rect.left - radius}px`;
+            circle.style.top = `${event.clientY - rect.top - radius}px`;
+            circle.classList.add("ripple");
+
+            const ripple = button.getElementsByClassName("ripple")[0];
+
+            if (ripple) {
+                ripple.remove();
+            }
+
+            button.appendChild(circle);
+
+            // Ripple'ı animasyon bitince kaldır
+            setTimeout(() => {
+                if (circle.parentNode) {
+                    circle.parentNode.removeChild(circle);
+                }
+            }, 600);
+        }
+
+        // Tüm ripple-container elementlerine event listener ekle
+        function addRippleEffect() {
+            document.addEventListener("click", createRipple);
+            document.addEventListener("touchstart", createRipple);
+        }
+
         class BlogApp {
             constructor() {
                 this.data = null;
@@ -1320,6 +1392,8 @@
                     this.buildSearchIndex();
                     this.setupEventListeners();
                     this.handleRoute();
+                    // Ripple effect'i başlat
+                    addRippleEffect();
                 } catch (error) {
                     console.error('Initialization error:', error);
                     this.showError('Veri yüklenirken bir hata oluştu.');
@@ -1519,7 +1593,7 @@
                     </div>
 
                     <div class="home-search">
-                        <input type="text" class="home-search-input" id="homeSearchInput" placeholder="Makale, kategori veya yazar ara..." onclick="app.showSearchPage()">
+                        <input type="text" class="home-search-input ripple-container" id="homeSearchInput" placeholder="Makale, kategori veya yazar ara..." onclick="app.showSearchPage()">
                         <svg class="icon home-search-icon" viewBox="0 0 24 24">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
@@ -1542,7 +1616,7 @@
                 }
 
                 articlesGrid.innerHTML = this.data.map((article, index) => `
-                    <a href="#makale-${article.id}" class="article-card" style="animation-delay: ${index * 0.1}s;">
+                    <a href="#makale-${article.id}" class="article-card ripple-container" style="animation-delay: ${index * 0.1}s;">
                         <div class="article-image-container">
                             <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
                             <div class="article-overlay">
@@ -1567,71 +1641,71 @@
             }
 
             renderArticle(articleId) {
-    const article = this.data?.find(a => a.id === articleId);
-    if (!article) {
-        this.showError('Makale bulunamadı.');
-        return;
-    }
+                const article = this.data?.find(a => a.id === articleId);
+                if (!article) {
+                    this.showError('Makale bulunamadı.');
+                    return;
+                }
 
-    const content = document.getElementById('content');
-    content.innerHTML = `
-        <div class="article-detail">
-            <div class="breadcrumb">
-                <a href="#" onclick="showHome()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                    </svg>
-                    Ana Sayfa
-                </a>
-                <span>›</span>
-                <a href="#kategori-${encodeURIComponent(article.kategori)}">${article.kategori}</a>
-                <span>›</span>
-                <span>${article.baslik}</span>
-            </div>
-
-            <div class="article-detail-header">
-                <img src="${article.gorsel}" alt="${article.baslik}" class="article-detail-image">
-                <div class="article-detail-overlay">
-                    <h1 class="article-detail-title">${article.baslik}</h1>
-                    <div class="article-detail-meta">
-                        <div class="meta-detail">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                            <a href="#yazar-${this.getAuthorSlug(article.yazar)}" class="author-link" style="color: rgba(255, 255, 255, 0.9);">${article.yazar}</a>
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="article-detail">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()" class="ripple-container">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <a href="#kategori-${encodeURIComponent(article.kategori)}" class="ripple-container">${article.kategori}</a>
+                            <span>›</span>
+                            <span>${article.baslik}</span>
                         </div>
-                        <div class="meta-detail">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                            <span style="color: rgba(255, 255, 255, 0.9);">${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+
+                        <div class="article-detail-header">
+                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-detail-image">
+                            <div class="article-detail-overlay">
+                                <h1 class="article-detail-title">${article.baslik}</h1>
+                                <div class="article-detail-meta">
+                                    <div class="meta-detail">
+                                        <svg class="icon" viewBox="0 0 24 24">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <a href="#yazar-${this.getAuthorSlug(article.yazar)}" class="author-link ripple-container" style="color: rgba(255, 255, 255, 0.9);">${article.yazar}</a>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <svg class="icon" viewBox="0 0 24 24">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                        <span style="color: rgba(255, 255, 255, 0.9);">${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="article-detail-content">
+                            ${this.formatArticleContent(article.icerik)}
+                            
+                            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                                <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Etiketler:</h3>
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    ${article.etiketler?.map(etiket => `
+                                        <span style="background: var(--bg-tertiary); color: var(--primary-color); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--border-color);">
+                                            #${etiket}
+                                        </span>
+                                    `).join('') || ''}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="article-detail-content">
-                ${this.formatArticleContent(article.icerik)}
-                
-                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Etiketler:</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        ${article.etiketler?.map(etiket => `
-                            <span style="background: var(--bg-tertiary); color: var(--primary-color); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--border-color);">
-                                #${etiket}
-                            </span>
-                        `).join('') || ''}
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
+                `;
+            }
 
             renderAuthor(authorSlug) {
                 const author = this.authorsData?.find(a => a.slug === authorSlug);
@@ -1648,7 +1722,7 @@
                 content.innerHTML = `
                     <div class="author-page">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()">
+                            <a href="#" onclick="showHome()" class="ripple-container">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -1691,14 +1765,14 @@
                                     </div>
                                     <div class="author-social">
                                         ${author.sosyal_medya.twitter ? `
-                                            <a href="https://twitter.com/${author.sosyal_medya.twitter.replace('@', '')}" target="_blank" class="social-link">
+                                            <a href="https://twitter.com/${author.sosyal_medya.twitter.replace('@', '')}" target="_blank" class="social-link ripple-container">
                                                 <svg class="icon" viewBox="0 0 24 24">
                                                     <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                                                 </svg>
                                             </a>
                                         ` : ''}
                                         ${author.sosyal_medya.instagram ? `
-                                            <a href="https://instagram.com/${author.sosyal_medya.instagram.replace('@', '')}" target="_blank" class="social-link">
+                                            <a href="https://instagram.com/${author.sosyal_medya.instagram.replace('@', '')}" target="_blank" class="social-link ripple-container">
                                                 <svg class="icon" viewBox="0 0 24 24">
                                                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                                                     <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -1707,7 +1781,7 @@
                                             </a>
                                         ` : ''}
                                         ${author.sosyal_medya.linkedin ? `
-                                            <a href="https://linkedin.com/in/${author.sosyal_medya.linkedin}" target="_blank" class="social-link">
+                                            <a href="https://linkedin.com/in/${author.sosyal_medya.linkedin}" target="_blank" class="social-link ripple-container">
                                                 <svg class="icon" viewBox="0 0 24 24">
                                                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                                                     <rect x="2" y="9" width="4" height="12"></rect>
@@ -1736,7 +1810,7 @@
                                 <h2>Makaleleri (${authorArticles.length})</h2>
                                 <div class="articles-grid" style="margin-top: 1rem;">
                                     ${authorArticles.map((article, index) => `
-                                        <a href="#makale-${article.id}" class="article-card" style="animation-delay: ${index * 0.1}s;">
+                                        <a href="#makale-${article.id}" class="article-card ripple-container" style="animation-delay: ${index * 0.1}s;">
                                             <div class="article-image-container">
                                                 <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
                                                 <div class="article-overlay">
@@ -1762,7 +1836,7 @@
                 content.innerHTML = `
                     <div class="destekle-page">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()">
+                            <a href="#" onclick="showHome()" class="ripple-container">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -1855,7 +1929,7 @@
                 content.innerHTML = `
                     <div class="search-page">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()">
+                            <a href="#" onclick="showHome()" class="ripple-container">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -1868,7 +1942,7 @@
 
                         <div class="search-page-header">
                             <h1 class="search-page-title">Makalelerde Arama</h1>
-                            <input type="text" class="search-page-input" id="searchPageInput" placeholder="Makale, kategori veya yazar ara..." autofocus>
+                            <input type="text" class="search-page-input ripple-container" id="searchPageInput" placeholder="Makale, kategori veya yazar ara..." autofocus>
                         </div>
 
                         <div id="searchPageResults"></div>
@@ -1920,7 +1994,7 @@
                                 if (!article) return '';
                                 
                                 return `
-                                    <a href="${result.url}" class="article-card">
+                                    <a href="${result.url}" class="article-card ripple-container">
                                         <div class="article-image-container">
                                             <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
                                             <div class="article-overlay">
@@ -1972,7 +2046,7 @@
                 content.innerHTML = `
                     <div class="categories-page">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()">
+                            <a href="#" onclick="showHome()" class="ripple-container">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -1990,7 +2064,7 @@
 
                         <div class="categories-grid">
                             ${categories.map(category => `
-                                <a href="#kategori-${encodeURIComponent(category.name)}" class="category-card">
+                                <a href="#kategori-${encodeURIComponent(category.name)}" class="category-card ripple-container">
                                     <div class="category-name">${category.name}</div>
                                     <div class="category-count">${category.count} makale</div>
                                 </a>
@@ -2018,7 +2092,7 @@
                 content.innerHTML = `
                     <div class="search-page">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()">
+                            <a href="#" onclick="showHome()" class="ripple-container">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -2026,7 +2100,7 @@
                                 Ana Sayfa
                             </a>
                             <span>›</span>
-                            <a href="#kategoriler">Kategoriler</a>
+                            <a href="#kategoriler" class="ripple-container">Kategoriler</a>
                             <span>›</span>
                             <span>${category}</span>
                         </div>
@@ -2038,7 +2112,7 @@
 
                         <div class="articles-grid">
                             ${categoryArticles.map((article, index) => `
-                                <a href="#makale-${article.id}" class="article-card" style="animation-delay: ${index * 0.1}s;">
+                                <a href="#makale-${article.id}" class="article-card ripple-container" style="animation-delay: ${index * 0.1}s;">
                                     <div class="article-image-container">
                                         <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
                                         <div class="article-overlay">
@@ -2062,7 +2136,7 @@
                 content.innerHTML = `
                     <div class="about-page">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()">
+                            <a href="#" onclick="showHome()" class="ripple-container">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
