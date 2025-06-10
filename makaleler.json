@@ -5,7 +5,7 @@
       "baslik": "Modern Web Tasarımında Minimalizm",
       "ozet": "Günümüz web tasarımında minimalist yaklaşımların önemi ve kullanıcı deneyimine etkileri üzerine detaylı bir inceleme.",
       "icerik": "Minimalizm, web tasarımında sadece gerekli olanı kullanarak maksimum etki yaratma sanatıdır. Bu yaklaşım, kullanıcıların dikkatini dağıtmadan ana mesaja odaklanmalarını sağlar.\n\nMinimalist tasarımın temel prensipleri:\n\n1. **Beyaz Alan Kullanımı**: Beyaz alan, tasarımda nefes aldıran ve içeriği öne çıkaran en önemli unsurdur.\n\n2. **Sınırlı Renk Paleti**: Az renk kullanarak güçlü bir görsel hiyerarşi oluşturmak mümkündür.\n\n3. **Tipografi Odaklı Tasarım**: Güçlü tipografi seçimleri, minimalist tasarımın temelini oluşturur.\n\n4. **Fonksiyonel Yaklaşım**: Her element bir amaca hizmet etmelidir.\n\nMinimalist web tasarımı, sadece estetik bir tercih değil, aynı zamanda kullanıcı deneyimini iyileştiren stratejik bir karardır.",
-      "yazar": "Ahmet Yılmaz",
+      "yazar": "Muhammed Yusuf ERTEK",
       "tarih": "2024-01-15",
       "kategori": "Tasarım",
       "etiketler": ["web tasarım", "minimalizm", "UX", "UI"],
@@ -34,7 +34,7 @@
       "kategori": "CSS",
       "etiketler": ["css", "grid", "layout", "responsive"],
       "okuma_suresi": 6,
-      "gorsel": "/placeholder.svg?height=400&width=800"
+      "gorsel": "/sızıntı.webp?height=400&width=800"
     },
     {
       "id": 4,
@@ -46,7 +46,7 @@
       "kategori": "React",
       "etiketler": ["react", "hooks", "state", "javascript"],
       "okuma_suresi": 7,
-      "gorsel": "/placeholder.svg?height=400&width=800"
+      "gorsel": "/kandiller2.jpg?height=400&width=800"
     },
     {
       "id": 5,
@@ -58,7 +58,7 @@
       "kategori": "Backend",
       "etiketler": ["nodejs", "express", "api", "backend"],
       "okuma_suresi": 9,
-      "gorsel": "/placeholder.svg?height=400&width=800"
+      "gorsel": "/sızıntı2.webp?height=400&width=800"
     },
     {
       "id": 6,
@@ -70,7 +70,7 @@
       "kategori": "TypeScript",
       "etiketler": ["typescript", "javascript", "tip güvenliği", "geliştirme"],
       "okuma_suresi": 8,
-      "gorsel": "/placeholder.svg?height=400&width=800"
+      "gorsel": "/sızıntı3.webp?height=400&width=800"
     }
   ]
 }

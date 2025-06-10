@@ -2,14 +2,14 @@
   "yazarlar": [
     {
       "id": 1,
-      "isim": "Ahmet Yılmaz",
-      "slug": "ahmet-yilmaz",
+      "isim": "Muhammed Yusuf ERTEK",
+      "slug": "muhammed-yusuf-ertek",
       "biyografi": "İslami araştırmalar alanında 15 yıllık deneyime sahip yazar ve araştırmacı. Kur'an-ı Kerim'in günümüz hayatındaki yerini ve önemini anlatan makaleler yazıyor.",
       "uzmanlik_alanlari": ["Tefsir", "İslam Tarihi", "Kur'an Araştırmaları"],
       "egitim": "İstanbul Üniversitesi İlahiyat Fakültesi",
       "deneyim": "15 yıl",
       "makale_sayisi": 45,
-      "profil_resmi": "/placeholder.svg?height=200&width=200",
+      "profil_resmi": "/yusuf112254.jpg?height=200&width=200",
       "sosyal_medya": {
         "twitter": "@ahmetyilmaz",
         "instagram": "@ahmetyilmaz_yazar",
@@ -28,7 +28,7 @@
       "egitim": "İTÜ Fizik Mühendisliği, Marmara Üniversitesi İlahiyat",
       "deneyim": "12 yıl",
       "makale_sayisi": 32,
-      "profil_resmi": "/placeholder.svg?height=200&width=200",
+      "profil_resmi": "/yusuf112254.jpg?height=200&width=200",
       "sosyal_medya": {
         "twitter": "@mehmetdemir",
         "youtube": "MehmetDemirBilim",
