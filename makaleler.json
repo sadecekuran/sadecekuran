@@ -53,7 +53,7 @@
       "baslik": "Node.js ile RESTful API Geliştirme",
       "ozet": "Node.js ve Express.js kullanarak modern RESTful API'ler oluşturmanın en iyi uygulamaları.",
       "icerik": "RESTful API'ler, modern web uygulamalarının omurgasını oluşturur. Node.js ile güçlü ve ölçeklenebilir API'ler geliştirebiliriz.\n\n## Express.js ile Başlangıç\n\nTemel bir Express sunucusu:\n\n```javascript\nconst express = require('express');\nconst app = express();\n\napp.use(express.json());\n\napp.get('/api/users', (req, res) => {\n  res.json({ message: 'Kullanıcılar listelendi' });\n});\n\napp.listen(3000, () => {\n  console.log('Sunucu 3000 portunda çalışıyor');\n});\n```\n\n## Middleware Kullanımı\n\nAuthentication middleware örneği:\n\n```javascript\nconst authenticateToken = (req, res, next) => {\n  const authHeader = req.headers['authorization'];\n  const token = authHeader && authHeader.split(' ')[1];\n\n  if (!token) {\n    return res.sendStatus(401);\n  }\n\n  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {\n    if (err) return res.sendStatus(403);\n    req.user = user;\n    next();\n  });\n};\n```\n\n## Error Handling\n\nMerkezi hata yönetimi:\n\n```javascript\nconst errorHandler = (err, req, res, next) => {\n  console.error(err.stack);\n  \n  if (err.name === 'ValidationError') {\n    return res.status(400).json({ error: err.message });\n  }\n  \n  res.status(500).json({ error: 'Sunucu hatası' });\n};\n\napp.use(errorHandler);\n```\n\nNode.js ile API geliştirme, hızlı ve verimli backend çözümleri sunar.",
-      "yazar": "Fatma Şen",
+      "yazar": "Fatma Şen", 
       "tarih": "2023-12-28",
       "kategori": "Backend",
       "etiketler": ["nodejs", "express", "api", "backend"],
