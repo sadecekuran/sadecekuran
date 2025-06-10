@@ -1,0 +1,76 @@
+{
+  "makaleler": [
+    {
+      "id": 1,
+      "baslik": "Modern Web Tasarımında Minimalizm",
+      "ozet": "Günümüz web tasarımında minimalist yaklaşımların önemi ve kullanıcı deneyimine etkileri üzerine detaylı bir inceleme.",
+      "icerik": "Minimalizm, web tasarımında sadece gerekli olanı kullanarak maksimum etki yaratma sanatıdır. Bu yaklaşım, kullanıcıların dikkatini dağıtmadan ana mesaja odaklanmalarını sağlar.\n\nMinimalist tasarımın temel prensipleri:\n\n1. **Beyaz Alan Kullanımı**: Beyaz alan, tasarımda nefes aldıran ve içeriği öne çıkaran en önemli unsurdur.\n\n2. **Sınırlı Renk Paleti**: Az renk kullanarak güçlü bir görsel hiyerarşi oluşturmak mümkündür.\n\n3. **Tipografi Odaklı Tasarım**: Güçlü tipografi seçimleri, minimalist tasarımın temelini oluşturur.\n\n4. **Fonksiyonel Yaklaşım**: Her element bir amaca hizmet etmelidir.\n\nMinimalist web tasarımı, sadece estetik bir tercih değil, aynı zamanda kullanıcı deneyimini iyileştiren stratejik bir karardır.",
+      "yazar": "Ahmet Yılmaz",
+      "tarih": "2024-01-15",
+      "kategori": "Tasarım",
+      "etiketler": ["web tasarım", "minimalizm", "UX", "UI"],
+      "okuma_suresi": 5,
+      "gorsel": "/kader.jpg?height=400&width=800"
+    },
+    {
+      "id": 2,
+      "baslik": "JavaScript'te Asenkron Programlama",
+      "ozet": "Promise, async/await ve callback yapıları ile JavaScript'te asenkron programlamanın incelikleri.",
+      "icerik": "JavaScript'te asenkron programlama, modern web uygulamalarının temel taşlarından biridir. Bu yazıda, asenkron programlamanın farklı yöntemlerini ve en iyi uygulamalarını inceleyeceğiz.\n\n## Callback Fonksiyonları\n\nCallback'ler, JavaScript'te asenkron işlemlerin en temel yöntemidir:\n\n```javascript\nfunction veriGetir(callback) {\n  setTimeout(() => {\n    callback('Veri başarıyla getirildi!');\n  }, 1000);\n}\n```\n\n## Promise Yapısı\n\nPromise'ler, callback hell problemini çözmek için geliştirilmiştir:\n\n```javascript\nconst veriGetir = () => {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      resolve('Veri başarıyla getirildi!');\n    }, 1000);\n  });\n};\n```\n\n## Async/Await\n\nModern JavaScript'te en temiz asenkron kod yazma yöntemi:\n\n```javascript\nasync function veriIsle() {\n  try {\n    const veri = await veriGetir();\n    console.log(veri);\n  } catch (hata) {\n    console.error(hata);\n  }\n}\n```\n\nAsenkron programlama, web uygulamalarının performansını artırır ve kullanıcı deneyimini iyileştirir.",
+      "yazar": "Mehmet Demir",
+      "tarih": "2024-01-10",
+      "kategori": "Programlama",
+      "etiketler": ["javascript", "async", "promise", "programlama"],
+      "okuma_suresi": 8,
+      "gorsel": "/sefaat1.jpg?height=400&width=800"
+    },
+    {
+      "id": 3,
+      "baslik": "CSS Grid ile Modern Layout Tasarımı",
+      "ozet": "CSS Grid sisteminin gücü ve modern web sayfalarında layout oluşturmanın yeni yolları.",
+      "icerik": "CSS Grid, web tasarımında devrim yaratan bir layout sistemidir. Flexbox'tan farklı olarak, iki boyutlu layout'lar oluşturmamıza olanak tanır.\n\n## Grid Container Oluşturma\n\nBir elementi grid container yapmak için:\n\n```css\n.container {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-template-rows: auto;\n  gap: 20px;\n}\n```\n\n## Grid Areas\n\nGrid areas ile semantic layout'lar oluşturabiliriz:\n\n```css\n.layout {\n  display: grid;\n  grid-template-areas:\n    'header header header'\n    'sidebar main main'\n    'footer footer footer';\n}\n\n.header { grid-area: header; }\n.sidebar { grid-area: sidebar; }\n.main { grid-area: main; }\n.footer { grid-area: footer; }\n```\n\n## Responsive Grid\n\nCSS Grid ile responsive tasarım:\n\n```css\n.responsive-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n  gap: 1rem;\n}\n```\n\nCSS Grid, karmaşık layout'ları basit ve anlaşılır kod ile oluşturmamızı sağlar.",
+      "yazar": "Ayşe Kaya",
+      "tarih": "2024-01-05",
+      "kategori": "CSS",
+      "etiketler": ["css", "grid", "layout", "responsive"],
+      "okuma_suresi": 6,
+      "gorsel": "/placeholder.svg?height=400&width=800"
+    },
+    {
+      "id": 4,
+      "baslik": "React Hooks ile State Yönetimi",
+      "ozet": "React Hooks'un gücü ve fonksiyonel komponentlerde state yönetiminin modern yaklaşımları.",
+      "icerik": "React Hooks, fonksiyonel komponentlerde state ve lifecycle yönetimini mümkün kılan devrimci bir özelliktir.\n\n## useState Hook\n\nTemel state yönetimi için:\n\n```jsx\nimport { useState } from 'react';\n\nfunction Sayac() {\n  const [sayac, setSayac] = useState(0);\n\n  return (\n    <div>\n      <p>Sayaç: {sayac}</p>\n      <button onClick={() => setSayac(sayac + 1)}>\n        Artır\n      </button>\n    </div>\n  );\n}\n```\n\n## useEffect Hook\n\nSide effect'ler için:\n\n```jsx\nimport { useEffect, useState } from 'react';\n\nfunction VeriGetir() {\n  const [veri, setVeri] = useState(null);\n\n  useEffect(() => {\n    fetch('/api/veri')\n      .then(response => response.json())\n      .then(data => setVeri(data));\n  }, []);\n\n  return <div>{veri ? veri.mesaj : 'Yükleniyor...'}</div>;\n}\n```\n\n## Custom Hooks\n\nKendi hook'larımızı oluşturabiliriz:\n\n```jsx\nfunction useLocalStorage(key, initialValue) {\n  const [value, setValue] = useState(() => {\n    const item = localStorage.getItem(key);\n    return item ? JSON.parse(item) : initialValue;\n  });\n\n  const setStoredValue = (value) => {\n    setValue(value);\n    localStorage.setItem(key, JSON.stringify(value));\n  };\n\n  return [value, setStoredValue];\n}\n```\n\nReact Hooks, kod tekrarını azaltır ve komponent mantığını daha iyi organize etmemizi sağlar.",
+      "yazar": "Can Özkan",
+      "tarih": "2024-01-01",
+      "kategori": "React",
+      "etiketler": ["react", "hooks", "state", "javascript"],
+      "okuma_suresi": 7,
+      "gorsel": "/placeholder.svg?height=400&width=800"
+    },
+    {
+      "id": 5,
+      "baslik": "Node.js ile RESTful API Geliştirme",
+      "ozet": "Node.js ve Express.js kullanarak modern RESTful API'ler oluşturmanın en iyi uygulamaları.",
+      "icerik": "RESTful API'ler, modern web uygulamalarının omurgasını oluşturur. Node.js ile güçlü ve ölçeklenebilir API'ler geliştirebiliriz.\n\n## Express.js ile Başlangıç\n\nTemel bir Express sunucusu:\n\n```javascript\nconst express = require('express');\nconst app = express();\n\napp.use(express.json());\n\napp.get('/api/users', (req, res) => {\n  res.json({ message: 'Kullanıcılar listelendi' });\n});\n\napp.listen(3000, () => {\n  console.log('Sunucu 3000 portunda çalışıyor');\n});\n```\n\n## Middleware Kullanımı\n\nAuthentication middleware örneği:\n\n```javascript\nconst authenticateToken = (req, res, next) => {\n  const authHeader = req.headers['authorization'];\n  const token = authHeader && authHeader.split(' ')[1];\n\n  if (!token) {\n    return res.sendStatus(401);\n  }\n\n  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {\n    if (err) return res.sendStatus(403);\n    req.user = user;\n    next();\n  });\n};\n```\n\n## Error Handling\n\nMerkezi hata yönetimi:\n\n```javascript\nconst errorHandler = (err, req, res, next) => {\n  console.error(err.stack);\n  \n  if (err.name === 'ValidationError') {\n    return res.status(400).json({ error: err.message });\n  }\n  \n  res.status(500).json({ error: 'Sunucu hatası' });\n};\n\napp.use(errorHandler);\n```\n\nNode.js ile API geliştirme, hızlı ve verimli backend çözümleri sunar.",
+      "yazar": "Fatma Şen",
+      "tarih": "2023-12-28",
+      "kategori": "Backend",
+      "etiketler": ["nodejs", "express", "api", "backend"],
+      "okuma_suresi": 9,
+      "gorsel": "/placeholder.svg?height=400&width=800"
+    },
+    {
+      "id": 6,
+      "baslik": "TypeScript ile Tip Güvenli Geliştirme",
+      "ozet": "TypeScript'in JavaScript geliştirme sürecine kattığı tip güvenliği ve geliştirici deneyimi iyileştirmeleri.",
+      "icerik": "TypeScript, JavaScript'e statik tip kontrolü ekleyerek daha güvenli ve sürdürülebilir kod yazmamızı sağlar.\n\n## Temel Tipler\n\nTypeScript'te temel tip tanımlamaları:\n\n```typescript\nlet isim: string = 'Ahmet';\nlet yas: number = 25;\nlet aktif: boolean = true;\nlet hobbiler: string[] = ['okuma', 'yazılım'];\n```\n\n## Interface Tanımlamaları\n\nKarmaşık veri yapıları için:\n\n```typescript\ninterface Kullanici {\n  id: number;\n  isim: string;\n  email: string;\n  aktif?: boolean; // opsiyonel\n}\n\nfunction kullaniciOlustur(kullanici: Kullanici): Kullanici {\n  return {\n    ...kullanici,\n    aktif: kullanici.aktif ?? true\n  };\n}\n```\n\n## Generic Tipler\n\nYeniden kullanılabilir tip tanımlamaları:\n\n```typescript\ninterface ApiResponse<T> {\n  data: T;\n  success: boolean;\n  message: string;\n}\n\nfunction apiCagir<T>(url: string): Promise<ApiResponse<T>> {\n  return fetch(url).then(response => response.json());\n}\n```\n\n## Union ve Intersection Tipler\n\n```typescript\ntype Durum = 'bekliyor' | 'tamamlandi' | 'iptal';\n\ntype KullaniciDetay = Kullanici & {\n  sonGiris: Date;\n  roller: string[];\n};\n```\n\nTypeScript, büyük projelerde kod kalitesini artırır ve hataları geliştirme aşamasında yakalar.",
+      "yazar": "Emre Yıldız",
+      "tarih": "2023-12-25",
+      "kategori": "TypeScript",
+      "etiketler": ["typescript", "javascript", "tip güvenliği", "geliştirme"],
+      "okuma_suresi": 8,
+      "gorsel": "/placeholder.svg?height=400&width=800"
+    }
+  ]
+}

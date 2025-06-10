@@ -1,717 +1,118 @@
 {
-  "authors": [
+  "yazarlar": [
     {
       "id": 1,
-      "name": "Ali Bulaç",
-      "image": "yazar/ali.webp?height=300&width=300",
-      "birth_year": "1951",
-      "death_year": null,
-      "title": "Prof. Dr.",
-      "profession": "Akademisyen, Yazar, Çevirmen",
-      "university": "İstanbul Üniversitesi",
-      "short_bio": "İslami düşünce ve sosyoloji alanında uzman, çağdaş İslam yorumcusu.",
-      "detailed_bio": "1951 yılında Mardin'de doğdu. İstanbul Üniversitesi Sosyoloji Bölümü'nden mezun oldu. İslami düşünce, sosyoloji ve Kuran çevirisi alanlarında çalışmalar yürütmüştür. Çok sayıda kitap ve makale yazmış, İslam'ın çağdaş sorunlara çözüm önerilerini araştırmıştır.",
-      "translation_sample": "Elif, Lam, Mim,",
-      "translation_features": [
-        "Sosyolojik perspektif",
-        "Çağdaş dil kullanımı",
-        "İslami terminoloji",
-        "Akademik yaklaşım"
-      ],
-      "notable_works": [
-        "Kuran Çevirisi",
-        "İslam ve Demokrasi",
-        "Çağdaş Kavramlar ve Düzenler",
-        "İslam'ın Üç Siyaset Tarzı"
-      ],
-      "approach": "İslami değerleri çağdaş sosyal bilimlerle harmanlayarak yorumlar.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
+      "isim": "Ahmet Yılmaz",
+      "slug": "ahmet-yilmaz",
+      "biyografi": "İslami araştırmalar alanında 15 yıllık deneyime sahip yazar ve araştırmacı. Kur'an-ı Kerim'in günümüz hayatındaki yerini ve önemini anlatan makaleler yazıyor.",
+      "uzmanlik_alanlari": ["Tefsir", "İslam Tarihi", "Kur'an Araştırmaları"],
+      "egitim": "İstanbul Üniversitesi İlahiyat Fakültesi",
+      "deneyim": "15 yıl",
+      "makale_sayisi": 45,
+      "profil_resmi": "/placeholder.svg?height=200&width=200",
+      "sosyal_medya": {
+        "twitter": "@ahmetyilmaz",
+        "instagram": "@ahmetyilmaz_yazar",
+        "linkedin": "ahmet-yilmaz"
+      },
+      "iletisim": "ahmet@sadeceKuran.com",
+      "hakkinda": "Ahmet Yılmaz, İslami araştırmalar alanında uzmanlaşmış bir yazar ve akademisyendir. Kur'an-ı Kerim'in evrensel mesajlarını günümüz insanına ulaştırma konusunda çalışmalar yürütmektedir. Özellikle tefsir ve İslam tarihi alanlarında derinlemesine araştırmalar yapmakta, bu konulardaki bilgilerini sade ve anlaşılır bir dille okuyucularıyla paylaşmaktadır.",
+      "son_makaleler": [1, 4, 6]
     },
     {
       "id": 2,
-      "name": "Edip Yüksel (Eski Baskı)",
-      "image": "yazar/edip.jpg?height=300&width=300",
-      "birth_year": "1957",
-      "death_year": null,
-      "title": "Dr.",
-      "profession": "Yazar, Düşünür, Çevirmen",
-      "university": "Arizona Üniversitesi",
-      "short_bio": "Kuran'ın rasyonel yorumunu savunan, uluslararası tanınırlığa sahip düşünür.",
-      "detailed_bio": "1957 yılında Türkiye'de doğdu. Hukuk eğitimi aldıktan sonra Amerika'ya yerleşti. Arizona Üniversitesi'nde felsefe doktorası yaptı. Kuran'ın rasyonel ve bilimsel yorumunu savunur. Bu eski baskısında daha geleneksel bir yaklaşım benimser.",
-      "translation_sample": "A.L.M.",
-      "translation_features": [
-        "Kısa ve öz ifadeler",
-        "Harflerin kısaltılması",
-        "Pratik yaklaşım",
-        "Basit dil"
-      ],
-      "notable_works": [
-        "Mesaj: Kuran Çevirisi (Eski Baskı)",
-        "Kuran'ın Matematiksel Mucizesi",
-        "19: Kuran'ın Şifresi",
-        "İslam Devrimi"
-      ],
-      "approach": "Eski baskısında daha sade ve kısa bir çeviri yaklaşımı benimser.",
-      "website": "https://www.edipyuksel.com",
-      "social_media": {
-        "twitter": "@edipyuksel",
-        "youtube": "Edip Yüksel"
-      }
+      "isim": "Mehmet Demir",
+      "slug": "mehmet-demir",
+      "biyografi": "Kur'an-ı Kerim'in bilimsel mucizelerini araştıran ve modern bilimle İslam'ın uyumunu inceleyen yazar. Fizik mühendisliği geçmişi ile dini metinleri bilimsel perspektiften ele alıyor.",
+      "uzmanlik_alanlari": ["Bilimsel Mucizeler", "Fizik ve İslam", "Modern Bilim"],
+      "egitim": "İTÜ Fizik Mühendisliği, Marmara Üniversitesi İlahiyat",
+      "deneyim": "12 yıl",
+      "makale_sayisi": 32,
+      "profil_resmi": "/placeholder.svg?height=200&width=200",
+      "sosyal_medya": {
+        "twitter": "@mehmetdemir",
+        "youtube": "MehmetDemirBilim",
+        "linkedin": "mehmet-demir-fizik"
+      },
+      "iletisim": "mehmet@sadeceKuran.com",
+      "hakkinda": "Mehmet Demir, fizik mühendisliği ve ilahiyat eğitimi almış, bilim ve din arasındaki uyumu araştıran bir yazardır. Kur'an-ı Kerim'deki bilimsel işaretleri modern bilimin ışığında incelemekte ve bu konudaki bulgularını akademik bir yaklaşımla sunmaktadır. Özellikle fizik, astronomi ve matematik alanlarındaki Kur'ani referanslar üzerine çalışmalar yapmaktadır.",
+      "son_makaleler": [2, 5]
     },
     {
       "id": 3,
-      "name": "Ahmed Hulusi",
-      "image": "yazar/hulusi.jpg?height=300&width=300",
-      "birth_year": "1945",
-      "death_year": null,
-      "title": "",
-      "profession": "Yazar, Düşünür, Araştırmacı",
-      "university": "İstanbul Teknik Üniversitesi",
-      "short_bio": "Tasavvuf ve İslami düşünce alanında çağdaş yorumcu, spiritüel öğretmen.",
-      "detailed_bio": "1945 yılında İstanbul'da doğdu. İstanbul Teknik Üniversitesi'nden mezun oldu. İslam tasavvufu, beyin bilimi ve spiritüel gelişim konularında çalışmalar yapmıştır. Kuran'ı çağdaş bilimsel verilerle yorumlama konusunda öncü isimlerdendir.",
-      "translation_sample": "Eliif, Laaam, Miiim.",
-      "translation_features": [
-        "Tasavvufi yaklaşım",
-        "Bilimsel terminoloji",
-        "Spiritüel vurgu",
-        "Çağdaş dil"
-      ],
-      "notable_works": [
-        "Kuran'dan Haberler",
-        "Beyin ve Zikir",
-        "İnsan ve Sırları",
-        "Evrensel Sırlar"
-      ],
-      "approach": "Kuran'ı tasavvufi ve bilimsel perspektifle yorumlayarak spiritüel boyutunu vurgular.",
-      "website": "https://www.ahmedhulusi.org",
-      "social_media": {
-        "twitter": null,
-        "youtube": "Ahmed Hulusi"
-      }
+      "isim": "Ayşe Kaya",
+      "slug": "ayse-kaya",
+      "biyografi": "İslam'da kadının yeri ve hakları konusunda uzmanlaşmış yazar. Kur'an-ı Kerim'in kadına bakış açısını çağdaş perspektifle ele alan makaleler yazıyor.",
+      "uzmanlik_alanlari": ["Kadın ve İslam", "Aile Hayatı", "İslami Değerler"],
+      "egitim": "Ankara Üniversitesi İlahiyat Fakültesi",
+      "deneyim": "10 yıl",
+      "makale_sayisi": 28,
+      "profil_resmi": "/placeholder.svg?height=200&width=200",
+      "sosyal_medya": {
+        "instagram": "@aysekaya_yazar",
+        "facebook": "AyseKayaYazar",
+        "linkedin": "ayse-kaya-ilahiyat"
+      },
+      "iletisim": "ayse@sadeceKuran.com",
+      "hakkinda": "Ayşe Kaya, İslam'da kadının konumu ve hakları üzerine uzmanlaşmış bir yazardır. Kur'an-ı Kerim'in kadına verdiği değeri ve İslam'ın kadın hakları konusundaki yaklaşımını çağdaş bir perspektifle ele almaktadır. Aile hayatı, kadın-erkek ilişkileri ve İslami değerler konularında derinlemesine araştırmalar yapmakta ve bu konulardaki görüşlerini akademik bir temelde sunmaktadır.",
+      "son_makaleler": [3]
     },
     {
       "id": 4,
-      "name": "Elmalılı (Sadeleştirilmiş)",
-      "image": "yazar/elmalı.jpg?height=300&width=300",
-      "birth_year": "1878",
-      "death_year": "1942",
-      "title": "Elmalılı",
-      "profession": "Müfessir, Hukukçu, Yazar",
-      "university": "Darülfünun Hukuk Fakültesi",
-      "short_bio": "Türkiye'nin en kapsamlı tefsirlerinden birinin yazarı, klasik İslam alimi.",
-      "detailed_bio": "1878'de Elmalı'da doğdu, 1942'de vefat etti. Darülfünun Hukuk Fakültesi'nden mezun oldu. Hak Dini Kuran Dili adlı tefsiri ile tanınır. Bu sadeleştirilmiş versiyonu, orijinal eserinin çağdaş Türkçe'ye uyarlanmış halidir.",
-      "translation_sample": "Elif, Lam, Mim.",
-      "translation_features": [
-        "Klasik tefsir geleneği",
-        "Sadeleştirilmiş dil",
-        "Kapsamlı açıklamalar",
-        "Geleneksel yaklaşım"
-      ],
-      "notable_works": [
-        "Hak Dini Kuran Dili",
-        "İslam Hukuku",
-        "Tefsir Çalışmaları",
-        "Fıkıh Eserleri"
-      ],
-      "approach": "Klasik İslam tefsir geleneğini çağdaş dile aktararak yorumlar.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
+      "isim": "Can Özkan",
+      "slug": "can-ozkan",
+      "biyografi": "Kur'an-ı Kerim'in ahlaki öğretilerini günlük hayata uyarlama konusunda çalışan yazar. İslami ahlak ve değerler üzerine pratik rehberler hazırlıyor.",
+      "uzmanlik_alanlari": ["İslami Ahlak", "Günlük Hayat", "Manevi Gelişim"],
+      "egitim": "Uludağ Üniversitesi İlahiyat Fakültesi",
+      "deneyim": "8 yıl",
+      "makale_sayisi": 22,
+      "profil_resmi": "/placeholder.svg?height=200&width=200",
+      "sosyal_medya": {
+        "twitter": "@canozkan",
+        "instagram": "@canozkan_yazar",
+        "medium": "@canozkan"
+      },
+      "iletisim": "can@sadeceKuran.com",
+      "hakkinda": "Can Özkan, İslami ahlak ve değerlerin günlük hayata uygulanması konusunda uzmanlaşmış bir yazardır. Kur'an-ı Kerim'in ahlaki öğretilerini çağdaş yaşam koşullarında nasıl uygulayabileceğimiz konusunda pratik rehberler hazırlamaktadır. Manevi gelişim, kişisel gelişim ve İslami yaşam tarzı konularında okuyucularına yol gösterici makaleler yazmaktadır.",
+      "son_makaleler": [4]
     },
     {
       "id": 5,
-      "name": "Bayraktar Bayraklı",
-      "image": "yazar/bayraklı.jpg?height=300&width=300",
-      "birth_year": "1943",
-      "death_year": null,
-      "title": "Prof. Dr.",
-      "profession": "Akademisyen, Müfessir",
-      "university": "Dokuz Eylül Üniversitesi",
-      "short_bio": "Tefsir alanında uzman akademisyen, çağdaş Kuran yorumcusu.",
-      "detailed_bio": "1943 yılında doğdu. Dokuz Eylül Üniversitesi İlahiyat Fakültesi'nde öğretim üyesi olarak çalıştı. Tefsir ve Kuran ilimleri alanında uzmanlaştı. Akademik yaklaşımla Kuran çevirisi ve yorumu konularında çalışmalar yürütmüştür.",
-      "translation_sample": "Elif, lam, mim.",
-      "translation_features": [
-        "Akademik metodoloji",
-        "Filolojik yaklaşım",
-        "Çağdaş dil",
-        "Bilimsel analiz"
-      ],
-      "notable_works": [
-        "Yeni Bir Anlayışın Işığında Kuran Tefsiri",
-        "Kuran Çevirisi",
-        "Tefsir Metodolojisi",
-        "İslami Araştırmalar"
-      ],
-      "approach": "Akademik metodoloji ve filolojik analiz ile Kuran'ı yorumlar.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
+      "isim": "Fatma Şen",
+      "slug": "fatma-sen",
+      "biyografi": "Kur'an-ı Kerim'in sosyal adalet ve toplumsal düzen konularındaki öğretilerini inceleyen sosyolog ve yazar. İslam'ın toplumsal boyutunu araştırıyor.",
+      "uzmanlik_alanlari": ["Sosyal Adalet", "İslam Sosyolojisi", "Toplumsal Düzen"],
+      "egitim": "Hacettepe Üniversitesi Sosyoloji, İlahiyat Yüksek Lisans",
+      "deneyim": "11 yıl",
+      "makale_sayisi": 35,
+      "profil_resmi": "/placeholder.svg?height=200&width=200",
+      "sosyal_medya": {
+        "twitter": "@fatmasen",
+        "linkedin": "fatma-sen-sosyolog",
+        "academia": "fatma-sen"
+      },
+      "iletisim": "fatma@sadeceKuran.com",
+      "hakkinda": "Fatma Şen, sosyoloji ve ilahiyat eğitimi almış, İslam'ın toplumsal boyutunu araştıran bir yazardır. Kur'an-ı Kerim'in sosyal adalet, toplumsal düzen ve insan hakları konularındaki öğretilerini sosyolojik bir perspektifle incelemektedir. İslam toplumunun ideal yapısı ve çağdaş toplumsal sorunlara İslami çözümler konularında çalışmalar yürütmektedir.",
+      "son_makaleler": [5]
     },
     {
       "id": 6,
-      "name": "Erhan Aktaş",
-      "image": "yazar/erhan.jpg?height=300&width=300",
-      "birth_year": "1960",
-      "death_year": null,
-      "title": "Dr.",
-      "profession": "Yazar, Çevirmen",
-      "university": "İstanbul Üniversitesi",
-      "short_bio": "Çağdaş Kuran çevirisi alanında çalışan yazar ve araştırmacı.",
-      "detailed_bio": "1960 yılında doğdu. İstanbul Üniversitesi'nden mezun oldu. Kuran çevirisi ve İslami araştırmalar alanında çalışmalar yürütmektedir. Çevirilerinde anlaşılır dil kullanmaya özen gösterir.",
-      "translation_sample": "Elif. Lam. Mim[1].",
-      "translation_features": [
-        "Anlaşılır dil",
-        "Dipnotlarla destekleme",
-        "Çağdaş yaklaşım",
-        "Pratik kullanım"
-      ],
-      "notable_works": [
-        "Kuran Çevirisi",
-        "İslami Araştırmalar",
-        "Çağdaş Tefsir",
-        "Dini Metinler"
-      ],
-      "approach": "Anlaşılır dil ve dipnotlarla desteklenmiş pratik bir çeviri yaklaşımı benimser.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 7,
-      "name": "Elmalılı Hamdi Yazır",
-      "image": "yazar/elmalı.jpg?height=300&width=300",
-      "birth_year": "1878",
-      "death_year": "1942",
-      "title": "Elmalılı",
-      "profession": "Müfessir, Hukukçu, Yazar",
-      "university": "Darülfünun Hukuk Fakültesi",
-      "short_bio": "Türkiye'nin en kapsamlı tefsirlerinden birinin yazarı, klasik İslam alimi.",
-      "detailed_bio": "1878'de Elmalı'da doğdu, 1942'de vefat etti. Darülfünun Hukuk Fakültesi'nden mezun oldu. 'Hak Dini Kuran Dili' adlı tefsiri ile tanınır. Türkiye'de yazılmış en kapsamlı tefsirlerden biri olan bu eseri, İslami ilimlerin derinliğini yansıtır.",
-      "translation_sample": "Elif, Lam, Mim.",
-      "translation_features": [
-        "Klasik tefsir geleneği",
-        "Kapsamlı açıklamalar",
-        "Derin analiz",
-        "Geleneksel yaklaşım"
-      ],
-      "notable_works": [
-        "Hak Dini Kuran Dili",
-        "İslam Hukuku Eserleri",
-        "Fıkıh Çalışmaları",
-        "Tefsir Metodolojisi"
-      ],
-      "approach": "Klasik İslam tefsir geleneğinin derinliğini modern Türkçe ile buluşturur.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 8,
-      "name": "Diyanet İşleri Başkanlığı",
-      "image": "yazar/diyanet.PNG?height=300&width=300",
-      "birth_year": null,
-      "death_year": null,
-      "title": "Kurum",
-      "profession": "Resmi Kurum",
-      "university": "Türkiye Cumhuriyeti",
-      "short_bio": "Türkiye'nin resmi din işleri kurumu tarafından hazırlanan meal.",
-      "detailed_bio": "Türkiye Cumhuriyeti Diyanet İşleri Başkanlığı, ülkenin resmi din işleri kurumudur. Kuran mealini hazırlarken geniş bir akademisyen kadrosu ile çalışmıştır. Geleneksel İslam anlayışını benimseyen, Türkiye'de yaygın olarak kabul gören resmi meal çalışmasıdır.",
-      "translation_sample": "Elif Lam Mim.",
-      "translation_features": [
-        "Resmi kurum onayı",
-        "Geleneksel yaklaşım",
-        "Akademik komisyon çalışması",
-        "Yaygın kabul görmüş"
-      ],
-      "notable_works": [
-        "Kuran-ı Kerim ve Açıklamalı Meali",
-        "Kuran-ı Kerim Meali",
-        "Diyanet Tefsiri",
-        "İslam Ansiklopedisi"
-      ],
-      "approach": "Geleneksel İslam yorumunu benimseyen, geniş akademisyen kadrosu tarafından hazırlanmış resmi meal.",
-      "website": "https://www.diyanet.gov.tr",
-      "social_media": {
-        "twitter": "@diyanetbasin",
-        "youtube": "Diyanet İşleri Başkanlığı"
-      }
-    },
-    {
-      "id": 9,
-      "name": "Gültekin Onan",
-      "image": "/placeholder.svg?height=300&width=300",
-      "birth_year": "1943",
-      "death_year": null,
-      "title": "Dr.",
-      "profession": "Yazar, Çevirmen",
-      "university": "Ankara Üniversitesi",
-      "short_bio": "Kuran çevirisi alanında çalışan yazar ve araştırmacı.",
-      "detailed_bio": "1943 yılında doğdu. Ankara Üniversitesi'nden mezun oldu. Kuran çevirisi ve İslami araştırmalar alanında çalışmalar yürütmektedir. Çevirilerinde sadeleştirilmiş dil kullanmayı tercih eder.",
-      "translation_sample": "Elif, Lam Mim,",
-      "translation_features": [
-        "Sadeleştirilmiş dil",
-        "Anlaşılır ifadeler",
-        "Çağdaş yaklaşım",
-        "Pratik kullanım"
-      ],
-      "notable_works": [
-        "Kuran Çevirisi",
-        "İslami Metinler",
-        "Dini Araştırmalar",
-        "Çeviri Çalışmaları"
-      ],
-      "approach": "Sadeleştirilmiş dil ile anlaşılır bir çeviri yaklaşımı benimser.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 10,
-      "name": "Hasan Basri Çantay",
-      "image": "yazar/hasan.jpg?height=300&width=300",
-      "birth_year": "1887",
-      "death_year": "1964",
-      "title": "Hoca",
-      "profession": "Müfessir, Siyasetçi",
-      "university": "Medresetü'l-Vaizin",
-      "short_bio": "Türkiye'nin ilk Kuran çevirilerinden birinin yazarı, siyasetçi ve din alimi.",
-      "detailed_bio": "1887'de Giresun'da doğdu, 1964'te vefat etti. Medresetü'l-Vaizin'den mezun oldu. Türkiye'de Kuran'ın Türkçe çevirisini yapan ilk kişilerden biridir. Aynı zamanda siyasetçi olarak da görev yapmıştır.",
-      "translation_sample": "Elif, Lam, Mim.",
-      "translation_features": [
-        "Tarihi önem",
-        "Geleneksel yaklaşım",
-        "İlk çevirilerden",
-        "Klasik dil"
-      ],
-      "notable_works": [
-        "Kuran-ı Hakim ve Meal-i Kerim",
-        "Tefsir Çalışmaları",
-        "Dini Eserler",
-        "Siyasi Yazılar"
-      ],
-      "approach": "Türkiye'deki ilk Kuran çevirilerinden biri olarak tarihi öneme sahiptir.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 11,
-      "name": "İbni Kesir",
-      "image": "yazar/kesir.jpg?height=300&width=300",
-      "birth_year": "1300",
-      "death_year": "1373",
-      "title": "İmam",
-      "profession": "Müfessir, Tarihçi, Hadisçi",
-      "university": "Şam Medreseleri",
-      "short_bio": "İslam tarihinin en önemli müfessirlerinden, klasik tefsir geleneğinin temsilcisi.",
-      "detailed_bio": "1300 yılında Şam'da doğdu, 1373'te vefat etti. İslam tarihinin en önemli müfessirlerinden biridir. Tefsiri günümüzde hala yaygın olarak okunan klasik eserlerdendir. Hadis ve tarih alanlarında da önemli çalışmaları bulunmaktadır.",
-      "translation_sample": "Elif, Lam, Mim",
-      "translation_features": [
-        "Klasik tefsir",
-        "Hadis temelli",
-        "Geleneksel yaklaşım",
-        "Kapsamlı açıklamalar"
-      ],
-      "notable_works": [
-        "Tefsiru'l-Kurani'l-Azim",
-        "el-Bidaye ve'n-Nihaye",
-        "Hadis Çalışmaları",
-        "Tarih Eserleri"
-      ],
-      "approach": "Klasik İslam tefsir geleneğini hadis ve tarihsel verilerle destekleyerek yorumlar.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 12,
-      "name": "Muhammed Esed",
-      "image": "yazar/esed.jpg?height=300&width=300",
-      "birth_year": "1900",
-      "death_year": "1992",
-      "title": "Dr.",
-      "profession": "Yazar, Çevirmen, Diplomat",
-      "university": "Viyana Üniversitesi",
-      "short_bio": "Avusturyalı mühtedi, çağdaş dönemin en etkili Kuran çevirmenlerinden.",
-      "detailed_bio": "1900'de Avusturya'da Leopold Weiss adıyla doğdu, 1992'de vefat etti. İslam'ı seçtikten sonra Muhammed Esed adını aldı. 'The Message of the Quran' adlı eseri dünya çapında tanınan önemli bir çeviridir.",
-      "translation_sample": "Elif-Lam-Mim.",
-      "translation_features": [
-        "Batılı perspektif",
-        "Çağdaş yaklaşım",
-        "Kapsamlı dipnotlar",
-        "Uluslararası tanınırlık"
-      ],
-      "notable_works": [
-        "The Message of the Quran",
-        "The Road to Mecca",
-        "Islam at the Crossroads",
-        "This Law of Ours"
-      ],
-      "approach": "Batılı bir mühtedi olarak Kuran'ı çağdaş zihinle buluşturmaya odaklanır.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 13,
-      "name": "Şaban Piriş",
-      "image": "yazar/şaban.jpg?height=300&width=300",
-      "birth_year": "1945",
-      "death_year": null,
-      "title": "Dr.",
-      "profession": "Akademisyen, Çevirmen",
-      "university": "İstanbul Üniversitesi",
-      "short_bio": "Kuran çevirisi alanında çalışan akademisyen ve araştırmacı.",
-      "detailed_bio": "1945 yılında doğdu. İstanbul Üniversitesi'nden mezun oldu. Kuran çevirisi ve İslami araştırmalar alanında akademik çalışmalar yürütmektedir. Çevirilerinde anlaşılır dil kullanmaya özen gösterir.",
-      "translation_sample": "Elif, lam, Mim.",
-      "translation_features": [
-        "Akademik yaklaşım",
-        "Anlaşılır dil",
-        "Çağdaş metodoloji",
-        "Bilimsel analiz"
-      ],
-      "notable_works": [
-        "Kuran Çevirisi",
-        "İslami Araştırmalar",
-        "Akademik Makaleler",
-        "Çeviri Çalışmaları"
-      ],
-      "approach": "Akademik metodoloji ile anlaşılır bir çeviri yaklaşımı benimser.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 14,
-      "name": "Suat Yıldırım",
-      "image": "yazar/suat.jpg?height=300&width=300",
-      "birth_year": "1941",
-      "death_year": null,
-      "title": "Prof. Dr.",
-      "profession": "Akademisyen, Müfessir",
-      "university": "Sakarya Üniversitesi",
-      "short_bio": "Tefsir alanında uzman akademisyen, çağdaş Kuran yorumcusu.",
-      "detailed_bio": "1941 yılında doğdu. Sakarya Üniversitesi İlahiyat Fakültesi'nde öğretim üyesi olarak çalıştı. Tefsir ve Kuran ilimleri alanında uzmanlaştı. Akademik yaklaşımla Kuran çevirisi ve yorumu konularında çalışmalar yürütmüştür.",
-      "translation_sample": "Elif, Lam, Mim.",
-      "translation_features": [
-        "Akademik metodoloji",
-        "Tefsir geleneği",
-        "Çağdaş dil",
-        "Eğitici yaklaşım"
-      ],
-      "notable_works": [
-        "Kuran Çevirisi",
-        "Tefsir Dersleri",
-        "İslami Araştırmalar",
-        "Akademik Yayınlar"
-      ],
-      "approach": "Akademik tefsir geleneğini çağdaş eğitim metodolojisi ile birleştirir.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 15,
-      "name": "Süleyman Ateş",
-      "image": "yazar/ateş.jpg?height=300&width=300",
-      "birth_year": "1933",
-      "death_year": "2009",
-      "title": "Prof. Dr.",
-      "profession": "Akademisyen, Müfessir",
-      "university": "İstanbul Üniversitesi",
-      "short_bio": "Türkiye'nin önde gelen tefsir alimlerinden, kapsamlı Kuran çevirisi yazarı.",
-      "detailed_bio": "1933'te doğdu, 2009'da vefat etti. İstanbul Üniversitesi İlahiyat Fakültesi'nde öğretim üyesi olarak çalıştı. Kuran-ı Kerim Tefsiri adlı eseri ile tanınır. Tefsir alanında Türkiye'nin önde gelen alimlerinden biridir.",
-      "translation_sample": "Elif lam mim.",
-      "translation_features": [
-        "Kapsamlı tefsir",
-        "Akademik derinlik",
-        "Geleneksel yaklaşım",
-        "Eğitici içerik"
-      ],
-      "notable_works": [
-        "Kuran-ı Kerim Tefsiri",
-        "Kuran Ansiklopedisi",
-        "İslami Araştırmalar",
-        "Tefsir Metodolojisi"
-      ],
-      "approach": "Geleneksel tefsir metodolojisini akademik derinlikle birleştirerek yorumlar.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 16,
-      "name": "Yaşar Nuri Öztürk",
-      "image": "yazar/yaşar.jpg?height=300&width=300",
-      "birth_year": "1945",
-      "death_year": "2016",
-      "title": "Prof. Dr.",
-      "profession": "Akademisyen, Yazar, Siyasetçi",
-      "university": "İstanbul Üniversitesi İlahiyat Fakültesi",
-      "short_bio": "Kuran İslam'ı savunucusu, çağdaş İslam düşüncesinin öncü isimlerinden.",
-      "detailed_bio": "1945 yılında Malatya'da doğdu, 2016 yılında vefat etti. İstanbul Üniversitesi İlahiyat Fakültesi'nde öğretim üyesi olarak çalıştı. 'Kuran İslam'ı' kavramını geliştirdi ve İslam'ın özüne dönüş çağrısı yaptı.",
-      "translation_sample": "Elif, Lam, Mim.",
-      "translation_features": [
-        "Kuran merkezli yaklaşım",
-        "Geleneksel yorumları sorgulama",
-        "Özgün dil kullanımı",
-        "Reformist perspektif"
-      ],
-      "notable_works": [
-        "Kuran'daki İslam",
-        "Din ve Fıtrat",
-        "Kuran'ın Temel Kavramları",
-        "İslam Nasıl Yozlaştırıldı"
-      ],
-      "approach": "Kuran'ı tek kaynak olarak kabul ederek, geleneksel yorumları eleştirel gözle inceler.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": "Yaşar Nuri Öztürk Arşivi"
-      }
-    },
-    {
-      "id": 17,
-      "name": "Mustafa İslamoğlu",
-      "image": "yazar/mustafa.jpg?height=300&width=300",
-      "birth_year": "1960",
-      "death_year": null,
-      "title": "Dr.",
-      "profession": "Yazar, Düşünür",
-      "university": "Marmara Üniversitesi İlahiyat Fakültesi",
-      "short_bio": "Çağdaş İslam düşüncesinin önemli temsilcilerinden, yenilikçi Kuran yorumcusu.",
-      "detailed_bio": "1960 yılında Erzurum'da doğdu. Marmara Üniversitesi İlahiyat Fakültesi'nden mezun oldu. İslam düşüncesinde yeniden yapılanma konusunda önemli çalışmaları bulunmaktadır. Kuran'ın evrensel mesajını çağdaş hayatla buluşturmaya odaklanmıştır.",
-      "translation_sample": "Elif-Lam-Mim!",
-      "translation_features": [
-        "Evrensel mesaj vurgusu",
-        "Çağdaş hayatla bağlantı",
-        "Sosyal adalet odaklı yaklaşım",
-        "Akıl ve vahiy dengesi"
-      ],
-      "notable_works": [
-        "Hayat Kitabı Kuran",
-        "İslam'ın Özgünlüğü",
-        "Kuran ve Sünnet İlişkisi",
-        "İslam Düşüncesinde Yeniden Yapılanma"
-      ],
-      "approach": "Kuran'ın evrensel değerlerini çağdaş sosyal sorunlarla ilişkilendirerek yorumlar.",
-      "website": "https://www.mustafaislamoglu.com",
-      "social_media": {
-        "twitter": "@mistafaislamoglu",
-        "youtube": "Mustafa İslamoğlu"
-      }
-    },
-    {
-      "id": 18,
-      "name": "Süleymaniye Vakfı",
-      "image": "yazar/süleymaniye.jpg?height=300&width=300",
-      "birth_year": null,
-      "death_year": null,
-      "title": "Vakıf",
-      "profession": "Dini Kurum",
-      "university": "Süleymaniye Vakfı",
-      "short_bio": "Geleneksel İslam anlayışını benimseyen vakıf tarafından hazırlanan meal.",
-      "detailed_bio": "Süleymaniye Vakfı, geleneksel İslam anlayışını benimseyen ve bu doğrultuda eğitim faaliyetleri yürüten bir vakıftır. Kuran mealini geleneksel tefsir metodolojisi ile hazırlamıştır.",
-      "translation_sample": "Elif-Lam-Mim[1]!",
-      "translation_features": [
-        "Geleneksel yaklaşım",
-        "Vakıf kurumu",
-        "Dipnotlu açıklamalar",
-        "Klasik metodoloji"
-      ],
-      "notable_works": [
-        "Kuran-ı Kerim Meali",
-        "Tefsir Çalışmaları",
-        "Dini Eğitim Materyalleri",
-        "İslami Yayınlar"
-      ],
-      "approach": "Geleneksel İslam tefsir metodolojisini benimseyen vakıf yaklaşımı.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 19,
-      "name": "Erhan Aktaş (Eski Baskı)",
-      "image": "yazar/erhan.jpg?height=300&width=300",
-      "birth_year": "1960",
-      "death_year": null,
-      "title": "Dr.",
-      "profession": "Yazar, Çevirmen",
-      "university": "İstanbul Üniversitesi",
-      "short_bio": "Çağdaş Kuran çevirisi alanında çalışan yazar ve araştırmacının eski baskısı.",
-      "detailed_bio": "Erhan Aktaş'ın eski baskı çevirisi, yazarın daha önceki dönemde yaptığı çeviri çalışmasıdır. Bu baskıda daha geleneksel bir yaklaşım benimsenmiştir.",
-      "translation_sample": "Elif. Lam. Mim.",
-      "translation_features": [
-        "Eski baskı yaklaşımı",
-        "Geleneksel dil",
-        "Basit ifadeler",
-        "Klasik stil"
-      ],
-      "notable_works": [
-        "Kuran Çevirisi (Eski Baskı)",
-        "İslami Araştırmalar",
-        "Çeviri Çalışmaları",
-        "Dini Metinler"
-      ],
-      "approach": "Eski baskısında daha geleneksel ve basit bir çeviri yaklaşımı benimser.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 20,
-      "name": "Ali Rıza Safa",
-      "image": "/placeholder.svg?height=300&width=300",
-      "birth_year": "1920",
-      "death_year": "2000",
-      "title": "Dr.",
-      "profession": "Yazar, Çevirmen",
-      "university": "İstanbul Üniversitesi",
-      "short_bio": "Kuran çevirisi alanında çalışan yazar ve araştırmacı.",
-      "detailed_bio": "1920 yılında doğdu, 2000 yılında vefat etti. İstanbul Üniversitesi'nden mezun oldu. Kuran çevirisi alanında çalışmalar yürütmüştür. Çevirilerinde kısa ve öz ifadeler kullanmayı tercih etmiştir.",
-      "translation_sample": "A. L. M.[11]",
-      "translation_features": [
-        "Kısa ve öz ifadeler",
-        "Harflerin kısaltılması",
-        "Dipnotlu sistem",
-        "Pratik yaklaşım"
-      ],
-      "notable_works": [
-        "Kuran Çevirisi",
-        "İslami Metinler",
-        "Çeviri Çalışmaları",
-        "Dini Araştırmalar"
-      ],
-      "approach": "Kısa ve öz ifadelerle pratik bir çeviri yaklaşımı benimser.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 21,
-      "name": "Edip Yüksel",
-      "image": "yazar/edip.jpg?height=300&width=300",
-      "birth_year": "1957",
-      "death_year": null,
-      "title": "Dr.",
-      "profession": "Yazar, Düşünür, Çevirmen",
-      "university": "Arizona Üniversitesi",
-      "short_bio": "Kuran'ın rasyonel yorumunu savunan, uluslararası tanınırlığa sahip düşünür.",
-      "detailed_bio": "1957 yılında Türkiye'de doğdu. Hukuk eğitimi aldıktan sonra Amerika'ya yerleşti. Arizona Üniversitesi'nde felsefe doktorası yaptı. Kuran'ın rasyonel ve bilimsel yorumunu savunur. Matematiksel mucize konusunda öncü çalışmalar yapmıştır.",
-      "translation_sample": "A1 L30 M40[1]",
-      "translation_features": [
-        "Matematiksel yaklaşım",
-        "Sayısal kodlama",
-        "Bilimsel metodoloji",
-        "Rasyonel perspektif"
-      ],
-      "notable_works": [
-        "Mesaj: Kuran Çevirisi",
-        "Kuran'ın Matematiksel Mucizesi",
-        "19: Kuran'ın Şifresi",
-        "İslam Devrimi"
-      ],
-      "approach": "Kuran'ı matematiksel ve bilimsel verilerle destekleyerek rasyonel bir yaklaşımla yorumlar.",
-      "website": "https://www.edipyuksel.com",
-      "social_media": {
-        "twitter": "@edipyuksel",
-        "youtube": "Edip Yüksel"
-      }
-    },
-    {
-      "id": 22,
-      "name": "Süleymaniye Vakfı (Eski Baskı)",
-      "image": "/placeholder.svg?height=300&width=300",
-      "birth_year": null,
-      "death_year": null,
-      "title": "Vakıf",
-      "profession": "Dini Kurum",
-      "university": "Süleymaniye Vakfı",
-      "short_bio": "Geleneksel İslam anlayışını benimseyen vakıf tarafından hazırlanan eski baskı meal.",
-      "detailed_bio": "Süleymaniye Vakfı'nın eski baskı çevirisi, vakfın daha önceki dönemde hazırladığı meal çalışmasıdır. Bu baskıda daha vurgulu bir dil kullanılmıştır.",
-      "translation_sample": "ELİF! LÂM! MÎM![1]",
-      "translation_features": [
-        "Vurgulu dil",
-        "Eski baskı yaklaşımı",
-        "Geleneksel metodoloji",
-        "Dipnotlu sistem"
-      ],
-      "notable_works": [
-        "Kuran-ı Kerim Meali (Eski Baskı)",
-        "Tefsir Çalışmaları",
-        "Dini Eğitim Materyalleri",
-        "İslami Yayınlar"
-      ],
-      "approach": "Eski baskısında daha vurgulu ve geleneksel bir yaklaşım benimser.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
-    },
-    {
-      "id": 23,
-      "name": "Erhan Aktaş (10. Baskı)",
-      "image": "yazar/erhan.jpg?height=300&width=300",
-      "birth_year": "1960",
-      "death_year": null,
-      "title": "Dr.",
-      "profession": "Yazar, Çevirmen",
-      "university": "İstanbul Üniversitesi",
-      "short_bio": "Çağdaş Kuran çevirisi alanında çalışan yazar ve araştırmacının güncel baskısı.",
-      "detailed_bio": "Erhan Aktaş'ın 10. baskı çevirisi, yazarın en güncel ve revize edilmiş çeviri çalışmasıdır. Bu baskıda çağdaş dil kullanımı ve güncel yaklaşımlar benimsenmiştir.",
-      "translation_sample": "Elif. Lam. Mim.",
-      "translation_features": [
-        "Güncel baskı",
-        "Revize edilmiş metin",
-        "Çağdaş dil",
-        "Geliştirilmiş yaklaşım"
-      ],
-      "notable_works": [
-        "Kuran Çevirisi (10. Baskı)",
-        "İslami Araştırmalar",
-        "Güncel Çeviri Çalışmaları",
-        "Çağdaş Tefsir"
-      ],
-      "approach": "10. baskısında en güncel ve geliştirilmiş çeviri yaklaşımını benimser.",
-      "website": null,
-      "social_media": {
-        "twitter": null,
-        "youtube": null
-      }
+      "isim": "Emre Yıldız",
+      "slug": "emre-yildiz",
+      "biyografi": "Kur'an-ı Kerim'in psikolojik ve ruhsal iyileştirici etkilerini araştıran psikolog ve yazar. İslami psikoloji alanında çalışmalar yürütüyor.",
+      "uzmanlik_alanlari": ["İslami Psikoloji", "Ruhsal İyileşme", "Manevi Danışmanlık"],
+      "egitim": "Boğaziçi Üniversitesi Psikoloji, İslami Araştırmalar Sertifikası",
+      "deneyim": "9 yıl",
+      "makale_sayisi": 26,
+      "profil_resmi": "/placeholder.svg?height=200&width=200",
+      "sosyal_medya": {
+        "instagram": "@emreyildiz_psikolog",
+        "linkedin": "emre-yildiz-psikolog",
+        "youtube": "EmreYildizPsikoloji"
+      },
+      "iletisim": "emre@sadeceKuran.com",
+      "hakkinda": "Emre Yıldız, psikoloji eğitimi almış ve İslami psikoloji alanında uzmanlaşmış bir yazardır. Kur'an-ı Kerim'in insan ruhuna olan etkilerini, İslami değerlerin psikolojik sağlık üzerindeki olumlu etkilerini araştırmaktadır. Manevi danışmanlık, stres yönetimi ve ruhsal iyileşme konularında İslami perspektiften yaklaşımlar geliştirmektedir.",
+      "son_makaleler": [6]
     }
   ]
 }
