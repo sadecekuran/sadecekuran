@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galactic QR Generator - Premium</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <title>QR Galactic - QR Kod Tarayıcı ve Oluşturucu</title>
   <style>
     :root {
       --bg-primary: #000000;
@@ -34,7 +33,6 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-      padding: 20px;
     }
 
     /* Galaxy Animation Background */
@@ -99,375 +97,407 @@
 
     /* Main Container */
     .container {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      padding: 2rem;
       position: relative;
       z-index: 10;
     }
 
     /* Header */
     .header {
-      grid-column: 1 / -1;
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
       animation: fadeInDown 1s ease-out;
     }
 
     .title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 700;
       background: var(--gradient-primary);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
     }
 
     .subtitle {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: var(--text-secondary);
       font-weight: 300;
       letter-spacing: 0.5px;
     }
 
-    /* Control Panel */
-    .control-panel {
-      background: var(--bg-secondary);
+    /* Mode Toggle */
+    .mode-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .toggle-container {
+      background: rgba(17, 17, 17, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 4px;
+      border: 1px solid var(--border-color);
+      display: flex;
+    }
+
+    .toggle-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 46px;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toggle-btn.active {
+      background: var(--gradient-primary);
+      color: var(--bg-primary);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    .toggle-btn:hover:not(.active) {
+      color: var(--text-primary);
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(17, 17, 17, 0.5);
       border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 2rem;
+      margin-bottom: 2rem;
       backdrop-filter: blur(10px);
       box-shadow: 
         0 8px 32px var(--shadow-dark),
         inset 0 1px 0 var(--shadow-light);
-      animation: fadeInLeft 1s ease-out 0.2s both;
-      height: fit-content;
+      animation: fadeInUp 1s ease-out 0.4s both;
     }
 
-    .section {
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .card-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
       margin-bottom: 2rem;
     }
 
-    .section:last-child {
-      margin-bottom: 0;
-    }
-
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: var(--text-secondary);
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 0.75rem 1rem;
+    /* Camera Section */
+    .camera-container {
+      position: relative;
+      aspect-ratio: 16/9;
       background: var(--bg-primary);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
       border: 2px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      outline: none;
     }
 
-    .form-input:focus {
-      border-color: var(--text-primary);
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-    }
-
-    .form-textarea {
-      min-height: 100px;
-      resize: vertical;
-      font-family: inherit;
-    }
-
-    .form-select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-      background-position: right 0.5rem center;
-      background-repeat: no-repeat;
-      background-size: 1.5em 1.5em;
-      padding-right: 2.5rem;
-    }
-
-    .color-input-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .color-input-wrapper {
-      position: relative;
-    }
-
-    .color-input {
-      width: 100%;
-      height: 40px;
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .color-input:hover {
-      border-color: var(--text-primary);
-    }
-
-    .range-group {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 1rem;
-      align-items: center;
-    }
-
-    .range-input {
-      width: 100%;
-      height: 6px;
-      border-radius: 3px;
-      background: var(--border-color);
-      outline: none;
-      appearance: none;
-    }
-
-    .range-input::-webkit-slider-thumb {
-      appearance: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--text-primary);
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .range-input::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--text-primary);
-      cursor: pointer;
-      border: none;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .range-value {
-      min-width: 40px;
-      text-align: center;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .file-input-wrapper {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .file-input {
-      position: absolute;
-      opacity: 0;
+    .camera-video {
       width: 100%;
       height: 100%;
-      cursor: pointer;
+      object-fit: cover;
     }
 
-    .file-input-label {
-      display: block;
-      padding: 0.75rem 1rem;
-      background: var(--bg-primary);
-      border: 2px dashed var(--border-color);
-      border-radius: 8px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      color: var(--text-secondary);
+    .camera-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-muted);
+      flex-direction: column;
+      gap: 1rem;
     }
 
-    .file-input-label:hover {
-      border-color: var(--text-primary);
-      color: var(--text-primary);
+    .camera-icon {
+      width: 4rem;
+      height: 4rem;
+      opacity: 0.5;
     }
 
-    .style-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 0.5rem;
+    /* Scanning Overlay */
+    .scanning-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .style-option {
-      padding: 0.5rem;
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      background: var(--bg-primary);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: center;
-      font-size: 0.8rem;
+    .scan-frame {
+      width: 250px;
+      height: 250px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      position: relative;
     }
 
-    .style-option:hover {
-      border-color: var(--text-primary);
+    .scan-corner {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 4px solid white;
     }
 
-    .style-option.active {
-      border-color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.1);
+    .scan-corner.top-left {
+      top: -2px;
+      left: -2px;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 12px 0 0 0;
     }
 
+    .scan-corner.top-right {
+      top: -2px;
+      right: -2px;
+      border-left: none;
+      border-bottom: none;
+      border-radius: 0 12px 0 0;
+    }
+
+    .scan-corner.bottom-left {
+      bottom: -2px;
+      left: -2px;
+      border-right: none;
+      border-top: none;
+      border-radius: 0 0 0 12px;
+    }
+
+    .scan-corner.bottom-right {
+      bottom: -2px;
+      right: -2px;
+      border-left: none;
+      border-top: none;
+      border-radius: 0 0 12px 0;
+    }
+
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, white, transparent);
+      animation: scan-animation 2s linear infinite;
+    }
+
+    @keyframes scan-animation {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(246px); }
+    }
+
+    /* Buttons */
     .btn {
-      padding: 0.75rem 1.5rem;
-      background: var(--gradient-primary);
-      color: var(--bg-primary);
+      padding: 12px 24px;
       border: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
+      border-radius: 12px;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      justify-content: center;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: var(--bg-primary);
     }
 
-    .btn:active {
-      transform: translateY(0);
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn:hover::before {
-      left: 100%;
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
     }
 
     .btn-secondary {
       background: transparent;
-      color: var(--text-primary);
-      border: 2px solid var(--border-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
     }
 
     .btn-secondary:hover {
       border-color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
     }
 
-    /* Preview Panel */
-    .preview-panel {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 2rem;
-      backdrop-filter: blur(10px);
-      box-shadow: 
-        0 8px 32px var(--shadow-dark),
-        inset 0 1px 0 var(--shadow-light);
-      animation: fadeInRight 1s ease-out 0.4s both;
+    .btn-danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #b91c1c;
+      transform: translateY(-2px);
+    }
+
+    .btn-center {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      justify-content: center;
     }
 
-    .qr-container {
-      background: white;
-      padding: 2rem;
-      border-radius: 16px;
-      margin: 2rem 0;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    .qr-container:hover {
-      transform: scale(1.02);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    #qrCanvas {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-    .logo-preview {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 60px;
-      max-height: 60px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      background: white;
-      padding: 4px;
-    }
-
-    .download-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* Input Section */
+    .input-group {
+      display: flex;
       gap: 1rem;
-      width: 100%;
-      margin-top: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    .info-panel {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-color);
+    .input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--border-color);
       border-radius: 12px;
-      padding: 1.5rem;
-      margin-top: 2rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: 'JetBrains Mono', monospace;
     }
 
-    .info-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
+    .input:focus {
+      border-color: var(--text-primary);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Drop Area */
+    .drop-area {
+      border: 2px dashed var(--border-color);
+      border-radius: 16px;
+      padding: 3rem;
+      text-align: center;
+      background: rgba(17, 17, 17, 0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+
+    .drop-area:hover,
+    .drop-area.dragover {
+      border-color: var(--text-primary);
+      background: rgba(0, 0, 0, 0.5);
+      transform: scale(1.02);
+    }
+
+    .drop-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+
+    /* QR Code Display */
+    .qr-display {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .qr-code-container {
+      display: inline-block;
+      padding: 1rem;
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .qr-code-img {
+      width: 300px;
+      height: 300px;
+      max-width: 100%;
+    }
+
+    .qr-url {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      word-break: break-all;
       font-size: 0.9rem;
     }
 
-    .info-label {
+    /* History */
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .history-list {
+      max-height: 300px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-color) transparent;
+    }
+
+    .history-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .history-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .history-list::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .history-item:hover {
+      border-color: var(--border-color);
+      transform: translateX(8px);
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .history-url {
       color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      flex: 1;
+      margin-right: 1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .info-value {
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    /* Feedback */
-    .feedback {
+    /* Toast Notifications */
+    .toast {
       position: fixed;
       top: 2rem;
       right: 2rem;
@@ -475,92 +505,26 @@
       border-radius: 12px;
       font-weight: 500;
       transform: translateX(400px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       z-index: 1000;
       backdrop-filter: blur(10px);
+      max-width: 350px;
     }
 
-    .feedback.show {
+    .toast.show {
       transform: translateX(0);
     }
 
-    .feedback.success {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: var(--text-primary);
+    .toast.success {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
     }
 
-    .feedback.error {
-      background: rgba(255, 68, 68, 0.1);
-      border: 1px solid rgba(255, 68, 68, 0.3);
-      color: #ff4444;
-    }
-
-    /* Animations */
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes fadeInRight {
-      from {
-        opacity: 0;
-        transform: translateX(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      .container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      
-      .color-input-group {
-        grid-template-columns: 1fr;
-      }
-      
-      .download-section {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .feedback {
-        top: 1rem;
-        right: 1rem;
-        left: 1rem;
-        transform: translateY(-100px);
-      }
-      
-      .feedback.show {
-        transform: translateY(0);
-      }
-      
-      .style-grid {
-        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-      }
+    .toast.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
     }
 
     /* Loading Animation */
@@ -577,6 +541,74 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .input-group {
+        flex-direction: column;
+      }
+      
+      .toggle-container {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .toggle-btn {
+        justify-content: center;
+      }
+      
+      .toast {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        transform: translateY(-100px);
+        max-width: none;
+      }
+      
+      .toast.show {
+        transform: translateY(0);
+      }
+    }
+
+    /* Hidden class */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Icons */
+    .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: currentColor;
+    }
   </style>
 </head>
 <body>
@@ -589,163 +621,166 @@
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <h1 class="title">Galactic QR Generator</h1>
-      <p class="subtitle">Evrenin derinliklerinden özelleştirilebilir QR kodları oluşturun</p>
+      <h1 class="title">QR GALACTIC</h1>
+      <p class="subtitle">Evrenin derinliklerinden QR kodlarınızı okuyun ve oluşturun</p>
     </div>
 
-    <!-- Control Panel -->
-    <div class="control-panel">
-      <!-- Content Section -->
-      <div class="section">
-        <h3 class="section-title">📝 İçerik</h3>
-        <div class="form-group">
-          <label class="form-label">QR Kod İçeriği</label>
-          <textarea 
-            id="qrContent" 
-            class="form-input form-textarea" 
-            placeholder="URL, metin, telefon numarası veya herhangi bir içerik girin..."
-            oninput="generateQR()"
-          >https://github.com</textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label">İçerik Türü</label>
-          <select id="contentType" class="form-input form-select" onchange="updateContentType()">
-            <option value="text">Metin</option>
-            <option value="url" selected>URL</option>
-            <option value="email">E-posta</option>
-            <option value="phone">Telefon</option>
-            <option value="sms">SMS</option>
-            <option value="wifi">WiFi</option>
-            <option value="vcard">vCard</option>
-          </select>
-        </div>
+    <!-- Mode Toggle -->
+    <div class="mode-toggle">
+      <div class="toggle-container">
+        <button class="toggle-btn active" id="scannerBtn" onclick="switchMode('scanner')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+            <circle cx="12" cy="13" r="3"/>
+          </svg>
+          Tarayıcı
+        </button>
+        <button class="toggle-btn" id="generatorBtn" onclick="switchMode('generator')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect width="5" height="5" x="3" y="3" rx="1"/>
+            <rect width="5" height="5" x="16" y="3" rx="1"/>
+            <rect width="5" height="5" x="3" y="16" rx="1"/>
+            <path d="m21 16-3.5-3.5-1 1 1.5 1.5L16 17l1 1 1.5-1.5 1 1L21 16ZM21 21l-1.5-1.5L18 21l-1-1 1.5-1.5L17 17l1-1 3.5 3.5L21 21Z"/>
+          </svg>
+          Oluşturucu
+        </button>
       </div>
-
-      <!-- Design Section -->
-      <div class="section">
-        <h3 class="section-title">🎨 Tasarım</h3>
-        <div class="form-group">
-          <label class="form-label">Renkler</label>
-          <div class="color-input-group">
-            <div class="color-input-wrapper">
-              <label class="form-label" style="margin-bottom: 0.25rem;">Ön Plan</label>
-              <input type="color" id="foregroundColor" class="color-input" value="#000000" onchange="generateQR()">
-            </div>
-            <div class="color-input-wrapper">
-              <label class="form-label" style="margin-bottom: 0.25rem;">Arka Plan</label>
-              <input type="color" id="backgroundColor" class="color-input" value="#ffffff" onchange="generateQR()">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Boyut</label>
-          <div class="range-group">
-            <input type="range" id="qrSize" class="range-input" min="200" max="800" value="400" oninput="generateQR()">
-            <span class="range-value" id="sizeValue">400px</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Hata Düzeltme Seviyesi</label>
-          <select id="errorLevel" class="form-input form-select" onchange="generateQR()">
-            <option value="L">Düşük (7%)</option>
-            <option value="M" selected>Orta (15%)</option>
-            <option value="Q">Yüksek (25%)</option>
-            <option value="H">Çok Yüksek (30%)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Logo Section -->
-      <div class="section">
-        <h3 class="section-title">🖼️ Logo</h3>
-        <div class="form-group">
-          <label class="form-label">Logo Yükle</label>
-          <div class="file-input-wrapper">
-            <input type="file" id="logoInput" class="file-input" accept="image/*" onchange="handleLogoUpload()">
-            <label for="logoInput" class="file-input-label">
-              <span id="logoLabel">Logo seçin veya sürükleyin</span>
-            </label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Logo Boyutu</label>
-          <div class="range-group">
-            <input type="range" id="logoSize" class="range-input" min="10" max="30" value="20" oninput="generateQR()">
-            <span class="range-value" id="logoSizeValue">20%</span>
-          </div>
-        </div>
-        <button class="btn btn-secondary" onclick="removeLogo()">Logo Kaldır</button>
-      </div>
-
-      <!-- Style Section -->
-      <div class="section">
-        <h3 class="section-title">✨ Stil</h3>
-        <div class="form-group">
-          <label class="form-label">QR Kod Stili</label>
-          <div class="style-grid">
-            <div class="style-option active" data-style="square" onclick="selectStyle(this, 'square')">Kare</div>
-            <div class="style-option" data-style="dots" onclick="selectStyle(this, 'dots')">Nokta</div>
-            <div class="style-option" data-style="rounded" onclick="selectStyle(this, 'rounded')">Yuvarla</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Kenar Boşluğu</label>
-          <div class="range-group">
-            <input type="range" id="qrMargin" class="range-input" min="0" max="10" value="4" oninput="generateQR()">
-            <span class="range-value" id="marginValue">4</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Generate Button -->
-      <button class="btn" onclick="generateQR()">
-        <span id="generateBtnText">QR Kod Oluştur</span>
-      </button>
     </div>
 
-    <!-- Preview Panel -->
-    <div class="preview-panel">
-      <h3 class="section-title">👁️ Önizleme</h3>
-      
-      <div class="qr-container" id="qrContainer">
-        <canvas id="qrCanvas"></canvas>
-        <img id="logoPreview" class="logo-preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Logo önizleme" style="display: none;">
+    <!-- Scanner Section -->
+    <div id="scannerSection">
+      <div class="card">
+        <h2 class="card-title">QR Kod Tarayıcı</h2>
+        <p class="card-subtitle">QR kodunu kameraya gösterin, otomatik olarak açılacak</p>
+
+        <div class="camera-container" id="cameraContainer">
+          <video id="cameraVideo" class="camera-video hidden" autoplay playsinline muted></video>
+          <canvas id="scanCanvas" class="hidden"></canvas>
+          
+          <div class="camera-placeholder" id="cameraPlaceholder">
+            <svg class="camera-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+              <circle cx="12" cy="13" r="3"/>
+            </svg>
+            <p>Kamera kapalı</p>
+          </div>
+
+          <div class="scanning-overlay hidden" id="scanningOverlay">
+            <div class="scan-frame">
+              <div class="scan-corner top-left"></div>
+              <div class="scan-corner top-right"></div>
+              <div class="scan-corner bottom-left"></div>
+              <div class="scan-corner bottom-right"></div>
+              <div class="scan-line"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-center">
+          <button class="btn btn-primary" id="cameraToggle" onclick="toggleCamera()">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+              <circle cx="12" cy="13" r="3"/>
+            </svg>
+            <span id="cameraToggleText">Kamerayı Başlat</span>
+          </button>
+        </div>
       </div>
 
-      <div class="download-section">
-        <button class="btn" onclick="downloadQR('png')">PNG İndir</button>
-        <button class="btn btn-secondary" onclick="downloadQR('svg')">SVG İndir</button>
+      <!-- Scan History -->
+      <div class="card" id="scanHistoryCard">
+        <div class="history-header">
+          <h3>Tarama Geçmişi</h3>
+          <button class="btn btn-secondary" onclick="clearScanHistory()">Temizle</button>
+        </div>
+        <div class="history-list" id="scanHistoryList">
+          <p style="text-align: center; color: var(--text-muted); padding: 2rem;">Henüz tarama yapılmadı</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generator Section -->
+    <div id="generatorSection" class="hidden">
+      <div class="card">
+        <h2 class="card-title">QR Kod Oluşturucu</h2>
+        <p class="card-subtitle">URL girin veya sürükleyip bırakın</p>
+
+        <div class="input-group">
+          <input 
+            type="url" 
+            class="input" 
+            id="urlInput" 
+            placeholder="https://example.com"
+            onkeydown="handleUrlInputKeydown(event)"
+          >
+          <button class="btn btn-primary" onclick="generateQRCode()">
+            <span id="generateBtnText">Oluştur</span>
+          </button>
+        </div>
+
+        <div class="drop-area" id="dropArea" onclick="document.getElementById('urlInput').focus()">
+          <div class="drop-icon">🔗</div>
+          <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">URL'yi buraya sürükleyin</div>
+          <div style="font-size: 0.9rem; color: var(--text-muted);">veya yapıştırın (Ctrl+V)</div>
+        </div>
       </div>
 
-      <div class="info-panel">
-        <div class="info-item">
-          <span class="info-label">Boyut:</span>
-          <span class="info-value" id="infoSize">400x400px</span>
+      <!-- QR Code Display -->
+      <div class="card hidden" id="qrDisplayCard">
+        <div class="qr-display">
+          <h3 style="margin-bottom: 1.5rem;">Oluşturulan QR Kod</h3>
+          
+          <div class="qr-code-container">
+            <img id="qrCodeImg" class="qr-code-img" alt="Generated QR Code">
+          </div>
+          
+          <div class="qr-url" id="qrUrl"></div>
+          
+          <button class="btn btn-primary" onclick="downloadQRCode()">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7,10 12,15 17,10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            QR Kodu İndir
+          </button>
         </div>
-        <div class="info-item">
-          <span class="info-label">Format:</span>
-          <span class="info-value" id="infoFormat">PNG</span>
+      </div>
+
+      <!-- Generation History -->
+      <div class="card" id="generationHistoryCard">
+        <div class="history-header">
+          <h3>Oluşturma Geçmişi</h3>
+          <button class="btn btn-secondary" onclick="clearGenerationHistory()">Temizle</button>
         </div>
-        <div class="info-item">
-          <span class="info-label">Hata Düzeltme:</span>
-          <span class="info-value" id="infoError">Orta (15%)</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">Karakter Sayısı:</span>
-          <span class="info-value" id="infoChars">0</span>
+        <div class="history-list" id="generationHistoryList">
+          <p style="text-align: center; color: var(--text-muted); padding: 2rem;">Henüz QR kod oluşturulmadı</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Feedback -->
-  <div class="feedback" id="feedback"></div>
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
 
   <script>
-    let currentLogo = null;
-    let currentStyle = 'square';
+    // Global variables
+    let currentMode = 'scanner';
+    let isScanning = false;
+    let stream = null;
+    let scanInterval = null;
+    let lastScannedUrl = '';
+    let currentQRUrl = '';
 
-    // Initialize stars
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', function() {
+      createStars();
+      loadHistories();
+      checkHashMode();
+      setupEventListeners();
+    });
+
+    // Create animated stars
     function createStars() {
       const starsContainer = document.getElementById('stars');
       const starCount = 100;
@@ -762,287 +797,407 @@
       }
     }
 
-    // Show feedback
-    function showFeedback(message, type) {
-      const feedback = document.getElementById('feedback');
-      feedback.textContent = message;
-      feedback.className = `feedback ${type}`;
-      feedback.classList.add('show');
+    // Setup event listeners
+    function setupEventListeners() {
+      // Hash change listener
+      window.addEventListener('hashchange', checkHashMode);
       
-      setTimeout(() => {
-        feedback.classList.remove('show');
-      }, 4000);
-    }
-
-    // Update range values
-    document.getElementById('qrSize').oninput = function() {
-      document.getElementById('sizeValue').textContent = this.value + 'px';
-      generateQR();
-    };
-
-    document.getElementById('logoSize').oninput = function() {
-      document.getElementById('logoSizeValue').textContent = this.value + '%';
-      generateQR();
-    };
-
-    document.getElementById('qrMargin').oninput = function() {
-      document.getElementById('marginValue').textContent = this.value;
-      generateQR();
-    };
-
-    // Content type templates
-    function updateContentType() {
-      const contentType = document.getElementById('contentType').value;
-      const contentInput = document.getElementById('qrContent');
-      
-      const templates = {
-        text: 'Merhaba Dünya!',
-        url: 'https://example.com',
-        email: 'mailto:ornek@email.com?subject=Konu&body=Mesaj',
-        phone: 'tel:+905551234567',
-        sms: 'sms:+905551234567?body=Merhaba',
-        wifi: 'WIFI:T:WPA;S:WiFi_Adi;P:sifre123;H:false;;',
-        vcard: 'BEGIN:VCARD\nVERSION:3.0\nFN:Ad Soyad\nORG:Şirket\nTEL:+905551234567\nEMAIL:ornek@email.com\nEND:VCARD'
-      };
-      
-      contentInput.value = templates[contentType] || '';
-      generateQR();
-    }
-
-    // Style selection
-    function selectStyle(element, style) {
-      document.querySelectorAll('.style-option').forEach(opt => opt.classList.remove('active'));
-      element.classList.add('active');
-      currentStyle = style;
-      generateQR();
-    }
-
-    // Logo handling
-    function handleLogoUpload() {
-      const input = document.getElementById('logoInput');
-      const file = input.files[0];
-      
-      if (file) {
-        if (file.size > 5 * 1024 * 1024) {
-          showFeedback('Logo dosyası 5MB\'dan küçük olmalıdır', 'error');
-          return;
-        }
-        
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          currentLogo = e.target.result;
-          document.getElementById('logoLabel').textContent = file.name;
-          document.getElementById('logoPreview').src = currentLogo;
-          document.getElementById('logoPreview').style.display = 'block';
-          generateQR();
-          showFeedback('Logo başarıyla yüklendi', 'success');
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function removeLogo() {
-      currentLogo = null;
-      document.getElementById('logoInput').value = '';
-      document.getElementById('logoLabel').textContent = 'Logo seçin veya sürükleyin';
-      document.getElementById('logoPreview').style.display = 'none';
-      generateQR();
-      showFeedback('Logo kaldırıldı', 'success');
-    }
-
-    // QR Code generation
-    async function generateQR() {
-      const content = document.getElementById('qrContent').value.trim();
-      const canvas = document.getElementById('qrCanvas');
-      const generateBtn = document.getElementById('generateBtnText');
-      
-      if (!content) {
-        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-        updateInfo();
-        return;
-      }
-
-      generateBtn.innerHTML = '<div class="loading"></div>';
-      
-      try {
-        const size = parseInt(document.getElementById('qrSize').value);
-        const margin = parseInt(document.getElementById('qrMargin').value);
-        const errorLevel = document.getElementById('errorLevel').value;
-        const foregroundColor = document.getElementById('foregroundColor').value;
-        const backgroundColor = document.getElementById('backgroundColor').value;
-        
-        const options = {
-          width: size,
-          height: size,
-          margin: margin,
-          color: {
-            dark: foregroundColor,
-            light: backgroundColor
-          },
-          errorCorrectionLevel: errorLevel
-        };
-
-        // Generate QR code
-        await QRCode.toCanvas(canvas, content, options);
-        
-        // Add logo if present
-        if (currentLogo) {
-          await addLogoToCanvas(canvas);
-        }
-        
-        // Apply style effects
-        if (currentStyle !== 'square') {
-          applyStyleToCanvas(canvas);
-        }
-        
-        updateInfo();
-        showFeedback('QR kod başarıyla oluşturuldu', 'success');
-        
-      } catch (error) {
-        console.error('QR kod oluşturma hatası:', error);
-        showFeedback('QR kod oluşturulamadı: ' + error.message, 'error');
-      } finally {
-        generateBtn.textContent = 'QR Kod Oluştur';
-      }
-    }
-
-    // Add logo to canvas
-    function addLogoToCanvas(canvas) {
-      return new Promise((resolve) => {
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        
-        img.onload = function() {
-          const logoSizePercent = parseInt(document.getElementById('logoSize').value);
-          const logoSize = (canvas.width * logoSizePercent) / 100;
-          const x = (canvas.width - logoSize) / 2;
-          const y = (canvas.height - logoSize) / 2;
-          
-          // Create white background for logo
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(x - 5, y - 5, logoSize + 10, logoSize + 10);
-          
-          // Draw logo
-          ctx.drawImage(img, x, y, logoSize, logoSize);
-          resolve();
-        };
-        
-        img.src = currentLogo;
+      // Drop area events
+      const dropArea = document.getElementById('dropArea');
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
       });
+      
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => dropArea.classList.add('dragover'), false);
+      });
+      
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => dropArea.classList.remove('dragover'), false);
+      });
+      
+      dropArea.addEventListener('drop', handleDrop, false);
+      
+      // Paste event
+      document.addEventListener('paste', handlePaste);
     }
 
-    // Apply style effects to canvas
-    function applyStyleToCanvas(canvas) {
-      const ctx = canvas.getContext('2d');
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      
-      if (currentStyle === 'dots') {
-        // Convert squares to dots (simplified version)
-        // This is a basic implementation - a full version would require more complex processing
-      } else if (currentStyle === 'rounded') {
-        // Add rounded corners effect (simplified version)
-        // This is a basic implementation - a full version would require more complex processing
-      }
-    }
-
-    // Update info panel
-    function updateInfo() {
-      const content = document.getElementById('qrContent').value;
-      const size = document.getElementById('qrSize').value;
-      const errorLevel = document.getElementById('errorLevel').value;
-      
-      document.getElementById('infoSize').textContent = size + 'x' + size + 'px';
-      document.getElementById('infoChars').textContent = content.length;
-      
-      const errorLevels = {
-        'L': 'Düşük (7%)',
-        'M': 'Orta (15%)',
-        'Q': 'Yüksek (25%)',
-        'H': 'Çok Yüksek (30%)'
-      };
-      document.getElementById('infoError').textContent = errorLevels[errorLevel];
-    }
-
-    // Download QR code
-    function downloadQR(format) {
-      const canvas = document.getElementById('qrCanvas');
-      const content = document.getElementById('qrContent').value.trim();
-      
-      if (!content) {
-        showFeedback('Önce bir QR kod oluşturun', 'error');
-        return;
-      }
-      
-      try {
-        if (format === 'png') {
-          const link = document.createElement('a');
-          link.download = 'qr-code.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-          showFeedback('PNG dosyası indirildi', 'success');
-        } else if (format === 'svg') {
-          // For SVG, we would need to regenerate using SVG format
-          // This is a simplified version
-          showFeedback('SVG formatı yakında eklenecek', 'error');
-        }
-      } catch (error) {
-        showFeedback('İndirme hatası: ' + error.message, 'error');
-      }
-    }
-
-    // Drag and drop for logo
-    const logoInput = document.querySelector('.file-input-label');
-    
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      logoInput.addEventListener(eventName, preventDefaults, false);
-    });
-
+    // Prevent default drag behaviors
     function preventDefaults(e) {
       e.preventDefault();
       e.stopPropagation();
     }
 
-    ['dragenter', 'dragover'].forEach(eventName => {
-      logoInput.addEventListener(eventName, highlight, false);
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-      logoInput.addEventListener(eventName, unhighlight, false);
-    });
-
-    function highlight() {
-      logoInput.style.borderColor = 'var(--text-primary)';
-      logoInput.style.color = 'var(--text-primary)';
-    }
-
-    function unhighlight() {
-      logoInput.style.borderColor = 'var(--border-color)';
-      logoInput.style.color = 'var(--text-secondary)';
-    }
-
-    logoInput.addEventListener('drop', handleDrop, false);
-
+    // Handle file drop
     function handleDrop(e) {
-      const dt = e.dataTransfer;
-      const files = dt.files;
-      
-      if (files.length > 0) {
-        const file = files[0];
-        if (file.type.startsWith('image/')) {
-          document.getElementById('logoInput').files = files;
-          handleLogoUpload();
-        } else {
-          showFeedback('Lütfen bir resim dosyası seçin', 'error');
+      const url = e.dataTransfer.getData('text/uri-list') || e.dataTransfer.getData('text/plain');
+      if (url) {
+        document.getElementById('urlInput').value = url.trim();
+        generateQRCode(url.trim());
+      }
+    }
+
+    // Handle paste
+    function handlePaste(e) {
+      if (currentMode === 'generator' && document.activeElement === document.getElementById('dropArea')) {
+        const paste = e.clipboardData.getData('text');
+        if (paste && isValidUrl(paste)) {
+          document.getElementById('urlInput').value = paste;
+          generateQRCode(paste);
         }
       }
     }
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      createStars();
-      generateQR();
-    });
+    // Check hash for mode
+    function checkHashMode() {
+      const hash = window.location.hash.slice(1);
+      if (hash === 'generator') {
+        switchMode('generator');
+      } else {
+        switchMode('scanner');
+      }
+    }
+
+    // Switch between modes
+    function switchMode(mode) {
+      currentMode = mode;
+      
+      // Update buttons
+      document.getElementById('scannerBtn').classList.toggle('active', mode === 'scanner');
+      document.getElementById('generatorBtn').classList.toggle('active', mode === 'generator');
+      
+      // Update sections
+      document.getElementById('scannerSection').classList.toggle('hidden', mode !== 'scanner');
+      document.getElementById('generatorSection').classList.toggle('hidden', mode !== 'generator');
+      
+      // Update hash
+      window.location.hash = mode === 'generator' ? 'generator' : '';
+      
+      // Stop camera if switching away from scanner
+      if (mode !== 'scanner' && isScanning) {
+        stopCamera();
+      }
+    }
+
+    // URL validation
+    function isValidUrl(string) {
+      try {
+        const url = new URL(string.startsWith('http') ? string : 'https://' + string);
+        return ['http:', 'https:'].includes(url.protocol);
+      } catch (_) {
+        return false;
+      }
+    }
+
+    // Show toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type}`;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    // Camera functions
+    async function toggleCamera() {
+      if (isScanning) {
+        stopCamera();
+      } else {
+        await startCamera();
+      }
+    }
+
+    async function startCamera() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: 'environment',
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          }
+        });
+
+        const video = document.getElementById('cameraVideo');
+        video.srcObject = stream;
+        
+        // Show video, hide placeholder
+        document.getElementById('cameraPlaceholder').classList.add('hidden');
+        document.getElementById('scanningOverlay').classList.remove('hidden');
+        video.classList.remove('hidden');
+        
+        // Update button
+        document.getElementById('cameraToggleText').textContent = 'Kamerayı Durdur';
+        document.getElementById('cameraToggle').className = 'btn btn-danger';
+        
+        isScanning = true;
+        startScanning();
+        
+        showToast('Kamera başlatıldı', 'success');
+      } catch (error) {
+        showToast('Kameraya erişim sağlanamadı. Lütfen izinleri kontrol edin.', 'error');
+      }
+    }
+
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+      
+      if (scanInterval) {
+        clearInterval(scanInterval);
+        scanInterval = null;
+      }
+      
+      // Hide video, show placeholder
+      document.getElementById('cameraVideo').classList.add('hidden');
+      document.getElementById('scanningOverlay').classList.add('hidden');
+      document.getElementById('cameraPlaceholder').classList.remove('hidden');
+      
+      // Update button
+      document.getElementById('cameraToggleText').textContent = 'Kamerayı Başlat';
+      document.getElementById('cameraToggle').className = 'btn btn-primary';
+      
+      isScanning = false;
+      showToast('Kamera durduruldu', 'success');
+    }
+
+    function startScanning() {
+      const video = document.getElementById('cameraVideo');
+      const canvas = document.getElementById('scanCanvas');
+      const ctx = canvas.getContext('2d');
+
+      const scan = () => {
+        if (!isScanning || !video.videoWidth) return;
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0);
+
+        // Try to detect QR code using BarcodeDetector if available
+        if ('BarcodeDetector' in window) {
+          const barcodeDetector = new BarcodeDetector({
+            formats: ['qr_code']
+          });
+
+          barcodeDetector.detect(canvas)
+            .then(barcodes => {
+              if (barcodes.length > 0) {
+                const qrCode = barcodes[0];
+                handleQRDetected(qrCode.rawValue);
+              }
+            })
+            .catch(() => {
+              // Fallback - could implement jsQR here
+            });
+        }
+      };
+
+      // Scan every 500ms
+      scanInterval = setInterval(scan, 500);
+    }
+
+    function handleQRDetected(url) {
+      if (url === lastScannedUrl) return;
+      
+      lastScannedUrl = url;
+      
+      // Add to scan history
+      addToScanHistory(url);
+      
+      showToast(`QR Kod tespit edildi: ${url}`, 'success');
+      
+      // Auto-open URL after delay
+      setTimeout(() => {
+        openUrl(url);
+      }, 1000);
+    }
+
+    function openUrl(url) {
+      try {
+        const finalUrl = url.startsWith('http') ? url : `https://${url}`;
+        window.open(finalUrl, '_blank', 'noopener,noreferrer');
+        showToast(`URL açıldı: ${finalUrl}`, 'success');
+      } catch (error) {
+        showToast('URL açılamadı', 'error');
+      }
+    }
+
+    // QR Code generation
+    function handleUrlInputKeydown(event) {
+      if (event.key === 'Enter') {
+        generateQRCode();
+      }
+    }
+
+    async function generateQRCode(inputUrl = null) {
+      const url = inputUrl || document.getElementById('urlInput').value.trim();
+      
+      if (!url) {
+        showToast('Lütfen bir URL girin', 'error');
+        return;
+      }
+
+      const finalUrl = url.startsWith('http') ? url : `https://${url}`;
+      
+      if (!isValidUrl(finalUrl)) {
+        showToast('Geçersiz URL formatı', 'error');
+        return;
+      }
+
+      // Show loading
+      const btnText = document.getElementById('generateBtnText');
+      btnText.innerHTML = '<div class="loading"></div>';
+
+      try {
+        // Generate QR code using QR Server API
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(finalUrl)}&format=png&margin=20`;
+        
+        // Update display
+        document.getElementById('qrCodeImg').src = qrUrl;
+        document.getElementById('qrUrl').textContent = finalUrl;
+        document.getElementById('qrDisplayCard').classList.remove('hidden');
+        
+        currentQRUrl = qrUrl;
+        
+        // Add to generation history
+        addToGenerationHistory(finalUrl);
+        
+        showToast('QR kod oluşturuldu!', 'success');
+        
+        // Clear input if not from history
+        if (!inputUrl) {
+          document.getElementById('urlInput').value = '';
+        }
+        
+      } catch (error) {
+        showToast('QR kod oluşturulamadı', 'error');
+      } finally {
+        setTimeout(() => {
+          btnText.textContent = 'Oluştur';
+        }, 1000);
+      }
+    }
+
+    async function downloadQRCode() {
+      if (!currentQRUrl) return;
+
+      try {
+        const response = await fetch(currentQRUrl);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `qr-code-${Date.now()}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+
+        showToast('QR kod indirildi!', 'success');
+      } catch (error) {
+        showToast('QR kod indirilemedi', 'error');
+      }
+    }
+
+    // History management
+    function loadHistories() {
+      loadScanHistory();
+      loadGenerationHistory();
+    }
+
+    function loadScanHistory() {
+      const history = JSON.parse(localStorage.getItem('qr-scan-history') || '[]');
+      const historyList = document.getElementById('scanHistoryList');
+      
+      if (history.length === 0) {
+        historyList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">Henüz tarama yapılmadı</p>';
+        return;
+      }
+      
+      historyList.innerHTML = history.map(url => `
+        <div class="history-item" onclick="openUrl('${url}')">
+          <span class="history-url" title="${url}">${url}</span>
+          <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="event.stopPropagation(); removeFromScanHistory('${url}')">×</button>
+        </div>
+      `).join('');
+    }
+
+    function addToScanHistory(url) {
+      let history = JSON.parse(localStorage.getItem('qr-scan-history') || '[]');
+      history = history.filter(item => item !== url);
+      history.unshift(url);
+      
+      if (history.length > 10) {
+        history = history.slice(0, 10);
+      }
+      
+      localStorage.setItem('qr-scan-history', JSON.stringify(history));
+      loadScanHistory();
+    }
+
+    function removeFromScanHistory(url) {
+      let history = JSON.parse(localStorage.getItem('qr-scan-history') || '[]');
+      history = history.filter(item => item !== url);
+      localStorage.setItem('qr-scan-history', JSON.stringify(history));
+      loadScanHistory();
+      showToast('URL geçmişten silindi', 'success');
+    }
+
+    function clearScanHistory() {
+      if (confirm('Tüm tarama geçmişini silmek istediğinizden emin misiniz?')) {
+        localStorage.removeItem('qr-scan-history');
+        loadScanHistory();
+        showToast('Tarama geçmişi temizlendi', 'success');
+      }
+    }
+
+    function loadGenerationHistory() {
+      const history = JSON.parse(localStorage.getItem('qr-generation-history') || '[]');
+      const historyList = document.getElementById('generationHistoryList');
+      
+      if (history.length === 0) {
+        historyList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">Henüz QR kod oluşturulmadı</p>';
+        return;
+      }
+      
+      historyList.innerHTML = history.map(url => `
+        <div class="history-item">
+          <span class="history-url" title="${url}">${url}</span>
+          <button class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;" onclick="regenerateQR('${url}')">Tekrar Oluştur</button>
+        </div>
+      `).join('');
+    }
+
+    function addToGenerationHistory(url) {
+      let history = JSON.parse(localStorage.getItem('qr-generation-history') || '[]');
+      history = history.filter(item => item !== url);
+      history.unshift(url);
+      
+      if (history.length > 10) {
+        history = history.slice(0, 10);
+      }
+      
+      localStorage.setItem('qr-generation-history', JSON.stringify(history));
+      loadGenerationHistory();
+    }
+
+    function regenerateQR(url) {
+      document.getElementById('urlInput').value = url;
+      generateQRCode(url);
+    }
+
+    function clearGenerationHistory() {
+      if (confirm('Tüm oluşturma geçmişini silmek istediğinizden emin misiniz?')) {
+        localStorage.removeItem('qr-generation-history');
+        loadGenerationHistory();
+        showToast('Oluşturma geçmişi temizlendi', 'success');
+      }
+    }
   </script>
 </body>
 </html>
