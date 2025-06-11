@@ -165,6 +165,43 @@
     --navbar-bg: #9f1239;
 }
 
+/* Remove default blue highlight on touch */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Allow text selection for specific elements */
+p, h1, h2, h3, h4, h5, h6, span, div.verse-translation, div.verse-detail-translation {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+/* Ripple effect container */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ripple animation */
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -2202,32 +2239,32 @@ body {
     font-size: calc(1rem * var(--font-size-multiplier));
 }
 </style>
-</head>
+</head>     
 <body data-theme="dark">
 <!-- Header -->
 <header class="header">
 <div class="header-content">
 <a href="#" class="logo" onclick="showHome()">SADECE KURAN</a>
 <div class="header-actions">
-    <button class="search-btn" onclick="app.showSearchPage()">
+    <button class="search-btn ripple" onclick="app.showSearchPage()">
         <svg class="icon" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.35-4.35"></path>
         </svg>
     </button>
-    <button class="saved-btn" onclick="app.showSavedVerses()">
+    <button class="saved-btn ripple" onclick="app.showSavedVerses()">
         <svg class="icon icon-sm" viewBox="0 0 24 24">
             <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
         </svg>
         <span>Kaydedilenler</span>
     </button>
-    <a href="#destekle" class="support-btn">
+    <a href="#destekle" class="support-btn ripple">
         <svg class="icon icon-sm" viewBox="0 0 24 24">
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
         </svg>
         <span>Destekle</span>
     </a>
-    <button class="settings-btn" onclick="app.showSettings()">
+    <button class="settings-btn ripple" onclick="app.showSettings()">
         <svg class="icon" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="3"></circle>
             <path d="M12 1v6m0 6v6"></path>
@@ -2238,7 +2275,7 @@ body {
             <path d="m20.5 15.5-3-3-3 3"></path>
         </svg>
     </button>
-    <button class="theme-btn" onclick="app.toggleTheme()">
+    <button class="theme-btn ripple" onclick="app.toggleTheme()">
         <svg class="icon" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -2261,8 +2298,8 @@ body {
 <h3>Ayeti Kaydet</h3>
 <textarea class="save-note-input" id="saveNoteInput" placeholder="Bu ayet hakkında notunuzu yazın..."></textarea>
 <div class="save-modal-actions">
-    <button class="save-modal-btn secondary" onclick="app.closeSaveModal()">İptal</button>
-    <button class="save-modal-btn primary" onclick="app.confirmSaveVerse()">Kaydet</button>
+    <button class="save-modal-btn secondary ripple" onclick="app.closeSaveModal()">İptal</button>
+    <button class="save-modal-btn primary ripple" onclick="app.confirmSaveVerse()">Kaydet</button>
 </div>
 </div>
 </div>
@@ -2271,24 +2308,24 @@ body {
 <div class="audio-player" id="audioPlayer">
 <div class="audio-controls">
 <div class="audio-main-controls">
-    <button class="audio-btn" id="audioPrevBtn" onclick="app.previousTrack()" title="Önceki">
+    <button class="audio-btn ripple" id="audioPrevBtn" onclick="app.previousTrack()" title="Önceki">
         <svg class="icon" viewBox="0 0 24 24">
             <polygon points="19,20 9,12 19,4"></polygon>
             <line x1="5" y1="19" x2="5" y2="5"></line>
         </svg>
     </button>
-    <button class="audio-play-btn" id="audioPlayBtn" onclick="app.toggleAudio()">
+    <button class="audio-play-btn ripple" id="audioPlayBtn" onclick="app.toggleAudio()">
         <svg class="icon" viewBox="0 0 24 24">
             <polygon points="5,3 19,12 5,21"></polygon>
         </svg>
     </button>
-    <button class="audio-btn" id="audioNextBtn" onclick="app.nextTrack()" title="Sonraki">
+    <button class="audio-btn ripple" id="audioNextBtn" onclick="app.nextTrack()" title="Sonraki">
         <svg class="icon" viewBox="0 0 24 24">
             <polygon points="5,4 15,12 5,20"></polygon>
             <line x1="19" y1="5" x2="19" y2="19"></line>
         </svg>
     </button>
-    <button class="audio-btn" id="audioRepeatBtn" onclick="app.toggleRepeat()" title="Tekrar">
+    <button class="audio-btn ripple" id="audioRepeatBtn" onclick="app.toggleRepeat()" title="Tekrar">
         <svg class="icon" viewBox="0 0 24 24">
             <polyline points="17,1 21,5 17,9"></polyline>
             <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
@@ -2296,7 +2333,7 @@ body {
             <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
         </svg>
     </button>
-    <button class="audio-btn" id="audioShuffleBtn" onclick="app.toggleShuffle()" title="Karıştır">
+    <button class="audio-btn ripple" id="audioShuffleBtn" onclick="app.toggleShuffle()" title="Karıştır">
         <svg class="icon" viewBox="0 0 24 24">
             <polyline points="16,3 21,3 21,8"></polyline>
             <line x1="4" y1="20" x2="21" y2="3"></line>
@@ -2319,7 +2356,7 @@ body {
     </div>
 </div>
 <div class="audio-volume-control">
-    <button class="audio-btn" onclick="app.toggleMute()" title="Sessiz">
+    <button class="audio-btn ripple" onclick="app.toggleMute()" title="Sessiz">
         <svg class="icon" viewBox="0 0 24 24" id="volumeIcon">
             <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -2327,7 +2364,7 @@ body {
     </button>
     <input type="range" class="audio-volume-slider" id="audioVolumeSlider" min="0" max="100" value="50" onchange="app.setAudioVolume(this.value)">
 </div>
-<button class="audio-close" onclick="app.closeAudio()">
+<button class="audio-close ripple" onclick="app.closeAudio()">
     <svg class="icon" viewBox="0 0 24 24">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -2397,6 +2434,17 @@ async init() {
         console.error('Initialization error:', error);
         this.showError('Veri yüklenirken bir hata oluştu.');
     }
+
+    // Add this at the end of the init method
+    setTimeout(() => {
+        // Add ripple class to all interactive elements
+        const interactiveElements = document.querySelectorAll('button, a, .surah-card, .verse-card, .setting-item, .theme-option, .font-size-option');
+        interactiveElements.forEach(element => {
+            if (!element.classList.contains('ripple')) {
+                element.classList.add('ripple');
+            }
+        });
+    }, 1000);
 }
 
 async loadData() {
@@ -2986,7 +3034,7 @@ renderSurahsGrid() {
     }
 
     surahsGrid.innerHTML = this.data.map((surah, index) => `
-        <a href="#sure-${surah.id}" class="surah-card" style="animation-delay: ${index * 0.02}s;">
+        <a href="#sure-${surah.id}" class="surah-card ripple" style="animation-delay: ${index * 0.02}s;">
             <div class="surah-header">
                 <div class="surah-number">${surah.id}</div>
                 <div class="surah-info">
@@ -3028,7 +3076,7 @@ renderSettings() {
                     </svg>
                     Meal Ayarları
                 </h3>
-                <div class="setting-item">
+                <div class="setting-item ripple">
                     <div>
                         <div class="setting-label">
                             <svg class="icon" viewBox="0 0 24 24">
@@ -3057,7 +3105,7 @@ renderSettings() {
                     </svg>
                     Yazı Boyutu Ayarları
                 </h3>
-                <div class="setting-item">
+                <div class="setting-item ripple">
                     <div>
                         <div class="setting-label">
                             <svg class="icon" viewBox="0 0 24 24">
@@ -3070,13 +3118,13 @@ renderSettings() {
                         <div class="setting-description">Tüm metinlerin boyutunu ayarlayın</div>
                     </div>
                     <div class="font-size-grid">
-                        <div class="font-size-option ${this.settings.fontSize === 'small' ? 'active' : ''}" onclick="app.setFontSize('small')">Küçük</div>
-                        <div class="font-size-option ${this.settings.fontSize === 'normal' ? 'active' : ''}" onclick="app.setFontSize('normal')">Normal</div>
-                        <div class="font-size-option ${this.settings.fontSize === 'large' ? 'active' : ''}" onclick="app.setFontSize('large')">Büyük</div>
-                        <div class="font-size-option ${this.settings.fontSize === 'xlarge' ? 'active' : ''}" onclick="app.setFontSize('xlarge')">Çok Büyük</div>
+                        <div class="font-size-option ripple ${this.settings.fontSize === 'small' ? 'active' : ''}" onclick="app.setFontSize('small')">Küçük</div>
+                        <div class="font-size-option ripple ${this.settings.fontSize === 'normal' ? 'active' : ''}" onclick="app.setFontSize('normal')">Normal</div>
+                        <div class="font-size-option ripple ${this.settings.fontSize === 'large' ? 'active' : ''}" onclick="app.setFontSize('large')">Büyük</div>
+                        <div class="font-size-option ripple ${this.settings.fontSize === 'xlarge' ? 'active' : ''}" onclick="app.setFontSize('xlarge')">Çok Büyük</div>
                     </div>
                 </div>
-                <div class="setting-item">
+                <div class="setting-item ripple">
                     <div>
                         <div class="setting-label">
                             <svg class="icon" viewBox="0 0 24 24">
@@ -3090,10 +3138,10 @@ renderSettings() {
                         <div class="setting-description">Arapça metinlerin boyutunu ayrı olarak ayarlayın</div>
                     </div>
                     <div class="font-size-grid">
-                        <div class="font-size-option ${this.settings.arabicFontSize === 'small' ? 'active' : ''}" onclick="app.setArabicFontSize('small')">Küçük</div>
-                        <div class="font-size-option ${this.settings.arabicFontSize === 'normal' ? 'active' : ''}" onclick="app.setArabicFontSize('normal')">Normal</div>
-                        <div class="font-size-option ${this.settings.arabicFontSize === 'large' ? 'active' : ''}" onclick="app.setArabicFontSize('large')">Büyük</div>
-                        <div class="font-size-option ${this.settings.arabicFontSize === 'xlarge' ? 'active' : ''}" onclick="app.setArabicFontSize('xlarge')">Çok Büyük</div>
+                        <div class="font-size-option ripple ${this.settings.arabicFontSize === 'small' ? 'active' : ''}" onclick="app.setArabicFontSize('small')">Küçük</div>
+                        <div class="font-size-option ripple ${this.settings.arabicFontSize === 'normal' ? 'active' : ''}" onclick="app.setArabicFontSize('normal')">Normal</div>
+                        <div class="font-size-option ripple ${this.settings.arabicFontSize === 'large' ? 'active' : ''}" onclick="app.setArabicFontSize('large')">Büyük</div>
+                        <div class="font-size-option ripple ${this.settings.arabicFontSize === 'xlarge' ? 'active' : ''}" onclick="app.setArabicFontSize('xlarge')">Çok Büyük</div>
                     </div>
                 </div>
             </div>
@@ -3112,31 +3160,31 @@ renderSettings() {
                     Tema Seçimi
                 </h3>
                 <div class="theme-grid">
-                    <div class="theme-option ${this.currentTheme === 'dark' ? 'active' : ''}" onclick="app.setTheme('dark')">
+                    <div class="theme-option ripple ${this.currentTheme === 'dark' ? 'active' : ''}" onclick="app.setTheme('dark')">
                         <div class="theme-preview dark"></div>
                         🌙 Karanlık
                     </div>
-                    <div class="theme-option ${this.currentTheme === 'light' ? 'active' : ''}" onclick="app.setTheme('light')">
+                    <div class="theme-option ripple ${this.currentTheme === 'light' ? 'active' : ''}" onclick="app.setTheme('light')">
                         <div class="theme-preview light"></div>
                         ☀️ Aydınlık
                     </div>
-                    <div class="theme-option ${this.currentTheme === 'sepia' ? 'active' : ''}" onclick="app.setTheme('sepia')">
+                    <div class="theme-option ripple ${this.currentTheme === 'sepia' ? 'active' : ''}" onclick="app.setTheme('sepia')">
                         <div class="theme-preview sepia"></div>
                         📜 Sepya
                     </div>
-                    <div class="theme-option ${this.currentTheme === 'blue' ? 'active' : ''}" onclick="app.setTheme('blue')">
+                    <div class="theme-option ripple ${this.currentTheme === 'blue' ? 'active' : ''}" onclick="app.setTheme('blue')">
                         <div class="theme-preview blue"></div>
                         🔵 Mavi
                     </div>
-                    <div class="theme-option ${this.currentTheme === 'green' ? 'active' : ''}" onclick="app.setTheme('green')">
+                    <div class="theme-option ripple ${this.currentTheme === 'green' ? 'active' : ''}" onclick="app.setTheme('green')">
                         <div class="theme-preview green"></div>
                         🟢 Yeşil
                     </div>
-                    <div class="theme-option ${this.currentTheme === 'purple' ? 'active' : ''}" onclick="app.setTheme('purple')">
+                    <div class="theme-option ripple ${this.currentTheme === 'purple' ? 'active' : ''}" onclick="app.setTheme('purple')">
                         <div class="theme-preview purple"></div>
                         🟣 Mor
                     </div>
-                    <div class="theme-option ${this.currentTheme === 'rose' ? 'active' : ''}" onclick="app.setTheme('rose')">
+                    <div class="theme-option ripple ${this.currentTheme === 'rose' ? 'active' : ''}" onclick="app.setTheme('rose')">
                         <div class="theme-preview rose"></div>
                         🌹 Pembe
                     </div>
@@ -3151,7 +3199,7 @@ renderSettings() {
                     </svg>
                     Görünüm Ayarları
                 </h3>
-                <div class="setting-item">
+                <div class="setting-item ripple">
                     <div>
                         <div class="setting-label">
                             <svg class="icon" viewBox="0 0 24 24">
@@ -3166,7 +3214,7 @@ renderSettings() {
                     </div>
                     <div class="toggle-switch ${this.settings.showArabicText ? 'active' : ''}" onclick="app.toggleArabicText()"></div>
                 </div>
-                <div class="setting-item">
+                <div class="setting-item ripple">
                     <div>
                         <div class="setting-label">
                             <svg class="icon" viewBox="0 0 24 24">
@@ -3182,7 +3230,7 @@ renderSettings() {
                     </div>
                     <div class="toggle-switch ${this.settings.showTranscription ? 'active' : ''}" onclick="app.toggleTranscription()"></div>
                 </div>
-                <div class="setting-item">
+                <div class="setting-item ripple">
                     <div>
                         <div class="setting-label">
                             <svg class="icon" viewBox="0 0 24 24">
@@ -3204,7 +3252,7 @@ renderSettings() {
                     </svg>
                     Ses Ayarları
                 </h3>
-                <div class="setting-item">
+                <div class="setting-item ripple">
                     <div>
                         <div class="setting-label">Ses Seviyesi</div>
                         <div class="setting-description">Varsayılan ses seviyesini ayarlayın</div>
@@ -3244,7 +3292,7 @@ renderSurah(surahId) {
             </div>
 
             <div class="surah-detail-header">
-                <button class="surah-play-btn" onclick="app.playSurah(${surah.id})" title="Sureyi dinle">
+                <button class="surah-play-btn ripple" onclick="app.playSurah(${surah.id})" title="Sureyi dinle">
                     <svg class="icon" viewBox="0 0 24 24">
                         <polygon points="5,3 19,12 5,21"></polygon>
                     </svg>
@@ -3279,7 +3327,7 @@ renderSurah(surahId) {
 
             <div class="verses-container">
                 ${surah.verses?.map((verse, index) => `
-                    <div class="verse-card" onclick="app.navigateToVerse(${surah.id}, ${verse.verse_number})" style="animation-delay: ${index * 0.05}s;">
+                    <div class="verse-card ripple" onclick="app.navigateToVerse(${surah.id}, ${verse.verse_number})" style="animation-delay: ${index * 0.05}s;">
                         <div class="verse-number-badge">${verse.verse_number}</div>
                         <div class="verse-translation">${this.getPreferredTranslation(surah.id, verse.verse_number) || 'Meal bulunamadı'}</div>
                         <div class="verse-arabic arabic ${this.settings.showArabicText ? '' : 'hidden'}">${verse.text}</div>
@@ -3352,19 +3400,19 @@ renderVerse(surahId, verseNumber) {
             
             <div class="verse-detail-header">
                 <div class="verse-actions">
-                    <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="app.toggleSaveVerse(${surahId}, ${verseNumber})" title="${isSaved ? 'Kayıtlı' : 'Kaydet'}">
+                    <button class="save-btn ${isSaved ? 'saved' : ''} ripple" onclick="app.toggleSaveVerse(${surahId}, ${verseNumber})" title="${isSaved ? 'Kayıtlı' : 'Kaydet'}">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
                         </svg>
                     </button>
-                    <button class="share-btn" onclick="app.shareVerse(${surahId}, ${verseNumber})" title="Paylaş">
+                    <button class="share-btn ripple" onclick="app.shareVerse(${surahId}, ${verseNumber})" title="Paylaş">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
                             <polyline points="16,6 12,2 8,6"></polyline>
                             <line x1="12" y1="2" x2="12" y2="15"></line>
                         </svg>
                     </button>
-                    <button class="audio-btn-verse" onclick="app.playVerseAudio(${surahId})" title="Dinle">
+                    <button class="audio-btn-verse ripple" onclick="app.playVerseAudio(${surahId})" title="Dinle">
                         <svg class="icon" viewBox="0 0 24 24">
                             <polygon points="5,3 19,12 5,21"></polygon>
                         </svg>
@@ -3376,14 +3424,14 @@ renderVerse(surahId, verseNumber) {
             </div>
 
             <div class="verse-navigation">
-                <a href="#ayet-${surahId}-${verseNumber - 1}" class="nav-btn ${isFirstVerse ? 'disabled' : ''}" ${isFirstVerse ? 'onclick="return false"' : ''}>
+                <a href="#ayet-${surahId}-${verseNumber - 1}" class="nav-btn ripple ${isFirstVerse ? 'disabled' : ''}" ${isFirstVerse ? 'onclick="return false"' : ''}>
                     <svg class="icon" viewBox="0 0 24 24">
                         <polyline points="15,18 9,12 15,6"></polyline>
                     </svg>
                     Önceki
                 </a>
                 <span style="color: var(--text-muted); font-size: 0.9rem;">${verseNumber} / ${surah.verse_count}</span>
-                <a href="#ayet-${surahId}-${verseNumber + 1}" class="nav-btn ${isLastVerse ? 'disabled' : ''}" ${isLastVerse ? 'onclick="return false"' : ''}>
+                <a href="#ayet-${surahId}-${verseNumber + 1}" class="nav-btn ripple ${isLastVerse ? 'disabled' : ''}" ${isLastVerse ? 'onclick="return false"' : ''}>
                     Sonraki
                     <svg class="icon" viewBox="0 0 24 24">
                         <polyline points="9,18 15,12 9,6"></polyline>
@@ -3393,14 +3441,14 @@ renderVerse(surahId, verseNumber) {
 
             <div class="tabs-container">
                 <div class="tabs-nav">
-                    <button class="tab-button active" onclick="app.switchTab('word-analysis')">
+                    <button class="tab-button ripple active" onclick="app.switchTab('word-analysis')">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14,2 14,8 20,8"></polyline>
                         </svg>
                         Kelime Analizi
                     </button>
-                    <button class="tab-button" onclick="app.switchTab('translations')">
+                    <button class="tab-button ripple" onclick="app.switchTab('translations')">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
@@ -3413,7 +3461,7 @@ renderVerse(surahId, verseNumber) {
                     <div class="words-analysis">
                         <div class="words-grid">
                             ${verse.words?.map((word, index) => `
-                                <div class="word-item">
+                                <div class="word-item ripple">
                                     <div class="word-arabic arabic ${this.settings.showArabicText ? '' : 'hidden'}">${word.arabic}</div>
                                     ${word.transcription_tr && this.settings.showTranscription ? `<div class="word-transcription">${word.transcription_tr}</div>` : ''}
                                     ${word.translation_tr ? `<div class="word-translation">${word.translation_tr}</div>` : ''}
@@ -3502,11 +3550,11 @@ renderSavedVerses() {
                         <svg class="icon" viewBox="0 0 24 24">
                             <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                             <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                        </svg>
-                        Ana Sayfa
-                    </a>
-                    <span>›</span>
-                    <span>Kaydedilen Ayetler</span>
+                    </svg>
+                    Ana Sayfa
+                </a>
+                <span>›</span>
+                <span>Kaydedilen Ayetler</span>
                 </div>
                 
                 <div class="text-center" style="padding: 4rem 2rem;">
@@ -3553,7 +3601,7 @@ renderSavedVerses() {
                             </div>
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <div class="saved-verse-date">${new Date(savedVerse.savedAt).toLocaleDateString('tr-TR')}</div>
-                                <button class="remove-saved-btn" onclick="app.removeSavedVerse(${savedVerse.surahId}, ${savedVerse.verseNumber})" title="Kaldır">
+                                <button class="remove-saved-btn ripple" onclick="app.removeSavedVerse(${savedVerse.surahId}, ${savedVerse.verseNumber})" title="Kaldır">
                                     <svg class="icon" viewBox="0 0 24 24">
                                         <polyline points="3,6 5,6 21,6"></polyline>
                                         <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
@@ -4088,6 +4136,77 @@ showNotification(message) {
     }, 3000);
 }
 }
+
+// Ripple effect functionality
+function createRipple(event) {
+    const button = event.currentTarget;
+    
+    // Don't add ripple if element is disabled
+    if (button.disabled || button.classList.contains('disabled')) {
+        return;
+    }
+    
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+    
+    const rect = button.getBoundingClientRect();
+    const x = event.clientX - rect.left - radius;
+    const y = event.clientY - rect.top - radius;
+    
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${x}px`;
+    circle.style.top = `${y}px`;
+    circle.classList.add("ripple-effect");
+    
+    const ripple = button.getElementsByClassName("ripple-effect")[0];
+    if (ripple) {
+        ripple.remove();
+    }
+    
+    button.appendChild(circle);
+    
+    // Remove the ripple element after animation
+    setTimeout(() => {
+        if (circle.parentNode) {
+            circle.remove();
+        }
+    }, 600);
+}
+
+// Add ripple effect to all elements with ripple class
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listeners for ripple effect
+    function addRippleListeners() {
+        const rippleElements = document.querySelectorAll('.ripple');
+        rippleElements.forEach(element => {
+            // Remove existing listeners to avoid duplicates
+            element.removeEventListener('click', createRipple);
+            element.removeEventListener('touchstart', createRipple);
+            
+            // Add new listeners
+            element.addEventListener('click', createRipple);
+            element.addEventListener('touchstart', createRipple);
+        });
+    }
+    
+    // Initial setup
+    addRippleListeners();
+    
+    // Re-add listeners when new content is loaded
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                addRippleListeners();
+            }
+        });
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+});
 
 function showHome() {
     window.location.hash = '';
