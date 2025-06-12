@@ -1,7 +1,7 @@
 {
   "name": "TheLeng Web App",
   "short_name": "TheLeng",
-  "start_url": "index.html",
+  "start_url": "appp.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
