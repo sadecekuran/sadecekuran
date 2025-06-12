@@ -1,57 +1,199 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TheLeng Web App</title>
-
-  <!-- Manifest ve Tema -->
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#000000" />
-  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Ekrana Ekle</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <meta name="theme-color" content="#2196F3">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
+        h1 {
+            color: #2196F3;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 300px;
+        }
+        .btn:hover {
+            background-color: #0b7dda;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .instructions p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        .instructions img {
+            max-width: 100%;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .hidden {
+            display: none;
+        }
+        .ios-instructions, .android-instructions {
+            margin-top: 20px;
+        }
+        .platform-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+    </style>
 </head>
 <body>
-  <h1 style="text-align: center;">📱 TheLeng Web App'e Hoş Geldin</h1>
+    <div class="container">
+        <h1>Ana Ekrana Ekle</h1>
+        
+        <button id="install-button" class="btn">Ana Ekrana Ekle</button>
+        
+        <div class="instructions">
+            <div id="ios-instructions" class="ios-instructions hidden">
+                <h3>iOS Cihazlar İçin:</h3>
+                <p>1. Safari tarayıcısının alt kısmındaki <strong>Paylaş</strong> butonuna dokunun</p>
+                <p>2. Açılan menüden <strong>"Ana Ekrana Ekle"</strong> seçeneğine dokunun</p>
+                <p>3. Açılan pencerede <strong>"Ekle"</strong> butonuna dokunun</p>
+            </div>
+            
+            <div id="android-instructions" class="android-instructions hidden">
+                <h3>Android Cihazlar İçin:</h3>
+                <p>1. Tarayıcının sağ üst köşesindeki üç nokta menüsüne dokunun</p>
+                <p>2. Açılan menüden <strong>"Ana ekrana ekle"</strong> seçeneğine dokunun</p>
+                <p>3. Açılan pencerede <strong>"Ekle"</strong> butonuna dokunun</p>
+            </div>
+            
+            <div id="desktop-instructions">
+                <h3>Bu özelliği kullanmak için lütfen mobil cihazınızdan ziyaret edin</h3>
+            </div>
+        </div>
+    </div>
 
-  <!-- Ana Ekrana Ekle Butonu -->
-  <div style="text-align: center; margin-top: 20px;">
-    <button id="a2hs-button" style="display: none; padding: 10px 20px; font-size: 18px;">
-      📲 Ana Ekrana Ekle
-    </button>
-  </div>
+    <script>
+        // Service worker kaydı
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker başarıyla kaydedildi:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker kaydı başarısız:', error);
+                    });
+            });
+        }
 
-  <!-- Service Worker ve beforeinstallprompt -->
-  <script>
-    // Service Worker kaydı
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js').then(() => {
-        console.log("✅ Service Worker başarıyla kaydedildi.");
-      });
-    }
+        // Yükleme işlemi için değişkenler
+        let deferredPrompt;
+        const installButton = document.getElementById('install-button');
+        const iosInstructions = document.getElementById('ios-instructions');
+        const androidInstructions = document.getElementById('android-instructions');
+        const desktopInstructions = document.getElementById('desktop-instructions');
 
-    // Ana Ekrana Ekle işlemi
-    let deferredPrompt;
-    const addBtn = document.getElementById("a2hs-button");
+        // Cihaz tipini tespit et
+        function detectDevice() {
+            const ua = navigator.userAgent;
+            if (/iPhone|iPad|iPod/.test(ua)) {
+                return 'ios';
+            } else if (/Android/.test(ua)) {
+                return 'android';
+            } else {
+                return 'desktop';
+            }
+        }
 
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault(); // Tarayıcıya sorma
-      deferredPrompt = e;
-      addBtn.style.display = "inline-block";
+        // Cihaz tipine göre talimatları göster
+        const deviceType = detectDevice();
+        if (deviceType === 'ios') {
+            iosInstructions.classList.remove('hidden');
+            desktopInstructions.classList.add('hidden');
+        } else if (deviceType === 'android') {
+            androidInstructions.classList.remove('hidden');
+            desktopInstructions.classList.add('hidden');
+        } else {
+            desktopInstructions.classList.remove('hidden');
+        }
 
-      addBtn.addEventListener("click", () => {
-        addBtn.style.display = "none";
-        deferredPrompt.prompt();
-
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === "accepted") {
-            console.log("✅ Kullanıcı ana ekrana eklemeyi kabul etti.");
-          } else {
-            console.log("❌ Kullanıcı reddetti.");
-          }
-          deferredPrompt = null;
+        // PWA yükleme olayını yakala
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Chrome/Android için yükleme işlemini engelle
+            e.preventDefault();
+            // Daha sonra kullanmak üzere olayı sakla
+            deferredPrompt = e;
+            // Yükleme butonunu göster
+            installButton.style.display = 'block';
         });
-      });
-    });
-  </script>
+
+        // Yükleme butonu tıklama olayı
+        installButton.addEventListener('click', async () => {
+            if (deviceType === 'android' && deferredPrompt) {
+                // Android için PWA yükleme işlemi
+                deferredPrompt.prompt();
+                // Kullanıcının yanıtını bekle
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`Kullanıcı yanıtı: ${outcome}`);
+                // Olayı temizle
+                deferredPrompt = null;
+            } else if (deviceType === 'ios') {
+                // iOS için talimatları göster
+                iosInstructions.classList.remove('hidden');
+                androidInstructions.classList.add('hidden');
+                desktopInstructions.classList.add('hidden');
+            } else if (deviceType === 'android') {
+                // Android için talimatları göster (eğer PWA yükleme olayı yoksa)
+                androidInstructions.classList.remove('hidden');
+                iosInstructions.classList.add('hidden');
+                desktopInstructions.classList.add('hidden');
+            }
+        });
+
+        // Uygulama zaten yüklendiyse
+        window.addEventListener('appinstalled', () => {
+            console.log('Uygulama başarıyla yüklendi');
+            installButton.textContent = 'Uygulama Yüklendi';
+            installButton.disabled = true;
+            deferredPrompt = null;
+        });
+    </script>
 </body>
 </html>

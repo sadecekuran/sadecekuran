@@ -1,20 +1,23 @@
 {
-  "name": "TheLeng Web App",
-  "short_name": "TheLeng",
+  "name": "Ana Ekrana Ekle Uygulaması",
+  "short_name": "Ana Ekran",
+  "description": "Bu uygulama ana ekrana eklenebilir",
   "start_url": "appp.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#2196F3",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
