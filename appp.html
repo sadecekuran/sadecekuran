@@ -2,39 +2,53 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TheLeng App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TheLeng Web App</title>
+
+  <!-- Manifest ve Tema -->
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#000000"/>
+  <meta name="theme-color" content="#000000" />
   <link rel="icon" href="icons/icon-192.png" type="image/png" />
 </head>
 <body>
-  <h1>TheLeng App'e Hoş Geldin</h1>
-  <button id="a2hs-button" style="display: none; padding: 1em;">📲 Ana Ekrana Ekle</button>
+  <h1 style="text-align: center;">📱 TheLeng Web App'e Hoş Geldin</h1>
 
+  <!-- Ana Ekrana Ekle Butonu -->
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="a2hs-button" style="display: none; padding: 10px 20px; font-size: 18px;">
+      📲 Ana Ekrana Ekle
+    </button>
+  </div>
+
+  <!-- Service Worker ve beforeinstallprompt -->
   <script>
+    // Service Worker kaydı
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
+      navigator.serviceWorker.register('service-worker.js').then(() => {
+        console.log("✅ Service Worker başarıyla kaydedildi.");
+      });
     }
 
+    // Ana Ekrana Ekle işlemi
     let deferredPrompt;
     const addBtn = document.getElementById("a2hs-button");
 
     window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
+      e.preventDefault(); // Tarayıcıya sorma
       deferredPrompt = e;
       addBtn.style.display = "inline-block";
 
       addBtn.addEventListener("click", () => {
+        addBtn.style.display = "none";
         deferredPrompt.prompt();
+
         deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === "accepted") {
-            console.log("Kullanıcı ekledi.");
+            console.log("✅ Kullanıcı ana ekrana eklemeyi kabul etti.");
           } else {
-            console.log("Kullanıcı eklemedi.");
+            console.log("❌ Kullanıcı reddetti.");
           }
           deferredPrompt = null;
-          addBtn.style.display = "none";
         });
       });
     });
