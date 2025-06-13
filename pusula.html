@@ -1747,1223 +1747,210 @@ this.showError('Pusula için gerekli izinler olmadan uygulama doğru çalışmay
 }
 
 removePermissionPrompt() {
-const overlay = document.querySelector('.permission-overlay');
-if (overlay) {
-    overlay.remove();
-}
-}
-
-setTheme(theme) {
-this.currentTheme = theme;
-document.documentElement.setAttribute('data-theme', theme);
-localStorage.setItem('theme', theme);
-
-const themeBtn = document.querySelector('.theme-btn .icon');
-if (themeBtn) {
-    if (theme === 'dark') {
-        themeBtn.innerHTML = `
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        `;
-    } else if (theme === 'light') {
-        themeBtn.innerHTML = `
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        `;
-    } else {
-        themeBtn.innerHTML = `
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
-        `;
+    const overlay = document.querySelector('.permission-overlay');
+    if (overlay) {
+        overlay.remove();
     }
-}
-}
-
-toggleTheme() {
-const themes = ['dark', 'light', 'sepia', 'blue', 'green', 'purple', 'rose'];
-const currentIndex = themes.indexOf(this.currentTheme);
-const nextIndex = (currentIndex + 1) % themes.length;
-this.setTheme(themes[nextIndex]);
-}
-
-setFontSize(size) {
-this.settings.fontSize = size;
-localStorage.setItem('fontSize', size);
-
-const multipliers = {
-    'small': 0.85,
-    'normal': 1,
-    'large': 1.15,
-    'xlarge': 1.3
-};
-
-document.documentElement.style.setProperty('--font-size-multiplier', multipliers[size] || 1);
-}
-
-setupEventListeners() {
-window.addEventListener('hashchange', () => this.handleRoute());
-
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('ripple')) {
-        this.createRipple(e);
-    }
-});
-
-document.addEventListener('touchstart', (e) => {
-    if (e.target.classList.contains('ripple')) {
-        this.createRipple(e);
-    }
-});
-
-// Listen for visibility changes to restart compass when app comes back to foreground
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && this.hasPermission) {
-        this.startCompass();
-    }
-});
-
-// Listen for device orientation changes
-window.addEventListener('resize', () => {
-    this.updateCompassSize();
-});
-
-// Handle back button on Android
-window.addEventListener('popstate', (e) => {
-    if (this.isCalibrating) {
-        this.stopCalibration();
-        e.preventDefault();
-        return false;
-    }
-});
-}
-
-updateCompassSize() {
-const compass = document.querySelector('.compass');
-if (compass) {
-    const width = Math.min(300, window.innerWidth - 40);
-    compass.style.width = `${width}px`;
-    compass.style.height = `${width}px`;
-}
-}
-
-createRipple(event) {
-const button = event.currentTarget;
-
-// Don't add ripple if element is disabled
-if (button.disabled || button.classList.contains('disabled')) {
-    return;
-}
-
-const circle = document.createElement("span");
-const diameter = Math.max(button.clientWidth, button.clientHeight);
-const radius = diameter / 2;
-
-const rect = button.getBoundingClientRect();
-const x = event.clientX || (event.touches && event.touches[0].clientX) || rect.left + radius;
-const y = event.clientY || (event.touches && event.touches[0].clientY) || rect.top + radius;
-
-const offsetX = x - rect.left - radius;
-const offsetY = y - rect.top - radius;
-
-circle.style.width = circle.style.height = `${diameter}px`;
-circle.style.left = `${offsetX}px`;
-circle.style.top = `${offsetY}px`;
-circle.classList.add("ripple-effect");
-
-const ripple = button.getElementsByClassName("ripple-effect")[0];
-if (ripple) {
-    ripple.remove();
-}
-
-button.appendChild(circle);
-
-// Remove the ripple element after animation
-setTimeout(() => {
-    if (circle.parentNode) {
-        circle.remove();
-    }
-}, 600);
-}
-
-handleRoute() {
-const hash = window.location.hash.slice(1);
-
-if (!hash) {
-    this.renderHome();
-} else if (hash === 'ayarlar') {
-    this.renderSettings();
-} else if (hash === 'hakkinda') {
-    this.renderAboutPage();
-} else if (hash === 'kaydedilenler') {
-    this.renderSavedLocations();
-} else if (hash.startsWith('ozellik-')) {
-    const feature = hash.split('-')[1];
-    this.renderFeature(feature);
-}
-}
-
-renderHome() {
-// Home page is already rendered in HTML
-if (this.hasPermission) {
-    this.startCompass();
-}
-this.getCurrentLocation();
-}
-
-showSettings() {
-window.location.hash = 'ayarlar';
-}
-
-showLocationSearch() {
-// Implement location search functionality
-this.showNotification('Konum arama özelliği yakında eklenecek');
-}
-
-showSavedLocations() {
-window.location.hash = 'kaydedilenler';
-}
-
-showFeature(feature) {
-window.location.hash = `ozellik-${feature}`;
-}
-
-renderSettings() {
-const content = document.getElementById('content');
-
-content.innerHTML = `
-    <div class="settings-page">
-        <div class="breadcrumb">
-            <a href="#" onclick="showHome()">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                </svg>
-            </a>
-            <span>›</span>
-            <span>Ayarlar</span>
-        </div>
-
-        <div class="settings-header">
-            <h1 class="settings-title">Ayarlar</h1>
-            <p class="settings-description">Uygulamanızı kişiselleştirin ve deneyiminizi iyileştirin</p>
-        </div>
-
-        <div class="settings-section" style="animation-delay: 0.1s;">
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path>
-                    <path d="M12 6a1 1 0 0 0-1 1v5a1 1 0 0 0 .5.87l4 2.5a1 1 0 0 0 1.5-.87 1 1 0 0 0-.5-.87l-3.5-2.18V7a1 1 0 0 0-1-1z"></path>
-                </svg>
-                Konum Ayarları
-            </h3>
-            <div class="setting-item ripple">
-                <div>
-                    <div class="setting-label">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                        </svg>
-                        Yüksek Hassasiyet
-                    </div>
-                    <div class="setting-description">Daha hassas konum bilgisi için GPS kullan (pil tüketimini artırır)</div>
-                </div>
-                <div class="toggle-switch ${this.settings.useHighAccuracy ? 'active' : ''}" onclick="app.toggleHighAccuracy()"></div>
-            </div>
-        </div>
-
-        <div class="settings-section" style="animation-delay: 0.15s;">
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14,2 14,8 20,8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                </svg>
-                Yazı Boyutu Ayarları
-            </h3>
-            <div class="setting-item ripple">
-                <div>
-                    <div class="setting-label">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M4 7V4h16v3"></path>
-                            <path d="M9 20h6"></path>
-                            <path d="M12 4v16"></path>
-                        </svg>
-                        Genel Yazı Boyutu
-                    </div>
-                    <div class="setting-description">Tüm metinlerin boyutunu ayarlayın</div>
-                </div>
-                <div class="font-size-grid">
-                    <div class="font-size-option ripple ${this.settings.fontSize === 'small' ? 'active' : ''}" onclick="app.setFontSize('small')">Küçük</div>
-                    <div class="font-size-option ripple ${this.settings.fontSize === 'normal' ? 'active' : ''}" onclick="app.setFontSize('normal')">Normal</div>
-                    <div class="font-size-option ripple ${this.settings.fontSize === 'large' ? 'active' : ''}" onclick="app.setFontSize('large')">Büyük</div>
-                    <div class="font-size-option ripple ${this.settings.fontSize === 'xlarge' ? 'active' : ''}" onclick="app.setFontSize('xlarge')">Çok Büyük</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="settings-section" style="animation-delay: 0.2s;">
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M12 1v6m0 6v6"></path>
-                    <path d="m15.5 3.5-3 3-3-3"></path>
-                    <path d="m15.5 20.5-3-3-3 3"></path>
-                    <path d="M1 12h6m6 0h6"></path>
-                    <path d="m3.5 15.5 3-3 3 3"></path>
-                    <path d="m20.5 15.5-3-3-3 3"></path>
-                </svg>
-                Tema Seçimi
-            </h3>
-            <div class="theme-grid">
-                <div class="theme-option ripple ${this.currentTheme === 'dark' ? 'active' : ''}" onclick="app.setTheme('dark')">
-                    <div class="theme-preview dark"></div>
-                    🌙 Karanlık
-                </div>
-                <div class="theme-option ripple ${this.currentTheme === 'light' ? 'active' : ''}" onclick="app.setTheme('light')">
-                    <div class="theme-preview light"></div>
-                    ☀️ Aydınlık
-                </div>
-                <div class="theme-option ripple ${this.currentTheme === 'sepia' ? 'active' : ''}" onclick="app.setTheme('sepia')">
-                    <div class="theme-preview sepia"></div>
-                    📜 Sepya
-                </div>
-                <div class="theme-option ripple ${this.currentTheme === 'blue' ? 'active' : ''}" onclick="app.setTheme('blue')">
-                    <div class="theme-preview blue"></div>
-                    🔵 Mavi
-                </div>
-                <div class="theme-option ripple ${this.currentTheme === 'green' ? 'active' : ''}" onclick="app.setTheme('green')">
-                    <div class="theme-preview green"></div>
-                    🟢 Yeşil
-                </div>
-                <div class="theme-option ripple ${this.currentTheme === 'purple' ? 'active' : ''}" onclick="app.setTheme('purple')">
-                    <div class="theme-preview purple"></div>
-                    🟣 Mor
-                </div>
-                <div class="theme-option ripple ${this.currentTheme === 'rose' ? 'active' : ''}" onclick="app.setTheme('rose')">
-                    <div class="theme-preview rose"></div>
-                    🌹 Pembe
-                </div>
-            </div>
-        </div>
-
-        <div class="settings-section" style="animation-delay: 0.3s;">
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M8 5.25A4.75 4.75 0 0 1 17.25 9 3.25 3.25 0 0 1 18 15.25H8.5a4.5 4.5 0 1 1 .5-9"></path>
-                    <path d="M11 20v1"></path>
-                    <path d="M14 19v2"></path>
-                    <path d="M8 19v1"></path>
-                </svg>
-                Hava Durumu Ayarları
-            </h3>
-            <div class="setting-item ripple">
-                <div>
-                    <div class="setting-label">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M12 9a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"></path>
-                            <path d="M12 3v2"></path>
-                            <path d="M12 19v2"></path>
-                            <path d="M5 12H3"></path>
-                            <path d="M21 12h-2"></path>
-                            <path d="m18.364 5.636-1.414 1.414"></path>
-                            <path d="m5.636 18.364 1.414-1.414"></path>
-                            <path d="m5.636 5.636 1.414 1.414"></path>
-                            <path d="m18.364 18.364-1.414-1.414"></path>
-                        </svg>
-                        Sıcaklık Birimi
-                    </div>
-                    <div class="setting-description">Sıcaklık birimini seçin</div>
-                </div>
-                <div class="toggle-switch ${this.settings.useCelsius ? 'active' : ''}" onclick="app.toggleTemperatureUnit()">
-                    <span style="position: absolute; left: -40px; color: var(--text-secondary);">°F</span>
-                    <span style="position: absolute; right: -40px; color: var(--text-secondary);">°C</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="settings-section" style="animation-delay: 0.4s;">
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                </svg>
-                Bildirim Ayarları
-            </h3>
-            <div class="setting-item ripple">
-                <div>
-                    <div class="setting-label">Bildirimleri Göster</div>
-                    <div class="setting-description">Uygulama bildirimleri gösterilsin mi?</div>
-                </div>
-                <div class="toggle-switch ${this.settings.showNotifications ? 'active' : ''}" onclick="app.toggleNotifications()"></div>
-            </div>
-        </div>
-        
-        <div class="settings-section" style="animation-delay: 0.5s;">
-            <h3>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                </svg>
-                Pusula Ayarları
-            </h3>
-            <div class="setting-item ripple">
-                <div>
-                    <div class="setting-label">Pusula Kalibrasyonu</div>
-                    <div class="setting-description">Daha doğru pusula ölçümleri için cihazınızı kalibre edin</div>
-                </div>
-                <button class="compass-btn" onclick="app.calibrateCompass()">Kalibre Et</button>
-            </div>
-            <div class="setting-item ripple">
-                <div>
-                    <div class="setting-label">Pusula İzinleri</div>
-                    <div class="setting-description">Pusula için gerekli izinleri yeniden isteyin</div>
-                </div>
-                <button class="compass-btn" onclick="app.requestPermission()">İzin İste</button>
-            </div>
-        </div>
-    </div>
-`;
-
-// Update UI after rendering
-setTimeout(() => {
-    this.updateSettingsUI();
-}, 100);
-}
-
-renderAboutPage() {
-const content = document.getElementById('content');
-    
-content.innerHTML = `
-    <div class="about-page">
-        <div class="breadcrumb">
-            <a href="#" onclick="showHome()">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                </svg>
-            </a>
-            <span>›</span>
-            <span>Hakkında</span>
-        </div>
-
-        <div class="about-header">
-            <h1 class="about-title">PUSULA Hakkında</h1>
-            <p class="about-description">
-                <strong>Yön Bulma ve Konum Belirleme Uygulaması</strong>
-                <br><br>
-                PUSULA, modern teknoloji ile geleneksel yön bulma tekniklerini birleştiren bir uygulamadır. Nerede olursanız olun, doğru yönü bulmanıza ve hedefinize ulaşmanıza yardımcı olur.
-                <br><br>
-                Uygulamamız, cihazınızın dahili sensörlerini kullanarak hassas pusula ölçümleri yapar ve GPS teknolojisi ile konumunuzu belirler. Ayrıca, yükseklik ölçümü, hava durumu bilgisi ve navigasyon özellikleri ile seyahatlerinizde size rehberlik eder.
-                <br><br>
-                PUSULA, doğa yürüyüşleri, kamp, seyahat ve günlük kullanım için idealdir. Kullanıcı dostu arayüzü ve çeşitli tema seçenekleri ile her türlü ihtiyaca uygun bir deneyim sunar.
-                <br><br>
-                Versiyon: 1.0.0
-                <br>
-                Geliştirici: PUSULA Ekibi
-            </p>
-
-            <a href="mailto:info@pusula.com" class="about-button">
-                <div class="about-button-content">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                    İletişime Geç
-                </div>
-            </a>
-        </div>
-    </div>
-`;
-}
-
-renderSavedLocations() {
-const content = document.getElementById('content');
-    
-if (this.savedLocations.length === 0) {
-    content.innerHTML = `
-        <div class="settings-page">
-            <div class="breadcrumb">
-                <a href="#" onclick="showHome()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                    </svg>
-                </a>
-                <span>›</span>
-                <span>Kaydedilen Konumlar</span>
-            </div>
-            
-            <div class="text-center" style="padding: 4rem 2rem;">
-                <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;">📍</div>
-                <h2>Henüz kaydettiğiniz konum yok</h2>
-                <p style="color: var(--text-secondary); margin-top: 1rem;">Önemli konumları kaydetmek için ana sayfadaki "Konumumu Kaydet" butonunu kullanın.</p>
-                <a href="#" onclick="showHome()" style="display: inline-block; margin-top: 2rem; padding: 1rem 2rem; background: var(--primary-color); color: var(--bg-primary); text-decoration: none; border-radius: 8px;">Ana Sayfaya Dön</a>
-            </div>
-        </div>
-    `;
-    return;
-}
-
-let locationsHTML = '';
-this.savedLocations.forEach((location, index) => {
-    locationsHTML += `
-        <div class="setting-item ripple" style="animation-delay: ${index * 0.1}s;">
-            <div>
-                <div class="setting-label">${location.name}</div>
-                <div class="setting-description">
-                    ${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}
-                    <br>
-                    ${new Date(location.savedAt).toLocaleDateString('tr-TR')}
-                </div>
-            </div>
-            <div style="display: flex; gap: 0.5rem;">
-                <button class="compass-btn ripple" onclick="app.navigateToLocation(${index})">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-                    </svg>
-                </button>
-                <button class="compass-btn ripple" style="background: #dc2626; color: white;" onclick="app.removeLocation(${index})">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <polyline points="3,6 5,6 21,6"></polyline>
-                        <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    `;
-});
-
-content.innerHTML = `
-    <div class="settings-page">
-        <div class="breadcrumb">
-            <a href="#" onclick="showHome()">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                </svg>
-            </a>
-            <span>›</span>
-            <span>Kaydedilen Konumlar</span>
-        </div>
-        
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <h1 style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem;">Kaydedilen Konumlar</h1>
-            <p style="color: var(--text-secondary);">${this.savedLocations.length} konum kaydedildi</p>
-        </div>
-
-        <div class="settings-section">
-            ${locationsHTML}
-        </div>
-    </div>
-`;
-}
-
-renderFeature(feature) {
-const content = document.getElementById('content');
-let featureContent = '';
-    
-switch(feature) {
-    case 'compass':
-        featureContent = `
-            <div class="about-header">
-                <h1 class="about-title">Pusula</h1>
-                <p class="about-description">
-                    Dijital pusula, cihazınızın manyetik sensörlerini kullanarak kuzey yönünü tespit eder. Pusula iğnesi her zaman manyetik kuzeyi gösterir.
-                    <br><br>
-                    Pusulanın doğru çalışması için cihazınızı düz tutun ve manyetik alanlardan uzak durun. Gerekirse pusulayı kalibre edin.
-                </p>
-                <button class="about-button" onclick="app.calibrateCompass()">
-                    <div class="about-button-content">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M21 2v6h-6"></path>
-                            <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
-                            <path d="M3 22v-6h6"></path>
-                            <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
-                        </svg>
-                        Pusulayı Kalibre Et
-                    </div>
-                </button>
-            </div>
-        `;
-        break;
-    case 'location':
-        featureContent = `
-            <div class="about-header">
-                <h1 class="about-title">Konum</h1>
-                <p class="about-description">
-                    GPS teknolojisi ile konumunuzu hassas bir şekilde belirleyin. Enlem, boylam ve yükseklik bilgilerinizi görüntüleyin.
-                    <br><br>
-                    Konum bilgisi, açık havada ve GPS sinyalinin güçlü olduğu yerlerde daha doğru sonuçlar verir. Kapalı alanlarda konum doğruluğu azalabilir.
-                </p>
-                <button class="about-button" onclick="app.getCurrentLocation()">
-                    <div class="about-button-content">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="22" y1="12" x2="18" y2="12"></line>
-                            <line x1="6" y1="12" x2="2" y2="12"></line>
-                            <line x1="12" y1="6" x2="12" y2="2"></line>
-                            <line x1="12" y1="22" x2="12" y2="18"></line>
-                        </svg>
-                        Konumumu Güncelle
-                    </div>
-                </button>
-            </div>
-        `;
-        break;
-    case 'navigation':
-        featureContent = `
-            <div class="about-header">
-                <h1 class="about-title">Navigasyon</h1>
-                <p class="about-description">
-                    Hedef noktaya yönlendirme ve mesafe hesaplama özelliği ile istediğiniz yere kolayca ulaşın.
-                    <br><br>
-                    Kaydedilen bir konumu seçin veya harita üzerinde bir nokta belirleyin, PUSULA sizi oraya yönlendirecektir.
-                </p>
-                <button class="about-button" onclick="app.showSavedLocations()">
-                    <div class="about-button-content">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        Kaydedilen Konumları Göster
-                    </div>
-                </button>
-            </div>
-        `;
-        break;
-    case 'altitude':
-        featureContent = `
-            <div class="about-header">
-                <h1 class="about-title">Yükseklik</h1>
-                <p class="about-description">
-                    Deniz seviyesinden yüksekliğinizi ölçün. Bu özellik, dağcılık, yürüyüş ve diğer açık hava aktiviteleri için faydalıdır.
-                    <br><br>
-                    Yükseklik ölçümü, GPS ve barometrik sensörler kullanılarak yapılır. Hava basıncındaki değişiklikler ölçüm doğruluğunu etkileyebilir.
-                </p>
-                <button class="about-button" onclick="app.getCurrentLocation()">
-                    <div class="about-button-content">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M2 22h20"></path>
-                            <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
-                        </svg>
-                        Yüksekliği Ölç
-                    </div>
-                </button>
-            </div>
-        `;
-        break;
-    case 'weather':
-        featureContent = `
-            <div class="about-header">
-                <h1 class="about-title">Hava Durumu</h1>
-                <p class="about-description">
-                    Bulunduğunuz konumun güncel hava durumu bilgisini alın. Sıcaklık, nem, rüzgar hızı ve yağış olasılığı gibi bilgileri görüntüleyin.
-                    <br><br>
-                    Hava durumu verileri, konumunuza en yakın meteoroloji istasyonundan alınır ve düzenli olarak güncellenir.
-                </p>
-                <button class="about-button" onclick="app.getWeatherData()">
-                    <div class="about-button-content">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M8 5.25A4.75 4.75 0 0 1 17.25 9 3.25 3.25 0 0 1 18 15.25H8.5a4.5 4.5 0 1 1 .5-9"></path>
-                            <path d="M11 20v1"></path>
-                            <path d="M14 19v2"></path>
-                            <path d="M8 19v1"></path>
-                        </svg>
-                        Hava Durumunu Güncelle
-                    </div>
-                </button>
-            </div>
-        `;
-        break;
-    case 'save':
-        featureContent = `
-            <div class="about-header">
-                <h1 class="about-title">Konum Kaydetme</h1>
-                <p class="about-description">
-                    Önemli konumları kaydedin ve daha sonra bu konumlara kolayca ulaşın. Ev, iş, favori mekanlar veya hatırlamak istediğiniz herhangi bir yeri kaydedebilirsiniz.
-                    <br><br>
-                    Kaydedilen konumlar cihazınızda saklanır ve internet bağlantısı olmadan da erişilebilir.
-                </p>
-                <button class="about-button" onclick="app.saveCurrentLocation()">
-                    <div class="about-button-content">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                            <polyline points="7 3 7 8 15 8"></polyline>
-                        </svg>
-                        Mevcut Konumu Kaydet
-                    </div>
-                </button>
-            </div>
-        `;
-        break;
-    default:
-        featureContent = `
-            <div class="about-header">
-                <h1 class="about-title">Özellik Bulunamadı</h1>
-                <p class="about-description">
-                    İstediğiniz özellik bulunamadı. Lütfen ana sayfaya dönün ve tekrar deneyin.
-                </p>
-                <button class="about-button" onclick="showHome()">
-                    <div class="about-button-content">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                        </svg>
-                        Ana Sayfaya Dön
-                    </div>
-                </button>
-            </div>
-        `;
-}
-    
-content.innerHTML = `
-    <div class="about-page">
-        <div class="breadcrumb">
-            <a href="#" onclick="showHome()">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                </svg>
-            </a>
-            <span>›</span>
-            <span>Özellikler</span>
-            <span>›</span>
-            <span>${this.getFeatureName(feature)}</span>
-        </div>
-
-        ${featureContent}
-    </div>
-`;
-}
-
-getFeatureName(feature) {
-const names = {
-    'compass': 'Pusula',
-    'location': 'Konum',
-    'navigation': 'Navigasyon',
-    'altitude': 'Yükseklik',
-    'weather': 'Hava Durumu',
-    'save': 'Konum Kaydetme'
-};
-return names[feature] || 'Özellik';
-}
-
-updateSettingsUI() {
-// Update toggle switches
-const highAccuracyToggle = document.querySelector('[onclick="app.toggleHighAccuracy()"]');
-if (highAccuracyToggle) {
-    if (this.settings.useHighAccuracy) {
-        highAccuracyToggle.classList.add('active');
-    } else {
-        highAccuracyToggle.classList.remove('active');
-    }
-}
-
-const notificationsToggle = document.querySelector('[onclick="app.toggleNotifications()"]');
-if (notificationsToggle) {
-    if (this.settings.showNotifications) {
-        notificationsToggle.classList.add('active');
-    } else {
-        notificationsToggle.classList.remove('active');
-    }
-}
-
-const temperatureUnitToggle = document.querySelector('[onclick="app.toggleTemperatureUnit()"]');
-if (temperatureUnitToggle) {
-    if (this.settings.useCelsius) {
-        temperatureUnitToggle.classList.add('active');
-    } else {
-        temperatureUnitToggle.classList.remove('active');
-    }
-}
-
-// Update font size options
-document.querySelectorAll('.font-size-option').forEach(option => {
-    option.classList.remove('active');
-});
-
-const activeFontSizeOption = document.querySelector(`[onclick="app.setFontSize('${this.settings.fontSize}')"]`);
-if (activeFontSizeOption) {
-    activeFontSizeOption.classList.add('active');
-}
-
-// Update theme options
-document.querySelectorAll('.theme-option').forEach(option => {
-    option.classList.remove('active');
-});
-
-const activeThemeOption = document.querySelector(`[onclick="app.setTheme('${this.currentTheme}')"]`);
-if (activeThemeOption) {
-    activeThemeOption.classList.add('active');
-}
-}
-
-toggleHighAccuracy() {
-this.settings.useHighAccuracy = !this.settings.useHighAccuracy;
-localStorage.setItem('useHighAccuracy', this.settings.useHighAccuracy);
-this.updateSettingsUI();
-
-// Restart location tracking with new accuracy setting
-this.getCurrentLocation();
-}
-
-toggleNotifications() {
-this.settings.showNotifications = !this.settings.showNotifications;
-localStorage.setItem('showNotifications', this.settings.showNotifications);
-this.updateSettingsUI();
-}
-
-toggleTemperatureUnit() {
-this.settings.useCelsius = !this.settings.useCelsius;
-localStorage.setItem('useCelsius', this.settings.useCelsius);
-this.updateSettingsUI();
 }
 
 startCompass() {
-if (!this.hasPermission) return;
-
-// Remove any existing event listeners to prevent duplicates
-window.removeEventListener('deviceorientation', this.handleOrientation);
-window.removeEventListener('deviceorientationabsolute', this.handleOrientation);
-
-// Try to use absolute orientation first (more accurate)
-if ('ondeviceorientationabsolute' in window) {
-    window.addEventListener('deviceorientationabsolute', this.handleOrientation.bind(this));
-} else if (window.DeviceOrientationEvent) {
-    window.addEventListener('deviceorientation', this.handleOrientation.bind(this));
-} else {
-    this.showError('Pusula özelliği cihazınızda desteklenmiyor.');
-}
+    if (!this.hasPermission) return;
+    
+    window.addEventListener('deviceorientation', this.handleOrientation.bind(this), true);
 }
 
 handleOrientation(event) {
-if (!event) return;
-
-// Get device orientation data
-let heading = null;
-let alpha = event.alpha; // z-axis rotation [0, 360)
-let beta = event.beta;   // x-axis rotation [-180, 180]
-let gamma = event.gamma; // y-axis rotation [-90, 90]
-
-// Apply low-pass filter to reduce jitter
-if (this.lastAlpha !== null) {
-    alpha = this.compassFilter(alpha);
-    beta = this.tiltFilter(beta);
-    gamma = this.tiltFilter(gamma);
-}
-
-this.lastAlpha = alpha;
-this.lastBeta = beta;
-this.lastGamma = gamma;
-
-// For iOS devices
-if (event.webkitCompassHeading) {
-    heading = event.webkitCompassHeading;
-} 
-// For Android devices
-else if (alpha !== null) {
-    // Convert alpha value to compass heading
-    // Alpha is measured clockwise from north in degrees, so we need to convert
-    heading = 360 - alpha;
-}
-
-// Update compass UI if we have a valid heading
-if (heading !== null) {
-    this.currentHeading = heading;
-    this.updateCompassUI();
-}
-
-// Update tilt indicator
-this.updateTiltIndicator(beta, gamma);
-}
-
-updateCompassUI() {
-const needle = document.getElementById('compass-needle');
-const heading = document.getElementById('compass-heading');
-const rose = document.querySelector('.compass-rose');
-
-if (needle && heading) {
-    // Apply smooth transition for needle rotation
-    needle.style.transform = `translateX(-50%) rotate(${this.currentHeading}deg)`;
-    
-    // Update heading text with cardinal direction
-    const cardinalDirection = this.getCardinalDirection(this.currentHeading);
-    heading.innerHTML = `${Math.round(this.currentHeading)}° <span style="font-size: 0.7em; opacity: 0.8;">${cardinalDirection}</span>`;
-    
-    // Rotate the compass rose in the opposite direction for a more realistic effect
-    if (rose) {
-        rose.style.transform = `rotate(${-this.currentHeading}deg)`;
+    if (!event.alpha && event.alpha !== 0) {
+        this.showError('Pusula verisi alınamıyor. Cihazınızda pusula sensörü olmayabilir.');
+        return;
     }
+
+    // Get orientation data
+    let alpha = event.alpha; // z-axis rotation [0,360)
+    const beta = event.beta;  // x-axis rotation [-180,180]
+    const gamma = event.gamma; // y-axis rotation [-90,90]
+    
+    // Apply low-pass filter to reduce jitter
+    if (this.lastAlpha !== null) {
+        alpha = this.compassFilter(alpha);
+    }
+    
+    // Store last values
+    this.lastAlpha = alpha;
+    this.lastBeta = beta;
+    this.lastGamma = gamma;
+    
+    // Calculate heading based on device orientation
+    let heading = 0;
+    
+    // Different calculation for iOS vs Android
+    if (this.isIOS) {
+        // iOS devices: alpha is measured clockwise from north
+        heading = 360 - alpha;
+    } else {
+        // Android devices: alpha is measured counterclockwise from west
+        heading = alpha;
+    }
+    
+    // Ensure heading is between 0-360
+    heading = (heading + 360) % 360;
+    
+    // Update compass display
+    this.updateCompassDisplay(heading, beta, gamma);
 }
-}
 
-getCardinalDirection(heading) {
-const directions = ['K', 'KKD', 'KD', 'DKD', 'D', 'DGD', 'GD', 'GGD', 'G', 'GGB', 'GB', 'BGB', 'B', 'BKB', 'KB', 'KKB'];
-const index = Math.round(heading / 22.5) % 16;
-return directions[index];
-}
-
-updateTiltIndicator(beta, gamma) {
-const bubble = document.getElementById('tilt-bubble');
-if (!bubble || beta === null || gamma === null) return;
-
-// Calculate bubble position based on device tilt
-// Limit the movement to stay within the circle
-const maxOffset = 30; // Maximum pixel offset from center
-const betaOffset = Math.max(-maxOffset, Math.min(maxOffset, gamma * 1.5));
-const gammaOffset = Math.max(-maxOffset, Math.min(maxOffset, beta * 1.5));
-
-bubble.style.transform = `translate(calc(-50% + ${betaOffset}px), calc(-50% + ${gammaOffset}px))`;
-
-// Change bubble color based on how level the device is
-const tiltAmount = Math.sqrt(betaOffset * betaOffset + gammaOffset * gammaOffset);
-const isLevel = tiltAmount < 10;
-
-if (isLevel) {
-    bubble.style.backgroundColor = 'var(--primary-color)';
-    bubble.style.boxShadow = '0 0 10px var(--primary-color)';
-} else {
-    bubble.style.backgroundColor = 'var(--compass-accent)';
-    bubble.style.boxShadow = 'none';
-}
+updateCompassDisplay(heading, beta, gamma) {
+    // Update heading display
+    const headingElement = document.getElementById('compass-heading');
+    if (headingElement) {
+        headingElement.textContent = `${Math.round(heading)}°`;
+    }
+    
+    // Update compass rose rotation
+    const compassRose = document.querySelector('.compass-rose');
+    if (compassRose) {
+        compassRose.style.transform = `rotate(${heading}deg)`;
+    }
+    
+    // Update tilt bubble position
+    if (beta !== null && gamma !== null) {
+        const tiltBubble = document.getElementById('tilt-bubble');
+        if (tiltBubble) {
+            // Apply low-pass filter to tilt values
+            const filteredBeta = this.tiltFilter(beta);
+            const filteredGamma = this.tiltFilter(gamma);
+            
+            // Calculate position based on tilt (limit to edges of container)
+            const maxOffset = 40; // Maximum pixel offset from center
+            const xOffset = Math.max(-maxOffset, Math.min(maxOffset, filteredGamma * 2));
+            const yOffset = Math.max(-maxOffset, Math.min(maxOffset, filteredBeta * 2));
+            
+            tiltBubble.style.transform = `translate(calc(-50% + ${xOffset}px), calc(-50% + ${yOffset}px))`;
+            
+            // Change color based on how level the device is
+            const tiltAmount = Math.sqrt(filteredBeta * filteredBeta + filteredGamma * filteredGamma);
+            if (tiltAmount < 5) {
+                tiltBubble.style.backgroundColor = 'var(--primary-color)';
+            } else {
+                tiltBubble.style.backgroundColor = 'var(--compass-accent)';
+            }
+        }
+    }
 }
 
 calibrateCompass() {
-if (!this.hasPermission) {
-    this.requestPermission();
-    return;
-}
-
-this.isCalibrating = true;
-
-// Create calibration overlay
-const overlay = document.createElement('div');
-overlay.className = 'compass-calibration';
-overlay.innerHTML = `
-    <div class="calibration-content">
-        <h2 style="margin-bottom: 1rem;">Pusula Kalibrasyonu</h2>
-        <div class="calibration-animation">
-            <div class="calibration-phone"></div>
-        </div>
-        <p style="margin-bottom: 1rem;">
-            Cihazınızı sekiz (8) şeklinde hareket ettirin ve her yöne çevirin.
-            <br><br>
-            Bu işlem pusulanın doğruluğunu artıracaktır.
-        </p>
-        <div class="calibration-progress">
-            <div class="calibration-bar" id="calibration-bar"></div>
-        </div>
-        <button class="compass-btn" style="margin-top: 1rem;" onclick="app.stopCalibration()">İptal</button>
-    </div>
-`;
-document.body.appendChild(overlay);
-
-// Simulate calibration progress
-let progress = 0;
-const progressBar = document.getElementById('calibration-bar');
-const progressInterval = setInterval(() => {
-    progress += 2;
-    if (progressBar) {
-        progressBar.style.width = `${progress}%`;
-    }
+    if (this.isCalibrating) return;
     
-    if (progress >= 100) {
-        clearInterval(progressInterval);
-        setTimeout(() => {
-            this.stopCalibration();
-            this.showNotification('Pusula kalibre edildi!');
-        }, 500);
-    }
-}, 100);
-
-// Store interval ID to clear it if calibration is cancelled
-this.calibrationInterval = progressInterval;
-}
-
-stopCalibration() {
-this.isCalibrating = false;
-if (this.calibrationInterval) {
-    clearInterval(this.calibrationInterval);
-    this.calibrationInterval = null;
-}
-
-const overlay = document.querySelector('.compass-calibration');
-if (overlay) {
-    overlay.remove();
-}
-}
-
-getCurrentLocation() {
-if (!navigator.geolocation) {
-    this.showError('Konum özelliği cihazınızda desteklenmiyor.');
-    return;
-}
-
-const options = {
-    enableHighAccuracy: this.settings.useHighAccuracy,
-    timeout: 10000,
-    maximumAge: 0
-};
-
-this.showNotification('Konum alınıyor...');
-
-if (this.watchId) {
-    navigator.geolocation.clearWatch(this.watchId);
-}
-
-this.watchId = navigator.geolocation.watchPosition(
-    this.handleLocationSuccess.bind(this),
-    this.handleLocationError.bind(this),
-    options
-);
-}
-
-handleLocationSuccess(position) {
-this.currentLocation = {
-    latitude: position.coords.latitude,
-    longitude: position.coords.longitude,
-    altitude: position.coords.altitude,
-    accuracy: position.coords.accuracy,
-    timestamp: position.timestamp
-};
-
-const coordsElement = document.getElementById('compass-coordinates');
-if (coordsElement) {
-    coordsElement.innerHTML = `
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <div style="margin-bottom: 0.5rem;">
-                <span style="font-weight: 600;">Enlem:</span> ${position.coords.latitude.toFixed(6)}
+    this.isCalibrating = true;
+    
+    const overlay = document.createElement('div');
+    overlay.className = 'compass-calibration';
+    overlay.innerHTML = `
+        <div class="calibration-content">
+            <h2 class="permission-title">Pusula Kalibrasyonu</h2>
+            <div class="calibration-animation">
+                <div class="calibration-phone"></div>
             </div>
-            <div style="margin-bottom: 0.5rem;">
-                <span style="font-weight: 600;">Boylam:</span> ${position.coords.longitude.toFixed(6)}
-            </div>
-            ${position.coords.altitude ? `
-                <div>
-                    <span style="font-weight: 600;">Yükseklik:</span> ${position.coords.altitude.toFixed(1)}m
-                </div>
-            ` : ''}
-            <div style="margin-top: 0.5rem; font-size: 0.8em; opacity: 0.7;">
-                Doğruluk: ±${position.coords.accuracy.toFixed(0)}m
+            <p class="permission-description">
+                Lütfen cihazınızı elinizde tutarak 8 şeklinde hareket ettirin.
+                <br>
+                Bu işlem pusulanın doğru çalışması için gereklidir.
+            </p>
+            <div class="calibration-progress">
+                <div class="calibration-bar" id="calibration-bar"></div>
             </div>
         </div>
     `;
+    document.body.appendChild(overlay);
+    
+    let progress = 0;
+    const progressBar = document.getElementById('calibration-bar');
+    
+    const calibrationInterval = setInterval(() => {
+        progress += 2;
+        if (progressBar) {
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        if (progress >= 100) {
+            clearInterval(calibrationInterval);
+            this.isCalibrating = false;
+            overlay.remove();
+            this.showNotification('Kalibrasyon tamamlandı');
+        }
+    }, 100);
 }
 
-this.showNotification('Konum güncellendi!');
+getCurrentLocation() {
+    if (!navigator.geolocation) {
+        this.showError('Konum servisi cihazınızda desteklenmiyor.');
+        return;
+    }
+    
+    const options = {
+        enableHighAccuracy: this.settings.useHighAccuracy,
+        timeout: 10000,
+        maximumAge: 0
+    };
+    
+    this.showNotification('Konum alınıyor...');
+    
+    navigator.geolocation.getCurrentPosition(
+        this.handleLocationSuccess.bind(this),
+        this.handleLocationError.bind(this),
+        options
+    );
+}
+
+handleLocationSuccess(position) {
+    this.currentLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy: position.coords.accuracy,
+        altitude: position.coords.altitude,
+        altitudeAccuracy: position.coords.altitudeAccuracy,
+        timestamp: position.timestamp
+    };
+    
+    const coordsElement = document.getElementById('compass-coordinates');
+    if (coordsElement) {
+        coordsElement.innerHTML = `
+            ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}
+            <br>
+            <span style="font-size: 0.8em; opacity: 0.7;">Doğruluk: ±${Math.round(position.coords.accuracy)} m</span>
+        `;
+    }
+    
+    this.showNotification('Konum başarıyla alındı');
 }
 
 handleLocationError(error) {
-let message = 'Konum alınamadı.';
-
-switch(error.code) {
-    case error.PERMISSION_DENIED:
-        message = 'Konum izni reddedildi.';
-        break;
-    case error.POSITION_UNAVAILABLE:
-        message = 'Konum bilgisi kullanılamıyor.';
-        break;
-    case error.TIMEOUT:
-        message = 'Konum isteği zaman aşımına uğradı.';
-        break;
-}
-
-this.showError(message);
-}
-
-saveCurrentLocation() {
-if (!this.currentLocation) {
-    this.showError('Kaydedilecek konum bulunamadı.');
-    return;
-}
-
-// Prompt for location name
-const locationName = prompt('Konum için bir isim girin:', 'Konum ' + (this.savedLocations.length + 1));
-
-if (locationName) {
-    const newLocation = {
-        name: locationName,
-        latitude: this.currentLocation.latitude,
-        longitude: this.currentLocation.longitude,
-        altitude: this.currentLocation.altitude,
-        savedAt: new Date().toISOString()
-    };
+    let errorMessage = 'Konum alınamadı.';
     
-    this.savedLocations.push(newLocation);
-    localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            errorMessage = 'Konum izni reddedildi.';
+            break;
+        case error.POSITION_UNAVAILABLE:
+            errorMessage = 'Konum bilgisi mevcut değil.';
+            break;
+        case error.TIMEOUT:
+            errorMessage = 'Konum isteği zaman aşımına uğradı.';
+            break;
+    }
     
-    this.showNotification('Konum kaydedildi!');
-}
-}
-
-removeLocation(index) {
-if (confirm('Bu konumu silmek istediğinizden emin misiniz?')) {
-    this.savedLocations.splice(index, 1);
-    localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
-    this.renderSavedLocations();
-    this.showNotification('Konum silindi!');
-}
+    this.showError(errorMessage);
 }
 
-navigateToLocation(index) {
-const location = this.savedLocations[index];
-if (!location) return;
+setTheme(theme) {
+    this.currentTheme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
 
-// Calculate distance and bearing to the location
-if (this.currentLocation) {
-    const distance = this.calculateDistance(
-        this.currentLocation.latitude,
-        this.currentLocation.longitude,
-        location.latitude,
-        location.longitude
-    );
-    
-    const bearing = this.calculateBearing(
-        this.currentLocation.latitude,
-        this.currentLocation.longitude,
-        location.latitude,
-        location.longitude
-    );
-    
-    this.showNotification(`${location.name} - Mesafe: ${distance.toFixed(2)} km, Yön: ${Math.round(bearing)}°`);
-    
-    // Show navigation overlay
-    this.showNavigationOverlay(location, distance, bearing);
-} else {
-    this.showError('Mevcut konumunuz bilinmiyor.');
-}
-}
-
-showNavigationOverlay(location, distance, bearing) {
-const overlay = document.createElement('div');
-overlay.className = 'permission-overlay';
-overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-overlay.innerHTML = `
-    <div class="calibration-content" style="max-width: 90%; width: 400px;">
-        <h2 style="margin-bottom: 1rem;">${location.name}'a Yönlendirme</h2>
-        
-        <div style="position: relative; width: 200px; height: 200px; margin: 0 auto 2rem; border-radius: 50%; background: var(--bg-tertiary); border: 2px solid var(--border-color);">
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(${bearing}deg); width: 4px; height: 90px; background: var(--compass-accent); transform-origin: bottom center;">
-                <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 15px solid var(--compass-accent);"></div>
-            </div>
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; background: var(--bg-primary); border: 2px solid var(--border-color); border-radius: 50%;"></div>
-            <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-weight: bold; color: var(--compass-accent);">K</div>
-            <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-weight: bold;">G</div>
-            <div style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); font-weight: bold;">D</div>
-            <div style="position: absolute; top: 50%; left: 20px; transform: translateY(-50%); font-weight: bold;">B</div>
-        </div>
-        
-        <div style="margin-bottom: 2rem; text-align: center;">
-            <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">${Math.round(bearing)}°</div>
-            <div style="font-size: 1.2rem; margin-bottom: 1rem;">${this.getCardinalDirection(bearing)}</div>
-            <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">${distance.toFixed(2)} km</div>
-        </div>
-        
-        <div style="display: flex; justify-content: space-between;">
-            <button class="compass-btn" onclick="app.closeNavigationOverlay()">Kapat</button>
-            <button class="compass-btn primary" onclick="app.openInMaps(${location.latitude}, ${location.longitude})">Haritada Aç</button>
-        </div>
-    </div>
-`;
-document.body.appendChild(overlay);
-}
-
-closeNavigationOverlay() {
-const overlay = document.querySelector('.permission-overlay');
-if (overlay) {
-    overlay.remove();
-}
-}
-
-openInMaps(lat, lng) {
-// Try to open in Google Maps first
-const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-window.open(googleMapsUrl, '_blank');
-}
-
-calculateDistance(lat1, lon1, lat2, lon2) {
-const R = 6371; // Earth's radius in km
-const dLat = this.deg2rad(lat2 - lat1);
-const dLon = this.deg2rad(lon2 - lon1);
-const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-const distance = R * c;
-return distance;
-}
-
-calculateBearing(lat1, lon1, lat2, lon2) {
-lat1 = this.deg2rad(lat1);
-lon1 = this.deg2rad(lon1);
-lat2 = this.deg2rad(lat2);
-lon2 = this.deg2rad(lon2);
-
-const y = Math.sin(lon2 - lon1) * Math.cos(lat2);
-const x = Math.cos(lat1) * Math.sin(lat2) -
-          Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
-let bearing = Math.atan2(y, x);
-bearing = this.rad2deg(bearing);
-bearing = (bearing + 360) % 360;
-return bearing;
-}
-
-deg2rad(deg) {
-return deg * (Math.PI/180);
-}
-
-rad2deg(rad) {
-return rad * (180/Math.PI);
-}
-
-getWeatherData() {
-if (!this.currentLocation) {
-    this.showError('Hava durumu için konum bilgisi gerekli.');
-    return;
-}
-
-this.showNotification('Hava durumu bilgisi alınıyor...');
-
-// Simulate weather data fetch
-setTimeout(() => {
-    const weatherData = {
-        temperature: Math.round(15 + Math.random() * 15),
-        condition: ['Güneşli', 'Parçalı Bulutlu', 'Bulutlu', 'Yağmurlu'][Math.floor(Math.random() * 4)],
-        humidity: Math.round(40 + Math.random() * 40),
-        windSpeed: Math.round(5 + Math.random() * 20)
-    };
-    
-    const tempUnit = this.settings.useCelsius ? '°C' : '°F';
-    const temp = this.settings.useCelsius ? weatherData.temperature : (weatherData.temperature * 9/5) + 32;
-    
-    this.showWeatherOverlay(weatherData, temp, tempUnit);
-}, 1000);
-}
-
-showWeatherOverlay(weatherData, temp, tempUnit) {
-const overlay = document.createElement('div');
-overlay.className = 'permission-overlay';
-overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-
-let weatherIcon = '';
-switch(weatherData.condition) {
-    case 'Güneşli':
-        weatherIcon = `
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2">
+    const themeBtn = document.querySelector('.theme-btn .icon');
+    if (themeBtn) {
+        if (theme === 'dark') {
+            themeBtn.innerHTML = `
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -2973,12 +1960,14 @@ switch(weatherData.condition) {
                 <line x1="21" y1="12" x2="23" y2="12"></line>
                 <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            </svg>
-        `;
-        break;
-    case 'Parçalı Bulutlu':
-        weatherIcon = `
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2">
+            `;
+        } else if (theme === 'light') {
+            themeBtn.innerHTML = `
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            `;
+        } else {
+            themeBtn.innerHTML = `
+                <circle cx="12" cy="12" r="4"></circle>
                 <path d="M12 2v2"></path>
                 <path d="M12 20v2"></path>
                 <path d="m4.93 4.93 1.41 1.41"></path>
@@ -2987,121 +1976,991 @@ switch(weatherData.condition) {
                 <path d="M20 12h2"></path>
                 <path d="m6.34 17.66-1.41 1.41"></path>
                 <path d="m19.07 4.93-1.41 1.41"></path>
-                <path d="M10 13a5 5 0 0 0-6 2 3 3 0 0 0 3 4h9.5a2.5 2.5 0 0 0 0-5 4.5 4.5 0 0 0-6.5-1"></path>
-            </svg>
-        `;
-        break;
-    case 'Bulutlu':
-        weatherIcon = `
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2">
-                <path d="M10 13a5 5 0 0 0-6 2 3 3 0 0 0 3 4h9.5a2.5 2.5 0 0 0 0-5 4.5 4.5 0 0 0-6.5-1"></path>
-            </svg>
-        `;
-        break;
-    case 'Yağmurlu':
-        weatherIcon = `
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2">
-                <path d="M10 13a5 5 0 0 0-6 2 3 3 0 0 0 3 4h9.5a2.5 2.5 0 0 0 0-5 4.5 4.5 0 0 0-6.5-1"></path>
-                <path d="M8 19v2"></path>
-                <path d="M12 19v2"></path>
-                <path d="M16 19v2"></path>
-            </svg>
-        `;
-        break;
+            `;
+        }
+    }
 }
 
-overlay.innerHTML = `
-    <div class="calibration-content" style="max-width: 90%; width: 400px;">
-        <h2 style="margin-bottom: 1rem;">Hava Durumu</h2>
-        
-        <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem;">
-            ${weatherIcon}
-            <div style="font-size: 2.5rem; font-weight: bold; margin: 1rem 0;">${Math.round(temp)}${tempUnit}</div>
-            <div style="font-size: 1.2rem; margin-bottom: 1rem;">${weatherData.condition}</div>
+toggleTheme() {
+    const themes = ['dark', 'light', 'sepia', 'blue', 'green', 'purple', 'rose'];
+    const currentIndex = themes.indexOf(this.currentTheme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    this.setTheme(themes[nextIndex]);
+}
+
+setFontSize(size) {
+    this.settings.fontSize = size;
+    localStorage.setItem('fontSize', size);
+
+    const multipliers = {
+        'small': 0.85,
+        'normal': 1,
+        'large': 1.15,
+        'xlarge': 1.3
+    };
+
+    document.documentElement.style.setProperty('--font-size-multiplier', multipliers[size] || 1);
+}
+
+setupEventListeners() {
+    window.addEventListener('hashchange', () => this.handleRoute());
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('ripple')) {
+            this.createRipple(e);
+        }
+    });
+
+    document.addEventListener('touchstart', (e) => {
+        if (e.target.classList.contains('ripple')) {
+            this.createRipple(e);
+        }
+    });
+}
+
+createRipple(event) {
+    const button = event.currentTarget;
+
+    // Don't add ripple if element is disabled
+    if (button.disabled || button.classList.contains('disabled')) {
+        return;
+    }
+
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+
+    const rect = button.getBoundingClientRect();
+    const x = event.clientX || event.touches[0].clientX;
+    const y = event.clientY || event.touches[0].clientY;
+
+    const offsetX = x - rect.left - radius;
+    const offsetY = y - rect.top - radius;
+
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${offsetX}px`;
+    circle.style.top = `${offsetY}px`;
+    circle.classList.add("ripple-effect");
+
+    const ripple = button.getElementsByClassName("ripple-effect")[0];
+    if (ripple) {
+        ripple.remove();
+    }
+
+    button.appendChild(circle);
+
+    // Remove the ripple element after animation
+    setTimeout(() => {
+        if (circle.parentNode) {
+            circle.remove();
+        }
+    }, 600);
+}
+
+handleRoute() {
+    const hash = window.location.hash.slice(1);
+
+    if (!hash) {
+        this.renderHome();
+    } else if (hash === 'ayarlar') {
+        this.renderSettings();
+    } else if (hash === 'hakkinda') {
+        this.renderAboutPage();
+    } else if (hash === 'kaydedilenler') {
+        this.renderSavedLocations();
+    } else if (hash.startsWith('ozellik-')) {
+        const feature = hash.split('-')[1];
+        this.renderFeature(feature);
+    }
+}
+
+renderHome() {
+    // Home page is already rendered in HTML
+    this.startCompass();
+    this.getCurrentLocation();
+}
+
+showSettings() {
+    window.location.hash = 'ayarlar';
+}
+
+showLocationSearch() {
+    // Implement location search functionality
+    this.showNotification('Konum arama özelliği yakında eklenecek');
+}
+
+showSavedLocations() {
+    window.location.hash = 'kaydedilenler';
+}
+
+showFeature(feature) {
+    window.location.hash = `ozellik-${feature}`;
+}
+
+renderSettings() {
+    const content = document.getElementById('content');
+    
+    // Settings page content
+    content.innerHTML = `
+        <div class="settings-page">
+            <div class="breadcrumb">
+                <a href="#" onclick="event.preventDefault(); history.back();">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M19 12H5"></path>
+                        <path d="M12 19l-7-7 7-7"></path>
+                    </svg>
+                    Geri
+                </a>
+                <span>/</span>
+                <span>Ayarlar</span>
+            </div>
             
-            <div style="display: flex; width: 100%; justify-content: space-around; margin-top: 1rem;">
-                <div style="text-align: center;">
-                    <div style="font-size: 0.9rem; opacity: 0.7;">Nem</div>
-                    <div style="font-weight: bold;">%${weatherData.humidity}</div>
+            <div class="settings-header">
+                <h1 class="settings-title">Ayarlar</h1>
+                <p class="settings-description">Uygulama ayarlarını özelleştirin</p>
+            </div>
+            
+            <div class="settings-section">
+                <h3>
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Genel Ayarlar
+                </h3>
+                
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.7071-.7071M6.34315 6.34315l-.70711-.70711m12.72796.00005-.7071.70711M6.3432 17.6569l-.70711.7071"></path>
+                                <circle cx="12" cy="12" r="4"></circle>
+                            </svg>
+                            Yüksek Doğruluk Modu
+                        </div>
+                        <div class="setting-description">
+                            Daha doğru konum bilgisi için GPS kullanır. Pil tüketimini artırabilir.
+                        </div>
+                    </div>
+                    <div class="toggle-switch ${this.settings.useHighAccuracy ? 'active' : ''}" onclick="app.toggleSetting('useHighAccuracy')"></div>
                 </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 0.9rem; opacity: 0.7;">Rüzgar</div>
-                    <div style="font-weight: bold;">${weatherData.windSpeed} km/s</div>
+                
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <path d="M8 19h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"></path>
+                                <path d="M12 17v.01"></path>
+                            </svg>
+                            Bildirimler
+                        </div>
+                        <div class="setting-description">
+                            Uygulama içi bildirimleri göster
+                        </div>
+                    </div>
+                    <div class="toggle-switch ${this.settings.showNotifications ? 'active' : ''}" onclick="app.toggleSetting('showNotifications')"></div>
                 </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 0.9rem; opacity: 0.7;">Basınç</div>
-                    <div style="font-weight: bold;">${1000 + Math.floor(Math.random() * 30)} hPa</div>
+                
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+                            </svg>
+                            Celsius Kullan
+                        </div>
+                        <div class="setting-description">
+                            Sıcaklık birimini Celsius (°C) olarak ayarla. Kapalıysa Fahrenheit (°F) kullanılır.
+                        </div>
+                    </div>
+                    <div class="toggle-switch ${this.settings.useCelsius ? 'active' : ''}" onclick="app.toggleSetting('useCelsius')"></div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.7071-.7071M6.34315 6.34315l-.70711-.70711m12.72796.00005-.7071.70711M6.3432 17.6569l-.70711.7071"></path>
+                        <circle cx="12" cy="12" r="4"></circle>
+                    </svg>
+                    Tema
+                </h3>
+                
+                <div class="theme-grid">
+                    <div class="theme-option ${this.currentTheme === 'dark' ? 'active' : ''}" onclick="app.setTheme('dark')">
+                        <div class="theme-preview dark"></div>
+                        Koyu
+                    </div>
+                    <div class="theme-option ${this.currentTheme === 'light' ? 'active' : ''}" onclick="app.setTheme('light')">
+                        <div class="theme-preview light"></div>
+                        Açık
+                    </div>
+                    <div class="theme-option ${this.currentTheme === 'sepia' ? 'active' : ''}" onclick="app.setTheme('sepia')">
+                        <div class="theme-preview sepia"></div>
+                        Sepya
+                    </div>
+                    <div class="theme-option ${this.currentTheme === 'blue' ? 'active' : ''}" onclick="app.setTheme('blue')">
+                        <div class="theme-preview blue"></div>
+                        Mavi
+                    </div>
+                    <div class="theme-option ${this.currentTheme === 'green' ? 'active' : ''}" onclick="app.setTheme('green')">
+                        <div class="theme-preview green"></div>
+                        Yeşil
+                    </div>
+                    <div class="theme-option ${this.currentTheme === 'purple' ? 'active' : ''}" onclick="app.setTheme('purple')">
+                        <div class="theme-preview purple"></div>
+                        Mor
+                    </div>
+                    <div class="theme-option ${this.currentTheme === 'rose' ? 'active' : ''}" onclick="app.setTheme('rose')">
+                        <div class="theme-preview rose"></div>
+                        Gül
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M4 7V4h16v3"></path>
+                        <path d="M9 20h6"></path>
+                        <path d="M12 4v16"></path>
+                    </svg>
+                    Yazı Boyutu
+                </h3>
+                
+                <div class="font-size-grid">
+                    <div class="font-size-option ${this.settings.fontSize === 'small' ? 'active' : ''}" onclick="app.setFontSize('small')">
+                        Küçük
+                    </div>
+                    <div class="font-size-option ${this.settings.fontSize === 'normal' ? 'active' : ''}" onclick="app.setFontSize('normal')">
+                        Normal
+                    </div>
+                    <div class="font-size-option ${this.settings.fontSize === 'large' ? 'active' : ''}" onclick="app.setFontSize('large')">
+                        Büyük
+                    </div>
+                    <div class="font-size-option ${this.settings.fontSize === 'xlarge' ? 'active' : ''}" onclick="app.setFontSize('xlarge')">
+                        Çok Büyük
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <button class="compass-btn primary" onclick="app.closeWeatherOverlay()">Kapat</button>
-    </div>
-`;
-document.body.appendChild(overlay);
+    `;
 }
 
-closeWeatherOverlay() {
-const overlay = document.querySelector('.permission-overlay');
-if (overlay) {
-    overlay.remove();
+renderAboutPage() {
+    const content = document.getElementById('content');
+    
+    content.innerHTML = `
+        <div class="about-page">
+            <div class="breadcrumb">
+                <a href="#" onclick="event.preventDefault(); history.back();">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M19 12H5"></path>
+                        <path d="M12 19l-7-7 7-7"></path>
+                    </svg>
+                    Geri
+                </a>
+                <span>/</span>
+                <span>Hakkında</span>
+            </div>
+            
+            <div class="about-header">
+                <h1 class="about-title">PUSULA Hakkında</h1>
+                <p class="about-description">
+                    PUSULA, yön bulma ve konum belirleme ihtiyaçlarınız için tasarlanmış kullanıcı dostu bir uygulamadır. 
+                    Hassas pusula, GPS konum belirleme, yükseklik ölçümü ve daha fazlasını içerir.
+                    <br><br>
+                    Bu uygulama, modern web teknolojileri kullanılarak geliştirilmiştir ve çeşitli cihazlarda sorunsuz çalışacak şekilde tasarlanmıştır.
+                </p>
+                
+                <button class="about-button ripple" onclick="app.showFeature('compass')">
+                    <div class="about-button-content">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                        </svg>
+                        Pusula'yı Kullan
+                    </div>
+                </button>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Özellikler</h3>
+                <ul style="list-style-type: none; padding: 0;">
+                    <li class="setting-item">
+                        <div class="setting-label">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                            </svg>
+                            Hassas Dijital Pusula
+                        </div>
+                    </li>
+                    <li class="setting-item">
+                        <div class="setting-label">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            GPS Konum Belirleme
+                        </div>
+                    </li>
+                    <li class="setting-item">
+                        <div class="setting-label">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <path d="M2 22h20"></path>
+                                <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
+                            </svg>
+                            Yükseklik Ölçümü
+                        </div>
+                    </li>
+                    <li class="setting-item">
+                        <div class="setting-label">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <path d="M8 5.25A4.75 4.75 0 0 1 17.25 9 3.25 3.25 0 0 1 18 15.25H8.5a4.5 4.5 0 1 1 .5-9"></path>
+                            </svg>
+                            Hava Durumu Bilgisi
+                        </div>
+                    </li>
+                    <li class="setting-item">
+                        <div class="setting-label">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                            </svg>
+                            Navigasyon Desteği
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="settings-section">
+                <h3>İletişim</h3>
+                <p style="margin-bottom: 1rem;">
+                    Sorularınız, önerileriniz veya geri bildirimleriniz için lütfen bizimle iletişime geçin.
+                </p>
+                <a href="mailto:info@pusula-app.com" class="compass-btn" style="text-decoration: none; display: inline-flex;">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    E-posta Gönder
+                </a>
+            </div>
+        </div>
+    `;
 }
+
+renderSavedLocations() {
+    const content = document.getElementById('content');
+    
+    let locationsHTML = '';
+    
+    if (this.savedLocations.length === 0) {
+        locationsHTML = `
+            <div class="text-center" style="padding: 2rem;">
+                <svg class="icon" style="width: 48px; height: 48px; opacity: 0.5; margin-bottom: 1rem;" viewBox="0 0 24 24">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <p>Henüz kaydedilmiş konum bulunmuyor.</p>
+                <button class="compass-btn primary ripple mt-4" onclick="app.getCurrentLocation()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="22" y1="12" x2="18" y2="12"></line>
+                        <line x1="6" y1="12" x2="2" y2="12"></line>
+                        <line x1="12" y1="6" x2="12" y2="2"></line>
+                        <line x1="12" y1="22" x2="12" y2="18"></line>
+                    </svg>
+                    Konumumu Bul
+                </button>
+            </div>
+        `;
+    } else {
+        this.savedLocations.forEach((location, index) => {
+            locationsHTML += `
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">
+                            ${location.name || 'Kaydedilmiş Konum'}
+                        </div>
+                        <div class="setting-description">
+                            ${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}
+                            <br>
+                            <span style="font-size: 0.8em; opacity: 0.7;">
+                                ${new Date(location.timestamp).toLocaleString()}
+                            </span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="compass-btn" onclick="app.navigateToLocation(${index})">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                            </svg>
+                        </button>
+                        <button class="compass-btn" onclick="app.deleteLocation(${index})">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+    
+    content.innerHTML = `
+        <div class="settings-page">
+            <div class="breadcrumb">
+                <a href="#" onclick="event.preventDefault(); history.back();">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M19 12H5"></path>
+                        <path d="M12 19l-7-7 7-7"></path>
+                    </svg>
+                    Geri
+                </a>
+                <span>/</span>
+                <span>Kaydedilmiş Konumlar</span>
+            </div>
+            
+            <div class="settings-header">
+                <h1 class="settings-title">Kaydedilmiş Konumlar</h1>
+                <p class="settings-description">Önemli konumlarınızı kaydedin ve daha sonra kullanın</p>
+            </div>
+            
+            <div class="settings-section">
+                ${locationsHTML}
+            </div>
+            
+            <button class="compass-btn primary ripple" style="margin: 0 auto; display: flex;" onclick="app.saveCurrentLocation()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                Mevcut Konumu Kaydet
+            </button>
+        </div>
+    `;
+}
+
+renderFeature(feature) {
+    const content = document.getElementById('content');
+    
+    let featureContent = '';
+    let featureTitle = '';
+    
+    switch(feature) {
+        case 'compass':
+            featureTitle = 'Pusula';
+            featureContent = `
+                <div class="compass-container" style="margin-top: 2rem;">
+                    <div class="compass">
+                        <div class="compass-face">
+                            <div class="compass-markings" id="compass-markings"></div>
+                            <div class="compass-rose">
+                                <div class="compass-direction north">N</div>
+                                <div class="compass-direction east">E</div>
+                                <div class="compass-direction south">S</div>
+                                <div class="compass-direction west">W</div>
+                            </div>
+                            <div class="compass-needle" id="compass-needle"></div>
+                            <div class="compass-center"></div>
+                            <div class="tilt-indicator">
+                                <div class="tilt-bubble" id="tilt-bubble"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="compass-info">
+                        <div class="compass-heading" id="compass-heading">0°</div>
+                        <div class="compass-coordinates" id="compass-coordinates">Konum alınıyor...</div>
+                    </div>
+                    <div class="compass-actions">
+                        <button class="compass-btn ripple" onclick="app.calibrateCompass()">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M21 2v6h-6"></path>
+                                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                                <path d="M3 22v-6h6"></path>
+                                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+                            </svg>
+                            Kalibre Et
+                        </button>
+                        <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="22" y1="12" x2="18" y2="12"></line>
+                                <line x1="6" y1="12" x2="2" y2="12"></line>
+                                <line x1="12" y1="6" x2="12" y2="2"></line>
+                                <line x1="12" y1="22" x2="12" y2="18"></line>
+                            </svg>
+                            Konumumu Bul
+                        </button>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                this.createCompassMarkings();
+                this.startCompass();
+            }, 100);
+            break;
+            
+        case 'location':
+            featureTitle = 'Konum';
+            featureContent = `
+                <div style="text-align: center; margin: 2rem 0;">
+                    <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="22" y1="12" x2="18" y2="12"></line>
+                            <line x1="6" y1="12" x2="2" y2="12"></line>
+                            <line x1="12" y1="6" x2="12" y2="2"></line>
+                            <line x1="12" y1="22" x2="12" y2="18"></line>
+                        </svg>
+                        Konumumu Bul
+                    </button>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>Konum Bilgileri</h3>
+                    <div id="location-details">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <div class="loading-text">Konum bilgileri alınıyor...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>Konum Geçmişi</h3>
+                    <p>Yakında eklenecek</p>
+                </div>
+            `;
+            setTimeout(() => {
+                this.getCurrentLocation();
+                this.updateLocationDetails();
+            }, 100);
+            break;
+            
+        case 'navigation':
+            featureTitle = 'Navigasyon';
+            featureContent = `
+                <div class="settings-section">
+                    <h3>Hedef Noktaya Yönlendirme</h3>
+                    <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Geliştirme devam ediyor...</div>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'altitude':
+            featureTitle = 'Yükseklik';
+            featureContent = `
+                <div class="settings-section">
+                    <h3>Yükseklik Ölçümü</h3>
+                    <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Geliştirme devam ediyor...</div>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'weather':
+            featureTitle = 'Hava Durumu';
+            featureContent = `
+                <div class="settings-section">
+                    <h3>Hava Durumu Bilgisi</h3>
+                    <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Geliştirme devam ediyor...</div>
+                    </div>
+                </div>
+            `;
+            break;
+            
+        case 'save':
+            featureTitle = 'Konum Kaydetme';
+            featureContent = `
+                <div style="text-align: center; margin: 2rem 0;">
+                    <button class="compass-btn primary ripple" onclick="app.saveCurrentLocation()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                        Mevcut Konumu Kaydet
+                    </button>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>Kaydedilmiş Konumlar</h3>
+                    <div id="saved-locations-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <div class="loading-text">Konumlar yükleniyor...</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                this.updateSavedLocationsList();
+            }, 100);
+            break;
+            
+        default:
+            featureTitle = 'Özellik Bulunamadı';
+            featureContent = `
+                <div class="error">
+                    İstenen özellik bulunamadı.
+                </div>
+            `;
+    }
+    
+    content.innerHTML = `
+        <div class="settings-page">
+            <div class="breadcrumb">
+                <a href="#" onclick="event.preventDefault(); history.back();">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M19 12H5"></path>
+                        <path d="M12 19l-7-7 7-7"></path>
+                    </svg>
+                    Geri
+                </a>
+                <span>/</span>
+                <span>${featureTitle}</span>
+            </div>
+            
+            <div class="settings-header">
+                <h1 class="settings-title">${featureTitle}</h1>
+                <p class="settings-description">
+                    ${this.getFeatureDescription(feature)}
+                </p>
+            </div>
+            
+            ${featureContent}
+        </div>
+    `;
+}
+
+getFeatureDescription(feature) {
+    switch(feature) {
+        case 'compass':
+            return 'Hassas dijital pusula ile yönünüzü kolayca bulun';
+        case 'location':
+            return 'GPS ile tam konumunuzu öğrenin ve koordinatları görüntüleyin';
+        case 'navigation':
+            return 'Hedef noktaya yönlendirme ve mesafe hesaplama';
+        case 'altitude':
+            return 'Deniz seviyesinden yüksekliğinizi ölçün';
+        case 'weather':
+            return 'Bulunduğunuz konumun güncel hava durumu bilgisi';
+        case 'save':
+            return 'Önemli konumları kaydedin ve daha sonra kullanın';
+        default:
+            return '';
+    }
+}
+
+updateLocationDetails() {
+    const locationDetails = document.getElementById('location-details');
+    if (!locationDetails) return;
+    
+    if (!this.currentLocation) {
+        locationDetails.innerHTML = `
+            <div class="text-center" style="padding: 1rem;">
+                <p>Henüz konum bilgisi alınmadı.</p>
+                <button class="compass-btn primary ripple mt-4" onclick="app.getCurrentLocation()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="22" y1="12" x2="18" y2="12"></line>
+                        <line x1="6" y1="12" x2="2" y2="12"></line>
+                        <line x1="12" y1="6" x2="12" y2="2"></line>
+                        <line x1="12" y1="22" x2="12" y2="18"></line>
+                    </svg>
+                    Konumumu Bul
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    const { latitude, longitude, accuracy, altitude, altitudeAccuracy, timestamp } = this.currentLocation;
+    
+    locationDetails.innerHTML = `
+        <div class="setting-item">
+            <div class="setting-label">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                Koordinatlar
+            </div>
+            <div style="text-align: right; font-weight: 500;">
+                ${latitude.toFixed(6)}, ${longitude.toFixed(6)}
+            </div>
+        </div>
+        
+        <div class="setting-item">
+            <div class="setting-label">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 8v8"></path>
+                    <path d="M8 12h8"></path>
+                </svg>
+                Doğruluk
+            </div>
+            <div style="text-align: right; font-weight: 500;">
+                ±${Math.round(accuracy)} m
+            </div>
+        </div>
+        
+        ${altitude !== null ? `
+        <div class="setting-item">
+            <div class="setting-label">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M2 22h20"></path>
+                    <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
+                </svg>
+                Yükseklik
+            </div>
+            <div style="text-align: right; font-weight: 500;">
+                ${Math.round(altitude)} m
+                ${altitudeAccuracy !== null ? `<span style="font-size: 0.8em; opacity: 0.7;">(±${Math.round(altitudeAccuracy)} m)</span>` : ''}
+            </div>
+        </div>
+        ` : ''}
+        
+        <div class="setting-item">
+            <div class="setting-label">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                Zaman
+            </div>
+            <div style="text-align: right; font-weight: 500;">
+                ${new Date(timestamp).toLocaleString()}
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 1rem;">
+            <button class="compass-btn ripple" onclick="app.saveCurrentLocation()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                Bu Konumu Kaydet
+            </button>
+        </div>
+    `;
+}
+
+updateSavedLocationsList() {
+    const savedLocationsList = document.getElementById('saved-locations-list');
+    if (!savedLocationsList) return;
+    
+    if (this.savedLocations.length === 0) {
+        savedLocationsList.innerHTML = `
+            <div class="text-center" style="padding: 1rem;">
+                <p>Henüz kaydedilmiş konum bulunmuyor.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let locationsHTML = '';
+    
+    this.savedLocations.forEach((location, index) => {
+        locationsHTML += `
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">
+                        ${location.name || 'Kaydedilmiş Konum'}
+                    </div>
+                    <div class="setting-description">
+                        ${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}
+                        <br>
+                        <span style="font-size: 0.8em; opacity: 0.7;">
+                            ${new Date(location.timestamp).toLocaleString()}
+                        </span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="compass-btn" onclick="app.navigateToLocation(${index})">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                    </button>
+                    <button class="compass-btn" onclick="app.deleteLocation(${index})">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+    
+    savedLocationsList.innerHTML = locationsHTML;
+}
+
+saveCurrentLocation() {
+    if (!this.currentLocation) {
+        this.showError('Kaydedilecek konum bilgisi bulunamadı.');
+        this.getCurrentLocation();
+        return;
+    }
+    
+    const locationName = prompt('Bu konum için bir isim girin:', 'Konum ' + (this.savedLocations.length + 1));
+    
+    if (locationName === null) return; // User cancelled
+    
+    const newLocation = {
+        ...this.currentLocation,
+        name: locationName
+    };
+    
+    this.savedLocations.push(newLocation);
+    localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
+    
+    this.showNotification('Konum başarıyla kaydedildi');
+    
+    // Update UI if on saved locations page
+    this.updateSavedLocationsList();
+}
+
+deleteLocation(index) {
+    if (confirm('Bu konumu silmek istediğinizden emin misiniz?')) {
+        this.savedLocations.splice(index, 1);
+        localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
+        
+        this.showNotification('Konum silindi');
+        
+        // Update UI
+        if (window.location.hash === '#kaydedilenler') {
+            this.renderSavedLocations();
+        } else {
+            this.updateSavedLocationsList();
+        }
+    }
+}
+
+navigateToLocation(index) {
+    const location = this.savedLocations[index];
+    if (!location) return;
+    
+    this.showNotification('Navigasyon özelliği yakında eklenecek');
+    // Future implementation will go here
+}
+
+toggleSetting(setting) {
+    this.settings[setting] = !this.settings[setting];
+    localStorage.setItem(setting, this.settings[setting]);
+    
+    // Update UI
+    const toggleSwitch = document.querySelector(`.setting-item:has(.setting-label:contains('${setting}')) .toggle-switch`);
+    if (toggleSwitch) {
+        toggleSwitch.classList.toggle('active', this.settings[setting]);
+    }
+    
+    this.showNotification(`${setting} ayarı ${this.settings[setting] ? 'açıldı' : 'kapatıldı'}`);
 }
 
 showNotification(message) {
-if (!this.settings.showNotifications) return;
-
-const notification = document.createElement('div');
-notification.style.cssText = `
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    z-index: 1000;
-    animation: slideInRight 0.3s ease;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px var(--shadow-dark);
-    max-width: 90%;
-`;
-notification.textContent = message;
-document.body.appendChild(notification);
-
-setTimeout(() => {
-    notification.style.animation = 'slideOutRight 0.3s ease forwards';
-    setTimeout(() => notification.remove(), 300);
-}, 3000);
+    if (!this.settings.showNotifications) return;
+    
+    const notification = document.createElement('div');
+    notification.style.position = 'fixed';
+    notification.style.bottom = '20px';
+    notification.style.left = '50%';
+    notification.style.transform = 'translateX(-50%)';
+    notification.style.background = 'var(--bg-secondary)';
+    notification.style.color = 'var(--text-primary)';
+    notification.style.padding = '0.75rem 1.5rem';
+    notification.style.borderRadius = '8px';
+    notification.style.boxShadow = '0 4px 12px var(--shadow-dark)';
+    notification.style.zIndex = '9999';
+    notification.style.transition = 'all 0.3s ease';
+    notification.style.opacity = '0';
+    notification.style.transform = 'translateX(-50%) translateY(20px)';
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(-50%) translateY(0)';
+    }, 10);
+    
+    // Remove after delay
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(-50%) translateY(20px)';
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
 }
 
 showError(message) {
-const error = document.createElement('div');
-error.className = 'error';
-error.innerHTML = `
-    <svg class="icon" viewBox="0 0 24 24" style="margin-right: 0.5rem;">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="8" x2="12" y2="12"></line>
-        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-    </svg>
-    ${message}
-`;
-
-document.body.appendChild(error);
-
-setTimeout(() => {
-    error.style.animation = 'fadeOut 0.3s ease forwards';
-    setTimeout(() => error.remove(), 300);
-}, 5000);
+    const errorElement = document.createElement('div');
+    errorElement.className = 'error';
+    errorElement.innerHTML = `
+        <svg class="icon" style="width: 24px; height: 24px; margin-bottom: 0.5rem;" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <div>${message}</div>
+    `;
+    
+    // Check if there's already an error displayed
+    const existingError = document.querySelector('.error');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Find a good place to show the error
+    const content = document.getElementById('content');
+    if (content) {
+        content.prepend(errorElement);
+    } else {
+        document.body.prepend(errorElement);
+    }
+    
+    // Remove after delay
+    setTimeout(() => {
+        errorElement.style.opacity = '0';
+        setTimeout(() => {
+            if (errorElement.parentNode) {
+                errorElement.remove();
+            }
+        }, 300);
+    }, 5000);
 }
 }
 
+// Initialize the app
+const app = new PusulaApp();
+
+// Handle route on page load
+window.addEventListener('load', () => {
+app.handleRoute();
+});
+
+// Show home by default
 function showHome() {
 window.location.hash = '';
 }
-
-const app = new PusulaApp();
 </script>
 </body>
 </html>
