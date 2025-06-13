@@ -2067,15 +2067,12 @@ let heading = 0;
 
 // Different calculation for iOS vs Android
 if (this.isIOS) {
-    // iOS devices: alpha is measured clockwise from north
-    heading = 360 - alpha; // Invert for correct display when phone is facing up
+    heading = alpha;
 } else {
-    // Android devices: alpha is measured counterclockwise from west
-    heading = alpha; // Invert the previous calculation
+    heading = 360 - alpha;
 }
+heading = (heading + 360) % 360;
 
-// Ensure heading is between 0-360
-heading = (heading + 180) % 360;
 
 // Update compass display with smooth animation
 this.updateCompassDisplay(heading, beta, gamma);
