@@ -2075,7 +2075,7 @@ if (this.isIOS) {
 }
 
 // Ensure heading is between 0-360
-heading = (heading + 360) % 360;
+heading = (heading + 180) % 360;
 
 // Update compass display with smooth animation
 this.updateCompassDisplay(heading, beta, gamma);
