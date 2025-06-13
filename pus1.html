@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Phone Compass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #121212;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .compass-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .compass-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #1e1e1e;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #333;
+        }
+        
+        .compass-rose {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .direction-marker {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .north {
+            color: #ff5252;
+            font-weight: bold;
+            transform: translateY(-42%);
+        }
+        
+        .east {
+            color: white;
+            transform: translateX(42%);
+        }
+        
+        .south {
+            color: white;
+            transform: translateY(42%);
+        }
+        
+        .west {
+            color: white;
+            transform: translateX(-42%);
+        }
+        
+        .needle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 45%;
+            background: linear-gradient(to bottom, #ff5252 0%, #ff5252 50%, #ffffff 50%, #ffffff 100%);
+            transform-origin: bottom center;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        .center-pin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            border: 2px solid #555;
+        }
+        
+        .degree-display {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        
+        .direction-name {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        
+        .compass-markings {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        
+        .marking {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            height: 10px;
+            width: 2px;
+            background-color: rgba(255, 255, 255, 0.5);
+            transform-origin: bottom center;
+        }
+        
+        .marking.major {
+            height: 15px;
+            width: 3px;
+            background-color: white;
+        }
+        
+        .status {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .calibration-message {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="status" id="status">Waiting for compass...</div>
+    
+    <div class="compass-container">
+        <div class="compass-face">
+            <div class="compass-markings" id="compass-markings"></div>
+            <div class="compass-rose" id="compass-rose">
+                <div class="direction-marker north">N</div>
+                <div class="direction-marker east">E</div>
+                <div class="direction-marker south">S</div>
+                <div class="direction-marker west">W</div>
+            </div>
+            <div class="needle"></div>
+            <div class="center-pin"></div>
+        </div>
+    </div>
+    
+    <div class="degree-display" id="degree-display">0°</div>
+    <div class="direction-name" id="direction-name">North</div>
+    
+    <div class="calibration-message" id="calibration-message">
+        Please move your device in a figure-8 pattern to calibrate the compass
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const compassRose = document.getElementById('compass-rose');
+            const degreeDisplay = document.getElementById('degree-display');
+            const directionName = document.getElementById('direction-name');
+            const statusElement = document.getElementById('status');
+            const calibrationMessage = document.getElementById('calibration-message');
+            const compassMarkings = document.getElementById('compass-markings');
+            
+            // Create compass markings
+            for (let i = 0; i < 360; i += 5) {
+                const marking = document.createElement('div');
+                marking.className = i % 45 === 0 ? 'marking major' : 'marking';
+                marking.style.transform = `rotate(${i}deg) translateX(-50%)`;
+                compassMarkings.appendChild(marking);
+            }
+            
+            let compassHeading = 0;
+            let isCalibrating = false;
+            
+            function getDirectionName(degrees) {
+                const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'];
+                return directions[Math.round(degrees / 22.5)];
+            }
+            
+            function handleOrientation(event) {
+                // Check if we have the deviceorientationabsolute event
+                if (event.absolute) {
+                    statusElement.textContent = "Using absolute orientation";
+                    
+                    // When the device is flat (screen facing up), we need to use a different calculation
+                    // We'll use alpha for the heading when the device is flat
+                    compassHeading = event.alpha;
+                    
+                    // Update the UI
+                    updateCompassUI(compassHeading);
+                }
+            }
+            
+            function handleMotion(event) {
+                // Check for significant motion which might indicate calibration is needed
+                const acceleration = event.accelerationIncludingGravity;
+                if (acceleration && Math.abs(acceleration.x) > 10 || Math.abs(acceleration.y) > 10) {
+                    if (!isCalibrating) {
+                        isCalibrating = true;
+                        calibrationMessage.style.display = 'block';
+                        setTimeout(() => {
+                            calibrationMessage.style.display = 'none';
+                            isCalibrating = false;
+                        }, 5000);
+                    }
+                }
+            }
+            
+            function handleDeviceOrientation(event) {
+                statusElement.textContent = "Using device orientation";
+                
+                // For devices that don't support deviceorientationabsolute
+                // We need to calculate the heading differently based on device orientation
+                
+                // Get the orientation angles
+                const alpha = event.alpha; // z-axis rotation [0, 360)
+                const beta = event.beta;   // x-axis rotation [-180, 180]
+                const gamma = event.gamma; // y-axis rotation [-90, 90]
+                
+                // Check if device is approximately flat (screen facing up)
+                const isFlat = Math.abs(beta) < 20 && Math.abs(gamma) < 20;
+                
+                if (isFlat) {
+                    // When the device is flat and screen is facing up,
+                    // we can use alpha directly as the heading
+                    compassHeading = alpha;
+                } else {
+                    // When the device is not flat, we need a more complex calculation
+                    // Convert degrees to radians
+                    const alphaRad = alpha * (Math.PI / 180);
+                    const betaRad = beta * (Math.PI / 180);
+                    const gammaRad = gamma * (Math.PI / 180);
+                    
+                    // Calculate heading
+                    const cB = Math.cos(betaRad);
+                    const sB = Math.sin(betaRad);
+                    const cG = Math.cos(gammaRad);
+                    const sG = Math.sin(gammaRad);
+                    
+                    // Calculate the x and y components of the magnetic field vector
+                    const x = -cB * Math.sin(alphaRad);
+                    const y = sG * sB * Math.sin(alphaRad) - cG * Math.cos(alphaRad);
+                    
+                    // Calculate the compass heading
+                    compassHeading = Math.atan2(y, x) * (180 / Math.PI);
+                    
+                    // Convert to positive degrees [0, 360)
+                    compassHeading = (compassHeading + 360) % 360;
+                }
+                
+                // Update the UI
+                updateCompassUI(compassHeading);
+            }
+            
+            function updateCompassUI(heading) {
+                // Rotate the compass rose in the opposite direction of the heading
+                compassRose.style.transform = `rotate(${-heading}deg)`;
+                
+                // Update the degree display
+                degreeDisplay.textContent = `${Math.round(heading)}°`;
+                
+                // Update the direction name
+                directionName.textContent = getDirectionName(heading);
+            }
+            
+            // Try to use the deviceorientationabsolute event if available
+            if ('ondeviceorientationabsolute' in window) {
+                window.addEventListener('deviceorientationabsolute', handleOrientation);
+                statusElement.textContent = "Using deviceorientationabsolute";
+            } else if ('ondeviceorientation' in window) {
+                // Fall back to deviceorientation
+                window.addEventListener('deviceorientation', handleDeviceOrientation);
+                statusElement.textContent = "Using deviceorientation";
+            } else {
+                statusElement.textContent = "Compass not available";
+            }
+            
+            // Listen for device motion to detect when calibration might be needed
+            if ('ondevicemotion' in window) {
+                window.addEventListener('devicemotion', handleMotion);
+            }
+            
+            // Request permission for iOS 13+ devices
+            if (typeof DeviceOrientationEvent !== 'undefined' && 
+                typeof DeviceOrientationEvent.requestPermission === 'function') {
+                
+                document.body.addEventListener('click', function() {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(response => {
+                            if (response === 'granted') {
+                                if ('ondeviceorientationabsolute' in window) {
+                                    window.addEventListener('deviceorientationabsolute', handleOrientation);
+                                    statusElement.textContent = "Permission granted - using absolute";
+                                } else {
+                                    window.addEventListener('deviceorientation', handleDeviceOrientation);
+                                    statusElement.textContent = "Permission granted - using orientation";
+                                }
+                            } else {
+                                statusElement.textContent = "Permission denied";
+                            }
+                        })
+                        .catch(error => {
+                            statusElement.textContent = "Error: " + error;
+                        });
+                }, { once: true });
+                
+                statusElement.textContent = "Tap screen for compass access";
+            }
+        });
+    </script>
+</body>
+</html>
