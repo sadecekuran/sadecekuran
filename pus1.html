@@ -1,349 +1,3618 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Phone Compass</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #121212;
-            color: white;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .compass-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin-bottom: 20px;
-        }
-        
-        .compass-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: #1e1e1e;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #333;
-        }
-        
-        .compass-rose {
-            position: absolute;
-            width: 90%;
-            height: 90%;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-        
-        .direction-marker {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .north {
-            color: #ff5252;
-            font-weight: bold;
-            transform: translateY(-42%);
-        }
-        
-        .east {
-            color: white;
-            transform: translateX(42%);
-        }
-        
-        .south {
-            color: white;
-            transform: translateY(42%);
-        }
-        
-        .west {
-            color: white;
-            transform: translateX(-42%);
-        }
-        
-        .needle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 4px;
-            height: 45%;
-            background: linear-gradient(to bottom, #ff5252 0%, #ff5252 50%, #ffffff 50%, #ffffff 100%);
-            transform-origin: bottom center;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
-        
-        .center-pin {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            background: #333;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 20;
-            border: 2px solid #555;
-        }
-        
-        .degree-display {
-            font-size: 24px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        
-        .direction-name {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-        
-        .compass-markings {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-        }
-        
-        .marking {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            height: 10px;
-            width: 2px;
-            background-color: rgba(255, 255, 255, 0.5);
-            transform-origin: bottom center;
-        }
-        
-        .marking.major {
-            height: 15px;
-            width: 3px;
-            background-color: white;
-        }
-        
-        .status {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        
-        .calibration-message {
-            position: fixed;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-            font-size: 14px;
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="status" id="status">Waiting for compass...</div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUSULA - Yön Bulma Uygulaması</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--font-size-multiplier: 1;
+}
+
+:root[data-theme="dark"] {
+--bg-primary: #000000;
+--bg-secondary: #111111;
+--bg-tertiary: #1a1a1a;
+--text-primary: #ffffff;
+--text-secondary: #cccccc;
+--text-muted: #888888;
+--border-color: #333333;
+--accent-light: #ffffff;
+--accent-dark: #000000;
+--shadow-light: rgba(255, 255, 255, 0.1);
+--shadow-dark: rgba(0, 0, 0, 0.5);
+--gradient-primary: linear-gradient(135deg, #ffffff, #cccccc);
+--gradient-secondary: linear-gradient(135deg, #333333, #111111);
+--wire-color: #666666;
+--primary-color: #ffffff;
+--secondary-color: #cccccc;
+--accent-color: #888888;
+--header-height: 60px;
+--navbar-bg: #111111;
+--compass-color: #ffffff;
+--compass-accent: #ff4d4d;
+}
+
+:root[data-theme="light"] {
+--bg-primary: #ffffff;
+--bg-secondary: #f8fafc;
+--bg-tertiary: #f1f5f9;
+--text-primary: #1e293b;
+--text-secondary: #475569;
+--text-muted: #64748b;
+--border-color: #e2e8f0;
+--accent-light: #1e293b;
+--accent-dark: #ffffff;
+--shadow-light: rgba(0, 0, 0, 0.1);
+--shadow-dark: rgba(0, 0, 0, 0.1);
+--gradient-primary: linear-gradient(135deg, #1e293b, #475569);
+--gradient-secondary: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+--wire-color: #94a3b8;
+--primary-color: #2563eb;
+--secondary-color: #475569;
+--accent-color: #64748b;
+--header-height: 60px;
+--navbar-bg: #f8fafc;
+--compass-color: #1e293b;
+--compass-accent: #e11d48;
+}
+
+:root[data-theme="sepia"] {
+--bg-primary: #f7f3e9;
+--bg-secondary: #f0e6d2;
+--bg-tertiary: #e8dcc0;
+--text-primary: #5d4e37;
+--text-secondary: #8b7355;
+--text-muted: #a0916f;
+--border-color: #d4c4a8;
+--accent-light: #5d4e37;
+--accent-dark: #f7f3e9;
+--shadow-light: rgba(93, 78, 55, 0.1);
+--shadow-dark: rgba(93, 78, 55, 0.15);
+--gradient-primary: linear-gradient(135deg, #5d4e37, #8b7355);
+--gradient-secondary: linear-gradient(135deg, #e8dcc0, #d4c4a8);
+--wire-color: #a0916f;
+--primary-color: #8b4513;
+--secondary-color: #8b7355;
+--accent-color: #a0916f;
+--header-height: 60px;
+--navbar-bg: #f0e6d2;
+--compass-color: #5d4e37;
+--compass-accent: #c2410c;
+}
+
+:root[data-theme="blue"] {
+--bg-primary: #0f172a;
+--bg-secondary: #1e293b;
+--bg-tertiary: #334155;
+--text-primary: #f1f5f9;
+--text-secondary: #cbd5e1;
+--text-muted: #94a3b8;
+--border-color: #475569;
+--accent-light: #f1f5f9;
+--accent-dark: #0f172a;
+--shadow-light: rgba(241, 245, 249, 0.1);
+--shadow-dark: rgba(0, 0, 0, 0.5);
+--gradient-primary: linear-gradient(135deg, #3b82f6, #1d4ed8);
+--gradient-secondary: linear-gradient(135deg, #334155, #1e293b);
+--wire-color: #64748b;
+--primary-color: #3b82f6;
+--secondary-color: #cbd5e1;
+--accent-color: #94a3b8;
+--header-height: 60px;
+--navbar-bg: #1e293b;
+--compass-color: #f1f5f9;
+--compass-accent: #3b82f6;
+}
+
+:root[data-theme="green"] {
+--bg-primary: #064e3b;
+--bg-secondary: #065f46;
+--bg-tertiary: #047857;
+--text-primary: #ecfdf5;
+--text-secondary: #d1fae5;
+--text-muted: #a7f3d0;
+--border-color: #059669;
+--accent-light: #ecfdf5;
+--accent-dark: #064e3b;
+--shadow-light: rgba(236, 253, 245, 0.1);
+--shadow-dark: rgba(0, 0, 0, 0.5);
+--gradient-primary: linear-gradient(135deg, #10b981, #059669);
+--gradient-secondary: linear-gradient(135deg, #047857, #065f46);
+--wire-color: #6ee7b7;
+--primary-color: #10b981;
+--secondary-color: #d1fae5;
+--accent-color: #a7f3d0;
+--header-height: 60px;
+--navbar-bg: #065f46;
+--compass-color: #ecfdf5;
+--compass-accent: #10b981;
+}
+
+:root[data-theme="purple"] {
+--bg-primary: #581c87;
+--bg-secondary: #6b21a8;
+--bg-tertiary: #7c2d92;
+--text-primary: #faf5ff;
+--text-secondary: #e9d5ff;
+--text-muted: #d8b4fe;
+--border-color: #8b5cf6;
+--accent-light: #faf5ff;
+--accent-dark: #581c87;
+--shadow-light: rgba(250, 245, 255, 0.1);
+--shadow-dark: rgba(0, 0, 0, 0.5);
+--gradient-primary: linear-gradient(135deg, #8b5cf6, #7c3aed);
+--gradient-secondary: linear-gradient(135deg, #7c2d92, #6b21a8);
+--wire-color: #c4b5fd;
+--primary-color: #8b5cf6;
+--secondary-color: #e9d5ff;
+--accent-color: #d8b4fe;
+--header-height: 60px;
+--navbar-bg: #6b21a8;
+--compass-color: #faf5ff;
+--compass-accent: #8b5cf6;
+}
+
+:root[data-theme="rose"] {
+--bg-primary: #881337;
+--bg-secondary: #9f1239;
+--bg-tertiary: #be185d;
+--text-primary: #fdf2f8;
+--text-secondary: #fce7f3;
+--text-muted: #fbcfe8;
+--border-color: #ec4899;
+--accent-light: #fdf2f8;
+--accent-dark: #881337;
+--shadow-light: rgba(253, 242, 248, 0.1);
+--shadow-dark: rgba(0, 0, 0, 0.5);
+--gradient-primary: linear-gradient(135deg, #ec4899, #db2777);
+--gradient-secondary: linear-gradient(135deg, #be185d, #9f1239);
+--wire-color: #f9a8d4;
+--primary-color: #ec4899;
+--secondary-color: #fce7f3;
+--accent-color: #fbcfe8;
+--header-height: 60px;
+--navbar-bg: #9f1239;
+--compass-color: #fdf2f8;
+--compass-accent: #ec4899;
+}
+
+/* Remove default blue highlight on touch */
+* {
+-webkit-tap-highlight-color: transparent;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+user-select: none;
+}
+
+/* Allow text selection for specific elements */
+p, h1, h2, h3, h4, h5, h6, span {
+-webkit-user-select: text;
+user-select: text;
+}
+
+/* Ripple effect container */
+.ripple {
+position: relative;
+overflow: hidden;
+}
+
+/* Ripple animation */
+.ripple-effect {
+position: absolute;
+border-radius: 50%;
+background-color: rgba(255, 255, 255, 0.4);
+transform: scale(0);
+animation: ripple-animation 0.6s linear;
+pointer-events: none;
+}
+
+@keyframes ripple-animation {
+to {
+    transform: scale(2.5);
+    opacity: 0;
+}
+}
+
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+body {
+background: var(--bg-primary);
+color: var(--text-primary);
+font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+min-height: 100vh;
+position: relative;
+overflow-x: hidden;
+font-size: calc(16px * var(--font-size-multiplier));
+line-height: 1.6;
+transition: all 0.3s ease;
+padding-bottom: 80px;
+}
+
+.highlight {
+background: #ffff00;
+color: #000000;
+padding: 0.1em 0.2em;
+border-radius: 3px;
+font-weight: bold;
+}
+
+.icon {
+display: inline-block;
+width: 20px;
+height: 20px;
+stroke: var(--wire-color);
+fill: none;
+stroke-width: 1.5;
+stroke-linecap: round;
+stroke-linejoin: round;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon:hover {
+stroke: var(--text-primary);
+transform: scale(1.1);
+}
+
+.icon-sm {
+width: 16px;
+height: 16px;
+}
+
+.header {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+background: var(--navbar-bg);
+backdrop-filter: blur(20px);
+border-bottom: 1px solid var(--border-color);
+padding: 0.75rem 1rem;
+z-index: 1000;
+height: var(--header-height);
+animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-content {
+max-width: 1400px;
+margin: 0 auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 1rem;
+height: 100%;
+}
+
+.logo {
+font-size: 1.25rem;
+font-weight: 700;
+background: var(--gradient-primary);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-decoration: none;
+cursor: pointer;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+white-space: nowrap;
+}
+
+.logo:hover {
+transform: scale(1.05);
+}
+
+.header-actions {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+
+.search-btn, .theme-btn, .saved-btn, .settings-btn, .support-btn {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+padding: 0.5rem;
+border-radius: 8px;
+cursor: pointer;
+color: var(--text-secondary);
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+text-decoration: none;
+}
+
+.search-btn:hover, .theme-btn:hover, .saved-btn:hover, .settings-btn:hover, .support-btn:hover {
+background: var(--bg-tertiary);
+color: var(--text-primary);
+border-color: var(--wire-color);
+transform: scale(1.05);
+}
+
+.saved-btn, .support-btn {
+gap: 0.25rem;
+padding: 0.5rem 0.75rem;
+font-size: 0.8rem;
+}
+
+.saved-btn .icon, .support-btn .icon {
+margin: 0;
+}
+
+.main {
+margin-top: var(--header-height);
+min-height: calc(100vh - var(--header-height));
+}
+
+.content {
+padding: 2rem;
+max-width: 1400px;
+margin: 0 auto;
+animation: fadeInUp 1s ease-out 0.8s both;
+}
+
+.home-hero {
+text-align: center;
+padding: 2rem 0 2rem;
+max-width: 800px;
+margin: 0 auto;
+}
+
+.home-hero h1 {
+font-size: clamp(2.5rem, 5vw, 4rem);
+font-weight: 700;
+background: var(--gradient-primary);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 1rem;
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+.home-hero p {
+font-size: calc(1.2rem * var(--font-size-multiplier));
+color: var(--text-secondary);
+margin-bottom: 2rem;
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+}
+
+.compass-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+margin: 0 auto 3rem;
+position: relative;
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+max-width: 400px;
+}
+
+.compass {
+width: 300px;
+height: 300px;
+border-radius: 50%;
+background: var(--bg-secondary);
+border: 2px solid var(--border-color);
+position: relative;
+box-shadow: 0 4px 20px var(--shadow-dark);
+margin-bottom: 2rem;
+transition: all 0.3s ease;
+}
+
+.compass:hover {
+transform: scale(1.02);
+box-shadow: 0 8px 32px var(--shadow-dark);
+}
+
+.compass-face {
+width: 100%;
+height: 100%;
+border-radius: 50%;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+}
+
+.compass-rose {
+width: 90%;
+height: 90%;
+border-radius: 50%;
+position: absolute;
+transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.compass-direction {
+position: absolute;
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+color: var(--compass-color);
+font-size: 1.2rem;
+}
+
+.compass-direction.north {
+top: 10%;
+color: var(--compass-accent);
+}
+
+.compass-direction.east {
+right: 10%;
+transform: rotate(90deg);
+}
+
+.compass-direction.south {
+bottom: 10%;
+transform: rotate(180deg);
+}
+
+.compass-direction.west {
+left: 10%;
+transform: rotate(270deg);
+}
+
+.compass-needle {
+position: absolute;
+width: 6px;
+height: 50%;
+background: var(--compass-accent);
+top: 0;
+left: 50%;
+transform-origin: bottom center;
+transform: translateX(-50%);
+clip-path: polygon(50% 0, 100% 100%, 0 100%);
+z-index: 10;
+transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.compass-needle::after {
+content: '';
+position: absolute;
+width: 6px;
+height: 50%;
+background: var(--compass-color);
+bottom: -100%;
+left: 0;
+clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.compass-center {
+position: absolute;
+width: 20px;
+height: 20px;
+background: var(--bg-tertiary);
+border: 2px solid var(--border-color);
+border-radius: 50%;
+z-index: 20;
+}
+
+.compass-info {
+text-align: center;
+margin-top: 1rem;
+}
+
+.compass-heading {
+font-size: 2rem;
+font-weight: 700;
+margin-bottom: 0.5rem;
+color: var(--text-primary);
+}
+
+.compass-coordinates {
+font-size: 1rem;
+color: var(--text-secondary);
+margin-bottom: 1rem;
+}
+
+.compass-actions {
+display: flex;
+gap: 1rem;
+margin-top: 1rem;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.compass-btn {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+padding: 0.75rem 1.5rem;
+border-radius: 12px;
+cursor: pointer;
+color: var(--text-primary);
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.9rem;
+font-weight: 500;
+}
+
+.compass-btn:hover {
+background: var(--bg-tertiary);
+transform: translateY(-2px);
+box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+.compass-btn.primary {
+background: var(--primary-color);
+color: var(--bg-primary);
+}
+
+.compass-btn.primary:hover {
+transform: translateY(-2px) scale(1.05);
+box-shadow: 0 8px 20px var(--shadow-dark);
+}
+
+.features-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 1rem;
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+position: relative;
+z-index: 1;
+}
+
+.feature-card {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: 12px;
+padding: 1.5rem;
+cursor: pointer;
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+text-decoration: none;
+color: inherit;
+transform: translateY(0);
+opacity: 0;
+animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+position: relative;
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.feature-card:nth-child(odd) {
+animation-delay: 0.1s;
+}
+
+.feature-card:nth-child(even) {
+animation-delay: 0.2s;
+}
+
+.feature-card:hover {
+transform: translateY(-4px) scale(1.01);
+box-shadow: 0 8px 20px var(--shadow-dark);
+border-color: var(--wire-color);
+}
+
+.feature-icon {
+width: 3rem;
+height: 3rem;
+background: var(--bg-tertiary);
+border: 1px solid var(--border-color);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 1rem;
+transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+background: var(--wire-color);
+transform: scale(1.1);
+}
+
+.feature-icon .icon {
+width: 1.5rem;
+height: 1.5rem;
+stroke: var(--text-primary);
+}
+
+.feature-title {
+font-size: 1.2rem;
+font-weight: 600;
+margin-bottom: 0.5rem;
+color: var(--text-primary);
+}
+
+.feature-description {
+color: var(--text-secondary);
+font-size: 0.9rem;
+line-height: 1.5;
+}
+
+.settings-page {
+max-width: 800px;
+margin: 0 auto;
+}
+
+.settings-header {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: 16px;
+padding: 2rem;
+margin-bottom: 2rem;
+text-align: center;
+animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-title {
+font-size: 2rem;
+font-weight: 700;
+background: var(--gradient-primary);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 0.5rem;
+}
+
+.settings-description {
+color: var(--text-secondary);
+font-size: calc(1rem * var(--font-size-multiplier));
+}
+
+.settings-section {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: 16px;
+padding: 1.5rem;
+margin-bottom: 1.5rem;
+animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.settings-section h3 {
+margin-bottom: 1rem;
+color: var(--text-primary);
+font-size: calc(1.2rem * var(--font-size-multiplier));
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+
+.theme-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+gap: 1rem;
+}
+
+.theme-option {
+padding: 1rem;
+border: 2px solid var(--border-color);
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.3s ease;
+background: var(--bg-primary);
+color: var(--text-primary);
+font-size: calc(0.9rem * var(--font-size-multiplier));
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.theme-option.active {
+border-color: var(--primary-color);
+background: var(--primary-color);
+color: var(--bg-primary);
+transform: scale(1.05);
+}
+
+.theme-option:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+.theme-preview {
+width: 100%;
+height: 40px;
+border-radius: 8px;
+margin-bottom: 0.5rem;
+position: relative;
+}
+
+.theme-preview.dark { background: linear-gradient(135deg, #000000, #333333); }
+.theme-preview.light { background: linear-gradient(135deg, #ffffff, #f1f5f9); }
+.theme-preview.sepia { background: linear-gradient(135deg, #f7f3e9, #e8dcc0); }
+.theme-preview.blue { background: linear-gradient(135deg, #0f172a, #3b82f6); }
+.theme-preview.green { background: linear-gradient(135deg, #064e3b, #10b981); }
+.theme-preview.purple { background: linear-gradient(135deg, #581c87, #8b5cf6); }
+.theme-preview.rose { background: linear-gradient(135deg, #881337, #ec4899); }
+
+.setting-item {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 1rem;
+background: var(--bg-primary);
+border: 1px solid var(--border-color);
+border-radius: 12px;
+margin-bottom: 1rem;
+transition: all 0.3s ease;
+}
+
+.setting-item:hover {
+background: var(--bg-tertiary);
+transform: translateY(-1px);
+}
+
+.setting-label {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+color: var(--text-primary);
+font-weight: 500;
+font-size: calc(1rem * var(--font-size-multiplier));
+}
+
+.setting-description {
+color: var(--text-secondary);
+font-size: calc(0.9rem * var(--font-size-multiplier));
+margin-top: 0.25rem;
+}
+
+.toggle-switch {
+position: relative;
+width: 50px;
+height: 24px;
+background: var(--border-color);
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.toggle-switch.active {
+background: var(--primary-color);
+}
+
+.toggle-switch::after {
+content: '';
+position: absolute;
+top: 2px;
+left: 2px;
+width: 20px;
+height: 20px;
+background: white;
+border-radius: 50%;
+transition: all 0.3s ease;
+}
+
+.toggle-switch.active::after {
+transform: translateX(26px);
+}
+
+.font-size-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+gap: 0.75rem;
+margin-top: 0.5rem;
+}
+
+.font-size-option {
+padding: 0.75rem;
+border: 1px solid var(--border-color);
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s ease;
+background: var(--bg-primary);
+color: var(--text-primary);
+font-size: calc(0.9rem * var(--font-size-multiplier));
+text-align: center;
+}
+
+.font-size-option.active {
+border-color: var(--primary-color);
+background: var(--primary-color);
+color: var(--bg-primary);
+}
+
+.font-size-option:hover:not(.active) {
+background: var(--bg-tertiary);
+transform: translateY(-2px);
+}
+
+.breadcrumb {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+margin-bottom: 1rem;
+font-size: calc(0.9rem * var(--font-size-multiplier));
+color: var(--text-secondary);
+animation: fadeIn 0.6s ease-out;
+}
+
+.breadcrumb a {
+color: var(--text-secondary);
+text-decoration: none;
+transition: all 0.3s ease;
+padding: 0.25rem 0.5rem;
+border-radius: 6px;
+}
+
+.breadcrumb a:hover {
+color: var(--text-primary);
+background: var(--bg-tertiary);
+transform: translateY(-1px);
+}
+
+.about-page {
+max-width: 800px;
+margin: 0 auto;
+}
+
+.about-header {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: 16px;
+padding: 2rem;
+margin-bottom: 2rem;
+text-align: center;
+animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-title {
+font-size: 2rem;
+font-weight: 700;
+background: var(--gradient-primary);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 1rem;
+}
+
+.about-description {
+color: var(--text-secondary);
+font-size: calc(1.1rem * var(--font-size-multiplier));
+line-height: 1.6;
+margin-bottom: 2rem;
+}
+
+.about-button {
+display: inline-block;
+background: var(--primary-color);
+color: var(--bg-primary);
+padding: 1rem 2rem;
+border-radius: 16px;
+text-decoration: none;
+font-size: calc(1.1rem * var(--font-size-multiplier));
+font-weight: 600;
+transition: all 0.3s ease;
+box-shadow: 0 8px 32px var(--shadow-dark);
+border: none;
+cursor: pointer;
+position: relative;
+overflow: hidden;
+}
+
+.about-button:hover {
+transform: translateY(-4px) scale(1.05);
+box-shadow: 0 12px 40px var(--shadow-dark);
+}
+
+.about-button-content {
+position: relative;
+z-index: 1;
+display: flex;
+align-items: center;
+gap: 0.75rem;
+}
+
+.loading {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 4rem 2rem;
+text-align: center;
+}
+
+.spinner {
+width: 40px;
+height: 40px;
+border: 2px solid var(--border-color);
+border-top: 2px solid var(--primary-color);
+border-radius: 50%;
+animation: spin 1s linear infinite;
+margin-bottom: 1rem;
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+color: var(--text-secondary);
+font-size: calc(1rem * var(--font-size-multiplier));
+animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+0%, 100% { opacity: 0.5; }
+50% { opacity: 1; }
+}
+
+.error {
+background: var(--bg-secondary);
+border: 1px solid #ff4444;
+color: #ff6666;
+padding: 1rem;
+border-radius: 12px;
+margin: 1rem 0;
+text-align: center;
+font-size: calc(1rem * var(--font-size-multiplier));
+}
+
+@keyframes slideDown {
+from {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+from {
+    opacity: 0;
+    transform: translateY(30px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+@keyframes slideUp {
+from {
+    opacity: 0;
+    transform: translateY(40px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+@keyframes slideInUp {
+from {
+    opacity: 0;
+    transform: translateY(30px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+@keyframes slideInRight {
+from {
+    opacity: 0;
+    transform: translateX(100%);
+}
+to {
+    opacity: 1;
+    transform: translateX(0);
+}
+}
+
+@keyframes slideOutRight {
+from {
+    opacity: 1;
+    transform: translateX(0);
+}
+to {
+    opacity: 0;
+    transform: translateX(100%);
+}
+}
+
+.hidden {
+display: none !important;
+}
+
+.text-center {
+text-align: center;
+}
+
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+
+/* Compass styles based on selected style */
+:root[data-compass-style="classic"] .compass-rose {
+background: conic-gradient(
+    from 180deg,
+    var(--bg-tertiary) 0deg,
+    var(--bg-tertiary) 90deg,
+    var(--bg-secondary) 90deg,
+    var(--bg-secondary) 180deg,
+    var(--bg-tertiary) 180deg,
+    var(--bg-tertiary) 270deg,
+    var(--bg-secondary) 270deg,
+    var(--bg-secondary) 360deg
+);
+}
+
+:root[data-compass-style="modern"] .compass {
+background: var(--bg-primary);
+box-shadow: 0 4px 30px var(--shadow-dark);
+}
+
+:root[data-compass-style="modern"] .compass-rose {
+background: radial-gradient(circle, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+}
+
+:root[data-compass-style="modern"] .compass-needle {
+width: 4px;
+height: 45%;
+background: linear-gradient(to bottom, var(--compass-accent) 0%, var(--compass-accent) 50%, var(--compass-color) 50%, var(--compass-color) 100%);
+clip-path: none;
+}
+
+:root[data-compass-style="modern"] .compass-needle::after {
+display: none;
+}
+
+:root[data-compass-style="minimal"] .compass {
+background: transparent;
+border: none;
+box-shadow: none;
+}
+
+:root[data-compass-style="minimal"] .compass-rose {
+background: transparent;
+border: 1px solid var(--border-color);
+}
+
+:root[data-compass-style="minimal"] .compass-needle {
+width: 2px;
+height: 50%;
+background: var(--compass-accent);
+clip-path: none;
+}
+
+:root[data-compass-style="minimal"] .compass-needle::after {
+width: 2px;
+background: var(--text-muted);
+}
+
+:root[data-compass-style="vintage"] .compass {
+background: var(--bg-secondary) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%23a0916f" stroke-width="2"/></svg>') center/cover;
+border: 4px double var(--border-color);
+}
+
+:root[data-compass-style="vintage"] .compass-rose {
+background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="none" stroke="%23a0916f" stroke-width="1"/><line x1="100" y1="10" x2="100" y2="190" stroke="%23a0916f" stroke-width="1"/><line x1="10" y1="100" x2="190" y2="100" stroke="%23a0916f" stroke-width="1"/><circle cx="100" cy="100" r="70" fill="none" stroke="%23a0916f" stroke-width="1" stroke-dasharray="2,4"/></svg>') center/cover;
+}
+
+:root[data-compass-style="vintage"] .compass-needle {
+width: 8px;
+height: 45%;
+background: #8b4513;
+clip-path: polygon(50% 0, 100% 100%, 50% 85%, 0 100%);
+}
+
+:root[data-compass-style="vintage"] .compass-needle::after {
+content: '';
+width: 8px;
+height: 45%;
+background: #d4c4a8;
+bottom: -90%;
+left: 0;
+clip-path: polygon(50% 15%, 100% 0, 50% 100%, 0 0);
+}
+
+:root[data-compass-style="digital"] .compass {
+background: var(--bg-tertiary);
+border: 2px solid var(--border-color);
+overflow: visible;
+}
+
+:root[data-compass-style="digital"] .compass-rose {
+background: transparent;
+}
+
+:root[data-compass-style="digital"] .compass-direction {
+font-family: monospace;
+}
+
+:root[data-compass-style="digital"] .compass-needle {
+display: none;
+}
+
+:root[data-compass-style="digital"] .compass::before {
+content: attr(data-heading);
+position: absolute;
+top: -40px;
+left: 50%;
+transform: translateX(-50%);
+font-family: monospace;
+font-size: 2rem;
+color: var(--compass-accent);
+background: var(--bg-tertiary);
+padding: 0.5rem 1rem;
+border-radius: 8px;
+border: 2px solid var(--border-color);
+}
+
+/* Compass markings */
+.compass-markings {
+position: absolute;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+}
+
+.compass-marking {
+position: absolute;
+top: 0;
+left: 50%;
+height: 10px;
+width: 1px;
+background: var(--text-muted);
+transform-origin: bottom center;
+}
+
+.compass-marking.major {
+height: 15px;
+width: 2px;
+background: var(--text-primary);
+}
+
+.compass-degree {
+position: absolute;
+top: 0;
+left: 50%;
+font-size: 0.8rem;
+color: var(--text-primary);
+transform-origin: center 120px;
+}
+
+/* Tilt indicator */
+.tilt-indicator {
+position: absolute;
+width: 100px;
+height: 100px;
+border-radius: 50%;
+background: var(--bg-tertiary);
+border: 1px solid var(--border-color);
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+opacity: 0.7;
+}
+
+.tilt-bubble {
+position: absolute;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background: var(--compass-accent);
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Compass animations */
+.compass.active {
+transform: scale(1.05);
+}
+
+.compass-needle.active {
+animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+0% { transform: translateX(-50%) rotate(var(--heading)) scale(1); }
+50% { transform: translateX(-50%) rotate(var(--heading)) scale(1.1); }
+100% { transform: translateX(-50%) rotate(var(--heading)) scale(1); }
+}
+
+.error {
+transition: opacity 0.3s ease;
+}
+
+.error.fade-out {
+opacity: 0;
+}
+
+/* Fix for iOS Safari */
+@supports (-webkit-touch-callout: none) {
+.compass-needle {
+    transform-origin: center bottom;
+}
+}
+
+/* Compass style grid */
+.compass-style-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+gap: 1rem;
+margin-top: 1rem;
+}
+
+.compass-style-option {
+padding: 1rem;
+border: 2px solid var(--border-color);
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.3s ease;
+background: var(--bg-primary);
+color: var(--text-primary);
+font-size: calc(0.9rem * var(--font-size-multiplier));
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.compass-style-option.active {
+border-color: var(--primary-color);
+background: var(--primary-color);
+color: var(--bg-primary);
+transform: scale(1.05);
+}
+
+.compass-style-option:hover:not(.active) {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+.compass-style-preview {
+width: 100%;
+height: 60px;
+border-radius: 8px;
+margin-bottom: 0.5rem;
+position: relative;
+background: var(--bg-tertiary);
+}
+
+/* Notification */
+.notification {
+position: fixed;
+bottom: -100px;
+left: 50%;
+transform: translateX(-50%);
+background: var(--bg-secondary);
+color: var(--text-primary);
+padding: 1rem 2rem;
+border-radius: 12px;
+box-shadow: 0 4px 20px var(--shadow-dark);
+z-index: 1000;
+transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+border: 1px solid var(--border-color);
+}
+
+.notification.show {
+bottom: 20px;
+}
+
+/* Permission overlay */
+.permission-overlay {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.8);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 2000;
+animation: fadeIn 0.3s ease;
+}
+
+.permission-content {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: 16px;
+padding: 2rem;
+max-width: 90%;
+width: 400px;
+}
+
+.permission-title {
+font-size: 1.5rem;
+font-weight: 700;
+margin-bottom: 1rem;
+color: var(--text-primary);
+}
+
+.permission-description {
+color: var(--text-secondary);
+margin-bottom: 1.5rem;
+font-size: calc(0.9rem * var(--font-size-multiplier));
+}
+
+.permission-buttons {
+display: flex;
+gap: 1rem;
+justify-content: flex-end;
+}
+
+.permission-btn {
+padding: 0.75rem 1.5rem;
+border-radius: 12px;
+cursor: pointer;
+font-size: calc(0.9rem * var(--font-size-multiplier));
+font-weight: 500;
+border: none;
+transition: all 0.3s ease;
+}
+
+.permission-btn.primary {
+background: var(--primary-color);
+color: var(--bg-primary);
+}
+
+.permission-btn.secondary {
+background: var(--bg-tertiary);
+color: var(--text-primary);
+}
+
+.permission-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+/* Calibration overlay */
+.compass-calibration {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.8);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 2000;
+animation: fadeIn 0.3s ease;
+}
+
+.calibration-content {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: 16px;
+padding: 2rem;
+max-width: 90%;
+width: 400px;
+text-align: center;
+}
+
+.calibration-animation {
+width: 150px;
+height: 150px;
+margin: 2rem auto;
+position: relative;
+}
+
+.calibration-phone {
+width: 60px;
+height: 100px;
+background: var(--bg-tertiary);
+border: 2px solid var(--border-color);
+border-radius: 10px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+animation: calibratePhone 4s infinite ease-in-out;
+}
+
+@keyframes calibratePhone {
+0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+25% { transform: translate(-50%, -50%) rotate(90deg) translateY(-20px); }
+50% { transform: translate(-50%, -50%) rotate(180deg); }
+75% { transform: translate(-50%, -50%) rotate(270deg) translateY(20px); }
+}
+
+.calibration-progress {
+width: 100%;
+height: 8px;
+background: var(--bg-tertiary);
+border-radius: 4px;
+overflow: hidden;
+margin-top: 1rem;
+}
+
+.calibration-bar {
+height: 100%;
+background: var(--primary-color);
+width: 0%;
+transition: width 0.1s linear;
+}
+
+@media (max-width: 768px) {
+:root {
+    --font-size-multiplier: 1.1;
+}
+
+.header {
+    padding: 0.4rem 0.8rem;
+    height: 50px;
+}
+
+.header-content {
+    gap: 0.4rem;
+}
+
+.logo {
+    font-size: 0.9rem;
+}
+
+.saved-btn, .support-btn {
+    padding: 0.4rem;
+    font-size: 0;
+}
+
+.saved-btn .icon, .support-btn .icon {
+    margin: 0;
+}
+
+.search-btn, .theme-btn, .settings-btn {
+    padding: 0.4rem;
+}
+
+.content {
+    padding: 0.8rem;
+}
+
+.home-hero {
+    padding: 0.8rem 0 1rem;
+}
+
+.home-hero h1 {
+    font-size: 1.8rem;
+}
+
+.compass {
+    width: 250px;
+    height: 250px;
+}
+
+.compass-heading {
+    font-size: 1.5rem;
+}
+
+.compass-coordinates {
+    font-size: 0.9rem;
+}
+
+.compass-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+}
+
+.features-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.8rem;
+}
+
+.feature-card {
+    padding: 1rem;
+}
+
+.feature-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.feature-icon .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.feature-title {
+    font-size: 1rem;
+}
+
+.feature-description {
+    font-size: 0.8rem;
+}
+
+.theme-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+}
+
+.theme-option {
+    padding: 0.5rem;
+}
+
+.theme-preview {
+    height: 25px;
+}
+
+.settings-section {
+    padding: 1rem;
+}
+
+.setting-item {
+    padding: 0.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.about-header {
+    padding: 1rem;
+}
+
+.about-title {
+    font-size: 1.5rem;
+}
+
+.about-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+}
+}
+
+@media (max-width: 480px) {
+:root {
+    --font-size-multiplier: 1.2;
+}
+
+.header {
+    padding: 0.3rem 0.6rem;
+    height: 45px;
+}
+
+.logo {
+    font-size: 0.8rem;
+}
+
+.content {
+    padding: 0.6rem;
+}
+
+.home-hero h1 {
+    font-size: 1.5rem;
+}
+
+.compass {
+    width: 200px;
+    height: 200px;
+}
+
+.compass-heading {
+    font-size: 1.3rem;
+}
+
+.compass-coordinates {
+    font-size: 0.8rem;
+}
+
+.compass-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+}
+
+.features-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+}
+
+.theme-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.about-header {
+    padding: 0.8rem;
+}
+
+.about-title {
+    font-size: 1.3rem;
+}
+
+.about-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+}
+}
+</style>
+</head>     
+<body data-theme="dark">
+<!-- Header -->
+<header class="header">
+<div class="header-content">
+<a href="#" class="logo" onclick="showHome()">PUSULA</a>
+<div class="header-actions">
+<button class="search-btn ripple" onclick="app.showLocationSearch()">
+    <svg class="icon" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+    </svg>
+</button>
+<button class="saved-btn ripple" onclick="app.showSavedLocations()">
+    <svg class="icon icon-sm" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+    </svg>
+    <span>Kaydedilenler</span>
+</button>
+<a href="#hakkinda" class="support-btn ripple">
+    <svg class="icon icon-sm" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+    <span>Hakkında</span>
+</a>
+<button class="settings-btn ripple" onclick="app.showSettings()">
+    <svg class="icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+</button>
+<button class="theme-btn ripple" onclick="app.toggleTheme()">
+    <svg class="icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+</button>
+</div>
+</div>
+</header>
+
+<!-- Main Content -->
+<main class="main">
+<div class="content" id="content">
+<!-- Content will be populated by JavaScript -->
+<div class="home-hero">
+<h1>PUSULA</h1>
+<p>Yön bulma ve konum belirleme uygulaması. Nerede olursanız olun, doğru yönü bulun ve hedefinize ulaşın.</p>
+</div>
+
+<div class="compass-container">
+<div class="compass">
+    <div class="compass-face">
+        <div class="compass-markings" id="compass-markings"></div>
+        <div class="compass-rose" id="compass-rose">
+            <div class="compass-direction north">N</div>
+            <div class="compass-direction east">E</div>
+            <div class="compass-direction south">S</div>
+            <div class="compass-direction west">W</div>
+        </div>
+        <div class="compass-needle" id="compass-needle"></div>
+        <div class="compass-center"></div>
+    </div>
+</div>
+<div class="compass-info">
+    <div class="compass-heading" id="compass-heading">0°</div>
+    <div class="compass-coordinates" id="compass-coordinates">Konum alınıyor...</div>
+</div>
+<div class="compass-actions">
+    <button class="compass-btn ripple" onclick="app.calibrateCompass()">
+        <svg class="icon" viewBox="0 0 24 24">
+            <path d="M21 2v6h-6"></path>
+            <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+            <path d="M3 22v-6h6"></path>
+            <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+        </svg>
+        Kalibre Et
+    </button>
+    <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
+        <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="22" y1="12" x2="18" y2="12"></line>
+            <line x1="6" y1="12" x2="2" y2="12"></line>
+            <line x1="12" y1="6" x2="12" y2="2"></line>
+            <line x1="12" y1="22" x2="12" y2="18"></line>
+        </svg>
+        Konumumu Bul
+    </button>
+</div>
+</div>
+
+<h2 class="text-center mb-4">Özellikler</h2>
+<div class="features-grid">
+<div class="feature-card ripple" onclick="app.showFeature('compass')">
+    <div class="feature-icon">
+        <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+        </svg>
+    </div>
+    <h3 class="feature-title">Pusula</h3>
+    <p class="feature-description">Hassas dijital pusula ile yönünüzü kolayca bulun</p>
+</div>
+<div class="feature-card ripple" onclick="app.showFeature('location')">
+    <div class="feature-icon">
+        <svg class="icon" viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+    </div>
+    <h3 class="feature-title">Konum</h3>
+    <p class="feature-description">GPS ile tam konumunuzu öğrenin ve koordinatları görüntüleyin</p>
+</div>
+<div class="feature-card ripple" onclick="app.showFeature('navigation')">
+    <div class="feature-icon">
+        <svg class="icon" viewBox="0 0 24 24">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+        </svg>
+    </div>
+    <h3 class="feature-title">Navigasyon</h3>
+    <p class="feature-description">Hedef noktaya yönlendirme ve mesafe hesaplama</p>
+</div>
+<div class="feature-card ripple" onclick="app.showFeature('altitude')">
+    <div class="feature-icon">
+        <svg class="icon" viewBox="0 0 24 24">
+            <path d="M2 22h20"></path>
+            <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
+            <path d="M3 18 L7 15 L11 18 L15 14 L19 18 L22 16"></path>
+        </svg>
+    </div>
+    <h3 class="feature-title">Yükseklik</h3>
+    <p class="feature-description">Deniz seviyesinden yüksekliğinizi ölçün</p>
+</div>
+<div class="feature-card ripple" onclick="app.showFeature('weather')">
+    <div class="feature-icon">
+<svg class="icon" viewBox="0 0 24 24">
+            <path d="M8 5.25A4.75 4.75 0 0 1 17.25 9 3.25 3.25 0 0 1 18 15.25H8.5a4.5 4.5 0 1 1 .5-9"></path>
+            <path d="M11 20v1"></path>
+            <path d="M14 19v2"></path>
+            <path d="M8 19v1"></path>
+        </svg>
+    </div>
+    <h3 class="feature-title">Hava Durumu</h3>
+    <p class="feature-description">Bulunduğunuz konumun güncel hava durumu bilgisi</p>
+</div>
+<div class="feature-card ripple" onclick="app.showFeature('save')">
+    <div class="feature-icon">
+        <svg class="icon" viewBox="0 0 24 24">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+        </svg>
+    </div>
+    <h3 class="feature-title">Kaydet</h3>
+    <p class="feature-description">Önemli konumları kaydedin ve daha sonra kullanın</p>
+</div>
+</div>
+</div>
+</main>
+
+<script>
+class PusulaApp {
+constructor() {
+this.currentTheme = localStorage.getItem('theme') || 'dark';
+this.settings = {
+    fontSize: localStorage.getItem('fontSize') || 'normal',
+    useHighAccuracy: localStorage.getItem('useHighAccuracy') !== 'false',
+    showNotifications: localStorage.getItem('showNotifications') !== 'false',
+    useCelsius: localStorage.getItem('useCelsius') !== 'false',
+    compassStyle: localStorage.getItem('compassStyle') || 'classic'
+};
+this.savedLocations = JSON.parse(localStorage.getItem('savedLocations') || '[]');
+this.currentHeading = 0;
+this.currentLocation = null;
+this.watchId = null;
+this.hasPermission = false;
+this.isCalibrating = false;
+this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+this.isAndroid = /android/i.test(navigator.userAgent);
+this.compassFilter = this.createLowPassFilter(0.2); // Daha yumuşak hareket için
+this.tiltFilter = this.createLowPassFilter(0.2);
+this.lastAlpha = null;
+this.lastBeta = null;
+this.lastGamma = null;
+this.isCompassActive = false;
+this.compassTouchStartX = 0;
+this.compassTouchStartY = 0;
+this.compassRotation = 0;
+this.init();
+}
+
+async init() {
+try {
+    this.setTheme(this.currentTheme);
+    this.setFontSize(this.settings.fontSize);
+    this.setCompassStyle(this.settings.compassStyle);
+    this.setupEventListeners();
+    this.createCompassMarkings();
+    this.checkPermissions();
+    this.getCurrentLocation();
     
-    <div class="compass-container">
-        <div class="compass-face">
-            <div class="compass-markings" id="compass-markings"></div>
-            <div class="compass-rose" id="compass-rose">
-                <div class="direction-marker north">N</div>
-                <div class="direction-marker east">E</div>
-                <div class="direction-marker south">S</div>
-                <div class="direction-marker west">W</div>
+    // Pusula etkileşimlerini etkinleştir
+    this.setupCompassInteractions();
+} catch (error) {
+    console.error('Initialization error:', error);
+    this.showError('Uygulama başlatılırken bir hata oluştu.');
+}
+
+// Add ripple effect to interactive elements
+setTimeout(() => {
+    const interactiveElements = document.querySelectorAll('button, a, .feature-card, .setting-item, .theme-option, .font-size-option, .compass-style-option');
+    interactiveElements.forEach(element => {
+        if (!element.classList.contains('ripple')) {
+            element.classList.add('ripple');
+        }
+    });
+}, 1000);
+}
+
+createLowPassFilter(alpha) {
+let lastValue = null;
+return function(value) {
+    if (lastValue === null) {
+        lastValue = value;
+        return value;
+    }
+    const filteredValue = lastValue + alpha * (value - lastValue);
+    lastValue = filteredValue;
+    return filteredValue;
+};
+}
+
+setupCompassInteractions() {
+const compass = document.querySelector('.compass');
+if (!compass) return;
+
+// Pusula üzerine tıklandığında animasyon ekle
+compass.addEventListener('click', () => {
+    this.toggleCompassActive();
+});
+
+// Dokunma etkileşimleri
+compass.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    this.compassTouchStartX = touch.clientX;
+    this.compassTouchStartY = touch.clientY;
+    compass.classList.add('active');
+    document.getElementById('compass-needle').classList.add('active');
+});
+
+compass.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - this.compassTouchStartX;
+    const deltaY = touch.clientY - this.compassTouchStartY;
+    
+    // Dokunma hareketine göre pusula gülünü döndür
+    const compassRose = document.getElementById('compass-rose');
+    if (compassRose) {
+        this.compassRotation += deltaX * 0.5;
+        compassRose.style.transform = `rotate(${this.compassRotation}deg)`;
+    }
+    
+    // Başlangıç noktasını güncelle
+    this.compassTouchStartX = touch.clientX;
+    this.compassTouchStartY = touch.clientY;
+});
+
+compass.addEventListener('touchend', () => {
+    // Pusula gülünü yavaşça gerçek yöne döndür
+    setTimeout(() => {
+        this.updateCompassDisplay(this.currentHeading, this.lastBeta, this.lastGamma);
+        compass.classList.remove('active');
+        document.getElementById('compass-needle').classList.remove('active');
+    }, 500);
+});
+}
+
+toggleCompassActive() {
+const compass = document.querySelector('.compass');
+const needle = document.getElementById('compass-needle');
+
+this.isCompassActive = !this.isCompassActive;
+
+if (this.isCompassActive) {
+    compass.classList.add('active');
+    needle.classList.add('active');
+} else {
+    compass.classList.remove('active');
+    needle.classList.remove('active');
+}
+}
+
+createCompassMarkings() {
+const markingsContainer = document.getElementById('compass-markings');
+if (!markingsContainer) return;
+
+markingsContainer.innerHTML = '';
+
+// Create degree markings
+for (let i = 0; i < 360; i += 5) {
+    const isMajor = i % 30 === 0;
+    const marking = document.createElement('div');
+    marking.className = `compass-marking ${isMajor ? 'major' : 'minor'}`;
+    marking.style.transform = `rotate(${i}deg) translateX(-50%)`;
+    markingsContainer.appendChild(marking);
+    
+    if (isMajor) {
+        const degree = document.createElement('div');
+        degree.className = 'compass-degree';
+        degree.textContent = i === 0 ? 'N' : i === 90 ? 'E' : i === 180 ? 'S' : i === 270 ? 'W' : i.toString();
+        degree.style.transform = `rotate(${i}deg) translate(0, -120px) rotate(-${i}deg)`;
+        markingsContainer.appendChild(degree);
+    }
+}
+}
+
+checkPermissions() {
+if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+    // iOS 13+ requires permission
+    this.showPermissionPrompt();
+} else if (window.DeviceOrientationEvent) {
+    // Other browsers
+    this.hasPermission = true;
+    this.startCompass();
+} else {
+    this.showError('Pusula özelliği cihazınızda desteklenmiyor.');
+}
+}
+
+showPermissionPrompt() {
+const overlay = document.createElement('div');
+overlay.className = 'permission-overlay';
+overlay.innerHTML = `
+    <div class="permission-content">
+        <h2 class="permission-title">Pusula İzni Gerekli</h2>
+        <p class="permission-description">
+            PUSULA uygulamasının doğru çalışabilmesi için cihazınızın hareket ve yönelim sensörlerine erişim izni gereklidir.
+            <br><br>
+            "İzin Ver" butonuna tıklayarak bu izni verebilirsiniz.
+        </p>
+        <div class="permission-buttons">
+            <button class="permission-btn secondary" onclick="app.denyPermission()">Reddet</button>
+            <button class="permission-btn primary" onclick="app.requestPermission()">İzin Ver</button>
+        </div>
+    </div>
+`;
+document.body.appendChild(overlay);
+}
+
+async requestPermission() {
+try {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        const permission = await DeviceOrientationEvent.requestPermission();
+        if (permission === 'granted') {
+            this.hasPermission = true;
+            this.startCompass();
+            this.removePermissionPrompt();
+        } else {
+            this.showError('Pusula için gerekli izinler verilmedi.');
+        }
+    } else {
+        this.hasPermission = true;
+        this.startCompass();
+        this.removePermissionPrompt();
+    }
+} catch (error) {
+    console.error('Permission request error:', error);
+    this.showError('İzin alınırken bir hata oluştu.');
+}
+}
+
+denyPermission() {
+this.removePermissionPrompt();
+this.showError('Pusula için gerekli izinler olmadan uygulama doğru çalışmayabilir.');
+}
+
+removePermissionPrompt() {
+const overlay = document.querySelector('.permission-overlay');
+if (overlay) {
+    overlay.remove();
+}
+}
+
+startCompass() {
+if (!this.hasPermission) return;
+
+window.addEventListener('deviceorientation', this.handleOrientation.bind(this), true);
+
+// Pusula animasyonunu başlat
+const compass = document.querySelector('.compass');
+if (compass) {
+    compass.classList.add('active');
+    setTimeout(() => {
+        compass.classList.remove('active');
+    }, 2000);
+}
+}
+
+handleOrientation(event) {
+if (!event.alpha && event.alpha !== 0) {
+    this.showError('Pusula verisi alınamıyor. Cihazınızda pusula sensörü olmayabilir.');
+    return;
+}
+
+// Get orientation data
+let alpha = event.alpha; // z-axis rotation [0,360)
+const beta = event.beta;  // x-axis rotation [-180,180]
+const gamma = event.gamma; // y-axis rotation [-90,90]
+
+// Apply low-pass filter to reduce jitter
+if (this.lastAlpha !== null) {
+    alpha = this.compassFilter(alpha);
+}
+
+// Store last values
+this.lastAlpha = alpha;
+this.lastBeta = beta;
+this.lastGamma = gamma;
+
+// Calculate heading based on device orientation
+let heading = 0;
+
+// Different calculation for iOS vs Android
+if (this.isIOS) {
+    // iOS devices: alpha is measured clockwise from north
+    heading = 360 - alpha; // Invert for correct display when phone is facing up
+} else {
+    // Android devices: alpha is measured counterclockwise from west
+    heading = alpha; // Invert the previous calculation
+}
+
+// Ensure heading is between 0-360
+heading = (heading + 360) % 360;
+
+// Update compass display with smooth animation
+this.updateCompassDisplay(heading, beta, gamma);
+}
+
+updateCompassDisplay(heading, beta, gamma) {
+// Store current heading
+this.currentHeading = heading;
+
+// Update heading display
+const headingElement = document.getElementById('compass-heading');
+if (headingElement) {
+    headingElement.textContent = `${Math.round(heading)}°`;
+}
+
+// Update compass rose rotation - this is the key change
+// We rotate the rose in the opposite direction of the heading
+const compassRose = document.getElementById('compass-rose');
+if (compassRose) {
+    compassRose.style.transform = `rotate(${-heading}deg)`;
+}
+
+// The needle always points north (fixed position)
+const needle = document.getElementById('compass-needle');
+if (needle) {
+    // No rotation needed for the needle as it's fixed pointing north
+    // The compass rose rotates instead
+    needle.style.transform = 'translateX(-50%)';
+}
+}
+
+calibrateCompass() {
+if (this.isCalibrating) return;
+
+this.isCalibrating = true;
+
+const overlay = document.createElement('div');
+overlay.className = 'compass-calibration';
+overlay.innerHTML = `
+    <div class="calibration-content">
+        <h2 class="permission-title">Pusula Kalibrasyonu</h2>
+        <div class="calibration-animation">
+            <div class="calibration-phone"></div>
+        </div>
+        <p class="permission-description">
+            Lütfen cihazınızı elinizde tutarak 8 şeklinde hareket ettirin.
+            <br>
+            Bu işlem pusulanın doğru çalışması için gereklidir.
+        </p>
+        <div class="calibration-progress">
+            <div class="calibration-bar" id="calibration-bar"></div>
+        </div>
+    </div>
+`;
+document.body.appendChild(overlay);
+
+let progress = 0;
+const progressBar = document.getElementById('calibration-bar');
+
+const calibrationInterval = setInterval(() => {
+    progress += 2;
+    if (progressBar) {
+        progressBar.style.width = `${progress}%`;
+    }
+    
+    if (progress >= 100) {
+        clearInterval(calibrationInterval);
+        this.isCalibrating = false;
+        overlay.remove();
+        this.showNotification('Kalibrasyon tamamlandı');
+        
+        // Pusula animasyonunu başlat
+        const compass = document.querySelector('.compass');
+        const needle = document.getElementById('compass-needle');
+        if (compass && needle) {
+            compass.classList.add('active');
+            needle.classList.add('active');
+            setTimeout(() => {
+                compass.classList.remove('active');
+                needle.classList.remove('active');
+            }, 2000);
+        }
+        
+        // Filtreleri sıfırla
+        this.compassFilter = this.createLowPassFilter(0.2);
+        this.tiltFilter = this.createLowPassFilter(0.2);
+        this.lastAlpha = null;
+        this.lastBeta = null;
+        this.lastGamma = null;
+    }
+}, 100);
+}
+
+getCurrentLocation() {
+if (!navigator.geolocation) {
+    this.showError('Konum servisi cihazınızda desteklenmiyor.');
+    return;
+}
+
+const options = {
+    enableHighAccuracy: this.settings.useHighAccuracy,
+    timeout: 10000,
+    maximumAge: 0
+};
+
+this.showNotification('Konum alınıyor...');
+
+navigator.geolocation.getCurrentPosition(
+    this.handleLocationSuccess.bind(this),
+    this.handleLocationError.bind(this),
+    options
+);
+}
+
+handleLocationSuccess(position) {
+this.currentLocation = {
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude,
+    accuracy: position.coords.accuracy,
+    altitude: position.coords.altitude,
+    altitudeAccuracy: position.coords.altitudeAccuracy,
+    timestamp: position.timestamp
+};
+
+const coordsElement = document.getElementById('compass-coordinates');
+if (coordsElement) {
+    coordsElement.innerHTML = `
+        ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}
+        <br>
+        <span style="font-size: 0.8em; opacity: 0.7;">Doğruluk: ±${Math.round(position.coords.accuracy)} m</span>
+    `;
+}
+
+this.showNotification('Konum başarıyla alındı');
+}
+
+handleLocationError(error) {
+let errorMessage = 'Konum alınamadı.';
+
+switch(error.code) {
+    case error.PERMISSION_DENIED:
+        errorMessage = 'Konum izni reddedildi.';
+        break;
+    case error.POSITION_UNAVAILABLE:
+        errorMessage = 'Konum bilgisi mevcut değil.';
+        break;
+    case error.TIMEOUT:
+        errorMessage = 'Konum isteği zaman aşımına uğradı.';
+        break;
+}
+
+this.showError(errorMessage);
+}
+
+setTheme(theme) {
+this.currentTheme = theme;
+document.documentElement.setAttribute('data-theme', theme);
+localStorage.setItem('theme', theme);
+
+const themeBtn = document.querySelector('.theme-btn .icon');
+if (themeBtn) {
+    if (theme === 'dark') {
+        themeBtn.innerHTML = `
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        `;
+    } else if (theme === 'light') {
+        themeBtn.innerHTML = `
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        `;
+    } else {
+        themeBtn.innerHTML = `
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+        `;
+    }
+}
+}
+
+setCompassStyle(style) {
+this.settings.compassStyle = style;
+document.documentElement.setAttribute('data-compass-style', style);
+localStorage.setItem('compassStyle', style);
+
+// Pusula animasyonunu başlat
+const compass = document.querySelector('.compass');
+const needle = document.getElementById('compass-needle');
+if (compass && needle) {
+    compass.classList.add('active');
+    needle.classList.add('active');
+    setTimeout(() => {
+        compass.classList.remove('active');
+        needle.classList.remove('active');
+    }, 1000);
+}
+}
+
+toggleTheme() {
+const themes = ['dark', 'light', 'sepia', 'blue', 'green', 'purple', 'rose'];
+const currentIndex = themes.indexOf(this.currentTheme);
+const nextIndex = (currentIndex + 1) % themes.length;
+this.setTheme(themes[nextIndex]);
+}
+
+setFontSize(size) {
+this.settings.fontSize = size;
+localStorage.setItem('fontSize', size);
+
+const multipliers = {
+    'small': 0.85,
+    'normal': 1,
+    'large': 1.15,
+    'xlarge': 1.3
+};
+
+document.documentElement.style.setProperty('--font-size-multiplier', multipliers[size] || 1);
+}
+
+setupEventListeners() {
+window.addEventListener('hashchange', () => this.handleRoute());
+
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('ripple')) {
+        this.createRipple(e);
+    }
+});
+
+document.addEventListener('touchstart', (e) => {
+    if (e.target.classList.contains('ripple')) {
+        this.createRipple(e);
+    }
+});
+}
+
+createRipple(event) {
+const button = event.currentTarget;
+
+// Don't add ripple if element is disabled
+if (button.disabled || button.classList.contains('disabled')) {
+    return;
+}
+
+const circle = document.createElement("span");
+const diameter = Math.max(button.clientWidth, button.clientHeight);
+const radius = diameter / 2;
+
+const rect = button.getBoundingClientRect();
+const x = event.clientX || (event.touches && event.touches[0].clientX);
+const y = event.clientY || (event.touches && event.touches[0].clientY);
+
+if (!x || !y) return;
+
+const offsetX = x - rect.left - radius;
+const offsetY = y - rect.top - radius;
+
+circle.style.width = circle.style.height = `${diameter}px`;
+circle.style.left = `${offsetX}px`;
+circle.style.top = `${offsetY}px`;
+circle.classList.add("ripple-effect");
+
+const ripple = button.getElementsByClassName("ripple-effect")[0];
+if (ripple) {
+    ripple.remove();
+}
+
+button.appendChild(circle);
+
+// Remove the ripple element after animation
+setTimeout(() => {
+    if (circle.parentNode) {
+        circle.remove();
+    }
+}, 600);
+}
+
+handleRoute() {
+const hash = window.location.hash.slice(1);
+
+if (!hash) {
+    this.renderHome();
+} else if (hash === 'ayarlar') {
+    this.renderSettings();
+} else if (hash === 'hakkinda') {
+    this.renderAboutPage();
+} else if (hash === 'kaydedilenler') {
+    this.renderSavedLocations();
+} else if (hash.startsWith('ozellik-')) {
+    const feature = hash.split('-')[1];
+    this.renderFeature(feature);
+}
+}
+
+renderHome() {
+// Home page is already rendered in HTML
+this.startCompass();
+this.getCurrentLocation();
+}
+
+showSettings() {
+window.location.hash = 'ayarlar';
+}
+
+showLocationSearch() {
+// Implement location search functionality
+this.showNotification('Konum arama özelliği yakında eklenecek');
+}
+
+showSavedLocations() {
+window.location.hash = 'kaydedilenler';
+}
+
+showFeature(feature) {
+window.location.hash = `ozellik-${feature}`;
+}
+
+renderSettings() {
+const content = document.getElementById('content');
+
+content.innerHTML = `
+    <div class="settings-page">
+        <div class="breadcrumb">
+            <a href="#" onclick="event.preventDefault(); history.back();">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Geri
+            </a>
+            <span>/</span>
+            <span>Ayarlar</span>
+        </div>
+        
+        <div class="settings-header">
+            <h1 class="settings-title">Ayarlar</h1>
+            <p class="settings-description">Uygulama ayarlarını özelleştirin</p>
+        </div>
+        
+        <div class="settings-section">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                Pusula Ayarları
+            </h3>
+            
+            <div class="compass-style-grid">
+                <div class="compass-style-option ${this.settings.compassStyle === 'classic' ? 'active' : ''}" onclick="app.setCompassStyle('classic')">
+                    <div class="compass-style-preview classic"></div>
+                    Klasik
+                </div>
+                <div class="compass-style-option ${this.settings.compassStyle === 'modern' ? 'active' : ''}" onclick="app.setCompassStyle('modern')">
+                    <div class="compass-style-preview modern"></div>
+                    Modern
+                </div>
+                <div class="compass-style-option ${this.settings.compassStyle === 'minimal' ? 'active' : ''}" onclick="app.setCompassStyle('minimal')">
+                    <div class="compass-style-preview minimal"></div>
+                    Minimal
+                </div>
+                <div class="compass-style-option ${this.settings.compassStyle === 'vintage' ? 'active' : ''}" onclick="app.setCompassStyle('vintage')">
+                    <div class="compass-style-preview vintage"></div>
+                    Vintage
+                </div>
+                <div class="compass-style-option ${this.settings.compassStyle === 'digital' ? 'active' : ''}" onclick="app.setCompassStyle('digital')">
+                    <div class="compass-style-preview digital"></div>
+                    Dijital
+                </div>
             </div>
-            <div class="needle"></div>
-            <div class="center-pin"></div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                Genel Ayarlar
+            </h3>
+            
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.7071-.7071M6.34315 6.34315l-.70711-.70711m12.72796.00005-.7071.70711M6.3432 17.6569l-.70711.7071"></path>
+                            <circle cx="12" cy="12" r="4"></circle>
+                        </svg>
+                        Yüksek Doğruluk Modu
+                    </div>
+                    <div class="setting-description">
+                        Daha doğru konum bilgisi için GPS kullanır. Pil tüketimini artırabilir.
+                    </div>
+                </div>
+                <div class="toggle-switch ${this.settings.useHighAccuracy ? 'active' : ''}" onclick="app.toggleSetting('useHighAccuracy')"></div>
+            </div>
+            
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M8 19h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"></path>
+                            <path d="M12 17v.01"></path>
+                        </svg>
+                        Bildirimler
+                    </div>
+                    <div class="setting-description">
+                        Uygulama içi bildirimleri göster
+                    </div>
+                </div>
+                <div class="toggle-switch ${this.settings.showNotifications ? 'active' : ''}" onclick="app.toggleSetting('showNotifications')"></div>
+            </div>
+            
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+                        </svg>
+                        Celsius Kullan
+                    </div>
+                    <div class="setting-description">
+                        Sıcaklık birimini Celsius (°C) olarak ayarla. Kapalıysa Fahrenheit (°F) kullanılır.
+                    </div>
+                </div>
+                <div class="toggle-switch ${this.settings.useCelsius ? 'active' : ''}" onclick="app.toggleSetting('useCelsius')"></div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.7071-.7071M6.34315 6.3
+4315l-.70711-.70711m12.72796.00005-.7071.70711M6.3432 17.6569l-.70711.7071"></path>
+                    <circle cx="12" cy="12" r="4"></circle>
+                </svg>
+                Tema
+            </h3>
+            
+            <div class="theme-grid">
+                <div class="theme-option ${this.currentTheme === 'dark' ? 'active' : ''}" onclick="app.setTheme('dark')">
+                    <div class="theme-preview dark"></div>
+                    Koyu
+                </div>
+                <div class="theme-option ${this.currentTheme === 'light' ? 'active' : ''}" onclick="app.setTheme('light')">
+                    <div class="theme-preview light"></div>
+                    Açık
+                </div>
+                <div class="theme-option ${this.currentTheme === 'sepia' ? 'active' : ''}" onclick="app.setTheme('sepia')">
+                    <div class="theme-preview sepia"></div>
+                    Sepya
+                </div>
+                <div class="theme-option ${this.currentTheme === 'blue' ? 'active' : ''}" onclick="app.setTheme('blue')">
+                    <div class="theme-preview blue"></div>
+                    Mavi
+                </div>
+                <div class="theme-option ${this.currentTheme === 'green' ? 'active' : ''}" onclick="app.setTheme('green')">
+                    <div class="theme-preview green"></div>
+                    Yeşil
+                </div>
+                <div class="theme-option ${this.currentTheme === 'purple' ? 'active' : ''}" onclick="app.setTheme('purple')">
+                    <div class="theme-preview purple"></div>
+                    Mor
+                </div>
+                <div class="theme-option ${this.currentTheme === 'rose' ? 'active' : ''}" onclick="app.setTheme('rose')">
+                    <div class="theme-preview rose"></div>
+                    Gül
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 7V4h16v3"></path>
+                    <path d="M9 20h6"></path>
+                    <path d="M12 4v16"></path>
+                </svg>
+                Yazı Boyutu
+            </h3>
+            
+            <div class="font-size-grid">
+                <div class="font-size-option ${this.settings.fontSize === 'small' ? 'active' : ''}" onclick="app.setFontSize('small')">
+                    Küçük
+                </div>
+                <div class="font-size-option ${this.settings.fontSize === 'normal' ? 'active' : ''}" onclick="app.setFontSize('normal')">
+                    Normal
+                </div>
+                <div class="font-size-option ${this.settings.fontSize === 'large' ? 'active' : ''}" onclick="app.setFontSize('large')">
+                    Büyük
+                </div>
+                <div class="font-size-option ${this.settings.fontSize === 'xlarge' ? 'active' : ''}" onclick="app.setFontSize('xlarge')">
+                    Çok Büyük
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+}
+
+renderAboutPage() {
+const content = document.getElementById('content');
+
+content.innerHTML = `
+    <div class="about-page">
+        <div class="breadcrumb">
+            <a href="#" onclick="event.preventDefault(); history.back();">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Geri
+            </a>
+            <span>/</span>
+            <span>Hakkında</span>
+        </div>
+        
+        <div class="about-header">
+            <h1 class="about-title">PUSULA Hakkında</h1>
+            <p class="about-description">
+                PUSULA, yön bulma ve konum belirleme ihtiyaçlarınız için tasarlanmış kullanıcı dostu bir uygulamadır. 
+                Hassas pusula, GPS konum belirleme, yükseklik ölçümü ve daha fazlasını içerir.
+                <br><br>
+                Bu uygulama, modern web teknolojileri kullanılarak geliştirilmiştir ve çeşitli cihazlarda sorunsuz çalışacak şekilde tasarlanmıştır.
+            </p>
+            
+            <button class="about-button ripple" onclick="app.showFeature('compass')">
+                <div class="about-button-content">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                    Pusula'yı Kullan
+                </div>
+            </button>
+        </div>
+        
+        <div class="settings-section">
+            <h3>Özellikler</h3>
+            <ul style="list-style-type: none; padding: 0;">
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                        </svg>
+                        Hassas Dijital Pusula
+                    </div>
+                </li>
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        GPS Konum Belirleme
+                    </div>
+                </li>
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M2 22h20"></path>
+                            <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
+                        </svg>
+                        Yükseklik Ölçümü
+                    </div>
+                </li>
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M8 5.25A4.75 4.75 0 0 1 17.25 9 3.25 3.25 0 0 1 18 15.25H8.5a4.5 4.5 0 1 1 .5-9"></path>
+                        </svg>
+                        Hava Durumu Bilgisi
+                    </div>
+                </li>
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                        Navigasyon Desteği
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="settings-section">
+            <h3>İletişim</h3>
+            <p style="margin-bottom: 1rem;">
+                Sorularınız, önerileriniz veya geri bildirimleriniz için lütfen bizimle iletişime geçin.
+            </p>
+            <a href="mailto:info@pusula-app.com" class="compass-btn" style="text-decoration: none; display: inline-flex;">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                E-posta Gönder
+            </a>
+        </div>
+    </div>
+`;
+}
+
+renderSavedLocations() {
+const content = document.getElementById('content');
+
+let locationsHTML = '';
+
+if (this.savedLocations.length === 0) {
+    locationsHTML = `
+        <div class="text-center" style="padding: 2rem;">
+            <svg class="icon" style="width: 48px; height: 48px; opacity: 0.5; margin-bottom: 1rem;" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <p>Henüz kaydedilmiş konum bulunmuyor.</p>
+            <button class="compass-btn primary ripple mt-4" onclick="app.getCurrentLocation()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="22" y1="12" x2="18" y2="12"></line>
+                    <line x1="6" y1="12" x2="2" y2="12"></line>
+                    <line x1="12" y1="6" x2="12" y2="2"></line>
+                    <line x1="12" y1="22" x2="12" y2="18"></line>
+                </svg>
+                Konumumu Bul
+            </button>
+        </div>
+    `;
+} else {
+    this.savedLocations.forEach((location, index) => {
+        locationsHTML += `
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">
+                        ${location.name || 'Kaydedilmiş Konum'}
+                    </div>
+                    <div class="setting-description">
+                        ${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}
+                        <br>
+                        <span style="font-size: 0.8em; opacity: 0.7;">
+                            ${new Date(location.timestamp).toLocaleString()}
+                        </span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="compass-btn" onclick="app.navigateToLocation(${index})">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                    </button>
+                    <button class="compass-btn" onclick="app.deleteLocation(${index})">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+content.innerHTML = `
+    <div class="settings-page">
+        <div class="breadcrumb">
+            <a href="#" onclick="event.preventDefault(); history.back();">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Geri
+            </a>
+            <span>/</span>
+            <span>Kaydedilmiş Konumlar</span>
+        </div>
+        
+        <div class="settings-header">
+            <h1 class="settings-title">Kaydedilmiş Konumlar</h1>
+            <p class="settings-description">Önemli konumlarınızı kaydedin ve daha sonra kullanın</p>
+        </div>
+        
+        <div class="settings-section">
+            ${locationsHTML}
+        </div>
+        
+        <button class="compass-btn primary ripple" style="margin: 0 auto; display: flex;" onclick="app.saveCurrentLocation()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Mevcut Konumu Kaydet
+        </button>
+    </div>
+`;
+}
+
+renderFeature(feature) {
+const content = document.getElementById('content');
+
+let featureContent = '';
+let featureTitle = '';
+
+switch(feature) {
+    case 'compass':
+        featureTitle = 'Pusula';
+        featureContent = `
+            <div class="compass-container" style="margin-top: 2rem;">
+                <div class="compass" id="compass">
+                    <div class="compass-face">
+                        <div class="compass-markings" id="compass-markings"></div>
+                        <div class="compass-rose" id="compass-rose">
+                            <div class="compass-direction north">N</div>
+                            <div class="compass-direction east">E</div>
+                            <div class="compass-direction south">S</div>
+                            <div class="compass-direction west">W</div>
+                        </div>
+                        <div class="compass-needle" id="compass-needle"></div>
+                        <div class="compass-center"></div>
+                    </div>
+                </div>
+                <div class="compass-info">
+                    <div class="compass-heading" id="compass-heading">0°</div>
+                    <div class="compass-coordinates" id="compass-coordinates">Konum alınıyor...</div>
+                </div>
+                <div class="compass-actions">
+                    <button class="compass-btn ripple" onclick="app.calibrateCompass()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M21 2v6h-6"></path>
+                            <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                            <path d="M3 22v-6h6"></path>
+                            <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+                        </svg>
+                        Kalibre Et
+                    </button>
+                    <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="22" y1="12" x2="18" y2="12"></line>
+                            <line x1="6" y1="12" x2="2" y2="12"></line>
+                            <line x1="12" y1="6" x2="12" y2="2"></line>
+                            <line x1="12" y1="22" x2="12" y2="18"></line>
+                        </svg>
+                        Konumumu Bul
+                    </button>
+                </div>
+            </div>
+        `;
+        setTimeout(() => {
+            this.createCompassMarkings();
+            this.startCompass();
+            this.setupCompassInteractions();
+        }, 100);
+        break;
+        
+    case 'location':
+        featureTitle = 'Konum';
+        featureContent = `
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="22" y1="12" x2="18" y2="12"></line>
+                        <line x1="6" y1="12" x2="2" y2="12"></line>
+                        <line x1="12" y1="6" x2="12" y2="2"></line>
+                        <line x1="12" y1="22" x2="12" y2="18"></line>
+                    </svg>
+                    Konumumu Bul
+                </button>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Konum Bilgileri</h3>
+                <div id="location-details">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Konum bilgileri alınıyor...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Konum Geçmişi</h3>
+                <p>Yakında eklenecek</p>
+            </div>
+        `;
+        setTimeout(() => {
+            this.getCurrentLocation();
+            this.updateLocationDetails();
+        }, 100);
+        break;
+        
+    case 'navigation':
+        featureTitle = 'Navigasyon';
+        featureContent = `
+            <div class="settings-section">
+                <h3>Hedef Noktaya Yönlendirme</h3>
+                <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Geliştirme devam ediyor...</div>
+                </div>
+            </div>
+        `;
+        break;
+        
+    case 'altitude':
+        featureTitle = 'Yükseklik';
+        featureContent = `
+            <div class="settings-section">
+                <h3>Yükseklik Ölçümü</h3>
+                <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Geliştirme devam ediyor...</div>
+                </div>
+            </div>
+        `;
+        break;
+        
+    case 'weather':
+        featureTitle = 'Hava Durumu';
+        featureContent = `
+            <div class="settings-section">
+                <h3>Hava Durumu Bilgisi</h3>
+                <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Geliştirme devam ediyor...</div>
+                </div>
+            </div>
+        `;
+        break;
+        
+    case 'save':
+        featureTitle = 'Konum Kaydetme';
+        featureContent = `
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="compass-btn primary ripple" onclick="app.saveCurrentLocation()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Mevcut Konumu Kaydet
+                </button>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Kaydedilmiş Konumlar</h3>
+                <div id="saved-locations-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Konumlar yükleniyor...</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        setTimeout(() => {
+            this.updateSavedLocationsList();
+        }, 100);
+        break;
+        
+    default:
+        featureTitle = 'Özellik Bulunamadı';
+        featureContent = `
+            <div class="error">
+                İstenen özellik bulunamadı.
+            </div>
+        `;
+}
+
+content.innerHTML = `
+    <div class="settings-page">
+        <div class="breadcrumb">
+            <a href="#" onclick="event.preventDefault(); history.back();">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Geri
+            </a>
+            <span>/</span>
+            <span>${featureTitle}</span>
+        </div>
+        
+        <div class="settings-header">
+            <h1 class="settings-title">${featureTitle}</h1>
+            <p class="settings-description">
+                ${this.getFeatureDescription(feature)}
+            </p>
+        </div>
+        
+        ${featureContent}
+    </div>
+`;
+}
+
+getFeatureDescription(feature) {
+switch(feature) {
+    case 'compass':
+        return 'Hassas dijital pusula ile yönünüzü kolayca bulun';
+    case 'location':
+        return 'GPS ile tam konumunuzu öğrenin ve koordinatları görüntüleyin';
+    case 'navigation':
+        return 'Hedef noktaya yönlendirme ve mesafe hesaplama';
+    case 'altitude':
+        return 'Deniz seviyesinden yüksekliğinizi ölçün';
+    case 'weather':
+        return 'Bulunduğunuz konumun güncel hava durumu bilgisi';
+    case 'save':
+        return 'Önemli konumları kaydedin ve daha sonra kullanın';
+    default:
+        return '';
+}
+}
+
+updateLocationDetails() {
+const locationDetails = document.getElementById('location-details');
+if (!locationDetails) return;
+
+if (!this.currentLocation) {
+    locationDetails.innerHTML = `
+        <div class="text-center" style="padding: 1rem;">
+            <p>Henüz konum bilgisi alınmadı.</p>
+            <button class="compass-btn primary ripple mt-4" onclick="app.getCurrentLocation()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="22" y1="12" x2="18" y2="12"></line>
+                    <line x1="6" y1="12" x2="2" y2="12"></line>
+                    <line x1="12" y1="6" x2="12" y2="2"></line>
+                    <line x1="12" y1="22" x2="12" y2="18"></line>
+                </svg>
+                Konumumu Bul
+            </button>
+        </div>
+    `;
+    return;
+}
+
+const { latitude, longitude, accuracy, altitude, altitudeAccuracy, timestamp } = this.currentLocation;
+
+locationDetails.innerHTML = `
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Koordinatlar
+        </div>
+        <div style="text-align: right; font-weight: 500;">
+            ${latitude.toFixed(6)}, ${longitude.toFixed(6)}
         </div>
     </div>
     
-    <div class="degree-display" id="degree-display">0°</div>
-    <div class="direction-name" id="direction-name">North</div>
-    
-    <div class="calibration-message" id="calibration-message">
-        Please move your device in a figure-8 pattern to calibrate the compass
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 8v8"></path>
+                <path d="M8 12h8"></path>
+            </svg>
+            Doğruluk
+        </div>
+        <div style="text-align: right;">
+            ±${Math.round(accuracy)} m
+        </div>
     </div>
+    
+    ${altitude !== null ? `
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <path d="M2 22h20"></path>
+                <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
+            </svg>
+            Yükseklik
+        </div>
+        <div style="text-align: right;">
+            ${Math.round(altitude)} m
+            ${altitudeAccuracy ? `<span style="font-size: 0.8em; opacity: 0.7;">(±${Math.round(altitudeAccuracy)} m)</span>` : ''}
+        </div>
+    </div>
+    ` : ''}
+    
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Zaman
+        </div>
+        <div style="text-align: right;">
+            ${new Date(timestamp).toLocaleString()}
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 1rem;">
+        <button class="compass-btn ripple" onclick="app.saveCurrentLocation()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Bu Konumu Kaydet
+        </button>
+    </div>
+`;
+}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const compassRose = document.getElementById('compass-rose');
-            const degreeDisplay = document.getElementById('degree-display');
-            const directionName = document.getElementById('direction-name');
-            const statusElement = document.getElementById('status');
-            const calibrationMessage = document.getElementById('calibration-message');
-            const compassMarkings = document.getElementById('compass-markings');
-            
-            // Create compass markings
-            for (let i = 0; i < 360; i += 5) {
-                const marking = document.createElement('div');
-                marking.className = i % 45 === 0 ? 'marking major' : 'marking';
-                marking.style.transform = `rotate(${i}deg) translateX(-50%)`;
-                compassMarkings.appendChild(marking);
-            }
-            
-            let compassHeading = 0;
-            let isCalibrating = false;
-            
-            function getDirectionName(degrees) {
-                const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'];
-                return directions[Math.round(degrees / 22.5)];
-            }
-            
-            function handleOrientation(event) {
-                // Check if we have the deviceorientationabsolute event
-                if (event.absolute) {
-                    statusElement.textContent = "Using absolute orientation";
-                    
-                    // When the device is flat (screen facing up), we need to use a different calculation
-                    // We'll use alpha for the heading when the device is flat
-                    compassHeading = event.alpha;
-                    
-                    // Update the UI
-                    updateCompassUI(compassHeading);
-                }
-            }
-            
-            function handleMotion(event) {
-                // Check for significant motion which might indicate calibration is needed
-                const acceleration = event.accelerationIncludingGravity;
-                if (acceleration && Math.abs(acceleration.x) > 10 || Math.abs(acceleration.y) > 10) {
-                    if (!isCalibrating) {
-                        isCalibrating = true;
-                        calibrationMessage.style.display = 'block';
-                        setTimeout(() => {
-                            calibrationMessage.style.display = 'none';
-                            isCalibrating = false;
-                        }, 5000);
-                    }
-                }
-            }
-            
-            function handleDeviceOrientation(event) {
-                statusElement.textContent = "Using device orientation";
-                
-                // For devices that don't support deviceorientationabsolute
-                // We need to calculate the heading differently based on device orientation
-                
-                // Get the orientation angles
-                const alpha = event.alpha; // z-axis rotation [0, 360)
-                const beta = event.beta;   // x-axis rotation [-180, 180]
-                const gamma = event.gamma; // y-axis rotation [-90, 90]
-                
-                // Check if device is approximately flat (screen facing up)
-                const isFlat = Math.abs(beta) < 20 && Math.abs(gamma) < 20;
-                
-                if (isFlat) {
-                    // When the device is flat and screen is facing up,
-                    // we can use alpha directly as the heading
-                    compassHeading = alpha;
-                } else {
-                    // When the device is not flat, we need a more complex calculation
-                    // Convert degrees to radians
-                    const alphaRad = alpha * (Math.PI / 180);
-                    const betaRad = beta * (Math.PI / 180);
-                    const gammaRad = gamma * (Math.PI / 180);
-                    
-                    // Calculate heading
-                    const cB = Math.cos(betaRad);
-                    const sB = Math.sin(betaRad);
-                    const cG = Math.cos(gammaRad);
-                    const sG = Math.sin(gammaRad);
-                    
-                    // Calculate the x and y components of the magnetic field vector
-                    const x = -cB * Math.sin(alphaRad);
-                    const y = sG * sB * Math.sin(alphaRad) - cG * Math.cos(alphaRad);
-                    
-                    // Calculate the compass heading
-                    compassHeading = Math.atan2(y, x) * (180 / Math.PI);
-                    
-                    // Convert to positive degrees [0, 360)
-                    compassHeading = (compassHeading + 360) % 360;
-                }
-                
-                // Update the UI
-                updateCompassUI(compassHeading);
-            }
-            
-            function updateCompassUI(heading) {
-                // Rotate the compass rose in the opposite direction of the heading
-                compassRose.style.transform = `rotate(${-heading}deg)`;
-                
-                // Update the degree display
-                degreeDisplay.textContent = `${Math.round(heading)}°`;
-                
-                // Update the direction name
-                directionName.textContent = getDirectionName(heading);
-            }
-            
-            // Try to use the deviceorientationabsolute event if available
-            if ('ondeviceorientationabsolute' in window) {
-                window.addEventListener('deviceorientationabsolute', handleOrientation);
-                statusElement.textContent = "Using deviceorientationabsolute";
-            } else if ('ondeviceorientation' in window) {
-                // Fall back to deviceorientation
-                window.addEventListener('deviceorientation', handleDeviceOrientation);
-                statusElement.textContent = "Using deviceorientation";
-            } else {
-                statusElement.textContent = "Compass not available";
-            }
-            
-            // Listen for device motion to detect when calibration might be needed
-            if ('ondevicemotion' in window) {
-                window.addEventListener('devicemotion', handleMotion);
-            }
-            
-            // Request permission for iOS 13+ devices
-            if (typeof DeviceOrientationEvent !== 'undefined' && 
-                typeof DeviceOrientationEvent.requestPermission === 'function') {
-                
-                document.body.addEventListener('click', function() {
-                    DeviceOrientationEvent.requestPermission()
-                        .then(response => {
-                            if (response === 'granted') {
-                                if ('ondeviceorientationabsolute' in window) {
-                                    window.addEventListener('deviceorientationabsolute', handleOrientation);
-                                    statusElement.textContent = "Permission granted - using absolute";
-                                } else {
-                                    window.addEventListener('deviceorientation', handleDeviceOrientation);
-                                    statusElement.textContent = "Permission granted - using orientation";
-                                }
-                            } else {
-                                statusElement.textContent = "Permission denied";
-                            }
-                        })
-                        .catch(error => {
-                            statusElement.textContent = "Error: " + error;
-                        });
-                }, { once: true });
-                
-                statusElement.textContent = "Tap screen for compass access";
-            }
-        });
-    </script>
+updateSavedLocationsList() {
+const savedLocationsList = document.getElementById('saved-locations-list');
+if (!savedLocationsList) return;
+
+if (this.savedLocations.length === 0) {
+    savedLocationsList.innerHTML = `
+        <div class="text-center" style="padding: 1rem;">
+            <p>Henüz kaydedilmiş konum bulunmuyor.</p>
+        </div>
+    `;
+    return;
+}
+
+let locationsHTML = '';
+this.savedLocations.forEach((location, index) => {
+    locationsHTML += `
+        <div class="setting-item">
+            <div>
+                <div class="setting-label">
+                    ${location.name || 'Kaydedilmiş Konum'}
+                </div>
+                <div class="setting-description">
+                    ${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}
+                    <br>
+                    <span style="font-size: 0.8em; opacity: 0.7;">
+                        ${new Date(location.timestamp).toLocaleString()}
+                    </span>
+                </div>
+            </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                <button class="compass-btn" onclick="app.navigateToLocation(${index})">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                    </svg>
+                </button>
+                <button class="compass-btn" onclick="app.deleteLocation(${index})">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    `;
+});
+
+savedLocationsList.innerHTML = locationsHTML;
+}
+
+saveCurrentLocation() {
+if (!this.currentLocation) {
+    this.showError('Kaydedilecek konum bilgisi bulunamadı.');
+    this.getCurrentLocation();
+    return;
+}
+
+const locationName = prompt('Bu konum için bir isim girin:');
+if (locationName === null) return; // User cancelled
+
+const newLocation = {
+    ...this.currentLocation,
+    name: locationName || `Konum ${this.savedLocations.length + 1}`
+};
+
+this.savedLocations.push(newLocation);
+localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
+
+this.showNotification('Konum başarıyla kaydedildi');
+this.updateSavedLocationsList();
+}
+
+deleteLocation(index) {
+if (confirm('Bu konumu silmek istediğinizden emin misiniz?')) {
+    this.savedLocations.splice(index, 1);
+    localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
+    this.showNotification('Konum silindi');
+    this.updateSavedLocationsList();
+}
+}
+
+navigateToLocation(index) {
+const location = this.savedLocations[index];
+if (!location) return;
+
+// This is a placeholder for future navigation functionality
+this.showNotification('Navigasyon özelliği yakında eklenecek');
+}
+
+toggleSetting(setting) {
+this.settings[setting] = !this.settings[setting];
+localStorage.setItem(setting, this.settings[setting]);
+
+const toggleSwitch = document.querySelector(`.setting-item:has(.setting-label:contains('${setting}')) .toggle-switch`);
+if (toggleSwitch) {
+    toggleSwitch.classList.toggle('active', this.settings[setting]);
+}
+
+this.showNotification(`${setting} ayarı ${this.settings[setting] ? 'etkinleştirildi' : 'devre dışı bırakıldı'}`);
+}
+
+showNotification(message) {
+if (!this.settings.showNotifications) return;
+
+const notification = document.createElement('div');
+notification.className = 'notification';
+notification.innerHTML = message;
+
+document.body.appendChild(notification);
+
+setTimeout(() => {
+    notification.classList.add('show');
+}, 10);
+
+setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => {
+        notification.remove();
+    }, 300);
+}, 3000);
+}
+
+showError(message) {
+const errorElement = document.createElement('div');
+errorElement.className = 'error';
+errorElement.innerHTML = message;
+
+// Find a good place to show the error
+const content = document.getElementById('content');
+if (content) {
+    content.prepend(errorElement);
+} else {
+    document.body.appendChild(errorElement);
+}
+
+setTimeout(() => {
+    errorElement.remove();
+}, 5000);
+}
+}
+
+// Initialize the app
+const app = new PusulaApp();
+
+// Handle route on page load
+app.handleRoute();
+
+// Add ripple effect to elements
+document.addEventListener('DOMContentLoaded', () => {
+// Add CSS for new elements
+const style = document.createElement('style');
+style.textContent = `
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px var(--shadow-dark);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    max-width: 90%;
+    border: 1px solid var(--border-color);
+}
+
+.notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.permission-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.permission-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 90%;
+    width: 400px;
+    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.permission-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.permission-description {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.permission-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.permission-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 1rem;
+}
+
+.permission-btn.primary {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+}
+
+.permission-btn.secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.permission-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+.compass-calibration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.calibration-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 90%;
+    width: 400px;
+    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.calibration-animation {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calibration-phone {
+    width: 60px;
+    height: 100px;
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    position: relative;
+    animation: calibratePhone 4s infinite ease-in-out;
+}
+
+.calibration-phone::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+.calibration-phone::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+}
+
+@keyframes calibratePhone {
+    0%, 100% { transform: rotate(0deg) translateX(0); }
+    25% { transform: rotate(45deg) translateX(20px); }
+    50% { transform: rotate(-45deg) translateX(-20px); }
+    75% { transform: rotate(45deg) translateX(20px); }
+}
+
+.calibration-progress {
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.calibration-bar {
+    height: 100%;
+    background: var(--primary-color);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.compass-style-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.compass-style-option {
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: calc(0.9rem * var(--font-size-multiplier));
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.compass-style-option.active {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    transform: scale(1.05);
+}
+
+.compass-style-option:hover:not(.active) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+.compass-style-preview {
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    position: relative;
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.compass-style-preview::before {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    position: relative;
+}
+
+.compass-style-preview::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 20px;
+    background: var(--compass-accent);
+    top: 10px;
+    transform-origin: bottom center;
+}
+
+.compass-style-preview.classic::after {
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.compass-style-preview.modern::after {
+    width: 6px;
+    background: linear-gradient(to bottom, var(--compass-accent), transparent);
+}
+
+.compass-style-preview.minimal::after {
+    width: 2px;
+    height: 60%;
+}
+
+.compass-style-preview.vintage {
+    background: var(--bg-tertiary) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><circle cx="150" cy="150" r="140" fill="none" stroke="%23666" stroke-width="1"/></svg>') center/cover no-repeat;
+}
+
+.compass-style-preview.digital::after {
+    display: none;
+}
+
+.compass-style-preview.digital::before {
+    content: '0°';
+    background: none;
+    font-family: monospace;
+    font-weight: bold;
+    color: var(--compass-accent);
+}
+
+.compass-markings {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.compass-marking {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    transform-origin: bottom center;
+}
+
+.compass-marking.major {
+    height: 15px;
+    background: var(--compass-color);
+    width: 2px;
+}
+
+.compass-marking.minor {
+    height: 8px;
+    background: var(--text-muted);
+    width: 1px;
+}
+
+.compass-degree {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--compass-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.compass.active {
+    transform: scale(1.05);
+    box-shadow: 0 8px 32px var(--shadow-dark);
+}
+
+.compass-needle.active {
+    animation: pulseNeedle 1s infinite alternate;
+}
+
+@keyframes pulseNeedle {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+/* Compass styles */
+:root[data-compass-style="classic"] .compass-needle {
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+:root[data-compass-style="modern"] .compass-needle {
+    clip-path: none;
+    width: 6px;
+    background: linear-gradient(to bottom, var(--compass-accent), transparent);
+}
+
+:root[data-compass-style="minimal"] .compass-needle {
+    clip-path: none;
+    width: 2px;
+    height: 60%;
+}
+
+:root[data-compass-style="vintage"] .compass {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><circle cx="150" cy="150" r="140" fill="none" stroke="%23666" stroke-width="1"/></svg>');
+}
+
+:root[data-compass-style="digital"] .compass-needle {
+    display: none;
+}
+
+:root[data-compass-style="digital"] .compass-heading {
+    font-family: monospace;
+    font-size: 2.5rem;
+}
+`;
+document.head.appendChild(style);
+});
+</script>
 </body>
 </html>
