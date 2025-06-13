@@ -178,6 +178,92 @@
 --compass-accent: #ec4899;
 }
 
+/* Pusula Stilleri */
+:root[data-compass-style="classic"] {
+--compass-bg: var(--bg-secondary);
+--compass-border: 2px solid var(--border-color);
+--compass-shadow: 0 4px 20px var(--shadow-dark);
+--compass-face-bg: transparent;
+--compass-rose-opacity: 1;
+--compass-needle-width: 6px;
+--compass-needle-color: var(--compass-accent);
+--compass-needle-shadow: 0 0 10px var(--compass-accent);
+--compass-center-size: 20px;
+--compass-center-bg: var(--bg-tertiary);
+--compass-center-border: 2px solid var(--border-color);
+--compass-marking-color: var(--compass-color);
+--compass-marking-opacity: 0.5;
+--compass-direction-size: 1.2rem;
+}
+
+:root[data-compass-style="modern"] {
+--compass-bg: var(--bg-secondary);
+--compass-border: none;
+--compass-shadow: 0 10px 30px var(--shadow-dark);
+--compass-face-bg: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+--compass-rose-opacity: 0.9;
+--compass-needle-width: 8px;
+--compass-needle-color: var(--primary-color);
+--compass-needle-shadow: 0 0 15px var(--primary-color);
+--compass-center-size: 24px;
+--compass-center-bg: var(--primary-color);
+--compass-center-border: none;
+--compass-marking-color: var(--compass-color);
+--compass-marking-opacity: 0.7;
+--compass-direction-size: 1.3rem;
+}
+
+:root[data-compass-style="minimal"] {
+--compass-bg: transparent;
+--compass-border: 1px solid var(--border-color);
+--compass-shadow: none;
+--compass-face-bg: transparent;
+--compass-rose-opacity: 0.7;
+--compass-needle-width: 4px;
+--compass-needle-color: var(--compass-accent);
+--compass-needle-shadow: none;
+--compass-center-size: 16px;
+--compass-center-bg: var(--bg-tertiary);
+--compass-center-border: 1px solid var(--border-color);
+--compass-marking-color: var(--compass-color);
+--compass-marking-opacity: 0.3;
+--compass-direction-size: 1rem;
+}
+
+:root[data-compass-style="vintage"] {
+--compass-bg: #d2b48c;
+--compass-border: 4px double #8b4513;
+--compass-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+--compass-face-bg: radial-gradient(#e6d2b5, #c19a6b);
+--compass-rose-opacity: 1;
+--compass-needle-width: 7px;
+--compass-needle-color: #8b0000;
+--compass-needle-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
+--compass-center-size: 22px;
+--compass-center-bg: #8b4513;
+--compass-center-border: 2px solid #d2b48c;
+--compass-marking-color: #5d4037;
+--compass-marking-opacity: 0.8;
+--compass-direction-size: 1.4rem;
+}
+
+:root[data-compass-style="digital"] {
+--compass-bg: #000;
+--compass-border: 2px solid #333;
+--compass-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+--compass-face-bg: radial-gradient(circle at center, #111, #000);
+--compass-rose-opacity: 0.8;
+--compass-needle-width: 5px;
+--compass-needle-color: #0ff;
+--compass-needle-shadow: 0 0 15px #0ff;
+--compass-center-size: 18px;
+--compass-center-bg: #0ff;
+--compass-center-border: none;
+--compass-marking-color: #0ff;
+--compass-marking-opacity: 0.6;
+--compass-direction-size: 1.1rem;
+}
+
 /* Remove default blue highlight on touch */
 * {
 -webkit-tap-highlight-color: transparent;
@@ -394,17 +480,22 @@ max-width: 400px;
 width: 300px;
 height: 300px;
 border-radius: 50%;
-background: var(--bg-secondary);
-border: 2px solid var(--border-color);
+background: var(--compass-bg);
+border: var(--compass-border);
 position: relative;
-box-shadow: 0 4px 20px var(--shadow-dark);
+box-shadow: var(--compass-shadow);
 margin-bottom: 2rem;
-transition: all 0.3s ease;
+transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+cursor: pointer;
 }
 
 .compass:hover {
-transform: scale(1.02);
+transform: scale(1.05);
 box-shadow: 0 8px 32px var(--shadow-dark);
+}
+
+.compass:active {
+transform: scale(0.98);
 }
 
 .compass-face {
@@ -416,6 +507,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 overflow: hidden;
+background: var(--compass-face-bg);
 }
 
 .compass-rose {
@@ -423,7 +515,8 @@ width: 90%;
 height: 90%;
 border-radius: 50%;
 position: relative;
-transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+opacity: var(--compass-rose-opacity);
 }
 
 .compass-direction {
@@ -435,7 +528,8 @@ align-items: center;
 justify-content: center;
 font-weight: 700;
 color: var(--compass-color);
-font-size: 1.2rem;
+font-size: var(--compass-direction-size);
+transition: all 0.3s ease;
 }
 
 .compass-direction.north {
@@ -460,22 +554,23 @@ transform: rotate(270deg);
 
 .compass-needle {
 position: absolute;
-width: 6px;
+width: var(--compass-needle-width);
 height: 50%;
-background: var(--compass-accent);
+background: var(--compass-needle-color);
 top: 0;
 left: 50%;
 transform-origin: bottom center;
 transform: translateX(-50%);
 clip-path: polygon(50% 0, 100% 100%, 0 100%);
 z-index: 10;
-transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+box-shadow: var(--compass-needle-shadow);
 }
 
 .compass-needle::after {
 content: '';
 position: absolute;
-width: 6px;
+width: 100%;
 height: 50%;
 background: var(--compass-color);
 bottom: -100%;
@@ -485,10 +580,10 @@ clip-path: polygon(0 0, 100% 0, 50% 100%);
 
 .compass-center {
 position: absolute;
-width: 20px;
-height: 20px;
-background: var(--bg-tertiary);
-border: 2px solid var(--border-color);
+width: var(--compass-center-size);
+height: var(--compass-center-size);
+background: var(--compass-center-bg);
+border: var(--compass-center-border);
 border-radius: 50%;
 z-index: 20;
 }
@@ -725,6 +820,78 @@ position: relative;
 .theme-preview.purple { background: linear-gradient(135deg, #581c87, #8b5cf6); }
 .theme-preview.rose { background: linear-gradient(135deg, #881337, #ec4899); }
 
+/* Pusula Stili Önizlemeleri */
+.compass-style-preview {
+width: 100%;
+height: 80px;
+border-radius: 8px;
+margin-bottom: 0.5rem;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+}
+
+.compass-style-preview.classic {
+background: var(--bg-secondary);
+border: 2px solid var(--border-color);
+}
+
+.compass-style-preview.modern {
+background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+box-shadow: 0 4px 10px var(--shadow-dark);
+}
+
+.compass-style-preview.minimal {
+background: transparent;
+border: 1px solid var(--border-color);
+}
+
+.compass-style-preview.vintage {
+background: radial-gradient(#e6d2b5, #c19a6b);
+border: 4px double #8b4513;
+}
+
+.compass-style-preview.digital {
+background: radial-gradient(circle at center, #111, #000);
+border: 2px solid #333;
+box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.compass-style-preview::after {
+content: '';
+position: absolute;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+background: var(--primary-color);
+}
+
+.compass-style-preview.classic::after {
+background: var(--compass-accent);
+}
+
+.compass-style-preview.modern::after {
+background: var(--primary-color);
+box-shadow: 0 0 10px var(--primary-color);
+}
+
+.compass-style-preview.minimal::after {
+background: var(--compass-accent);
+width: 20px;
+height: 20px;
+}
+
+.compass-style-preview.vintage::after {
+background: #8b0000;
+}
+
+.compass-style-preview.digital::after {
+background: #0ff;
+box-shadow: 0 0 15px #0ff;
+}
+
 .setting-item {
 display: flex;
 align-items: center;
@@ -815,6 +982,37 @@ color: var(--bg-primary);
 .font-size-option:hover:not(.active) {
 background: var(--bg-tertiary);
 transform: translateY(-2px);
+}
+
+.compass-style-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+gap: 1rem;
+margin-top: 0.5rem;
+}
+
+.compass-style-option {
+padding: 0.75rem;
+border: 2px solid var(--border-color);
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.3s ease;
+background: var(--bg-primary);
+color: var(--text-primary);
+font-size: calc(0.9rem * var(--font-size-multiplier));
+text-align: center;
+}
+
+.compass-style-option.active {
+border-color: var(--primary-color);
+background: var(--primary-color);
+color: var(--bg-primary);
+}
+
+.compass-style-option:hover:not(.active) {
+background: var(--bg-tertiary);
+transform: translateY(-2px);
+box-shadow: 0 4px 12px var(--shadow-dark);
 }
 
 .breadcrumb {
@@ -963,8 +1161,8 @@ top: 50%;
 left: 50%;
 transform-origin: 50% 0;
 width: 1px;
-background-color: var(--compass-color);
-opacity: 0.5;
+background-color: var(--compass-marking-color);
+opacity: var(--compass-marking-opacity);
 }
 
 .compass-marking.major {
@@ -1012,6 +1210,27 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 transition: all 0.3s ease;
+}
+
+/* Compass animations */
+@keyframes compass-pulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.02); }
+100% { transform: scale(1); }
+}
+
+@keyframes needle-glow {
+0% { box-shadow: 0 0 5px var(--compass-needle-color); }
+50% { box-shadow: 0 0 15px var(--compass-needle-color); }
+100% { box-shadow: 0 0 5px var(--compass-needle-color); }
+}
+
+.compass.active {
+animation: compass-pulse 2s infinite ease-in-out;
+}
+
+.compass-needle.active {
+animation: needle-glow 2s infinite ease-in-out;
 }
 
 .permission-overlay {
@@ -1145,6 +1364,24 @@ height: 100%;
 background-color: var(--primary-color);
 width: 0%;
 transition: width 0.3s ease;
+}
+
+/* Compass interaction effects */
+.compass-interaction {
+position: absolute;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+background: radial-gradient(circle at center, transparent, rgba(255, 255, 255, 0.1));
+opacity: 0;
+transform: scale(0.8);
+transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+pointer-events: none;
+}
+
+.compass:active .compass-interaction {
+opacity: 0.3;
+transform: scale(1);
 }
 
 @keyframes slideDown {
@@ -1361,6 +1598,10 @@ text-align: center;
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
 }
+
+.compass-style-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
 }
 
 @media (max-width: 480px) {
@@ -1427,7 +1668,7 @@ text-align: center;
 }
 </style>
 </head>     
-<body data-theme="dark">
+<body data-theme="dark" data-compass-style="classic">
 <!-- Header -->
 <header class="header">
 <div class="header-content">
@@ -1487,10 +1728,10 @@ text-align: center;
 </div>
 
 <div class="compass-container">
-<div class="compass">
+<div class="compass" id="compass">
     <div class="compass-face">
         <div class="compass-markings" id="compass-markings"></div>
-        <div class="compass-rose">
+        <div class="compass-rose" id="compass-rose">
             <div class="compass-direction north">N</div>
             <div class="compass-direction east">E</div>
             <div class="compass-direction south">S</div>
@@ -1501,6 +1742,7 @@ text-align: center;
         <div class="tilt-indicator">
             <div class="tilt-bubble" id="tilt-bubble"></div>
         </div>
+        <div class="compass-interaction"></div>
     </div>
 </div>
 <div class="compass-info">
@@ -1545,7 +1787,7 @@ text-align: center;
 <div class="feature-card ripple" onclick="app.showFeature('location')">
     <div class="feature-icon">
         <svg class="icon" viewBox="0 0 24 24">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
         </svg>
     </div>
@@ -1607,7 +1849,8 @@ this.settings = {
     fontSize: localStorage.getItem('fontSize') || 'normal',
     useHighAccuracy: localStorage.getItem('useHighAccuracy') !== 'false',
     showNotifications: localStorage.getItem('showNotifications') !== 'false',
-    useCelsius: localStorage.getItem('useCelsius') !== 'false'
+    useCelsius: localStorage.getItem('useCelsius') !== 'false',
+    compassStyle: localStorage.getItem('compassStyle') || 'classic'
 };
 this.savedLocations = JSON.parse(localStorage.getItem('savedLocations') || '[]');
 this.currentHeading = 0;
@@ -1617,11 +1860,15 @@ this.hasPermission = false;
 this.isCalibrating = false;
 this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 this.isAndroid = /android/i.test(navigator.userAgent);
-this.compassFilter = this.createLowPassFilter(0.2);
+this.compassFilter = this.createLowPassFilter(0.1); // Daha yumuşak hareket için değeri düşürdük
 this.tiltFilter = this.createLowPassFilter(0.1);
 this.lastAlpha = null;
 this.lastBeta = null;
 this.lastGamma = null;
+this.isCompassActive = false;
+this.compassTouchStartX = 0;
+this.compassTouchStartY = 0;
+this.compassRotation = 0;
 this.init();
 }
 
@@ -1629,10 +1876,14 @@ async init() {
 try {
     this.setTheme(this.currentTheme);
     this.setFontSize(this.settings.fontSize);
+    this.setCompassStyle(this.settings.compassStyle);
     this.setupEventListeners();
     this.createCompassMarkings();
     this.checkPermissions();
     this.getCurrentLocation();
+    
+    // Pusula etkileşimlerini etkinleştir
+    this.setupCompassInteractions();
 } catch (error) {
     console.error('Initialization error:', error);
     this.showError('Uygulama başlatılırken bir hata oluştu.');
@@ -1640,7 +1891,7 @@ try {
 
 // Add ripple effect to interactive elements
 setTimeout(() => {
-    const interactiveElements = document.querySelectorAll('button, a, .feature-card, .setting-item, .theme-option, .font-size-option');
+    const interactiveElements = document.querySelectorAll('button, a, .feature-card, .setting-item, .theme-option, .font-size-option, .compass-style-option');
     interactiveElements.forEach(element => {
         if (!element.classList.contains('ripple')) {
             element.classList.add('ripple');
@@ -1660,6 +1911,68 @@ return function(value) {
     lastValue = filteredValue;
     return filteredValue;
 };
+}
+
+setupCompassInteractions() {
+const compass = document.getElementById('compass');
+if (!compass) return;
+
+// Pusula üzerine tıklandığında animasyon ekle
+compass.addEventListener('click', () => {
+    this.toggleCompassActive();
+});
+
+// Dokunma etkileşimleri
+compass.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    this.compassTouchStartX = touch.clientX;
+    this.compassTouchStartY = touch.clientY;
+    compass.classList.add('active');
+    document.getElementById('compass-needle').classList.add('active');
+});
+
+compass.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - this.compassTouchStartX;
+    const deltaY = touch.clientY - this.compassTouchStartY;
+    
+    // Dokunma hareketine göre pusula gülünü döndür
+    const compassRose = document.getElementById('compass-rose');
+    if (compassRose) {
+        this.compassRotation += deltaX * 0.5;
+        compassRose.style.transform = `rotate(${this.compassRotation}deg)`;
+    }
+    
+    // Başlangıç noktasını güncelle
+    this.compassTouchStartX = touch.clientX;
+    this.compassTouchStartY = touch.clientY;
+});
+
+compass.addEventListener('touchend', () => {
+    // Pusula gülünü yavaşça gerçek yöne döndür
+    setTimeout(() => {
+        this.updateCompassDisplay(this.currentHeading, this.lastBeta, this.lastGamma);
+        compass.classList.remove('active');
+        document.getElementById('compass-needle').classList.remove('active');
+    }, 500);
+});
+}
+
+toggleCompassActive() {
+const compass = document.getElementById('compass');
+const needle = document.getElementById('compass-needle');
+
+
+this.isCompassActive = !this.isCompassActive;
+
+
+if (this.isCompassActive) {
+    compass.classList.add('active');
+    needle.classList.add('active');
+} else {
+    compass.classList.remove('active');
+    needle.classList.remove('active');
+}
 }
 
 createCompassMarkings() {
@@ -1747,1035 +2060,718 @@ this.showError('Pusula için gerekli izinler olmadan uygulama doğru çalışmay
 }
 
 removePermissionPrompt() {
-    const overlay = document.querySelector('.permission-overlay');
-    if (overlay) {
-        overlay.remove();
-    }
+const overlay = document.querySelector('.permission-overlay');
+if (overlay) {
+    overlay.remove();
+}
 }
 
 startCompass() {
-    if (!this.hasPermission) return;
-    
-    window.addEventListener('deviceorientation', this.handleOrientation.bind(this), true);
+if (!this.hasPermission) return;
+
+window.addEventListener('deviceorientation', this.handleOrientation.bind(this), true);
+
+// Pusula animasyonunu başlat
+const compass = document.getElementById('compass');
+if (compass) {
+    compass.classList.add('active');
+    setTimeout(() => {
+        compass.classList.remove('active');
+    }, 2000);
+}
 }
 
 handleOrientation(event) {
-    if (!event.alpha && event.alpha !== 0) {
-        this.showError('Pusula verisi alınamıyor. Cihazınızda pusula sensörü olmayabilir.');
-        return;
-    }
+if (!event.alpha && event.alpha !== 0) {
+    this.showError('Pusula verisi alınamıyor. Cihazınızda pusula sensörü olmayabilir.');
+    return;
+}
 
-    // Get orientation data
-    let alpha = event.alpha; // z-axis rotation [0,360)
-    const beta = event.beta;  // x-axis rotation [-180,180]
-    const gamma = event.gamma; // y-axis rotation [-90,90]
-    
-    // Apply low-pass filter to reduce jitter
-    if (this.lastAlpha !== null) {
-        alpha = this.compassFilter(alpha);
-    }
-    
-    // Store last values
-    this.lastAlpha = alpha;
-    this.lastBeta = beta;
-    this.lastGamma = gamma;
-    
-    // Calculate heading based on device orientation
-    let heading = 0;
-    
-    // Different calculation for iOS vs Android
-    if (this.isIOS) {
-        // iOS devices: alpha is measured clockwise from north
-        heading = 360 - alpha;
-    } else {
-        // Android devices: alpha is measured counterclockwise from west
-        heading = alpha;
-    }
-    
-    // Ensure heading is between 0-360
-    heading = (heading + 360) % 360;
-    
-    // Update compass display
-    this.updateCompassDisplay(heading, beta, gamma);
+// Get orientation data
+let alpha = event.alpha; // z-axis rotation [0,360)
+const beta = event.beta;  // x-axis rotation [-180,180]
+const gamma = event.gamma; // y-axis rotation [-90,90]
+
+// Apply low-pass filter to reduce jitter
+if (this.lastAlpha !== null) {
+    alpha = this.compassFilter(alpha);
+}
+
+// Store last values
+this.lastAlpha = alpha;
+this.lastBeta = beta;
+this.lastGamma = gamma;
+
+// Calculate heading based on device orientation
+let heading = 0;
+
+// Different calculation for iOS vs Android
+if (this.isIOS) {
+    // iOS devices: alpha is measured clockwise from north
+    heading = 360 - alpha;
+} else {
+    // Android devices: alpha is measured counterclockwise from west
+    heading = alpha;
+}
+
+// Ensure heading is between 0-360
+heading = (heading + 360) % 360;
+
+// Update compass display with smooth animation
+this.updateCompassDisplay(heading, beta, gamma);
 }
 
 updateCompassDisplay(heading, beta, gamma) {
-    // Update heading display
-    const headingElement = document.getElementById('compass-heading');
-    if (headingElement) {
-        headingElement.textContent = `${Math.round(heading)}°`;
-    }
-    
-    // Update compass rose rotation
-    const compassRose = document.querySelector('.compass-rose');
-    if (compassRose) {
-        compassRose.style.transform = `rotate(${heading}deg)`;
-    }
-    
-    // Update tilt bubble position
-    if (beta !== null && gamma !== null) {
-        const tiltBubble = document.getElementById('tilt-bubble');
-        if (tiltBubble) {
-            // Apply low-pass filter to tilt values
-            const filteredBeta = this.tiltFilter(beta);
-            const filteredGamma = this.tiltFilter(gamma);
-            
-            // Calculate position based on tilt (limit to edges of container)
-            const maxOffset = 40; // Maximum pixel offset from center
-            const xOffset = Math.max(-maxOffset, Math.min(maxOffset, filteredGamma * 2));
-            const yOffset = Math.max(-maxOffset, Math.min(maxOffset, filteredBeta * 2));
-            
-            tiltBubble.style.transform = `translate(calc(-50% + ${xOffset}px), calc(-50% + ${yOffset}px))`;
-            
-            // Change color based on how level the device is
-            const tiltAmount = Math.sqrt(filteredBeta * filteredBeta + filteredGamma * filteredGamma);
-            if (tiltAmount < 5) {
-                tiltBubble.style.backgroundColor = 'var(--primary-color)';
-            } else {
-                tiltBubble.style.backgroundColor = 'var(--compass-accent)';
-            }
+// Store current heading
+this.currentHeading = heading;
+
+// Update heading display
+const headingElement = document.getElementById('compass-heading');
+if (headingElement) {
+    headingElement.textContent = `${Math.round(heading)}°`;
+}
+
+// Update compass rose rotation with smooth animation
+const compassRose = document.querySelector('.compass-rose');
+if (compassRose && !this.isCompassActive) { // Sadece aktif değilse güncelle
+    compassRose.style.transform = `rotate(${heading}deg)`;
+}
+
+// Update tilt bubble position
+if (beta !== null && gamma !== null) {
+    const tiltBubble = document.getElementById('tilt-bubble');
+    if (tiltBubble) {
+        // Apply low-pass filter to tilt values
+        const filteredBeta = this.tiltFilter(beta);
+        const filteredGamma = this.tiltFilter(gamma);
+        
+        // Calculate position based on tilt (limit to edges of container)
+        const maxOffset = 40; // Maximum pixel offset from center
+        const xOffset = Math.max(-maxOffset, Math.min(maxOffset, filteredGamma * 2));
+        const yOffset = Math.max(-maxOffset, Math.min(maxOffset, filteredBeta * 2));
+        
+        tiltBubble.style.transform = `translate(calc(-50% + ${xOffset}px), calc(-50% + ${yOffset}px))`;
+        
+        // Change color based on how level the device is
+        const tiltAmount = Math.sqrt(filteredBeta * filteredBeta + filteredGamma * filteredGamma);
+        if (tiltAmount < 5) {
+            tiltBubble.style.backgroundColor = 'var(--primary-color)';
+        } else {
+            tiltBubble.style.backgroundColor = 'var(--compass-accent)';
         }
     }
+}
 }
 
 calibrateCompass() {
-    if (this.isCalibrating) return;
-    
-    this.isCalibrating = true;
-    
-    const overlay = document.createElement('div');
-    overlay.className = 'compass-calibration';
-    overlay.innerHTML = `
-        <div class="calibration-content">
-            <h2 class="permission-title">Pusula Kalibrasyonu</h2>
-            <div class="calibration-animation">
-                <div class="calibration-phone"></div>
-            </div>
-            <p class="permission-description">
-                Lütfen cihazınızı elinizde tutarak 8 şeklinde hareket ettirin.
-                <br>
-                Bu işlem pusulanın doğru çalışması için gereklidir.
-            </p>
-            <div class="calibration-progress">
-                <div class="calibration-bar" id="calibration-bar"></div>
-            </div>
+if (this.isCalibrating) return;
+
+this.isCalibrating = true;
+
+const overlay = document.createElement('div');
+overlay.className = 'compass-calibration';
+overlay.innerHTML = `
+    <div class="calibration-content">
+        <h2 class="permission-title">Pusula Kalibrasyonu</h2>
+        <div class="calibration-animation">
+            <div class="calibration-phone"></div>
         </div>
-    `;
-    document.body.appendChild(overlay);
+        <p class="permission-description">
+            Lütfen cihazınızı elinizde tutarak 8 şeklinde hareket ettirin.
+            <br>
+            Bu işlem pusulanın doğru çalışması için gereklidir.
+        </p>
+        <div class="calibration-progress">
+            <div class="calibration-bar" id="calibration-bar"></div>
+        </div>
+    </div>
+`;
+document.body.appendChild(overlay);
+
+let progress = 0;
+const progressBar = document.getElementById('calibration-bar');
+
+const calibrationInterval = setInterval(() => {
+    progress += 2;
+    if (progressBar) {
+        progressBar.style.width = `${progress}%`;
+    }
     
-    let progress = 0;
-    const progressBar = document.getElementById('calibration-bar');
-    
-    const calibrationInterval = setInterval(() => {
-        progress += 2;
-        if (progressBar) {
-            progressBar.style.width = `${progress}%`;
+    if (progress >= 100) {
+        clearInterval(calibrationInterval);
+        this.isCalibrating = false;
+        overlay.remove();
+        this.showNotification('Kalibrasyon tamamlandı');
+        
+        // Pusula animasyonunu başlat
+        const compass = document.getElementById('compass');
+        const needle = document.getElementById('compass-needle');
+        if (compass && needle) {
+            compass.classList.add('active');
+            needle.classList.add('active');
+            setTimeout(() => {
+                compass.classList.remove('active');
+                needle.classList.remove('active');
+            }, 2000);
         }
         
-        if (progress >= 100) {
-            clearInterval(calibrationInterval);
-            this.isCalibrating = false;
-            overlay.remove();
-            this.showNotification('Kalibrasyon tamamlandı');
-        }
-    }, 100);
+        // Filtreleri sıfırla
+        this.compassFilter = this.createLowPassFilter(0.1);
+        this.tiltFilter = this.createLowPassFilter(0.1);
+        this.lastAlpha = null;
+        this.lastBeta = null;
+        this.lastGamma = null;
+    }
+}, 100);
 }
 
 getCurrentLocation() {
-    if (!navigator.geolocation) {
-        this.showError('Konum servisi cihazınızda desteklenmiyor.');
-        return;
-    }
-    
-    const options = {
-        enableHighAccuracy: this.settings.useHighAccuracy,
-        timeout: 10000,
-        maximumAge: 0
-    };
-    
-    this.showNotification('Konum alınıyor...');
-    
-    navigator.geolocation.getCurrentPosition(
-        this.handleLocationSuccess.bind(this),
-        this.handleLocationError.bind(this),
-        options
-    );
+if (!navigator.geolocation) {
+    this.showError('Konum servisi cihazınızda desteklenmiyor.');
+    return;
+}
+
+const options = {
+    enableHighAccuracy: this.settings.useHighAccuracy,
+    timeout: 10000,
+    maximumAge: 0
+};
+
+this.showNotification('Konum alınıyor...');
+
+navigator.geolocation.getCurrentPosition(
+    this.handleLocationSuccess.bind(this),
+    this.handleLocationError.bind(this),
+    options
+);
 }
 
 handleLocationSuccess(position) {
-    this.currentLocation = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        accuracy: position.coords.accuracy,
-        altitude: position.coords.altitude,
-        altitudeAccuracy: position.coords.altitudeAccuracy,
-        timestamp: position.timestamp
-    };
-    
-    const coordsElement = document.getElementById('compass-coordinates');
-    if (coordsElement) {
-        coordsElement.innerHTML = `
-            ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}
-            <br>
-            <span style="font-size: 0.8em; opacity: 0.7;">Doğruluk: ±${Math.round(position.coords.accuracy)} m</span>
-        `;
-    }
-    
-    this.showNotification('Konum başarıyla alındı');
+this.currentLocation = {
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude,
+    accuracy: position.coords.accuracy,
+    altitude: position.coords.altitude,
+    altitudeAccuracy: position.coords.altitudeAccuracy,
+    timestamp: position.timestamp
+};
+
+const coordsElement = document.getElementById('compass-coordinates');
+if (coordsElement) {
+    coordsElement.innerHTML = `
+        ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}
+        <br>
+        <span style="font-size: 0.8em; opacity: 0.7;">Doğruluk: ±${Math.round(position.coords.accuracy)} m</span>
+    `;
+}
+
+this.showNotification('Konum başarıyla alındı');
 }
 
 handleLocationError(error) {
-    let errorMessage = 'Konum alınamadı.';
-    
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            errorMessage = 'Konum izni reddedildi.';
-            break;
-        case error.POSITION_UNAVAILABLE:
-            errorMessage = 'Konum bilgisi mevcut değil.';
-            break;
-        case error.TIMEOUT:
-            errorMessage = 'Konum isteği zaman aşımına uğradı.';
-            break;
-    }
-    
-    this.showError(errorMessage);
+let errorMessage = 'Konum alınamadı.';
+
+switch(error.code) {
+    case error.PERMISSION_DENIED:
+        errorMessage = 'Konum izni reddedildi.';
+        break;
+    case error.POSITION_UNAVAILABLE:
+        errorMessage = 'Konum bilgisi mevcut değil.';
+        break;
+    case error.TIMEOUT:
+        errorMessage = 'Konum isteği zaman aşımına uğradı.';
+        break;
+}
+
+this.showError(errorMessage);
 }
 
 setTheme(theme) {
-    this.currentTheme = theme;
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+this.currentTheme = theme;
+document.documentElement.setAttribute('data-theme', theme);
+localStorage.setItem('theme', theme);
 
-    const themeBtn = document.querySelector('.theme-btn .icon');
-    if (themeBtn) {
-        if (theme === 'dark') {
-            themeBtn.innerHTML = `
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            `;
-        } else if (theme === 'light') {
-            themeBtn.innerHTML = `
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            `;
-        } else {
-            themeBtn.innerHTML = `
-                <circle cx="12" cy="12" r="4"></circle>
-                <path d="M12 2v2"></path>
-                <path d="M12 20v2"></path>
-                <path d="m4.93 4.93 1.41 1.41"></path>
-                <path d="m17.66 17.66 1.41 1.41"></path>
-                <path d="M2 12h2"></path>
-                <path d="M20 12h2"></path>
-                <path d="m6.34 17.66-1.41 1.41"></path>
-                <path d="m19.07 4.93-1.41 1.41"></path>
-            `;
-        }
+const themeBtn = document.querySelector('.theme-btn .icon');
+if (themeBtn) {
+    if (theme === 'dark') {
+        themeBtn.innerHTML = `
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        `;
+    } else if (theme === 'light') {
+        themeBtn.innerHTML = `
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        `;
+    } else {
+        themeBtn.innerHTML = `
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+        `;
     }
+}
+}
+
+setCompassStyle(style) {
+this.settings.compassStyle = style;
+document.documentElement.setAttribute('data-compass-style', style);
+localStorage.setItem('compassStyle', style);
+
+// Pusula animasyonunu başlat
+const compass = document.getElementById('compass');
+const needle = document.getElementById('compass-needle');
+if (compass && needle) {
+    compass.classList.add('active');
+    needle.classList.add('active');
+    setTimeout(() => {
+        compass.classList.remove('active');
+        needle.classList.remove('active');
+    }, 1000);
+}
 }
 
 toggleTheme() {
-    const themes = ['dark', 'light', 'sepia', 'blue', 'green', 'purple', 'rose'];
-    const currentIndex = themes.indexOf(this.currentTheme);
-    const nextIndex = (currentIndex + 1) % themes.length;
-    this.setTheme(themes[nextIndex]);
+const themes = ['dark', 'light', 'sepia', 'blue', 'green', 'purple', 'rose'];
+const currentIndex = themes.indexOf(this.currentTheme);
+const nextIndex = (currentIndex + 1) % themes.length;
+this.setTheme(themes[nextIndex]);
 }
 
 setFontSize(size) {
-    this.settings.fontSize = size;
-    localStorage.setItem('fontSize', size);
+this.settings.fontSize = size;
+localStorage.setItem('fontSize', size);
 
-    const multipliers = {
-        'small': 0.85,
-        'normal': 1,
-        'large': 1.15,
-        'xlarge': 1.3
-    };
+const multipliers = {
+    'small': 0.85,
+    'normal': 1,
+    'large': 1.15,
+    'xlarge': 1.3
+};
 
-    document.documentElement.style.setProperty('--font-size-multiplier', multipliers[size] || 1);
+document.documentElement.style.setProperty('--font-size-multiplier', multipliers[size] || 1);
 }
 
 setupEventListeners() {
-    window.addEventListener('hashchange', () => this.handleRoute());
+window.addEventListener('hashchange', () => this.handleRoute());
 
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('ripple')) {
-            this.createRipple(e);
-        }
-    });
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('ripple')) {
+        this.createRipple(e);
+    }
+});
 
-    document.addEventListener('touchstart', (e) => {
-        if (e.target.classList.contains('ripple')) {
-            this.createRipple(e);
-        }
-    });
+document.addEventListener('touchstart', (e) => {
+    if (e.target.classList.contains('ripple')) {
+        this.createRipple(e);
+    }
+});
 }
 
 createRipple(event) {
-    const button = event.currentTarget;
+const button = event.currentTarget;
 
-    // Don't add ripple if element is disabled
-    if (button.disabled || button.classList.contains('disabled')) {
-        return;
+// Don't add ripple if element is disabled
+if (button.disabled || button.classList.contains('disabled')) {
+    return;
+}
+
+const circle = document.createElement("span");
+const diameter = Math.max(button.clientWidth, button.clientHeight);
+const radius = diameter / 2;
+
+const rect = button.getBoundingClientRect();
+const x = event.clientX || (event.touches && event.touches[0].clientX);
+const y = event.clientY || (event.touches && event.touches[0].clientY);
+
+if (!x || !y) return;
+
+const offsetX = x - rect.left - radius;
+const offsetY = y - rect.top - radius;
+
+circle.style.width = circle.style.height = `${diameter}px`;
+circle.style.left = `${offsetX}px`;
+circle.style.top = `${offsetY}px`;
+circle.classList.add("ripple-effect");
+
+const ripple = button.getElementsByClassName("ripple-effect")[0];
+if (ripple) {
+    ripple.remove();
+}
+
+button.appendChild(circle);
+
+// Remove the ripple element after animation
+setTimeout(() => {
+    if (circle.parentNode) {
+        circle.remove();
     }
-
-    const circle = document.createElement("span");
-    const diameter = Math.max(button.clientWidth, button.clientHeight);
-    const radius = diameter / 2;
-
-    const rect = button.getBoundingClientRect();
-    const x = event.clientX || event.touches[0].clientX;
-    const y = event.clientY || event.touches[0].clientY;
-
-    const offsetX = x - rect.left - radius;
-    const offsetY = y - rect.top - radius;
-
-    circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${offsetX}px`;
-    circle.style.top = `${offsetY}px`;
-    circle.classList.add("ripple-effect");
-
-    const ripple = button.getElementsByClassName("ripple-effect")[0];
-    if (ripple) {
-        ripple.remove();
-    }
-
-    button.appendChild(circle);
-
-    // Remove the ripple element after animation
-    setTimeout(() => {
-        if (circle.parentNode) {
-            circle.remove();
-        }
-    }, 600);
+}, 600);
 }
 
 handleRoute() {
-    const hash = window.location.hash.slice(1);
+const hash = window.location.hash.slice(1);
 
-    if (!hash) {
-        this.renderHome();
-    } else if (hash === 'ayarlar') {
-        this.renderSettings();
-    } else if (hash === 'hakkinda') {
-        this.renderAboutPage();
-    } else if (hash === 'kaydedilenler') {
-        this.renderSavedLocations();
-    } else if (hash.startsWith('ozellik-')) {
-        const feature = hash.split('-')[1];
-        this.renderFeature(feature);
-    }
+if (!hash) {
+    this.renderHome();
+} else if (hash === 'ayarlar') {
+    this.renderSettings();
+} else if (hash === 'hakkinda') {
+    this.renderAboutPage();
+} else if (hash === 'kaydedilenler') {
+    this.renderSavedLocations();
+} else if (hash.startsWith('ozellik-')) {
+    const feature = hash.split('-')[1];
+    this.renderFeature(feature);
+}
 }
 
 renderHome() {
-    // Home page is already rendered in HTML
-    this.startCompass();
-    this.getCurrentLocation();
+// Home page is already rendered in HTML
+this.startCompass();
+this.getCurrentLocation();
 }
 
 showSettings() {
-    window.location.hash = 'ayarlar';
+window.location.hash = 'ayarlar';
 }
 
 showLocationSearch() {
-    // Implement location search functionality
-    this.showNotification('Konum arama özelliği yakında eklenecek');
+// Implement location search functionality
+this.showNotification('Konum arama özelliği yakında eklenecek');
 }
 
 showSavedLocations() {
-    window.location.hash = 'kaydedilenler';
+window.location.hash = 'kaydedilenler';
 }
 
 showFeature(feature) {
-    window.location.hash = `ozellik-${feature}`;
+window.location.hash = `ozellik-${feature}`;
 }
 
 renderSettings() {
-    const content = document.getElementById('content');
-    
-    // Settings page content
-    content.innerHTML = `
-        <div class="settings-page">
-            <div class="breadcrumb">
-                <a href="#" onclick="event.preventDefault(); history.back();">
-                    <svg class="icon icon-sm" viewBox="0 0 24 24">
-                        <path d="M19 12H5"></path>
-                        <path d="M12 19l-7-7 7-7"></path>
-                    </svg>
-                    Geri
-                </a>
-                <span>/</span>
-                <span>Ayarlar</span>
-            </div>
+const content = document.getElementById('content');
+
+content.innerHTML = `
+    <div class="settings-page">
+        <div class="breadcrumb">
+            <a href="#" onclick="event.preventDefault(); history.back();">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Geri
+            </a>
+            <span>/</span>
+            <span>Ayarlar</span>
+        </div>
+        
+        <div class="settings-header">
+            <h1 class="settings-title">Ayarlar</h1>
+            <p class="settings-description">Uygulama ayarlarını özelleştirin</p>
+        </div>
+        
+        <div class="settings-section">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+                Pusula Ayarları
+            </h3>
             
-            <div class="settings-header">
-                <h1 class="settings-title">Ayarlar</h1>
-                <p class="settings-description">Uygulama ayarlarını özelleştirin</p>
-            </div>
-            
-            <div class="settings-section">
-                <h3>
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                    Genel Ayarlar
-                </h3>
-                
-                <div class="setting-item">
-                    <div>
-                        <div class="setting-label">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.7071-.7071M6.34315 6.34315l-.70711-.70711m12.72796.00005-.7071.70711M6.3432 17.6569l-.70711.7071"></path>
-                                <circle cx="12" cy="12" r="4"></circle>
-                            </svg>
-                            Yüksek Doğruluk Modu
-                        </div>
-                        <div class="setting-description">
-                            Daha doğru konum bilgisi için GPS kullanır. Pil tüketimini artırabilir.
-                        </div>
-                    </div>
-                    <div class="toggle-switch ${this.settings.useHighAccuracy ? 'active' : ''}" onclick="app.toggleSetting('useHighAccuracy')"></div>
+            <div class="compass-style-grid">
+                <div class="compass-style-option ${this.settings.compassStyle === 'classic' ? 'active' : ''}" onclick="app.setCompassStyle('classic')">
+                    <div class="compass-style-preview classic"></div>
+                    Klasik
                 </div>
-                
-                <div class="setting-item">
-                    <div>
-                        <div class="setting-label">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <path d="M8 19h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"></path>
-                                <path d="M12 17v.01"></path>
-                            </svg>
-                            Bildirimler
-                        </div>
-                        <div class="setting-description">
-                            Uygulama içi bildirimleri göster
-                        </div>
-                    </div>
-                    <div class="toggle-switch ${this.settings.showNotifications ? 'active' : ''}" onclick="app.toggleSetting('showNotifications')"></div>
+                <div class="compass-style-option ${this.settings.compassStyle === 'modern' ? 'active' : ''}" onclick="app.setCompassStyle('modern')">
+                    <div class="compass-style-preview modern"></div>
+                    Modern
                 </div>
-                
-                <div class="setting-item">
-                    <div>
-                        <div class="setting-label">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
-                            </svg>
-                            Celsius Kullan
-                        </div>
-                        <div class="setting-description">
-                            Sıcaklık birimini Celsius (°C) olarak ayarla. Kapalıysa Fahrenheit (°F) kullanılır.
-                        </div>
-                    </div>
-                    <div class="toggle-switch ${this.settings.useCelsius ? 'active' : ''}" onclick="app.toggleSetting('useCelsius')"></div>
+                <div class="compass-style-option ${this.settings.compassStyle === 'minimal' ? 'active' : ''}" onclick="app.setCompassStyle('minimal')">
+                    <div class="compass-style-preview minimal"></div>
+                    Minimal
                 </div>
-            </div>
-            
-            <div class="settings-section">
-                <h3>
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.7071-.7071M6.34315 6.34315l-.70711-.70711m12.72796.00005-.7071.70711M6.3432 17.6569l-.70711.7071"></path>
-                        <circle cx="12" cy="12" r="4"></circle>
-                    </svg>
-                    Tema
-                </h3>
-                
-                <div class="theme-grid">
-                    <div class="theme-option ${this.currentTheme === 'dark' ? 'active' : ''}" onclick="app.setTheme('dark')">
-                        <div class="theme-preview dark"></div>
-                        Koyu
-                    </div>
-                    <div class="theme-option ${this.currentTheme === 'light' ? 'active' : ''}" onclick="app.setTheme('light')">
-                        <div class="theme-preview light"></div>
-                        Açık
-                    </div>
-                    <div class="theme-option ${this.currentTheme === 'sepia' ? 'active' : ''}" onclick="app.setTheme('sepia')">
-                        <div class="theme-preview sepia"></div>
-                        Sepya
-                    </div>
-                    <div class="theme-option ${this.currentTheme === 'blue' ? 'active' : ''}" onclick="app.setTheme('blue')">
-                        <div class="theme-preview blue"></div>
-                        Mavi
-                    </div>
-                    <div class="theme-option ${this.currentTheme === 'green' ? 'active' : ''}" onclick="app.setTheme('green')">
-                        <div class="theme-preview green"></div>
-                        Yeşil
-                    </div>
-                    <div class="theme-option ${this.currentTheme === 'purple' ? 'active' : ''}" onclick="app.setTheme('purple')">
-                        <div class="theme-preview purple"></div>
-                        Mor
-                    </div>
-                    <div class="theme-option ${this.currentTheme === 'rose' ? 'active' : ''}" onclick="app.setTheme('rose')">
-                        <div class="theme-preview rose"></div>
-                        Gül
-                    </div>
+                <div class="compass-style-option ${this.settings.compassStyle === 'vintage' ? 'active' : ''}" onclick="app.setCompassStyle('vintage')">
+                    <div class="compass-style-preview vintage"></div>
+                    Vintage
                 </div>
-            </div>
-            
-            <div class="settings-section">
-                <h3>
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M4 7V4h16v3"></path>
-                        <path d="M9 20h6"></path>
-                        <path d="M12 4v16"></path>
-                    </svg>
-                    Yazı Boyutu
-                </h3>
-                
-                <div class="font-size-grid">
-                    <div class="font-size-option ${this.settings.fontSize === 'small' ? 'active' : ''}" onclick="app.setFontSize('small')">
-                        Küçük
-                    </div>
-                    <div class="font-size-option ${this.settings.fontSize === 'normal' ? 'active' : ''}" onclick="app.setFontSize('normal')">
-                        Normal
-                    </div>
-                    <div class="font-size-option ${this.settings.fontSize === 'large' ? 'active' : ''}" onclick="app.setFontSize('large')">
-                        Büyük
-                    </div>
-                    <div class="font-size-option ${this.settings.fontSize === 'xlarge' ? 'active' : ''}" onclick="app.setFontSize('xlarge')">
-                        Çok Büyük
-                    </div>
+                <div class="compass-style-option ${this.settings.compassStyle === 'digital' ? 'active' : ''}" onclick="app.setCompassStyle('digital')">
+                    <div class="compass-style-preview digital"></div>
+                    Dijital
                 </div>
             </div>
         </div>
-    `;
+        
+        <div class="settings-section">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                Genel Ayarlar
+            </h3>
+            
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.7071-.7071M6.34315 6.34315l-.70711-.70711m12.72796.00005-.7071.70711M6.3432 17.6569l-.70711.7071"></path>
+                            <circle cx="12" cy="12" r="4"></circle>
+                        </svg>
+                        Yüksek Doğruluk Modu
+                    </div>
+                    <div class="setting-description">
+                        Daha doğru konum bilgisi için GPS kullanır. Pil tüketimini artırabilir.
+                    </div>
+                </div>
+                <div class="toggle-switch ${this.settings.useHighAccuracy ? 'active' : ''}" onclick="app.toggleSetting('useHighAccuracy')"></div>
+            </div>
+            
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M8 19h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"></path>
+                            <path d="M12 17v.01"></path>
+                        </svg>
+                        Bildirimler
+                    </div>
+                    <div class="setting-description">
+                        Uygulama içi bildirimleri göster
+                    </div>
+                </div>
+                <div class="toggle-switch ${this.settings.showNotifications ? 'active' : ''}" onclick="app.toggleSetting('showNotifications')"></div>
+            </div>
+            
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+                        </svg>
+                        Celsius Kullan
+                    </div>
+                    <div class="setting-description">
+                        Sıcaklık birimini Celsius (°C) olarak ayarla. Kapalıysa Fahrenheit (°F) kullanılır.
+                    </div>
+                </div>
+                <div class="toggle-switch ${this.settings.useCelsius ? 'active' : ''}" onclick="app.toggleSetting('useCelsius')"></div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.7071-.7071M6.34315 6.34315l-.70711-.70711m12.72796.00005-.7071.70711M6.3432 17.6569l-.70711.7071"></path>
+                    <circle cx="12" cy="12" r="4"></circle>
+                </svg>
+                Tema
+            </h3>
+            
+            <div class="theme-grid">
+                <div class="theme-option ${this.currentTheme === 'dark' ? 'active' : ''}" onclick="app.setTheme('dark')">
+                    <div class="theme-preview dark"></div>
+                    Koyu
+                </div>
+                <div class="theme-option ${this.currentTheme === 'light' ? 'active' : ''}" onclick="app.setTheme('light')">
+                    <div class="theme-preview light"></div>
+                    Açık
+                </div>
+                <div class="theme-option ${this.currentTheme === 'sepia' ? 'active' : ''}" onclick="app.setTheme('sepia')">
+                    <div class="theme-preview sepia"></div>
+                    Sepya
+                </div>
+                <div class="theme-option ${this.currentTheme === 'blue' ? 'active' : ''}" onclick="app.setTheme('blue')">
+                    <div class="theme-preview blue"></div>
+                    Mavi
+                </div>
+                <div class="theme-option ${this.currentTheme === 'green' ? 'active' : ''}" onclick="app.setTheme('green')">
+                    <div class="theme-preview green"></div>
+                    Yeşil
+                </div>
+                <div class="theme-option ${this.currentTheme === 'purple' ? 'active' : ''}" onclick="app.setTheme('purple')">
+                    <div class="theme-preview purple"></div>
+                    Mor
+                </div>
+                <div class="theme-option ${this.currentTheme === 'rose' ? 'active' : ''}" onclick="app.setTheme('rose')">
+                    <div class="theme-preview rose"></div>
+                    Gül
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 7V4h16v3"></path>
+                    <path d="M9 20h6"></path>
+                    <path d="M12 4v16"></path>
+                </svg>
+                Yazı Boyutu
+            </h3>
+            
+            <div class="font-size-grid">
+                <div class="font-size-option ${this.settings.fontSize === 'small' ? 'active' : ''}" onclick="app.setFontSize('small')">
+                    Küçük
+                </div>
+                <div class="font-size-option ${this.settings.fontSize === 'normal' ? 'active' : ''}" onclick="app.setFontSize('normal')">
+                    Normal
+                </div>
+                <div class="font-size-option ${this.settings.fontSize === 'large' ? 'active' : ''}" onclick="app.setFontSize('large')">
+                    Büyük
+                </div>
+                <div class="font-size-option ${this.settings.fontSize === 'xlarge' ? 'active' : ''}" onclick="app.setFontSize('xlarge')">
+                    Çok Büyük
+                </div>
+            </div>
+        </div>
+    </div>
+`;
 }
 
 renderAboutPage() {
-    const content = document.getElementById('content');
-    
-    content.innerHTML = `
-        <div class="about-page">
-            <div class="breadcrumb">
-                <a href="#" onclick="event.preventDefault(); history.back();">
-                    <svg class="icon icon-sm" viewBox="0 0 24 24">
-                        <path d="M19 12H5"></path>
-                        <path d="M12 19l-7-7 7-7"></path>
-                    </svg>
-                    Geri
-                </a>
-                <span>/</span>
-                <span>Hakkında</span>
-            </div>
+const content = document.getElementById('content');
+
+content.innerHTML = `
+    <div class="about-page">
+        <div class="breadcrumb">
+            <a href="#" onclick="event.preventDefault(); history.back();">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Geri
+            </a>
+            <span>/</span>
+            <span>Hakkında</span>
+        </div>
+        
+        <div class="about-header">
+            <h1 class="about-title">PUSULA Hakkında</h1>
+            <p class="about-description">
+                PUSULA, yön bulma ve konum belirleme ihtiyaçlarınız için tasarlanmış kullanıcı dostu bir uygulamadır. 
+                Hassas pusula, GPS konum belirleme, yükseklik ölçümü ve daha fazlasını içerir.
+                <br><br>
+                Bu uygulama, modern web teknolojileri kullanılarak geliştirilmiştir ve çeşitli cihazlarda sorunsuz çalışacak şekilde tasarlanmıştır.
+            </p>
             
-            <div class="about-header">
-                <h1 class="about-title">PUSULA Hakkında</h1>
-                <p class="about-description">
-                    PUSULA, yön bulma ve konum belirleme ihtiyaçlarınız için tasarlanmış kullanıcı dostu bir uygulamadır. 
-                    Hassas pusula, GPS konum belirleme, yükseklik ölçümü ve daha fazlasını içerir.
-                    <br><br>
-                    Bu uygulama, modern web teknolojileri kullanılarak geliştirilmiştir ve çeşitli cihazlarda sorunsuz çalışacak şekilde tasarlanmıştır.
-                </p>
-                
-                <button class="about-button ripple" onclick="app.showFeature('compass')">
-                    <div class="about-button-content">
-                        <svg class="icon" viewBox="0 0 24 24">
+            <button class="about-button ripple" onclick="app.showFeature('compass')">
+                <div class="about-button-content">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                    Pusula'yı Kullan
+                </div>
+            </button>
+        </div>
+        
+        <div class="settings-section">
+            <h3>Özellikler</h3>
+            <ul style="list-style-type: none; padding: 0;">
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10"></circle>
                             <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
                         </svg>
-                        Pusula'yı Kullan
+                        Hassas Dijital Pusula
                     </div>
-                </button>
-            </div>
-            
-            <div class="settings-section">
-                <h3>Özellikler</h3>
-                <ul style="list-style-type: none; padding: 0;">
-                    <li class="setting-item">
-                        <div class="setting-label">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                            </svg>
-                            Hassas Dijital Pusula
-                        </div>
-                    </li>
-                    <li class="setting-item">
-                        <div class="setting-label">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            GPS Konum Belirleme
-                        </div>
-                    </li>
-                    <li class="setting-item">
-                        <div class="setting-label">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <path d="M2 22h20"></path>
-                                <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
-                            </svg>
-                            Yükseklik Ölçümü
-                        </div>
-                    </li>
-                    <li class="setting-item">
-                        <div class="setting-label">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <path d="M8 5.25A4.75 4.75 0 0 1 17.25 9 3.25 3.25 0 0 1 18 15.25H8.5a4.5 4.5 0 1 1 .5-9"></path>
-                            </svg>
-                            Hava Durumu Bilgisi
-                        </div>
-                    </li>
-                    <li class="setting-item">
-                        <div class="setting-label">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-                            </svg>
-                            Navigasyon Desteği
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="settings-section">
-                <h3>İletişim</h3>
-                <p style="margin-bottom: 1rem;">
-                    Sorularınız, önerileriniz veya geri bildirimleriniz için lütfen bizimle iletişime geçin.
-                </p>
-                <a href="mailto:info@pusula-app.com" class="compass-btn" style="text-decoration: none; display: inline-flex;">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                    E-posta Gönder
-                </a>
-            </div>
+                </li>
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        GPS Konum Belirleme
+                    </div>
+                </li>
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M2 22h20"></path>
+                            <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
+                        </svg>
+                        Yükseklik Ölçümü
+                    </div>
+                </li>
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M8 5.25A4.75 4.75 0 0 1 17.25 9 3.25 3.25 0 0 1 18 15.25H8.5a4.5 4.5 0 1 1 .5-9"></path>
+                        </svg>
+                        Hava Durumu Bilgisi
+                    </div>
+                </li>
+                <li class="setting-item">
+                    <div class="setting-label">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                        Navigasyon Desteği
+                    </div>
+                </li>
+            </ul>
         </div>
-    `;
+        
+        <div class="settings-section">
+            <h3>İletişim</h3>
+            <p style="margin-bottom: 1rem;">
+                Sorularınız, önerileriniz veya geri bildirimleriniz için lütfen bizimle iletişime geçin.
+            </p>
+            <a href="mailto:info@pusula-app.com" class="compass-btn" style="text-decoration: none; display: inline-flex;">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                E-posta Gönder
+            </a>
+        </div>
+    </div>
+`;
 }
 
 renderSavedLocations() {
-    const content = document.getElementById('content');
-    
-    let locationsHTML = '';
-    
-    if (this.savedLocations.length === 0) {
-        locationsHTML = `
-            <div class="text-center" style="padding: 2rem;">
-                <svg class="icon" style="width: 48px; height: 48px; opacity: 0.5; margin-bottom: 1rem;" viewBox="0 0 24 24">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <p>Henüz kaydedilmiş konum bulunmuyor.</p>
-                <button class="compass-btn primary ripple mt-4" onclick="app.getCurrentLocation()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="22" y1="12" x2="18" y2="12"></line>
-                        <line x1="6" y1="12" x2="2" y2="12"></line>
-                        <line x1="12" y1="6" x2="12" y2="2"></line>
-                        <line x1="12" y1="22" x2="12" y2="18"></line>
-                    </svg>
-                    Konumumu Bul
-                </button>
-            </div>
-        `;
-    } else {
-        this.savedLocations.forEach((location, index) => {
-            locationsHTML += `
-                <div class="setting-item">
-                    <div>
-                        <div class="setting-label">
-                            ${location.name || 'Kaydedilmiş Konum'}
-                        </div>
-                        <div class="setting-description">
-                            ${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}
-                            <br>
-                            <span style="font-size: 0.8em; opacity: 0.7;">
-                                ${new Date(location.timestamp).toLocaleString()}
-                            </span>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="compass-btn" onclick="app.navigateToLocation(${index})">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-                            </svg>
-                        </button>
-                        <button class="compass-btn" onclick="app.deleteLocation(${index})">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            `;
-        });
-    }
-    
-    content.innerHTML = `
-        <div class="settings-page">
-            <div class="breadcrumb">
-                <a href="#" onclick="event.preventDefault(); history.back();">
-                    <svg class="icon icon-sm" viewBox="0 0 24 24">
-                        <path d="M19 12H5"></path>
-                        <path d="M12 19l-7-7 7-7"></path>
-                    </svg>
-                    Geri
-                </a>
-                <span>/</span>
-                <span>Kaydedilmiş Konumlar</span>
-            </div>
-            
-            <div class="settings-header">
-                <h1 class="settings-title">Kaydedilmiş Konumlar</h1>
-                <p class="settings-description">Önemli konumlarınızı kaydedin ve daha sonra kullanın</p>
-            </div>
-            
-            <div class="settings-section">
-                ${locationsHTML}
-            </div>
-            
-            <button class="compass-btn primary ripple" style="margin: 0 auto; display: flex;" onclick="app.saveCurrentLocation()">
+const content = document.getElementById('content');
+
+let locationsHTML = '';
+
+if (this.savedLocations.length === 0) {
+    locationsHTML = `
+        <div class="text-center" style="padding: 2rem;">
+            <svg class="icon" style="width: 48px; height: 48px; opacity: 0.5; margin-bottom: 1rem;" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <p>Henüz kaydedilmiş konum bulunmuyor.</p>
+            <button class="compass-btn primary ripple mt-4" onclick="app.getCurrentLocation()">
                 <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                    <polyline points="7 3 7 8 15 8"></polyline>
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="22" y1="12" x2="18" y2="12"></line>
+                    <line x1="6" y1="12" x2="2" y2="12"></line>
+                    <line x1="12" y1="6" x2="12" y2="2"></line>
+                    <line x1="12" y1="22" x2="12" y2="18"></line>
                 </svg>
-                Mevcut Konumu Kaydet
+                Konumumu Bul
             </button>
         </div>
     `;
-}
-
-renderFeature(feature) {
-    const content = document.getElementById('content');
-    
-    let featureContent = '';
-    let featureTitle = '';
-    
-    switch(feature) {
-        case 'compass':
-            featureTitle = 'Pusula';
-            featureContent = `
-                <div class="compass-container" style="margin-top: 2rem;">
-                    <div class="compass">
-                        <div class="compass-face">
-                            <div class="compass-markings" id="compass-markings"></div>
-                            <div class="compass-rose">
-                                <div class="compass-direction north">N</div>
-                                <div class="compass-direction east">E</div>
-                                <div class="compass-direction south">S</div>
-                                <div class="compass-direction west">W</div>
-                            </div>
-                            <div class="compass-needle" id="compass-needle"></div>
-                            <div class="compass-center"></div>
-                            <div class="tilt-indicator">
-                                <div class="tilt-bubble" id="tilt-bubble"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="compass-info">
-                        <div class="compass-heading" id="compass-heading">0°</div>
-                        <div class="compass-coordinates" id="compass-coordinates">Konum alınıyor...</div>
-                    </div>
-                    <div class="compass-actions">
-                        <button class="compass-btn ripple" onclick="app.calibrateCompass()">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <path d="M21 2v6h-6"></path>
-                                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
-                                <path d="M3 22v-6h6"></path>
-                                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
-                            </svg>
-                            Kalibre Et
-                        </button>
-                        <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="22" y1="12" x2="18" y2="12"></line>
-                                <line x1="6" y1="12" x2="2" y2="12"></line>
-                                <line x1="12" y1="6" x2="12" y2="2"></line>
-                                <line x1="12" y1="22" x2="12" y2="18"></line>
-                            </svg>
-                            Konumumu Bul
-                        </button>
-                    </div>
-                </div>
-            `;
-            setTimeout(() => {
-                this.createCompassMarkings();
-                this.startCompass();
-            }, 100);
-            break;
-            
-        case 'location':
-            featureTitle = 'Konum';
-            featureContent = `
-                <div style="text-align: center; margin: 2rem 0;">
-                    <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="22" y1="12" x2="18" y2="12"></line>
-                            <line x1="6" y1="12" x2="2" y2="12"></line>
-                            <line x1="12" y1="6" x2="12" y2="2"></line>
-                            <line x1="12" y1="22" x2="12" y2="18"></line>
-                        </svg>
-                        Konumumu Bul
-                    </button>
-                </div>
-                
-                <div class="settings-section">
-                    <h3>Konum Bilgileri</h3>
-                    <div id="location-details">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            <div class="loading-text">Konum bilgileri alınıyor...</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="settings-section">
-                    <h3>Konum Geçmişi</h3>
-                    <p>Yakında eklenecek</p>
-                </div>
-            `;
-            setTimeout(() => {
-                this.getCurrentLocation();
-                this.updateLocationDetails();
-            }, 100);
-            break;
-            
-        case 'navigation':
-            featureTitle = 'Navigasyon';
-            featureContent = `
-                <div class="settings-section">
-                    <h3>Hedef Noktaya Yönlendirme</h3>
-                    <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <div class="loading-text">Geliştirme devam ediyor...</div>
-                    </div>
-                </div>
-            `;
-            break;
-            
-        case 'altitude':
-            featureTitle = 'Yükseklik';
-            featureContent = `
-                <div class="settings-section">
-                    <h3>Yükseklik Ölçümü</h3>
-                    <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <div class="loading-text">Geliştirme devam ediyor...</div>
-                    </div>
-                </div>
-            `;
-            break;
-            
-        case 'weather':
-            featureTitle = 'Hava Durumu';
-            featureContent = `
-                <div class="settings-section">
-                    <h3>Hava Durumu Bilgisi</h3>
-                    <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <div class="loading-text">Geliştirme devam ediyor...</div>
-                    </div>
-                </div>
-            `;
-            break;
-            
-        case 'save':
-            featureTitle = 'Konum Kaydetme';
-            featureContent = `
-                <div style="text-align: center; margin: 2rem 0;">
-                    <button class="compass-btn primary ripple" onclick="app.saveCurrentLocation()">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                            <polyline points="7 3 7 8 15 8"></polyline>
-                        </svg>
-                        Mevcut Konumu Kaydet
-                    </button>
-                </div>
-                
-                <div class="settings-section">
-                    <h3>Kaydedilmiş Konumlar</h3>
-                    <div id="saved-locations-list">
-                        <div class="loading">
-                            <div class="spinner"></div>
-                            <div class="loading-text">Konumlar yükleniyor...</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            setTimeout(() => {
-                this.updateSavedLocationsList();
-            }, 100);
-            break;
-            
-        default:
-            featureTitle = 'Özellik Bulunamadı';
-            featureContent = `
-                <div class="error">
-                    İstenen özellik bulunamadı.
-                </div>
-            `;
-    }
-    
-    content.innerHTML = `
-        <div class="settings-page">
-            <div class="breadcrumb">
-                <a href="#" onclick="event.preventDefault(); history.back();">
-                    <svg class="icon icon-sm" viewBox="0 0 24 24">
-                        <path d="M19 12H5"></path>
-                        <path d="M12 19l-7-7 7-7"></path>
-                    </svg>
-                    Geri
-                </a>
-                <span>/</span>
-                <span>${featureTitle}</span>
-            </div>
-            
-            <div class="settings-header">
-                <h1 class="settings-title">${featureTitle}</h1>
-                <p class="settings-description">
-                    ${this.getFeatureDescription(feature)}
-                </p>
-            </div>
-            
-            ${featureContent}
-        </div>
-    `;
-}
-
-getFeatureDescription(feature) {
-    switch(feature) {
-        case 'compass':
-            return 'Hassas dijital pusula ile yönünüzü kolayca bulun';
-        case 'location':
-            return 'GPS ile tam konumunuzu öğrenin ve koordinatları görüntüleyin';
-        case 'navigation':
-            return 'Hedef noktaya yönlendirme ve mesafe hesaplama';
-        case 'altitude':
-            return 'Deniz seviyesinden yüksekliğinizi ölçün';
-        case 'weather':
-            return 'Bulunduğunuz konumun güncel hava durumu bilgisi';
-        case 'save':
-            return 'Önemli konumları kaydedin ve daha sonra kullanın';
-        default:
-            return '';
-    }
-}
-
-updateLocationDetails() {
-    const locationDetails = document.getElementById('location-details');
-    if (!locationDetails) return;
-    
-    if (!this.currentLocation) {
-        locationDetails.innerHTML = `
-            <div class="text-center" style="padding: 1rem;">
-                <p>Henüz konum bilgisi alınmadı.</p>
-                <button class="compass-btn primary ripple mt-4" onclick="app.getCurrentLocation()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="22" y1="12" x2="18" y2="12"></line>
-                        <line x1="6" y1="12" x2="2" y2="12"></line>
-                        <line x1="12" y1="6" x2="12" y2="2"></line>
-                        <line x1="12" y1="22" x2="12" y2="18"></line>
-                    </svg>
-                    Konumumu Bul
-                </button>
-            </div>
-        `;
-        return;
-    }
-    
-    const { latitude, longitude, accuracy, altitude, altitudeAccuracy, timestamp } = this.currentLocation;
-    
-    locationDetails.innerHTML = `
-        <div class="setting-item">
-            <div class="setting-label">
-                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                Koordinatlar
-            </div>
-            <div style="text-align: right; font-weight: 500;">
-                ${latitude.toFixed(6)}, ${longitude.toFixed(6)}
-            </div>
-        </div>
-        
-        <div class="setting-item">
-            <div class="setting-label">
-                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 8v8"></path>
-                    <path d="M8 12h8"></path>
-                </svg>
-                Doğruluk
-            </div>
-            <div style="text-align: right; font-weight: 500;">
-                ±${Math.round(accuracy)} m
-            </div>
-        </div>
-        
-        ${altitude !== null ? `
-        <div class="setting-item">
-            <div class="setting-label">
-                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                    <path d="M2 22h20"></path>
-                    <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
-                </svg>
-                Yükseklik
-            </div>
-            <div style="text-align: right; font-weight: 500;">
-                ${Math.round(altitude)} m
-                ${altitudeAccuracy !== null ? `<span style="font-size: 0.8em; opacity: 0.7;">(±${Math.round(altitudeAccuracy)} m)</span>` : ''}
-            </div>
-        </div>
-        ` : ''}
-        
-        <div class="setting-item">
-            <div class="setting-label">
-                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                Zaman
-            </div>
-            <div style="text-align: right; font-weight: 500;">
-                ${new Date(timestamp).toLocaleString()}
-            </div>
-        </div>
-        
-        <div style="text-align: center; margin-top: 1rem;">
-            <button class="compass-btn ripple" onclick="app.saveCurrentLocation()">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                    <polyline points="7 3 7 8 15 8"></polyline>
-                </svg>
-                Bu Konumu Kaydet
-            </button>
-        </div>
-    `;
-}
-
-updateSavedLocationsList() {
-    const savedLocationsList = document.getElementById('saved-locations-list');
-    if (!savedLocationsList) return;
-    
-    if (this.savedLocations.length === 0) {
-        savedLocationsList.innerHTML = `
-            <div class="text-center" style="padding: 1rem;">
-                <p>Henüz kaydedilmiş konum bulunmuyor.</p>
-            </div>
-        `;
-        return;
-    }
-    
-    let locationsHTML = '';
-    
+} else {
     this.savedLocations.forEach((location, index) => {
         locationsHTML += `
             <div class="setting-item">
@@ -2807,160 +2803,1201 @@ updateSavedLocationsList() {
             </div>
         `;
     });
+}
+
+content.innerHTML = `
+    <div class="settings-page">
+        <div class="breadcrumb">
+            <a href="#" onclick="event.preventDefault(); history.back();">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Geri
+            </a>
+            <span>/</span>
+            <span>Kaydedilmiş Konumlar</span>
+        </div>
+        
+        <div class="settings-header">
+            <h1 class="settings-title">Kaydedilmiş Konumlar</h1>
+            <p class="settings-description">Önemli konumlarınızı kaydedin ve daha sonra kullanın</p>
+        </div>
+        
+        <div class="settings-section">
+            ${locationsHTML}
+        </div>
+        
+        <button class="compass-btn primary ripple" style="margin: 0 auto; display: flex;" onclick="app.saveCurrentLocation()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            Mevcut Konumu Kaydet
+        </button>
+    </div>
+`;
+}
+
+renderFeature(feature) {
+const content = document.getElementById('content');
+
+let featureContent = '';
+let featureTitle = '';
+
+switch(feature) {
+    case 'compass':
+        featureTitle = 'Pusula';
+        featureContent = `
+            <div class="compass-container" style="margin-top: 2rem;">
+                <div class="compass" id="compass">
+                    <div class="compass-face">
+                        <div class="compass-markings" id="compass-markings"></div>
+                        <div class="compass-rose" id="compass-rose">
+                            <div class="compass-direction north">N</div>
+                            <div class="compass-direction east">E</div>
+                            <div class="compass-direction south">S</div>
+                            <div class="compass-direction west">W</div>
+                        </div>
+                        <div class="compass-needle" id="compass-needle"></div>
+                        <div class="compass-center"></div>
+                        <div class="tilt-indicator">
+                            <div class="tilt-bubble" id="tilt-bubble"></div>
+                        </div>
+                        <div class="compass-interaction"></div>
+                    </div>
+                </div>
+                <div class="compass-info">
+                    <div class="compass-heading" id="compass-heading">0°</div>
+                    <div class="compass-coordinates" id="compass-coordinates">Konum alınıyor...</div>
+                </div>
+                <div class="compass-actions">
+                    <button class="compass-btn ripple" onclick="app.calibrateCompass()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M21 2v6h-6"></path>
+                            <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+                            <path d="M3 22v-6h6"></path>
+                            <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+                        </svg>
+                        Kalibre Et
+                    </button>
+                    <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="22" y1="12" x2="18" y2="12"></line>
+                            <line x1="6" y1="12" x2="2" y2="12"></line>
+                            <line x1="12" y1="6" x2="12" y2="2"></line>
+                            <line x1="12" y1="22" x2="12" y2="18"></line>
+                        </svg>
+                        Konumumu Bul
+                    </button>
+                </div>
+            </div>
+        `;
+        setTimeout(() => {
+            this.createCompassMarkings();
+            this.startCompass();
+            this.setupCompassInteractions();
+        }, 100);
+        break;
+        
+    case 'location':
+        featureTitle = 'Konum';
+        featureContent = `
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="compass-btn primary ripple" onclick="app.getCurrentLocation()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="22" y1="12" x2="18" y2="12"></line>
+                        <line x1="6" y1="12" x2="2" y2="12"></line>
+                        <line x1="12" y1="6" x2="12" y2="2"></line>
+                        <line x1="12" y1="22" x2="12" y2="18"></line>
+                    </svg>
+                    Konumumu Bul
+                </button>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Konum Bilgileri</h3>
+                <div id="location-details">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Konum bilgileri alınıyor...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Konum Geçmişi</h3>
+                <p>Yakında eklenecek</p>
+            </div>
+        `;
+        setTimeout(() => {
+            this.getCurrentLocation();
+            this.updateLocationDetails();
+        }, 100);
+        break;
+        
+    case 'navigation':
+        featureTitle = 'Navigasyon';
+        featureContent = `
+            <div class="settings-section">
+                <h3>Hedef Noktaya Yönlendirme</h3>
+                <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Geliştirme devam ediyor...</div>
+                </div>
+            </div>
+        `;
+        break;
+        
+    case 'altitude':
+        featureTitle = 'Yükseklik';
+        featureContent = `
+            <div class="settings-section">
+                <h3>Yükseklik Ölçümü</h3>
+                <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Geliştirme devam ediyor...</div>
+                </div>
+            </div>
+        `;
+        break;
+        
+    case 'weather':
+        featureTitle = 'Hava Durumu';
+        featureContent = `
+            <div class="settings-section">
+                <h3>Hava Durumu Bilgisi</h3>
+                <p style="margin-bottom: 1rem;">Bu özellik yakında eklenecektir.</p>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Geliştirme devam ediyor...</div>
+                </div>
+            </div>
+        `;
+        break;
+        
+    case 'save':
+        featureTitle = 'Konum Kaydetme';
+        featureContent = `
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="compass-btn primary ripple" onclick="app.saveCurrentLocation()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Mevcut Konumu Kaydet
+                </button>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Kaydedilmiş Konumlar</h3>
+                <div id="saved-locations-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Konumlar yükleniyor...</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        setTimeout(() => {
+            this.updateSavedLocationsList();
+        }, 100);
+        break;
+        
+    default:
+        featureTitle = 'Özellik Bulunamadı';
+        featureContent = `
+            <div class="error">
+                İstenen özellik bulunamadı.
+            </div>
+        `;
+}
+
+content.innerHTML = `
+    <div class="settings-page">
+        <div class="breadcrumb">
+            <a href="#" onclick="event.preventDefault(); history.back();">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Geri
+            </a>
+            <span>/</span>
+            <span>${featureTitle}</span>
+        </div>
+        
+        <div class="settings-header">
+            <h1 class="settings-title">${featureTitle}</h1>
+            <p class="settings-description">
+                ${this.getFeatureDescription(feature)}
+            </p>
+        </div>
+        
+        ${featureContent}
+    </div>
+`;
+}
+
+getFeatureDescription(feature) {
+switch(feature) {
+    case 'compass':
+        return 'Hassas dijital pusula ile yönünüzü kolayca bulun';
+    case 'location':
+        return 'GPS ile tam konumunuzu öğrenin ve koordinatları görüntüleyin';
+    case 'navigation':
+        return 'Hedef noktaya yönlendirme ve mesafe hesaplama';
+    case 'altitude':
+        return 'Deniz seviyesinden yüksekliğinizi ölçün';
+    case 'weather':
+        return 'Bulunduğunuz konumun güncel hava durumu bilgisi';
+    case 'save':
+        return 'Önemli konumları kaydedin ve daha sonra kullanın';
+    default:
+        return '';
+}
+}
+
+updateLocationDetails() {
+const locationDetails = document.getElementById('location-details');
+if (!locationDetails) return;
+
+if (!this.currentLocation) {
+    locationDetails.innerHTML = `
+        <div class="text-center" style="padding: 1rem;">
+            <p>Henüz konum bilgisi alınmadı.</p>
+            <button class="compass-btn primary ripple mt-4" onclick="app.getCurrentLocation()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="22" y1="12" x2="18" y2="12"></line>
+                    <line x1="6" y1="12" x2="2" y2="12"></line>
+                    <line x1="12" y1="6" x2="12" y2="2"></line>
+                    <line x1="12" y1="22" x2="12" y2="18"></line>
+                </svg>
+                Konumumu Bul
+            </button>
+        </div>
+    `;
+    return;
+}
+
+const { latitude, longitude, accuracy, altitude, altitudeAccuracy, timestamp } = this.currentLocation;
+
+locationDetails.innerHTML = `
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Koordinatlar
+        </div>
+        <div style="text-align: right; font-weight: 500;">
+            ${latitude.toFixed(6)}, ${longitude.toFixed(6)}
+        </div>
+    </div>
     
-    savedLocationsList.innerHTML = locationsHTML;
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 8v8"></path>
+                <path d="M8 12h8"></path>
+            </svg>
+            Doğruluk
+        </div>
+        <div style="text-align: right; font-weight: 500;">
+            ±${Math.round(accuracy)} m
+        </div>
+    </div>
+    
+    ${altitude !== null ? `
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <path d="M2 22h20"></path>
+                <path d="M3 9 L7 6 L11 9 L15 5 L19 9 L22 7"></path>
+            </svg>
+            Yükseklik
+        </div>
+        <div style="text-align: right; font-weight: 500;">
+            ${Math.round(altitude)} m
+            ${altitudeAccuracy !== null ? `<span style="font-size: 0.8em; opacity: 0.7;">(±${Math.round(altitudeAccuracy)} m)</span>` : ''}
+        </div>
+    </div>
+    ` : ''}
+    
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Zaman
+        </div>
+        <div style="text-align: right; font-weight: 500;">
+            ${new Date(timestamp).toLocaleString()}
+        </div>
+    </div>
+    
+    <div class="setting-item">
+        <div class="setting-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Adres
+        </div>
+        <div style="text-align: right; font-weight: 500;">
+            <button class="compass-btn ripple" onclick="app.getAddressFromCoordinates()">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                Adresi Bul
+            </button>
+        </div>
+    </div>
+`;
+}
+
+updateSavedLocationsList() {
+const savedLocationsList = document.getElementById('saved-locations-list');
+if (!savedLocationsList) return;
+
+if (this.savedLocations.length === 0) {
+    savedLocationsList.innerHTML = `
+        <div class="text-center" style="padding: 1rem;">
+            <p>Henüz kaydedilmiş konum bulunmuyor.</p>
+        </div>
+    `;
+    return;
+}
+
+let locationsHTML = '';
+this.savedLocations.forEach((location, index) => {
+    locationsHTML += `
+        <div class="setting-item">
+            <div>
+                <div class="setting-label">
+                    ${location.name || 'Kaydedilmiş Konum'}
+                </div>
+                <div class="setting-description">
+                    ${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}
+                    <br>
+                    <span style="font-size: 0.8em; opacity: 0.7;">
+                        ${new Date(location.timestamp).toLocaleString()}
+                    </span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <button class="compass-btn" onclick="app.navigateToLocation(${index})">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                    </svg>
+                </button>
+                <button class="compass-btn" onclick="app.deleteLocation(${index})">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    `;
+});
+
+savedLocationsList.innerHTML = locationsHTML;
 }
 
 saveCurrentLocation() {
-    if (!this.currentLocation) {
-        this.showError('Kaydedilecek konum bilgisi bulunamadı.');
-        this.getCurrentLocation();
-        return;
-    }
-    
-    const locationName = prompt('Bu konum için bir isim girin:', 'Konum ' + (this.savedLocations.length + 1));
-    
-    if (locationName === null) return; // User cancelled
-    
-    const newLocation = {
-        ...this.currentLocation,
-        name: locationName
-    };
-    
-    this.savedLocations.push(newLocation);
-    localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
-    
-    this.showNotification('Konum başarıyla kaydedildi');
-    
-    // Update UI if on saved locations page
-    this.updateSavedLocationsList();
+if (!this.currentLocation) {
+    this.showError('Kaydedilecek konum bulunamadı. Lütfen önce konumunuzu alın.');
+    this.getCurrentLocation();
+    return;
+}
+
+const locationName = prompt('Bu konum için bir isim girin:', 'Konum ' + (this.savedLocations.length + 1));
+if (locationName === null) return; // User cancelled
+
+const newLocation = {
+    name: locationName,
+    latitude: this.currentLocation.latitude,
+    longitude: this.currentLocation.longitude,
+    timestamp: Date.now()
+};
+
+this.savedLocations.push(newLocation);
+localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
+
+this.showNotification('Konum başarıyla kaydedildi');
+this.updateSavedLocationsList();
 }
 
 deleteLocation(index) {
-    if (confirm('Bu konumu silmek istediğinizden emin misiniz?')) {
-        this.savedLocations.splice(index, 1);
-        localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
-        
-        this.showNotification('Konum silindi');
-        
-        // Update UI
-        if (window.location.hash === '#kaydedilenler') {
-            this.renderSavedLocations();
-        } else {
-            this.updateSavedLocationsList();
-        }
-    }
+if (confirm('Bu konumu silmek istediğinizden emin misiniz?')) {
+    this.savedLocations.splice(index, 1);
+    localStorage.setItem('savedLocations', JSON.stringify(this.savedLocations));
+    this.showNotification('Konum silindi');
+    this.updateSavedLocationsList();
+}
 }
 
 navigateToLocation(index) {
-    const location = this.savedLocations[index];
-    if (!location) return;
-    
-    this.showNotification('Navigasyon özelliği yakında eklenecek');
-    // Future implementation will go here
+const location = this.savedLocations[index];
+if (!location) return;
+
+// This is a placeholder for future navigation functionality
+this.showNotification('Navigasyon özelliği yakında eklenecek');
+}
+
+getAddressFromCoordinates() {
+if (!this.currentLocation) {
+    this.showError('Adres bilgisi için konum gerekli. Lütfen önce konumunuzu alın.');
+    return;
+}
+
+this.showNotification('Adres bilgisi alınıyor...');
+
+// This is a placeholder for future reverse geocoding functionality
+setTimeout(() => {
+    this.showNotification('Adres bilgisi özelliği yakında eklenecek');
+}, 1500);
 }
 
 toggleSetting(setting) {
+if (this.settings.hasOwnProperty(setting)) {
     this.settings[setting] = !this.settings[setting];
     localStorage.setItem(setting, this.settings[setting]);
     
     // Update UI
-    const toggleSwitch = document.querySelector(`.setting-item:has(.setting-label:contains('${setting}')) .toggle-switch`);
+    const toggleSwitch = document.querySelector(`.setting-item:has(.setting-label:contains("${setting}")) .toggle-switch`);
     if (toggleSwitch) {
-        toggleSwitch.classList.toggle('active', this.settings[setting]);
+        if (this.settings[setting]) {
+            toggleSwitch.classList.add('active');
+        } else {
+            toggleSwitch.classList.remove('active');
+        }
     }
     
-    this.showNotification(`${setting} ayarı ${this.settings[setting] ? 'açıldı' : 'kapatıldı'}`);
+    this.showNotification(`${setting} ayarı ${this.settings[setting] ? 'etkinleştirildi' : 'devre dışı bırakıldı'}`);
+}
 }
 
 showNotification(message) {
-    if (!this.settings.showNotifications) return;
-    
-    const notification = document.createElement('div');
-    notification.style.position = 'fixed';
-    notification.style.bottom = '20px';
-    notification.style.left = '50%';
-    notification.style.transform = 'translateX(-50%)';
-    notification.style.background = 'var(--bg-secondary)';
-    notification.style.color = 'var(--text-primary)';
-    notification.style.padding = '0.75rem 1.5rem';
-    notification.style.borderRadius = '8px';
-    notification.style.boxShadow = '0 4px 12px var(--shadow-dark)';
-    notification.style.zIndex = '9999';
-    notification.style.transition = 'all 0.3s ease';
-    notification.style.opacity = '0';
-    notification.style.transform = 'translateX(-50%) translateY(20px)';
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
+if (!this.settings.showNotifications) return;
+
+const existingNotification = document.querySelector('.notification');
+if (existingNotification) {
+    existingNotification.remove();
+}
+
+const notification = document.createElement('div');
+notification.className = 'notification';
+notification.innerHTML = message;
+document.body.appendChild(notification);
+
+// Animate in
+setTimeout(() => {
+    notification.classList.add('show');
+}, 10);
+
+// Auto dismiss
+setTimeout(() => {
+    notification.classList.remove('show');
     setTimeout(() => {
-        notification.style.opacity = '1';
-        notification.style.transform = 'translateX(-50%) translateY(0)';
-    }, 10);
-    
-    // Remove after delay
-    setTimeout(() => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(-50%) translateY(20px)';
-        
-        setTimeout(() => {
+        if (notification.parentNode) {
             notification.remove();
-        }, 300);
-    }, 3000);
+        }
+    }, 300);
+}, 3000);
 }
 
 showError(message) {
-    const errorElement = document.createElement('div');
-    errorElement.className = 'error';
-    errorElement.innerHTML = `
-        <svg class="icon" style="width: 24px; height: 24px; margin-bottom: 0.5rem;" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        <div>${message}</div>
-    `;
-    
-    // Check if there's already an error displayed
-    const existingError = document.querySelector('.error');
-    if (existingError) {
-        existingError.remove();
-    }
-    
-    // Find a good place to show the error
-    const content = document.getElementById('content');
-    if (content) {
-        content.prepend(errorElement);
-    } else {
-        document.body.prepend(errorElement);
-    }
-    
-    // Remove after delay
+const existingError = document.querySelector('.error-notification');
+if (existingError) {
+    existingError.remove();
+}
+
+const error = document.createElement('div');
+error.className = 'error-notification';
+error.innerHTML = `
+    <svg class="icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    ${message}
+`;
+document.body.appendChild(error);
+
+// Animate in
+setTimeout(() => {
+    error.classList.add('show');
+}, 10);
+
+// Auto dismiss
+setTimeout(() => {
+    error.classList.remove('show');
     setTimeout(() => {
-        errorElement.style.opacity = '0';
-        setTimeout(() => {
-            if (errorElement.parentNode) {
-                errorElement.remove();
-            }
-        }, 300);
-    }, 5000);
+        if (error.parentNode) {
+            error.remove();
+        }
+    }, 300);
+}, 5000);
 }
 }
 
 // Initialize the app
 const app = new PusulaApp();
 
-// Handle route on page load
-window.addEventListener('load', () => {
-app.handleRoute();
-});
-
-// Show home by default
-function showHome() {
-window.location.hash = '';
+// Add CSS for new features
+document.head.insertAdjacentHTML('beforeend', `
+<style>
+/* Compass styles */
+:root {
+--compass-animation-duration: 0.8s;
 }
+
+:root[data-compass-style="classic"] {
+--compass-bg: var(--bg-secondary);
+--compass-border: var(--border-color);
+--compass-markings-color: var(--text-secondary);
+--compass-needle-color: var(--compass-accent);
+--compass-needle-back-color: var(--compass-color);
+--compass-center-color: var(--bg-tertiary);
+--compass-center-border: var(--border-color);
+--compass-direction-color: var(--compass-color);
+--compass-north-color: var(--compass-accent);
+}
+
+:root[data-compass-style="modern"] {
+--compass-bg: var(--bg-tertiary);
+--compass-border: var(--primary-color);
+--compass-markings-color: var(--primary-color);
+--compass-needle-color: var(--primary-color);
+--compass-needle-back-color: var(--text-secondary);
+--compass-center-color: var(--primary-color);
+--compass-center-border: var(--bg-primary);
+--compass-direction-color: var(--text-primary);
+--compass-north-color: var(--primary-color);
+}
+
+:root[data-compass-style="minimal"] {
+--compass-bg: transparent;
+--compass-border: var(--text-secondary);
+--compass-markings-color: var(--text-secondary);
+--compass-needle-color: var(--text-primary);
+--compass-needle-back-color: var(--text-muted);
+--compass-center-color: var(--text-primary);
+--compass-center-border: transparent;
+--compass-direction-color: var(--text-primary);
+--compass-north-color: var(--text-primary);
+}
+
+:root[data-compass-style="vintage"] {
+--compass-bg: #e8d4b9;
+--compass-border: #8b5a2b;
+--compass-markings-color: #8b5a2b;
+--compass-needle-color: #8b0000;
+--compass-needle-back-color: #000000;
+--compass-center-color: #8b5a2b;
+--compass-center-border: #000000;
+--compass-direction-color: #8b5a2b;
+--compass-north-color: #8b0000;
+}
+
+:root[data-compass-style="digital"] {
+--compass-bg: var(--bg-primary);
+--compass-border: var(--primary-color);
+--compass-markings-color: var(--primary-color);
+--compass-needle-color: var(--primary-color);
+--compass-needle-back-color: var(--text-secondary);
+--compass-center-color: var(--primary-color);
+--compass-center-border: var(--bg-primary);
+--compass-direction-color: var(--primary-color);
+--compass-north-color: var(--primary-color);
+}
+
+.compass {
+width: 300px;
+height: 300px;
+border-radius: 50%;
+background: var(--compass-bg);
+border: 2px solid var(--compass-border);
+position: relative;
+box-shadow: 0 4px 20px var(--shadow-dark);
+margin-bottom: 2rem;
+transition: all 0.3s ease, transform var(--compass-animation-duration) cubic-bezier(0.34, 1.56, 0.64, 1);
+overflow: hidden;
+}
+
+.compass.active {
+transform: scale(1.05);
+box-shadow: 0 8px 32px var(--shadow-dark);
+}
+
+.compass-face {
+width: 100%;
+height: 100%;
+border-radius: 50%;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+}
+
+.compass-markings {
+position: absolute;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+}
+
+.compass-marking {
+position: absolute;
+top: 0;
+left: 50%;
+height: 100%;
+width: 1px;
+transform-origin: bottom center;
+}
+
+.compass-marking.major {
+background: linear-gradient(to bottom, transparent 10%, var(--compass-markings-color) 10%, var(--compass-markings-color) 15%, transparent 15%);
+}
+
+.compass-marking.minor {
+background: linear-gradient(to bottom, transparent 12%, var(--compass-markings-color) 12%, var(--compass-markings-color) 14%, transparent 14%);
+opacity: 0.5;
+}
+
+.compass-degree {
+position: absolute;
+top: 20%;
+left: 50%;
+transform-origin: center;
+color: var(--compass-markings-color);
+font-size: 0.8rem;
+font-weight: 600;
+}
+
+.compass-rose {
+width: 90%;
+height: 90%;
+border-radius: 50%;
+position: relative;
+transition: transform var(--compass-animation-duration) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.compass-direction {
+position: absolute;
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+color: var(--compass-direction-color);
+font-size: 1.2rem;
+}
+
+.compass-direction.north {
+top: 10%;
+color: var(--compass-north-color);
+}
+
+.compass-direction.east {
+right: 10%;
+transform: rotate(90deg);
+}
+
+.compass-direction.south {
+bottom: 10%;
+transform: rotate(180deg);
+}
+
+.compass-direction.west {
+left: 10%;
+transform: rotate(270deg);
+}
+
+.compass-needle {
+position: absolute;
+width: 6px;
+height: 50%;
+background: var(--compass-needle-color);
+top: 0;
+left: 50%;
+transform-origin: bottom center;
+transform: translateX(-50%);
+clip-path: polygon(50% 0, 100% 100%, 0 100%);
+z-index: 10;
+transition: transform var(--compass-animation-duration) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.compass-needle::after {
+content: '';
+position: absolute;
+width: 6px;
+height: 50%;
+background: var(--compass-needle-back-color);
+bottom: -100%;
+left: 0;
+clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.compass-needle.active {
+animation: needle-pulse 1s ease-in-out infinite;
+}
+
+@keyframes needle-pulse {
+0%, 100% { transform: translateX(-50%) scale(1); }
+50% { transform: translateX(-50%) scale(1.1); }
+}
+
+.compass-center {
+position: absolute;
+width: 20px;
+height: 20px;
+background: var(--compass-center-color);
+border: 2px solid var(--compass-center-border);
+border-radius: 50%;
+z-index: 20;
+}
+
+.tilt-indicator {
+position: absolute;
+width: 100px;
+height: 100px;
+border: 2px solid var(--compass-markings-color);
+border-radius: 50%;
+opacity: 0.3;
+z-index: 5;
+}
+
+.tilt-bubble {
+position: absolute;
+width: 16px;
+height: 16px;
+background: var(--primary-color);
+border-radius: 50%;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+transition: transform 0.3s ease;
+z-index: 6;
+}
+
+.compass-interaction {
+position: absolute;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+z-index: 30;
+cursor: pointer;
+}
+
+/* Compass style options */
+.compass-style-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+gap: 1rem;
+margin-top: 1rem;
+}
+
+.compass-style-option {
+padding: 1rem;
+border: 2px solid var(--border-color);
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.3s ease;
+background: var(--bg-primary);
+color: var(--text-primary);
+font-size: calc(0.9rem * var(--font-size-multiplier));
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.compass-style-option.active {
+border-color: var(--primary-color);
+background: var(--primary-color);
+color: var(--bg-primary);
+transform: scale(1.05);
+}
+
+.compass-style-option:hover:not(.active) {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+.compass-style-preview {
+width: 100%;
+height: 60px;
+border-radius: 8px;
+margin-bottom: 0.5rem;
+position: relative;
+overflow: hidden;
+}
+
+.compass-style-preview::before,
+.compass-style-preview::after {
+content: '';
+position: absolute;
+}
+
+.compass-style-preview.classic::before {
+width: 80%;
+height: 80%;
+border-radius: 50%;
+background: var(--bg-secondary);
+border: 2px solid var(--border-color);
+top: 10%;
+left: 10%;
+}
+
+.compass-style-preview.classic::after {
+width: 4px;
+height: 40%;
+background: var(--compass-accent);
+top: 10%;
+left: calc(50% - 2px);
+clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.compass-style-preview.modern::before {
+width: 80%;
+height: 80%;
+border-radius: 50%;
+background: var(--bg-tertiary);
+border: 2px solid var(--primary-color);
+top: 10%;
+left: 10%;
+}
+
+.compass-style-preview.modern::after {
+width: 4px;
+height: 40%;
+background: var(--primary-color);
+top: 10%;
+left: calc(50% - 2px);
+clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.compass-style-preview.minimal::before {
+width: 80%;
+height: 80%;
+border-radius: 50%;
+border: 1px solid var(--text-secondary);
+top: 10%;
+left: 10%;
+}
+
+.compass-style-preview.minimal::after {
+width: 4px;
+height: 40%;
+background: var(--text-primary);
+top: 10%;
+left: calc(50% - 2px);
+clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.compass-style-preview.vintage::before {
+width: 80%;
+height: 80%;
+border-radius: 50%;
+background: #e8d4b9;
+border: 2px solid #8b5a2b;
+top: 10%;
+left: 10%;
+}
+
+.compass-style-preview.vintage::after {
+width: 4px;
+height: 40%;
+background: #8b0000;
+top: 10%;
+left: calc(50% - 2px);
+clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.compass-style-preview.digital::before {
+width: 80%;
+height: 80%;
+border-radius: 50%;
+background: var(--bg-primary);
+border: 2px solid var(--primary-color);
+top: 10%;
+left: 10%;
+}
+
+.compass-style-preview.digital::after {
+content: '0°';
+width: auto;
+height: auto;
+background: none;
+color: var(--primary-color);
+font-size: 14px;
+font-weight: bold;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+/* Notifications */
+.notification {
+position: fixed;
+bottom: 20px;
+left: 50%;
+transform: translateX(-50%) translateY(100px);
+background: var(--bg-secondary);
+color: var(--text-primary);
+padding: 12px 20px;
+border-radius: 12px;
+box-shadow: 0 4px 20px var(--shadow-dark);
+z-index: 1000;
+transition: transform 0.3s ease;
+max-width: 90%;
+text-align: center;
+}
+
+.notification.show {
+transform: translateX(-50%) translateY(0);
+}
+
+.error-notification {
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%) translateY(-100px);
+background: #ff4444;
+color: white;
+padding: 12px 20px;
+border-radius: 12px;
+box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+z-index: 1000;
+transition: transform 0.3s ease;
+display: flex;
+align-items: center;
+gap: 10px;
+max-width: 90%;
+}
+
+.error-notification.show {
+transform: translateX(-50%) translateY(0);
+}
+
+.error-notification .icon {
+stroke: white;
+width: 24px;
+height: 24px;
+}
+
+/* Permission overlay */
+.permission-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.8);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 2000;
+}
+
+.permission-content {
+background: var(--bg-secondary);
+border-radius: 16px;
+padding: 2rem;
+max-width: 90%;
+width: 400px;
+text-align: center;
+animation: scaleIn 0.3s ease;
+}
+
+.permission-title {
+font-size: 1.5rem;
+font-weight: 700;
+margin-bottom: 1rem;
+color: var(--text-primary);
+}
+
+.permission-description {
+color: var(--text-secondary);
+margin-bottom: 2rem;
+font-size: calc(1rem * var(--font-size-multiplier));
+}
+
+.permission-buttons {
+display: flex;
+gap: 1rem;
+justify-content: center;
+}
+
+.permission-btn {
+padding: 0.75rem 1.5rem;
+border-radius: 12px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+border: none;
+font-size: calc(1rem * var(--font-size-multiplier));
+}
+
+.permission-btn.primary {
+background: var(--primary-color);
+color: var(--bg-primary);
+}
+
+.permission-btn.secondary {
+background: var(--bg-tertiary);
+color: var(--text-primary);
+}
+
+.permission-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+/* Compass calibration */
+.compass-calibration {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.8);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 2000;
+}
+
+.calibration-content {
+background: var(--bg-secondary);
+border-radius: 16px;
+padding: 2rem;
+max-width: 90%;
+width: 400px;
+text-align: center;
+animation: scaleIn 0.3s ease;
+}
+
+.calibration-animation {
+width: 150px;
+height: 150px;
+margin: 0 auto 2rem;
+position: relative;
+}
+
+.calibration-phone {
+width: 60px;
+height: 100px;
+background: var(--bg-tertiary);
+border: 2px solid var(--border-color);
+border-radius: 10px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+animation: calibrate 4s infinite ease-in-out;
+}
+
+@keyframes calibrate {
+0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+25% { transform: translate(-50%, -50%) rotate(90deg); }
+50% { transform: translate(-50%, -50%) rotate(180deg); }
+75% { transform: translate(-50%, -50%) rotate(270deg); }
+}
+
+.calibration-progress {
+width: 100%;
+height: 8px;
+background: var(--bg-tertiary);
+border-radius: 4px;
+overflow: hidden;
+margin-top: 1rem;
+}
+
+.calibration-bar {
+height: 100%;
+background: var(--primary-color);
+width: 0%;
+transition: width 0.1s linear;
+}
+
+@keyframes scaleIn {
+from { transform: scale(0.8); opacity: 0; }
+to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+.compass {
+    width: 250px;
+    height: 250px;
+}
+
+.compass-style-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+}
+
+.compass-style-preview {
+    height: 50px;
+}
+
+.permission-content, .calibration-content {
+    padding: 1.5rem;
+    width: 320px;
+}
+
+.calibration-animation {
+    width: 120px;
+    height: 120px;
+}
+
+.calibration-phone {
+    width: 50px;
+    height: 80px;
+}
+}
+
+@media (max-width: 480px) {
+.compass {
+    width: 200px;
+    height: 200px;
+}
+
+.compass-style-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.permission-content, .calibration-content {
+    padding: 1rem;
+    width: 280px;
+}
+
+.calibration-animation {
+    width: 100px;
+    height: 100px;
+}
+
+.calibration-phone {
+    width: 40px;
+    height: 70px;
+}
+}
+</style>
+`);
 </script>
 </body>
 </html>
