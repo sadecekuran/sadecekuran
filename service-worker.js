@@ -6,6 +6,8 @@ const urlsToCache = [
   "/sdc1.PNG",
   "/sdc1.PNG",
   "/style.css",         // varsa
+  "/kuran_mealleri.json", 
+  "/all_surahs_data.json",         // varsa
   "/main.js"            // varsa
 ];
 
