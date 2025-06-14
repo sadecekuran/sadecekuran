@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="/logokuran2.jpg"/>
+<link rel="apple-touch-icon" href="/sdc1.PNG">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>SADECE KURAN - Kuran Meali ve Kelime Analizi</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -4221,5 +4227,19 @@ function showHome() {
 
 const app = new QuranApp();
 </script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("/service-worker.js")
+        .then(function (registration) {
+          console.log("Service Worker kayıtlı:", registration.scope);
+        })
+        .catch(function (error) {
+          console.log("Service Worker hatası:", error);
+        });
+    });
+  }
+</script>
+
 </body>
 </html>

@@ -1,23 +1,21 @@
 {
-  "name": "Ana Ekrana Ekle Uygulaması",
-  "short_name": "Ana Ekran",
-  "description": "Bu uygulama ana ekrana eklenebilir",
-  "start_url": "appp.html",
+  "name": "SADECE KURAN",
+  "short_name": "SadeceKuran",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2196F3",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "description": "Sadece Kur'an meali ve araştırma sitesi. 24 farklı meal, not alma ve gelişmiş arama özelliği.",
   "icons": [
     {
-      "src": "icon-192x192.png",
+      "src": "/sdc1.PNG",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "icon-512x512.png",
+      "src": "/sdc1.PNG",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
