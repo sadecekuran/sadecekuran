@@ -4,7 +4,7 @@ const urlsToCache = [
   "/index.html",        // varsa
   "/manifest.json",
   "/sdc1.PNG",
-  "/sdc1.PNG",
+  "/sdc5.PNG",
   "/style.css",         // varsa
   "/kuran_mealleri.json", 
   "/all_surahs_data.json",         // varsa
