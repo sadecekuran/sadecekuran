@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" href="/sdc5.PNG"/>
+    <link rel="apple-touch-icon" href="/sdc5.PNG">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Uygulamayı İndir - SADECE KURAN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-size-multiplier: 1;
+            --arabic-font-size-multiplier: 1;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --border-color: #333333;
+            --accent-light: #ffffff;
+            --accent-dark: #000000;
+            --shadow-light: rgba(255, 255, 255, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --gradient-primary: linear-gradient(135deg, #ffffff, #cccccc);
+            --gradient-secondary: linear-gradient(135deg, #333333, #111111);
+            --wire-color: #666666;
+            --primary-color: #ffffff;
+            --secondary-color: #cccccc;
+            --accent-color: #888888;
+            --header-height: 60px;
+            --navbar-bg: #111111;
+        }
+
+        :root[data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent-light: #1e293b;
+            --accent-dark: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #1e293b, #475569);
+            --gradient-secondary: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            --wire-color: #94a3b8;
+            --primary-color: #2563eb;
+            --secondary-color: #475569;
+            --accent-color: #64748b;
+            --header-height: 60px;
+            --navbar-bg: #f8fafc;
+        }
+
+        :root[data-theme="sepia"] {
+            --bg-primary: #f7f3e9;
+            --bg-secondary: #f0e6d2;
+            --bg-tertiary: #e8dcc0;
+            --text-primary: #5d4e37;
+            --text-secondary: #8b7355;
+            --text-muted: #a0916f;
+            --border-color: #d4c4a8;
+            --accent-light: #5d4e37;
+            --accent-dark: #f7f3e9;
+            --shadow-light: rgba(93, 78, 55, 0.1);
+            --shadow-dark: rgba(93, 78, 55, 0.15);
+            --gradient-primary: linear-gradient(135deg, #5d4e37, #8b7355);
+            --gradient-secondary: linear-gradient(135deg, #e8dcc0, #d4c4a8);
+            --wire-color: #a0916f;
+            --primary-color: #8b4513;
+            --secondary-color: #8b7355;
+            --accent-color: #a0916f;
+            --header-height: 60px;
+            --navbar-bg: #f0e6d2;
+        }
+
+        :root[data-theme="blue"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #475569;
+            --accent-light: #f1f5f9;
+            --accent-dark: #0f172a;
+            --shadow-light: rgba(241, 245, 249, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --gradient-primary: linear-gradient(135deg, #d5d5d5, #ffffff);
+            --gradient-secondary: linear-gradient(135deg, #334155, #1e293b);
+            --wire-color: #64748b;
+            --primary-color: #d8d8d8;
+            --secondary-color: #cbd5e1;
+            --accent-color: #94a3b8;
+            --header-height: 60px;
+            --navbar-bg: #1e293b;
+        }
+
+        :root[data-theme="green"] {
+            --bg-primary: #064e3b;
+            --bg-secondary: #065f46;
+            --bg-tertiary: #047857;
+            --text-primary: #ecfdf5;
+            --text-secondary: #d1fae5;
+            --text-muted: #a7f3d0;
+            --border-color: #059669;
+            --accent-light: #ecfdf5;
+            --accent-dark: #064e3b;
+            --shadow-light: rgba(236, 253, 245, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --gradient-primary: linear-gradient(135deg, #10b981, #059669);
+            --gradient-secondary: linear-gradient(135deg, #047857, #065f46);
+            --wire-color: #6ee7b7;
+            --primary-color: #10b981;
+            --secondary-color: #d1fae5;
+            --accent-color: #a7f3d0;
+            --header-height: 60px;
+            --navbar-bg: #065f46;
+        }
+
+        :root[data-theme="purple"] {
+            --bg-primary: #581c87;
+            --bg-secondary: #6b21a8;
+            --bg-tertiary: #7c2d92;
+            --text-primary: #faf5ff;
+            --text-secondary: #e9d5ff;
+            --text-muted: #d8b4fe;
+            --border-color: #8b5cf6;
+            --accent-light: #faf5ff;
+            --accent-dark: #581c87;
+            --shadow-light: rgba(250, 245, 255, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --gradient-primary: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            --gradient-secondary: linear-gradient(135deg, #7c2d92, #6b21a8);
+            --wire-color: #c4b5fd;
+            --primary-color: #8b5cf6;
+            --secondary-color: #e9d5ff;
+            --accent-color: #d8b4fe;
+            --header-height: 60px;
+            --navbar-bg: #6b21a8;
+        }
+
+        :root[data-theme="rose"] {
+            --bg-primary: #881337;
+            --bg-secondary: #9f1239;
+            --bg-tertiary: #be185d;
+            --text-primary: #fdf2f8;
+            --text-secondary: #fce7f3;
+            --text-muted: #fbcfe8;
+            --border-color: #ec4899;
+            --accent-light: #fdf2f8;
+            --accent-dark: #881337;
+            --shadow-light: rgba(253, 242, 248, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --gradient-primary: linear-gradient(135deg, #ec4899, #db2777);
+            --gradient-secondary: linear-gradient(135deg, #be185d, #9f1239);
+            --wire-color: #f9a8d4;
+            --primary-color: #ec4899;
+            --secondary-color: #fce7f3;
+            --accent-color: #fbcfe8;
+            --header-height: 60px;
+            --navbar-bg: #9f1239;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            min-height: 100vh;
+            font-size: calc(16px * var(--font-size-multiplier));
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            stroke: var(--wire-color);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .icon:hover {
+            stroke: var(--text-primary);
+            transform: scale(1.1);
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            z-index: 1000;
+            height: var(--header-height);
+            animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--wire-color);
+            transform: scale(1.05);
+        }
+
+        .main {
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        .content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .download-hero {
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .download-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+        }
+
+        .download-hero p {
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+        }
+
+        .download-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            box-shadow: 0 8px 32px var(--shadow-dark);
+        }
+
+        .download-section h2 {
+            font-size: calc(1.5rem * var(--font-size-multiplier));
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .device-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .device-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .device-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px var(--shadow-dark);
+            border-color: var(--wire-color);
+        }
+
+        .device-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .device-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+        }
+
+        .device-info h3 {
+            font-size: calc(1.2rem * var(--font-size-multiplier));
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .device-info p {
+            color: var(--text-secondary);
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+        }
+
+        .steps-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .step-item::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--primary-color);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+        }
+
+        .step-content h4 {
+            font-size: calc(1rem * var(--font-size-multiplier));
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+            line-height: 1.5;
+        }
+
+        .step-image {
+            margin: 1rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .step-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .step-image-placeholder {
+            background: var(--bg-tertiary);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-style: italic;
+            text-align: center;
+        }
+
+        .highlight-box {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .highlight-box .icon {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--wire-color);
+            transform: translateY(-2px);
+        }
+
+        .pwa-install-button {
+            background: var(--primary-color);
+            color: var(--bg-primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: calc(1rem * var(--font-size-multiplier));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            justify-content: center;
+            margin: 1rem auto;
+            max-width: 300px;
+        }
+
+        .pwa-install-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .pwa-install-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .browser-support {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .browser-support h4 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .browser-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .browser-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .browser-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .content {
+                padding: 1rem;
+            }
+
+            .download-hero {
+                padding: 1rem 0;
+                margin-bottom: 2rem;
+            }
+
+            .download-section {
+                padding: 1.5rem;
+            }
+
+            .device-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .device-card {
+                padding: 1rem;
+            }
+
+            .step-item {
+                padding-left: 2.5rem;
+            }
+
+            .step-item::before {
+                width: 1.5rem;
+                height: 1.5rem;
+                font-size: calc(0.8rem * var(--font-size-multiplier));
+            }
+
+            .browser-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.5rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .download-hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .download-section {
+                padding: 1rem;
+            }
+
+            .device-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .device-icon {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">SADECE KURAN</a>
+            <button class="theme-btn" onclick="toggleTheme()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <a href="index.html" class="back-button">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+                Ana Sayfaya Dön
+            </a>
+
+            <div class="download-hero">
+                <h1>Uygulamayı Cihazınıza Yükleyin</h1>
+                <p>SADECE KURAN uygulamasını cihazınıza yükleyerek offline erişim sağlayın ve daha hızlı bir deneyim yaşayın.</p>
+            </div>
+
+            <!-- PWA Install Button -->
+            <div class="download-section" style="animation-delay: 0.1s;">
+                <h2>
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-15"></path>
+                        <polyline points="7,10 12,15 17,10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Hızlı Kurulum
+                </h2>
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Tarayıcınız destekliyorsa, aşağıdaki butona tıklayarak uygulamayı doğrudan yükleyebilirsiniz:</p>
+                
+                <button id="installButton" class="pwa-install-button" style="display: none;">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7,10 12,15 17,10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Uygulamayı Yükle
+                </button>
+
+                <div class="highlight-box">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 6v6l4 2"></path>
+                    </svg>
+                    <strong>Not:</strong> Eğer yukarıdaki buton görünmüyorsa, aşağıdaki manuel kurulum adımlarını takip edin.
+                </div>
+            </div>
+
+            <!-- Mobile Devices -->
+            <div class="download-section" style="animation-delay: 0.2s;">
+                <h2>
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                    </svg>
+                    Mobil Cihazlar
+                </h2>
+
+                <div class="device-grid">
+                    <!-- iPhone/iPad -->
+                    <div class="device-card">
+                        <div class="device-header">
+                            <div class="device-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                </svg>
+                            </div>
+                            <div class="device-info">
+                                <h3>iPhone / iPad</h3>
+                                <p>Safari tarayıcısı kullanarak</p>
+                            </div>
+                        </div>
+
+                        <ol class="steps-list">
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Safari'de Siteyi Açın</h4>
+                                    <p>SADECE KURAN web sitesini Safari tarayıcısında açın.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            📱 Safari'de site açık
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Paylaş Butonuna Tıklayın</h4>
+                                    <p>Ekranın altındaki paylaş butonuna (⬆️) tıklayın.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            ⬆️ Paylaş butonu
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>"Ana Ekrana Ekle" Seçin</h4>
+                                    <p>Açılan menüden "Ana Ekrana Ekle" seçeneğini bulun ve tıklayın.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            ➕ Ana Ekrana Ekle seçeneği
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Uygulamayı Adlandırın</h4>
+                                    <p>Uygulama adını onaylayın ve "Ekle" butonuna tıklayın.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            ✅ "Ekle" butonu
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+
+                        <div class="highlight-box">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                            </svg>
+                            Artık ana ekranınızda SADECE KURAN uygulaması var!
+                        </div>
+                    </div>
+
+                    <!-- Android -->
+                    <div class="device-card">
+                        <div class="device-header">
+                            <div class="device-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                                    <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.2439 13.8533 7.8508 12 7.8508s-3.5902.3931-5.1367 1.0989L4.841 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3435-4.1021-2.6892-7.5743-6.1185-9.4396"/>
+                                </svg>
+                            </div>
+                            <div class="device-info">
+                                <h3>Android</h3>
+                                <p>Chrome veya diğer tarayıcılar</p>
+                            </div>
+                        </div>
+
+                        <ol class="steps-list">
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Chrome'da Siteyi Açın</h4>
+                                    <p>SADECE KURAN web sitesini Chrome tarayıcısında açın.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            🌐 Chrome'da site açık
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Menü Butonuna Tıklayın</h4>
+                                    <p>Sağ üst köşedeki üç nokta (⋮) menü butonuna tıklayın.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            ⋮ Menü butonu
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>"Ana ekrana ekle" Seçin</h4>
+                                    <p>Açılan menüden "Ana ekrana ekle" veya "Uygulama yükle" seçeneğini tıklayın.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            📱 Ana ekrana ekle seçeneği
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Kurulumu Onaylayın</h4>
+                                    <p>Çıkan onay penceresinde "Yükle" veya "Ekle" butonuna tıklayın.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            ✅ Kurulum onayı
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+
+                        <div class="highlight-box">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                            </svg>
+                            Uygulama ana ekranınıza ve uygulama çekmecenize eklendi!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop -->
+            <div class="download-section" style="animation-delay: 0.3s;">
+                <h2>
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    Masaüstü Bilgisayarlar
+                </h2>
+
+                <div class="device-grid">
+                    <!-- Chrome Desktop -->
+                    <div class="device-card">
+                        <div class="device-header">
+                            <div class="device-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <line x1="21.17" y1="8" x2="12" y2="8"/>
+                                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"/>
+                                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"/>
+                                </svg>
+                            </div>
+                            <div class="device-info">
+                                <h3>Google Chrome</h3>
+                                <p>Windows, Mac, Linux</p>
+                            </div>
+                        </div>
+
+                        <ol class="steps-list">
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Chrome'da Siteyi Açın</h4>
+                                    <p>SADECE KURAN web sitesini Chrome tarayıcısında açın.</p>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Yükleme İkonunu Arayın</h4>
+                                    <p>Adres çubuğunun sağında yükleme ikonu (⬇️) görünecektir.</p>
+                                    <div class="step-image">
+                                        <div class="step-image-placeholder">
+                                            ⬇️ Adres çubuğunda yükleme ikonu
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Yükleme İkonuna Tıklayın</h4>
+                                    <p>Yükleme ikonuna tıklayın veya menüden "Uygulama yükle" seçeneğini seçin.</p>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Kurulumu Onaylayın</h4>
+                                    <p>Çıkan onay penceresinde "Yükle" butonuna tıklayın.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- Edge Desktop -->
+                    <div class="device-card">
+                        <div class="device-header">
+                            <div class="device-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                                    <path d="M21.86 8.5c-.42-2.47-1.71-4.68-3.64-6.24C16.29.79 14.24 0 12 0 9.11 0 6.46 1.24 4.64 3.41 2.82 5.58 2 8.29 2 11.14c0 2.94.89 5.66 2.5 7.64 1.61 1.98 3.8 3.22 6.18 3.22 2.21 0 4.26-.89 5.82-2.5 1.56-1.61 2.5-3.8 2.5-6.18 0-.42-.03-.84-.09-1.25-.06-.41-.15-.82-.27-1.22-.12-.4-.27-.79-.45-1.17-.18-.38-.39-.75-.63-1.1z"/>
+                                </svg>
+                            </div>
+                            <div class="device-info">
+                                <h3>Microsoft Edge</h3>
+                                <p>Windows, Mac</p>
+                            </div>
+                        </div>
+
+                        <ol class="steps-list">
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Edge'de Siteyi Açın</h4>
+                                    <p>SADECE KURAN web sitesini Microsoft Edge tarayıcısında açın.</p>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>Menü Butonuna Tıklayın</h4>
+                                    <p>Sağ üst köşedeki üç nokta (...) menü butonuna tıklayın.</p>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>"Uygulamalar" Menüsüne Gidin</h4>
+                                    <p>Menüden "Uygulamalar" seçeneğini bulun ve tıklayın.</p>
+                                </div>
+                            </li>
+                            <li class="step-item">
+                                <div class="step-content">
+                                    <h4>"Bu siteyi uygulama olarak yükle" Seçin</h4>
+                                    <p>Alt menüden "Bu siteyi uygulama olarak yükle" seçeneğini tıklayın.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="browser-support">
+                    <h4>Desteklenen Tarayıcılar</h4>
+                    <div class="browser-list">
+                        <div class="browser-item">
+                            <div class="browser-icon" style="background: #4285f4;"></div>
+                            <span>Chrome 73+</span>
+                        </div>
+                        <div class="browser-item">
+                            <div class="browser-icon" style="background: #0078d4;"></div>
+                            <span>Edge 79+</span>
+                        </div>
+                        <div class="browser-item">
+                            <div class="browser-icon" style="background: #ff9500;"></div>
+                            <span>Safari 11.1+</span>
+                        </div>
+                        <div class="browser-item">
+                            <div class="browser-icon" style="background: #ff6611;"></div>
+                            <span>Firefox 58+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="download-section" style="animation-delay: 0.4s;">
+                <h2>
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    Uygulama Yüklemenin Avantajları
+                </h2>
+
+                <div class="device-grid">
+                    <div class="device-card">
+                        <div class="device-header">
+                            <div class="device-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="device-info">
+                                <h3>Offline Erişim</h3>
+                                <p>İnternet bağlantısı olmadan da kullanabilirsiniz</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="device-card">
+                        <div class="device-header">
+                            <div class="device-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                                </svg>
+                            </div>
+                            <div class="device-info">
+                                <h3>Hızlı Başlatma</h3>
+                                <p>Ana ekrandan tek tıkla hızlı erişim</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="device-card">
+                        <div class="device-header">
+                            <div class="device-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="device-info">
+                                <h3>Uygulama Deneyimi</h3>
+                                <p>Tam ekran, native uygulama hissi</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="device-card">
+                        <div class="device-header">
+                            <div class="device-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                                </svg>
+                            </div>
+                            <div class="device-info">
+                                <h3>Otomatik Güncelleme</h3>
+                                <p>Yeni özellikler otomatik olarak güncellenir</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let deferredPrompt;
+        let currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Set initial theme
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const themes = ['dark', 'light', 'sepia', 'blue', 'green', 'purple', 'rose'];
+            const currentIndex = themes.indexOf(currentTheme);
+            const nextIndex = (currentIndex + 1) % themes.length;
+            currentTheme = themes[nextIndex];
+            
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('theme', currentTheme);
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const themeBtn = document.querySelector('.theme-btn .icon');
+            if (themeBtn) {
+                if (currentTheme === 'dark') {
+                    themeBtn.innerHTML = `
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    `;
+                } else if (currentTheme === 'light') {
+                    themeBtn.innerHTML = `
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    `;
+                } else {
+                    themeBtn.innerHTML = `
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                    `;
+                }
+            }
+        }
+
+        // PWA Install functionality
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            const installButton = document.getElementById('installButton');
+            installButton.style.display = 'flex';
+            
+            installButton.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    
+                    if (outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        showNotification('Uygulama yükleniyor...');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    
+                    deferredPrompt = null;
+                    installButton.style.display = 'none';
+                }
+            });
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            showNotification('Uygulama başarıyla yüklendi!');
+            deferredPrompt = null;
+            
+            const installButton = document.getElementById('installButton');
+            installButton.style.display = 'none';
+        });
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: var(--bg-secondary);
+                color: var(--text-primary);
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                border: 1px solid var(--border-color);
+                z-index: 1000;
+                animation: slideInRight 0.3s ease;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 8px 32px var(--shadow-dark);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize theme icon
+        updateThemeIcon();
+
+        // Add animation keyframes for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
