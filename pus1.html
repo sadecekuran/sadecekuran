@@ -317,7 +317,7 @@ align-items: center;
 gap: 0.5rem;
 }
 
-.search-btn, .theme-btn, .saved-btn, .settings-btn, .support-btn, .install-btn {
+.search-btn, .theme-btn, .saved-btn, .settings-btn, .support-btn {
 background: var(--bg-secondary);
 border: 1px solid var(--border-color);
 padding: 0.5rem;
@@ -331,40 +331,21 @@ justify-content: center;
 text-decoration: none;
 }
 
-.search-btn:hover, .theme-btn:hover, .saved-btn:hover, .settings-btn:hover, .support-btn:hover, .install-btn:hover {
+.search-btn:hover, .theme-btn:hover, .saved-btn:hover, .settings-btn:hover, .support-btn:hover {
 background: var(--bg-tertiary);
 color: var(--text-primary);
 border-color: var(--wire-color);
 transform: scale(1.05);
 }
 
-.saved-btn, .support-btn, .install-btn {
+.saved-btn, .support-btn {
 gap: 0.25rem;
 padding: 0.5rem 0.75rem;
 font-size: 0.8rem;
 }
 
-.saved-btn .icon, .support-btn .icon, .install-btn .icon {
+.saved-btn .icon, .support-btn .icon {
 margin: 0;
-}
-
-/* Install button responsive styles */
-.install-btn {
-background: var(--primary-color);
-color: var(--bg-primary);
-border-color: var(--primary-color);
-font-weight: 600;
-}
-
-.install-btn:hover {
-background: var(--primary-color);
-color: var(--bg-primary);
-opacity: 0.9;
-transform: scale(1.05);
-}
-
-.install-btn-text {
-display: inline;
 }
 
 .main {
@@ -397,11 +378,92 @@ margin-bottom: 1rem;
 animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
 }
 
-.home-hero p {
-font-size: calc(1.2rem * var(--font-size-multiplier));
+/* PWA Install Panel - Updated for better responsiveness */
+.pwa-install-panel {
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: 16px;
+padding: 1.5rem;
+margin: 0 auto 2rem;
+max-width: 600px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 1rem;
+box-shadow: 0 4px 20px var(--shadow-dark);
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+transition: all 0.3s ease;
+}
+
+.pwa-install-panel:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 32px var(--shadow-dark);
+}
+
+.pwa-panel-left {
+display: flex;
+align-items: center;
+gap: 1rem;
+flex: 1;
+}
+
+.pwa-app-logo {
+width: 48px;
+height: 48px;
+border-radius: 12px;
+background: var(--primary-color);
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--bg-primary);
+font-weight: bold;
+font-size: 1.2rem;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+overflow: hidden;
+}
+
+.pwa-app-logo img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+border-radius: 8px;
+}
+
+.pwa-panel-info h3 {
+font-size: 1.1rem;
+font-weight: 600;
+margin-bottom: 0.25rem;
+color: var(--text-primary);
+text-align: left;
+}
+
+.pwa-panel-info p {
+font-size: 0.9rem;
 color: var(--text-secondary);
-margin-bottom: 2rem;
-animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+margin: 0;
+text-align: left;
+}
+
+.pwa-download-btn {
+background: var(--primary-color);
+color: var(--bg-primary);
+border: none;
+padding: 0.75rem 1.5rem;
+border-radius: 12px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.9rem;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+text-decoration: none;
+}
+
+.pwa-download-btn:hover {
+transform: translateY(-2px) scale(1.05);
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .home-search {
@@ -1211,6 +1273,7 @@ touch-action: pan-y;
 position: relative;
 }
 
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
 :root {
     --font-size-multiplier: 1.1;
@@ -1230,17 +1293,13 @@ position: relative;
     font-size: 0.9rem;
 }
 
-.saved-btn, .support-btn, .install-btn {
+.saved-btn, .support-btn {
     padding: 0.4rem;
     font-size: 0;
 }
 
-.saved-btn .icon, .support-btn .icon, .install-btn .icon {
+.saved-btn .icon, .support-btn .icon {
     margin: 0;
-}
-
-.install-btn-text {
-    display: none;
 }
 
 .search-btn, .theme-btn, .settings-btn {
@@ -1257,6 +1316,33 @@ position: relative;
 
 .home-hero h1 {
     font-size: 1.4rem;
+}
+
+.pwa-install-panel {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.pwa-panel-left {
+    justify-content: center;
+}
+
+.pwa-panel-info h3,
+.pwa-panel-info p {
+    text-align: center;
+}
+
+.pwa-app-logo {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.pwa-download-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
 }
 
 .home-search {
@@ -1520,6 +1606,7 @@ position: relative;
     --font-size-multiplier: 1.2;
     --arabic-font-size-multiplier: 1.3;
 }
+
 .words-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 0.4rem;
@@ -1544,6 +1631,22 @@ position: relative;
 
 .home-hero h1 {
     font-size: 1.2rem;
+}
+
+.pwa-install-panel {
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.pwa-app-logo {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+}
+
+.pwa-download-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
 }
 
 .surahs-grid {
@@ -2301,14 +2404,6 @@ font-size: calc(1rem * var(--font-size-multiplier));
     </svg>
     <span>Destekle</span>
 </a>
-<button class="install-btn ripple" onclick="window.open('indirme.html', '_blank')">
-    <svg class="icon icon-sm" viewBox="0 0 24 24">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="7,10 12,15 17,10"></polyline>
-        <line x1="12" y1="15" x2="12" y2="3"></line>
-    </svg>
-    <span class="install-btn-text">Uygulama İndir</span>
-</button>
 <button class="settings-btn ripple" onclick="app.showSettings()">
     <svg class="icon" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="3"></circle>
@@ -2814,19 +2909,25 @@ return text.replace(regex, '<span class="highlight">$1</span>');
 }
 
 setupEventListeners() {
-window.addEventListener('hashchange', () => this.handleRoute());
+window.addEventListener('hashchange', () => {
+    this.handleRoute();
+    // Scroll to top when route changes
+    setTimeout(() => this.scrollToTop(), 100);
+});
 
 const content = document.getElementById('content');
+
+// Touch event listeners - sadece ayet sayfasında aktif
 content.addEventListener('touchstart', (e) => {
     // Sadece ayet sayfasında swipe özelliğini etkinleştir
-    if (this.currentSurahId && this.currentVerseNumber) {
+    if (this.isVerseDetailPage()) {
         this.touchStartX = e.changedTouches[0].screenX;
     }
 });
 
 content.addEventListener('touchend', (e) => {
     // Sadece ayet sayfasında swipe özelliğini etkinleştir
-    if (this.currentSurahId && this.currentVerseNumber) {
+    if (this.isVerseDetailPage()) {
         this.touchEndX = e.changedTouches[0].screenX;
         this.handleSwipe();
     }
@@ -2846,7 +2947,8 @@ document.addEventListener('keydown', (e) => {
         e.preventDefault();
         this.showSearchPage();
     }
-    if (this.currentSurahId && this.currentVerseNumber) {
+    // Klavye navigasyonu sadece ayet sayfasında
+    if (this.isVerseDetailPage()) {
         if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
             e.preventDefault();
             this.navigateToPreviousVerse();
@@ -2863,8 +2965,13 @@ document.addEventListener('keydown', (e) => {
 });
 }
 
+// Yeni yardımcı fonksiyon - ayet detay sayfasında olup olmadığını kontrol eder
+isVerseDetailPage() {
+return this.currentHash.startsWith('ayet-') && this.currentSurahId && this.currentVerseNumber;
+}
+
 handleSwipe() {
-if (!this.currentSurahId || !this.currentVerseNumber) return;
+if (!this.isVerseDetailPage()) return;
 
 const swipeThreshold = 50;
 const swipeDistance = this.touchEndX - this.touchStartX;
@@ -2884,9 +2991,13 @@ this.currentHash = hash;
 
 if (!hash) {
     this.renderHome();
+    this.currentSurahId = null;
+    this.currentVerseNumber = null;
 } else if (hash.startsWith('sure-')) {
     const surahId = parseInt(hash.split('-')[1]);
     this.renderSurah(surahId);
+    this.currentSurahId = null;
+    this.currentVerseNumber = null;
 } else if (hash.startsWith('ayet-')) {
     const parts = hash.split('-');
     const surahId = parseInt(parts[1]);
@@ -2896,15 +3007,25 @@ if (!hash) {
     this.renderVerse(surahId, verseNumber);
 } else if (hash === 'ara') {
     this.renderSearchPage();
+    this.currentSurahId = null;
+    this.currentVerseNumber = null;
 } else if (hash.startsWith('ara-')) {
     const query = decodeURIComponent(hash.substring(4));
     this.renderSearchResults(query);
+    this.currentSurahId = null;
+    this.currentVerseNumber = null;
 } else if (hash === 'kaydedilenler') {
     this.renderSavedVerses();
+    this.currentSurahId = null;
+    this.currentVerseNumber = null;
 } else if (hash === 'ayarlar') {
     this.renderSettings();
+    this.currentSurahId = null;
+    this.currentVerseNumber = null;
 } else if (hash === 'destekle') {
     this.renderSupportPage();
+    this.currentSurahId = null;
+    this.currentVerseNumber = null;
 }
 }
 
@@ -2914,8 +3035,26 @@ const content = document.getElementById('content');
 content.innerHTML = `
     <div class="home-hero">
         <h1>SADECE KURAN</h1>
-        <p>Kuran-ı Kerim'in Türkçe meali ve detaylı kelime analizi. Her kelimeyi kökü ile birlikte inceleyin, ayetleri derinlemesine anlayın.</p>
-        <p>Sitemizin tasarımı güncellenmiştir. <a href="https://sadecekuran.com.tr/kuran" style="font-weight: bold; color: inherit; text-decoration: none;">SADECE KURAN ESKİ SÜRÜM</a> adresinden eski tasarımı kullanmaya devam edebilirsiniz.</p>
+    </div>
+
+    <!-- PWA Install Panel -->
+    <div class="pwa-install-panel">
+        <div class="pwa-panel-left">
+           
+            <div class="pwa-panel-info">
+                <h3>Uygulamayı İndir</h3>
+                <p>Offline erişim ve daha hızlı deneyim için uygulamayı cihazınıza yükleyin</p>
+            </div>
+        </div>
+
+        <a href="download.html" class="pwa-download-btn ripple">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7,10 12,15 17,10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Uygulamayı İndir
+        </a>
     </div>
 
     <div class="home-search">
@@ -3202,48 +3341,45 @@ content.innerHTML = `
                     <path d="m3.5 15.5 3-3 3 3"></path>
                     <path d="m20.5 15.5-3-3-3 3"></path>
                 </svg>
-                Tema Ayarları
+                Tema Seçimi
             </h3>
             <div class="theme-grid">
                 <div class="theme-option ripple ${this.currentTheme === 'dark' ? 'active' : ''}" onclick="app.setTheme('dark')">
                     <div class="theme-preview dark"></div>
-                    Koyu
+                    🌙 Karanlık
                 </div>
                 <div class="theme-option ripple ${this.currentTheme === 'light' ? 'active' : ''}" onclick="app.setTheme('light')">
                     <div class="theme-preview light"></div>
-                    Açık
+                    ☀️ Aydınlık
                 </div>
                 <div class="theme-option ripple ${this.currentTheme === 'sepia' ? 'active' : ''}" onclick="app.setTheme('sepia')">
                     <div class="theme-preview sepia"></div>
-                    Sepia
+                    📜 Sepya
                 </div>
                 <div class="theme-option ripple ${this.currentTheme === 'blue' ? 'active' : ''}" onclick="app.setTheme('blue')">
                     <div class="theme-preview blue"></div>
-                    Mavi
+                    🔵 Mavi
                 </div>
                 <div class="theme-option ripple ${this.currentTheme === 'green' ? 'active' : ''}" onclick="app.setTheme('green')">
                     <div class="theme-preview green"></div>
-                    Yeşil
+                    🟢 Yeşil
                 </div>
                 <div class="theme-option ripple ${this.currentTheme === 'purple' ? 'active' : ''}" onclick="app.setTheme('purple')">
                     <div class="theme-preview purple"></div>
-                    Mor
+                    🟣 Mor
                 </div>
                 <div class="theme-option ripple ${this.currentTheme === 'rose' ? 'active' : ''}" onclick="app.setTheme('rose')">
                     <div class="theme-preview rose"></div>
-                    Gül
+                    🌹 Pembe
                 </div>
             </div>
         </div>
 
-        <div class="settings-section" style="animation-delay: 0.25s;">
+        <div class="settings-section" style="animation-delay: 0.3s;">
             <h3>
                 <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M9 12l2 2 4-4"></path>
-                    <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"></path>
-                    <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"></path>
-                    <path d="M12 3c0 1-1 3-3 3s-3-2-3-3 1-3 3-3 3 2 3 3"></path>
-                    <path d="M12 21c0-1-1-3-3-3s-3 2-3 3 1 3 3 3 3-2 3-3"></path>
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
                 </svg>
                 Görünüm Ayarları
             </h3>
@@ -3258,7 +3394,7 @@ content.innerHTML = `
                         </svg>
                         Arapça Metni Göster
                     </div>
-                    <div class="setting-description">Ayetlerin Arapça metnini göster/gizle</div>
+                    <div class="setting-description">Arapça ayetleri ve kelimeleri göster/gizle</div>
                 </div>
                 <div class="toggle-switch ${this.settings.showArabicText ? 'active' : ''}" onclick="app.toggleArabicText()"></div>
             </div>
@@ -3270,16 +3406,29 @@ content.innerHTML = `
                             <polyline points="14,2 14,8 20,8"></polyline>
                             <line x1="16" y1="13" x2="8" y2="13"></line>
                             <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10,9 9,9 8,9"></polyline>
                         </svg>
-                        Transkripsiyon Göster
+                        Okunuş Göster
                     </div>
-                    <div class="setting-description">Ayetlerin okunuş transkripsiyon metnini göster/gizle</div>
+                    <div class="setting-description">Arapça kelimelerin okunuşunu göster</div>
                 </div>
                 <div class="toggle-switch ${this.settings.showTranscription ? 'active' : ''}" onclick="app.toggleTranscription()"></div>
             </div>
+            <div class="setting-item ripple">
+                <div>
+                    <div class="setting-label">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <polygon points="5,3 19,12 5,21"></polygon>
+                        </svg>
+                        Otomatik Ses Çalma
+                    </div>
+                    <div class="setting-description">Ses dosyası yüklendiğinde otomatik başlat</div>
+                </div>
+                <div class="toggle-switch ${this.settings.autoPlay ? 'active' : ''}" onclick="app.toggleAutoPlay()"></div>
+            </div>
         </div>
 
-        <div class="settings-section" style="animation-delay: 0.3s;">
+        <div class="settings-section" style="animation-delay: 0.4s;">
             <h3>
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
@@ -3289,25 +3438,7 @@ content.innerHTML = `
             </h3>
             <div class="setting-item ripple">
                 <div>
-                    <div class="setting-label">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <polygon points="5,3 19,12 5,21"></polygon>
-                        </svg>
-                        Otomatik Oynatma
-                    </div>
-                    <div class="setting-description">Ayet sayfasına geçildiğinde sesi otomatik oynat</div>
-                </div>
-                <div class="toggle-switch ${this.settings.autoPlay ? 'active' : ''}" onclick="app.toggleAutoPlay()"></div>
-            </div>
-            <div class="setting-item ripple">
-                <div>
-                    <div class="setting-label">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
-                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                        </svg>
-                        Ses Seviyesi
-                    </div>
+                    <div class="setting-label">Ses Seviyesi</div>
                     <div class="setting-description">Varsayılan ses seviyesini ayarlayın</div>
                 </div>
                 <input type="range" class="volume-slider" min="0" max="100" value="${this.settings.volume * 100}" onchange="app.setVolume(this.value)">
@@ -3316,121 +3447,10 @@ content.innerHTML = `
     </div>
 `;
 
-this.updateSettingsUI();
-}
-
-showSavedVerses() {
-window.location.hash = 'kaydedilenler';
-}
-
-renderSavedVerses() {
-const content = document.getElementById('content');
-
-if (this.savedVerses.length === 0) {
-    content.innerHTML = `
-        <div class="saved-verses">
-            <div class="breadcrumb">
-                <a href="#" onclick="showHome()">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                    </svg>
-                    
-                </a>
-                <span>›</span>
-                <span>Kaydedilenler</span>
-            </div>
-
-            <div class="settings-header">
-                <h1 class="settings-title">Kaydedilen Ayetler</h1>
-                <p class="settings-description">Henüz hiç ayet kaydetmediniz. Ayet sayfalarında kaydet butonunu kullanarak ayetleri kaydedebilirsiniz.</p>
-            </div>
-        </div>
-    `;
-    return;
-}
-
-content.innerHTML = `
-    <div class="saved-verses">
-        <div class="breadcrumb">
-            <a href="#" onclick="showHome()">
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                </svg>
-                
-            </a>
-            <span>›</span>
-            <span>Kaydedilenler</span>
-        </div>
-
-        <div class="settings-header">
-            <h1 class="settings-title">Kaydedilen Ayetler</h1>
-            <p class="settings-description">${this.savedVerses.length} adet kaydedilmiş ayet</p>
-        </div>
-
-        ${this.savedVerses.map(savedVerse => `
-            <div class="saved-verse-item">
-                <div class="saved-verse-header">
-                    <div class="saved-verse-title">${savedVerse.surahName} ${savedVerse.verseNumber}. Ayet</div>
-                    <div class="saved-verse-date">${new Date(savedVerse.savedAt).toLocaleDateString('tr-TR')}</div>
-                </div>
-                
-                <div class="verse-translation">${savedVerse.translation}</div>
-                
-                ${savedVerse.arabic ? `<div class="verse-arabic arabic">${savedVerse.arabic}</div>` : ''}
-                
-                ${savedVerse.note ? `<div class="saved-verse-note">${savedVerse.note}</div>` : ''}
-                
-                <div class="verse-actions" style="margin-top: 1rem;">
-                    <button class="save-btn ripple" onclick="window.location.hash='ayet-${savedVerse.surahId}-${savedVerse.verseNumber}'">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                    </button>
-                    <button class="remove-saved-btn ripple" onclick="app.removeSavedVerse('${savedVerse.id}')">
-                        <svg class="icon" viewBox="0 0 24 24">
-                            <polyline points="3,6 5,6 21,6"></polyline>
-                            <path d="m19,6v14a2,2 0 0,1-2,2H7a2,2 0 0,1-2-2V6m3,0V4a2,2 0 0,1,2-2h4a2,2 0 0,1,2,2v2"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        `).join('')}
-    </div>
-`;
-}
-
-search(query) {
-const results = [];
-const queryLower = query.toLowerCase();
-
-// Search in all categories
-this.searchIndex.forEach((categoryMap, category) => {
-    categoryMap.forEach((items, term) => {
-        if (term.includes(queryLower)) {
-            results.push(...items);
-        }
-    });
-});
-
-// Remove duplicates and sort by relevance
-const uniqueResults = results.filter((result, index, self) => 
-    index === self.findIndex(r => r.id === result.id && r.type === result.type)
-);
-
-return uniqueResults.sort((a, b) => {
-    const aRelevance = a.title.toLowerCase().indexOf(queryLower);
-    const bRelevance = b.title.toLowerCase().indexOf(queryLower);
-    
-    if (aRelevance !== -1 && bRelevance !== -1) {
-        return aRelevance - bRelevance;
-    }
-    if (aRelevance !== -1) return -1;
-    if (bRelevance !== -1) return 1;
-    return 0;
-});
+// Update UI after rendering
+setTimeout(() => {
+    this.updateSettingsUI();
+}, 100);
 }
 
 renderSurah(surahId) {
@@ -3441,7 +3461,6 @@ if (!surah) {
 }
 
 const content = document.getElementById('content');
-
 content.innerHTML = `
     <div class="surah-detail">
         <div class="breadcrumb">
@@ -3450,75 +3469,103 @@ content.innerHTML = `
                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                 </svg>
-                
+               
             </a>
             <span>›</span>
             <span>${surah.name}</span>
         </div>
 
         <div class="surah-detail-header">
-            <button class="surah-play-btn ripple" onclick="app.playSurah(${surahId})" title="Sureyi Oynat">
+            <button class="surah-play-btn ripple" onclick="app.playSurah(${surah.id})" title="Sureyi dinle">
                 <svg class="icon" viewBox="0 0 24 24">
                     <polygon points="5,3 19,12 5,21"></polygon>
                 </svg>
             </button>
-            
             <h1 class="surah-title">${surah.name}</h1>
-            <div class="surah-arabic-title arabic">${surah.name_original || ''}</div>
-            
+            <div class="surah-arabic-title arabic ${this.settings.showArabicText ? '' : 'hidden'}">${surah.name_original}</div>
             <div class="surah-meta-info">
+                <div class="meta-detail">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <span>Sure No: ${surah.id}</span>
+                </div>
                 <div class="meta-detail">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <polyline points="14,2 14,8 20,8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
                     </svg>
-                    ${surah.verse_count || surah.verses?.length || 0} Ayet
+                    <span>Ayet Sayısı: ${surah.verse_count}</span>
                 </div>
                 <div class="meta-detail">
                     <svg class="icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12,6 12,12 16,14"></polyline>
+                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                        <line x1="18" y1="12" x2="22" y2="12"></line>
                     </svg>
-                    ${surah.id}. Sure
+                    <span>İngilizce: ${surah.name_en}</span>
                 </div>
             </div>
         </div>
 
         <div class="verses-container">
-            ${surah.verses?.map(verse => `
-                <div class="verse-card ripple" onclick="window.location.hash='ayet-${surahId}-${verse.verse_number}'">
+            ${surah.verses?.map((verse, index) => `
+                <div class="verse-card ripple" onclick="app.navigateToVerse(${surah.id}, ${verse.verse_number})" style="animation-delay: ${index * 0.05}s;">
                     <div class="verse-number-badge">${verse.verse_number}</div>
-                    <div class="verse-translation">${verse.translation_tr || 'Meal bulunamadı'}</div>
-                    <div class="verse-arabic arabic ${this.settings.showArabicText ? '' : 'hidden'}">${verse.text || ''}</div>
+                    <div class="verse-translation">${this.getPreferredTranslation(surah.id, verse.verse_number) || 'Meal bulunamadı'}</div>
+                    <div class="verse-arabic arabic ${this.settings.showArabicText ? '' : 'hidden'}">${verse.text}</div>
                 </div>
-            `).join('') || '<div class="error">Bu surenin ayetleri yüklenemedi.</div>'}
+            `).join('') || '<p>Bu surede ayet bulunamadı.</p>'}
         </div>
     </div>
 `;
+}
 
-this.updateArabicTextVisibility();
+getPreferredTranslation(surahId, verseNumber) {
+// Önce ana veri kaynağından meal al
+const surah = this.data?.find(s => s.id === surahId);
+const verse = surah?.verses?.find(v => v.verse_number === verseNumber);
+
+// Eğer varsayılan yazar Diyanet ise ve ana veri kaynağında meal varsa onu kullan
+if (this.settings.defaultTranslationAuthor === 'Diyanet İşleri Başkanlığı' && verse?.translation_tr) {
+    return verse.translation_tr;
+}
+
+// Aksi halde kuran_mealleri.json'dan seçilen yazarın mealini bul
+if (this.translationsData) {
+    const translationSurah = this.translationsData.find(s => s.id === surahId);
+    const translationVerse = translationSurah?.verses?.find(v => v.verse_id === verseNumber);
+    
+    if (translationVerse?.translations) {
+        const preferredTranslation = translationVerse.translations.find(t => 
+            t.author === this.settings.defaultTranslationAuthor && t.text && t.text.trim()
+        );
+        
+        if (preferredTranslation) {
+            return preferredTranslation.text;
+        }
+    }
+}
+
+// Son çare olarak ana veri kaynağındaki meali döndür
+return verse?.translation_tr || null;
 }
 
 renderVerse(surahId, verseNumber) {
 const surah = this.data?.find(s => s.id === surahId);
-if (!surah) {
-    this.showError('Sure bulunamadı.');
-    return;
-}
+const verse = surah?.verses?.find(v => v.verse_number === verseNumber);
 
-const verse = surah.verses?.find(v => v.verse_number === verseNumber);
-if (!verse) {
+if (!surah || !verse) {
     this.showError('Ayet bulunamadı.');
     return;
 }
 
+const isFirstVerse = verseNumber === 1;
+const isLastVerse = verseNumber === surah.verse_count;
+const isSaved = this.isVerseSaved(surahId, verseNumber);
+
 const content = document.getElementById('content');
-
-// Get translations for this verse
-const translations = this.getVerseTranslations(surahId, verseNumber);
-
 content.innerHTML = `
     <div class="verse-detail">
         <div class="breadcrumb">
@@ -3534,443 +3581,706 @@ content.innerHTML = `
             <span>›</span>
             <span>${verseNumber}. Ayet</span>
         </div>
-
+        
         <div class="verse-detail-header">
             <div class="verse-actions">
-                <button class="save-btn ripple ${this.isVerseSaved(surahId, verseNumber) ? 'saved' : ''}" onclick="app.toggleSaveVerse(${surahId}, ${verseNumber})" title="Kaydet">
+                <button class="save-btn ${isSaved ? 'saved' : ''} ripple" onclick="app.toggleSaveVerse(${surahId}, ${verseNumber})" title="${isSaved ? 'Kayıtlı' : 'Kaydet'}">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
                     </svg>
                 </button>
                 <button class="share-btn ripple" onclick="app.shareVerse(${surahId}, ${verseNumber})" title="Paylaş">
                     <svg class="icon" viewBox="0 0 24 24">
-                        <circle cx="18" cy="5" r="3"></circle>
-                        <circle cx="6" cy="12" r="3"></circle>
-                        <circle cx="18" cy="19" r="3"></circle>
-                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                        <polyline points="16,6 12,2 8,6"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="15"></line>
                     </svg>
                 </button>
-                <button class="audio-btn-verse ripple" onclick="app.playVerse(${surahId}, ${verseNumber})" title="Dinle">
+                <button class="audio-btn-verse ripple" onclick="app.playVerseAudio(${surahId})" title="Dinle">
                     <svg class="icon" viewBox="0 0 24 24">
                         <polygon points="5,3 19,12 5,21"></polygon>
                     </svg>
                 </button>
             </div>
-            
-            <div class="verse-detail-translation">${verse.translation_tr || 'Meal bulunamadı'}</div>
-            <div class="verse-detail-arabic arabic ${this.settings.showArabicText ? '' : 'hidden'}">${verse.text || ''}</div>
-            ${this.settings.showTranscription && verse.transcription_tr ? 
-                `<div class="verse-detail-transcription">${verse.transcription_tr}</div>` : ''}
+            <div class="verse-detail-translation">${this.getPreferredTranslation(surahId, verseNumber) || 'Meal bulunamadı'}</div>
+            <div class="verse-detail-arabic arabic ${this.settings.showArabicText ? '' : 'hidden'}">${verse.text}</div>
+            ${verse.transcription_tr && this.settings.showTranscription ? `<div class="verse-detail-transcription">${verse.transcription_tr}</div>` : ''}
         </div>
 
         <div class="verse-navigation">
-            ${this.getPreviousVerse(surahId, verseNumber) ? 
-                `<a href="#ayet-${this.getPreviousVerse(surahId, verseNumber).surahId}-${this.getPreviousVerse(surahId, verseNumber).verseNumber}" class="nav-btn ripple">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <polyline points="15,18 9,12 15,6"></polyline>
-                    </svg>
-                    Önceki Ayet
-                </a>` : 
-                '<div class="nav-btn disabled">Önceki Ayet</div>'
-            }
-            
-            ${this.getNextVerse(surahId, verseNumber) ? 
-                `<a href="#ayet-${this.getNextVerse(surahId, verseNumber).surahId}-${this.getNextVerse(surahId, verseNumber).verseNumber}" class="nav-btn ripple">
-                    Sonraki Ayet
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <polyline points="9,18 15,12 9,6"></polyline>
-                    </svg>
-                </a>` : 
-                '<div class="nav-btn disabled">Sonraki Ayet</div>'
-            }
+            <a href="#ayet-${surahId}-${verseNumber - 1}" class="nav-btn ripple ${isFirstVerse ? 'disabled' : ''}" ${isFirstVerse ? 'onclick="return false"' : ''}>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+                Önceki
+            </a>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">${verseNumber} / ${surah.verse_count}</span>
+            <a href="#ayet-${surahId}-${verseNumber + 1}" class="nav-btn ripple ${isLastVerse ? 'disabled' : ''}" ${isLastVerse ? 'onclick="return false"' : ''}>
+                Sonraki
+                <svg class="icon" viewBox="0 0 24 24">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                </svg>
+            </a>
         </div>
 
         <div class="tabs-container">
             <div class="tabs-nav">
-                <button class="tab-button active" onclick="app.switchTab('words')">
+                <button class="tab-button ripple active" onclick="app.switchTab('word-analysis')">
                     <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M4 7V4h16v3"></path>
-                        <path d="M9 20h6"></path>
-                        <path d="M12 4v16"></path>
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14,2 14,8 20,8"></polyline>
                     </svg>
                     Kelime Analizi
                 </button>
-                <button class="tab-button" onclick="app.switchTab('translations')">
+                <button class="tab-button ripple" onclick="app.switchTab('translations')">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
                     </svg>
-                    Mealler
+                    Diğer Mealler
                 </button>
             </div>
 
-            <div class="tab-content active" id="words-tab">
+            <div id="word-analysis" class="tab-content active">
                 <div class="words-analysis">
                     <div class="words-grid">
                         ${verse.words?.map((word, index) => `
                             <div class="word-item ripple">
-                                <div class="word-arabic arabic">${word.arabic || ''}</div>
-                                <div class="word-transcription">${word.transcription_tr || ''}</div>
-                                <div class="word-translation">${word.translation_tr || ''}</div>
+                                <div class="word-arabic arabic ${this.settings.showArabicText ? '' : 'hidden'}">${word.arabic}</div>
+                                ${word.transcription_tr && this.settings.showTranscription ? `<div class="word-transcription">${word.transcription_tr}</div>` : ''}
+                                ${word.translation_tr ? `<div class="word-translation">${word.translation_tr}</div>` : ''}
                                 ${word.root ? `
                                     <div class="word-root">
-                                        Kök: ${word.root.arabic || ''} (${word.root.latin || ''})
-                                        ${word.root.meaning ? `<br>Anlam: ${word.root.meaning}` : ''}
+                                        Kök: <strong>${word.root.arabic} (${word.root.latin})</strong>
+                                        ${word.root.meaning ? `<br><em>${word.root.meaning}</em>` : ''}
                                     </div>
                                 ` : ''}
                             </div>
-                        `).join('') || '<div class="error">Kelime analizi bulunamadı.</div>'}
+                        `).join('') || '<p>Bu ayet için kelime analizi bulunamadı.</p>'}
                     </div>
                 </div>
             </div>
 
-            <div class="tab-content" id="translations-tab">
+            <div id="translations" class="tab-content">
                 <div class="translations-container">
-                    ${translations.length > 0 ? translations.map(translation => `
+                    ${this.getAllTranslations(surahId, verseNumber).map(translation => `
                         <div class="translation-item">
                             <div class="translation-author">${translation.author}</div>
                             <div class="translation-text">${translation.text}</div>
                         </div>
-                    `).join('') : '<div class="error">Ek meal bulunamadı.</div>'}
+                    `).join('')}
                 </div>
             </div>
         </div>
     </div>
 `;
 
+// Update Arabic text visibility after rendering
 this.updateArabicTextVisibility();
 }
 
-getVerseTranslations(surahId, verseNumber) {
+getAllTranslations(surahId, verseNumber) {
 const translations = [];
 
-// Add main translation
+// Önce ana veri kaynağından meal al (all_surahs_data.json)
 const surah = this.data?.find(s => s.id === surahId);
 const verse = surah?.verses?.find(v => v.verse_number === verseNumber);
+
 if (verse?.translation_tr) {
     translations.push({
-        author: 'Diyanet İşleri Başkanlığı',
+        author: "Diyanet İşleri Başkanlığı",
         text: verse.translation_tr
     });
 }
 
-// Add additional translations from translationsData
+// kuran_mealleri.json'dan meal yazarlarını ve metinlerini çek
 if (this.translationsData) {
     const translationSurah = this.translationsData.find(s => s.id === surahId);
-    const translationVerse = translationSurah?.verses?.find(v => v.verse_number === verseNumber);
+    const translationVerse = translationSurah?.verses?.find(v => v.verse_id === verseNumber);
     
     if (translationVerse?.translations) {
         translationVerse.translations.forEach(translation => {
-            if (translation.author && translation.text && translation.text.trim()) {
-                // Don't duplicate the main translation
-                if (translation.author !== 'Diyanet İşleri Başkanlığı') {
-                    translations.push({
-                        author: translation.author,
-                        text: translation.text
-                    });
-                }
+            // Aynı yazardan birden fazla meal varsa sadece birini al
+            const existingAuthor = translations.find(t => t.author === translation.author);
+            if (!existingAuthor && translation.text && translation.text.trim()) {
+                translations.push({
+                    author: translation.author,
+                    text: translation.text
+                });
             }
         });
     }
 }
 
-// Sort translations to put default author first
-return translations.sort((a, b) => {
-    if (a.author === this.settings.defaultTranslationAuthor) return -1;
-    if (b.author === this.settings.defaultTranslationAuthor) return 1;
-    return a.author.localeCompare(b.author, 'tr');
-});
+// Eğer hiç meal yoksa varsayılan mesaj
+if (translations.length === 0) {
+    translations.push({
+        author: "Bilgi",
+        text: "Bu ayet için meal bulunamadı."
+    });
 }
 
-switchTab(tabName) {
-// Remove active class from all tabs and contents
-document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-// Add active class to clicked tab and corresponding content
-document.querySelector(`[onclick="app.switchTab('${tabName}')"]`).classList.add('active');
-document.getElementById(`${tabName}-tab`).classList.add('active');
+return translations;
 }
 
-getPreviousVerse(surahId, verseNumber) {
-const surah = this.data?.find(s => s.id === surahId);
-if (!surah) return null;
+renderSavedVerses() {
+const content = document.getElementById('content');
 
-if (verseNumber > 1) {
-    return { surahId, verseNumber: verseNumber - 1 };
+if (this.savedVerses.length === 0) {
+    content.innerHTML = `
+        <div class="saved-verses">
+            <div class="breadcrumb">
+                <a href="#" onclick="showHome()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                </svg>
+               
+            </a>
+            <span>›</span>
+            <span>Kaydedilen Ayetler</span>
+            </div>
+            
+            <div class="text-center" style="padding: 4rem 2rem;">
+                <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;">📖</div>
+                <h2>Henüz kaydettiğiniz ayet yok</h2>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">Beğendiğiniz ayetleri kaydetmek için ayet sayfalarındaki kaydet butonunu kullanın.</p>
+                <a href="#" onclick="showHome()" style="display: inline-block; margin-top: 2rem; padding: 1rem 2rem; background: var(--primary-color); color: var(--bg-primary); text-decoration: none; border-radius: 8px;">Ana Sayfaya Dön</a>
+            </div>
+        </div>
+    `;
+    return;
 }
 
-// Go to previous surah's last verse
-const previousSurah = this.data?.find(s => s.id === surahId - 1);
-if (previousSurah && previousSurah.verses) {
-    return { 
-        surahId: surahId - 1, 
-        verseNumber: previousSurah.verses.length 
-    };
+content.innerHTML = `
+    <div class="saved-verses">
+        <div class="breadcrumb">
+            <a href="#" onclick="showHome()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                </svg>
+            </a>
+            <span>›</span>
+            <span>Kaydedilen Ayetler</span>
+        </div>
+        
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem;">Kaydedilen Ayetler</h1>
+            <p style="color: var(--text-secondary);">${this.savedVerses.length} ayet kaydedildi</p>
+        </div>
+
+        ${this.savedVerses.map((savedVerse, index) => {
+            const surah = this.data?.find(s => s.id === savedVerse.surahId);
+            const verse = surah?.verses?.find(v => v.verse_number === savedVerse.verseNumber);
+            
+            return `
+                <div class="saved-verse-item" style="animation-delay: ${index * 0.1}s;">
+                    <div class="saved-verse-header">
+                        <div class="saved-verse-title">
+                            <a href="#ayet-${savedVerse.surahId}-${savedVerse.verseNumber}" style="color: inherit; text-decoration: none;">
+                                ${surah?.name} ${savedVerse.verseNumber}. Ayet
+                            </a>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="saved-verse-date">${new Date(savedVerse.savedAt).toLocaleDateString('tr-TR')}</div>
+                            <button class="remove-saved-btn ripple" onclick="app.removeSavedVerse(${savedVerse.surahId}, ${savedVerse.verseNumber})" title="Kaldır">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <polyline points="3,6 5,6 21,6"></polyline>
+                                    <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 0.5rem; text-align: left; background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">${this.getPreferredTranslation(savedVerse.surahId, savedVerse.verseNumber) || verse?.translation_tr || 'Meal bulunamadı'}</div>
+                        <div class="arabic ${this.settings.showArabicText ? '' : 'hidden'}" style="font-size: 1.3rem; padding: 1rem; background: transparent; border-radius: 8px; text-align: right;">${verse?.text || 'Ayet metni bulunamadı'}</div>
+                    </div>
+                    ${savedVerse.note ? `
+                        <div class="saved-verse-note">
+                            <strong>Notunuz:</strong> ${savedVerse.note}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('')}
+    </div>
+`;
+
+// Update Arabic text visibility after rendering
+this.updateArabicTextVisibility();
 }
 
-return null;
-}
-
-getNextVerse(surahId, verseNumber) {
-const surah = this.data?.find(s => s.id === surahId);
-if (!surah) return null;
-
-if (verseNumber < (surah.verses?.length || 0)) {
-    return { surahId, verseNumber: verseNumber + 1 };
-}
-
-// Go to next surah's first verse
-const nextSurah = this.data?.find(s => s.id === surahId + 1);
-if (nextSurah) {
-    return { surahId: surahId + 1, verseNumber: 1 };
-}
-
-return null;
-}
-
-navigateToPreviousVerse() {
-const previous = this.getPreviousVerse(this.currentSurahId, this.currentVerseNumber);
-if (previous) {
-    window.location.hash = `ayet-${previous.surahId}-${previous.verseNumber}`;
-}
+navigateToVerse(surahId, verseNumber) {
+window.location.hash = `ayet-${surahId}-${verseNumber}`;
 }
 
 navigateToNextVerse() {
-const next = this.getNextVerse(this.currentSurahId, this.currentVerseNumber);
-if (next) {
-    window.location.hash = `ayet-${next.surahId}-${next.verseNumber}`;
+if (!this.currentSurahId || !this.currentVerseNumber) return;
+
+const surah = this.data?.find(s => s.id === this.currentSurahId);
+if (!surah) return;
+
+if (this.currentVerseNumber < surah.verse_count) {
+    window.location.hash = `ayet-${this.currentSurahId}-${this.currentVerseNumber + 1}`;
 }
 }
 
-isVerseSaved(surahId, verseNumber) {
-return this.savedVerses.some(saved => 
-    saved.surahId === surahId && saved.verseNumber === verseNumber
+navigateToPreviousVerse() {
+if (!this.currentSurahId || !this.currentVerseNumber) return;
+
+if (this.currentVerseNumber > 1) {
+    window.location.hash = `ayet-${this.currentSurahId}-${this.currentVerseNumber - 1}`;
+}
+}
+
+switchTab(tabId) {
+document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+event.target.classList.add('active');
+document.getElementById(tabId).classList.add('active');
+}
+
+search(query) {
+const results = [];
+const queryLower = query.toLowerCase();
+
+this.searchIndex.forEach((categoryMap, category) => {
+    categoryMap.forEach((items, term) => {
+        if (term.includes(queryLower)) {
+            results.push(...items);
+        }
+    });
+});
+
+const uniqueResults = results.filter((result, index, self) => 
+    index === self.findIndex(r => r.id === result.id && r.type === result.type)
 );
+
+return uniqueResults.slice(0, 50);
+}
+
+showSavedVerses() {
+window.location.hash = 'kaydedilenler';
+}
+
+isVerseSaved(surahId, verseNumber) {
+return this.savedVerses.some(v => v.surahId === surahId && v.verseNumber === verseNumber);
 }
 
 toggleSaveVerse(surahId, verseNumber) {
 if (this.isVerseSaved(surahId, verseNumber)) {
-    this.removeSavedVerseByLocation(surahId, verseNumber);
+    this.removeSavedVerse(surahId, verseNumber);
 } else {
-    this.showSaveModal(surahId, verseNumber);
+    this.pendingSaveVerse = { surahId, verseNumber };
+    this.showSaveModal();
 }
 }
 
-showSaveModal(surahId, verseNumber) {
-this.pendingSaveVerse = { surahId, verseNumber };
+showSaveModal() {
 const modal = document.getElementById('saveModal');
-const noteInput = document.getElementById('saveNoteInput');
-noteInput.value = '';
+const input = document.getElementById('saveNoteInput');
 modal.classList.add('active');
-noteInput.focus();
+setTimeout(() => input.focus(), 100);
 }
 
 closeSaveModal() {
 const modal = document.getElementById('saveModal');
+const input = document.getElementById('saveNoteInput');
 modal.classList.remove('active');
+input.value = '';
 this.pendingSaveVerse = null;
 }
 
 confirmSaveVerse() {
 if (!this.pendingSaveVerse) return;
 
-const { surahId, verseNumber } = this.pendingSaveVerse;
-const note = document.getElementById('saveNoteInput').value.trim();
+const note = document.getElementById('saveNoteInput').value;
+const savedVerse = {
+    surahId: this.pendingSaveVerse.surahId,
+    verseNumber: this.pendingSaveVerse.verseNumber,
+    note: note,
+    savedAt: new Date().toISOString()
+};
 
-const surah = this.data?.find(s => s.id === surahId);
-const verse = surah?.verses?.find(v => v.verse_number === verseNumber);
+this.savedVerses.push(savedVerse);
+localStorage.setItem('savedVerses', JSON.stringify(this.savedVerses));
 
-if (surah && verse) {
-    const savedVerse = {
-        id: `${surahId}-${verseNumber}-${Date.now()}`,
-        surahId,
-        verseNumber,
-        surahName: surah.name,
-        translation: verse.translation_tr,
-        arabic: verse.text,
-        note,
-        savedAt: new Date().toISOString()
-    };
+this.closeSaveModal();
+this.showNotification('Ayet kaydedildi!');
 
-    this.savedVerses.push(savedVerse);
-    localStorage.setItem('savedVerses', JSON.stringify(this.savedVerses));
-
-    // Update save button
+if (this.currentSurahId === this.pendingSaveVerse.surahId && 
+    this.currentVerseNumber === this.pendingSaveVerse.verseNumber) {
     const saveBtn = document.querySelector('.save-btn');
     if (saveBtn) {
         saveBtn.classList.add('saved');
+        saveBtn.title = 'Kayıtlı';
+    }
+}
+}
+
+removeSavedVerse(surahId, verseNumber) {
+this.savedVerses = this.savedVerses.filter(v => 
+    !(v.surahId === surahId && v.verseNumber === verseNumber)
+);
+localStorage.setItem('savedVerses', JSON.stringify(this.savedVerses));
+
+this.showNotification('Ayet kaydedilenlerden kaldırıldı');
+
+if (this.currentSurahId === surahId && this.currentVerseNumber === verseNumber) {
+    const saveBtn = document.querySelector('.save-btn');
+    if (saveBtn) {
+        saveBtn.classList.remove('saved');
+        saveBtn.title = 'Kaydet';
     }
 }
 
-this.closeSaveModal();
-}
-
-removeSavedVerse(savedVerseId) {
-this.savedVerses = this.savedVerses.filter(saved => saved.id !== savedVerseId);
-localStorage.setItem('savedVerses', JSON.stringify(this.savedVerses));
-
-// Re-render saved verses page if we're on it
 if (this.currentHash === 'kaydedilenler') {
     this.renderSavedVerses();
 }
 }
 
-removeSavedVerseByLocation(surahId, verseNumber) {
-this.savedVerses = this.savedVerses.filter(saved => 
-    !(saved.surahId === surahId && saved.verseNumber === verseNumber)
-);
-localStorage.setItem('savedVerses', JSON.stringify(this.savedVerses));
-
-// Update save button
-const saveBtn = document.querySelector('.save-btn');
-if (saveBtn) {
-    saveBtn.classList.remove('saved');
-}
-}
-
 shareVerse(surahId, verseNumber) {
-const surah = this.data?.find(s => s.id === surahId);
-const verse = surah?.verses?.find(v => v.verse_number === verseNumber);
+const url = `${window.location.origin}${window.location.pathname}#ayet-${surahId}-${verseNumber}`;
 
-if (surah && verse) {
-    const shareText = `${surah.name} ${verseNumber}. Ayet:\n\n"${verse.translation_tr}"\n\n${window.location.origin}#ayet-${surahId}-${verseNumber}`;
+if (navigator.share) {
+    const surah = this.data?.find(s => s.id === surahId);
+    const verse = surah?.verses?.find(v => v.verse_number === verseNumber);
     
-    if (navigator.share) {
-        navigator.share({
-            title: `${surah.name} ${verseNumber}. Ayet`,
-            text: shareText
-        });
-    } else {
-        navigator.clipboard.writeText(shareText).then(() => {
-            // Show a temporary notification
-            const notification = document.createElement('div');
-            notification.textContent = 'Ayet panoya kopyalandı!';
-            notification.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: var(--primary-color);
-                color: var(--bg-primary);
-                padding: 1rem 2rem;
-                border-radius: 8px;
-                z-index: 3000;
-                font-weight: 600;
-            `;
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 2000);
-        });
-    }
+    navigator.share({
+        title: `${surah?.name} ${verseNumber}. Ayet`,
+        text: this.getPreferredTranslation(surahId, verseNumber) || verse?.translation_tr || '',
+        url: url
+    });
+} else {
+    navigator.clipboard.writeText(url).then(() => {
+        this.showNotification('Ayet linki kopyalandı!');
+    });
 }
-}
-
-// Audio methods
-playVerse(surahId, verseNumber) {
-// This would integrate with an audio API
-console.log(`Playing verse ${surahId}:${verseNumber}`);
-this.showAudioPlayer(`${this.data?.find(s => s.id === surahId)?.name} ${verseNumber}. Ayet`);
 }
 
 playSurah(surahId) {
-// This would integrate with an audio API
-console.log(`Playing surah ${surahId}`);
 const surah = this.data?.find(s => s.id === surahId);
-if (surah) {
-    this.showAudioPlayer(surah.name);
-}
-}
+if (!surah) return;
 
-showAudioPlayer(title) {
+const audioUrl = `https://api.sadecekuran.com.tr/${surahId}.mp3`;
+const audioElement = document.getElementById('audioElement');
 const audioPlayer = document.getElementById('audioPlayer');
 const audioTitle = document.getElementById('audioTitle');
-audioTitle.textContent = title;
-audioPlayer.classList.add('active');
+
+if (this.currentAudio && !this.currentAudio.paused) {
+    this.currentAudio.pause();
 }
 
-closeAudio() {
-const audioPlayer = document.getElementById('audioPlayer');
-audioPlayer.classList.remove('active');
-if (this.currentAudio) {
-    this.currentAudio.pause();
-    this.currentAudio = null;
+audioElement.src = audioUrl;
+audioElement.volume = this.audioState.volume;
+audioTitle.textContent = `${surah.name} Suresi`;
+audioPlayer.classList.add('active');
+
+this.currentAudio = audioElement;
+this.currentSurahId = surahId;
+this.audioState.isPlaying = false;
+
+this.removeAudioEventListeners();
+this.addAudioEventListeners();
+
+if (this.settings.autoPlay) {
+    audioElement.play().catch(error => {
+        console.log('Autoplay prevented:', error);
+    });
 }
+}
+
+playVerseAudio(surahId) {
+this.playSurah(surahId);
+}
+
+removeAudioEventListeners() {
+const audioElement = document.getElementById('audioElement');
+if (audioElement) {
+    audioElement.removeEventListener('loadstart', this.handleLoadStart);
+    audioElement.removeEventListener('canplay', this.handleCanPlay);
+    audioElement.removeEventListener('loadedmetadata', this.handleLoadedMetadata);
+    audioElement.removeEventListener('timeupdate', this.handleTimeUpdate);
+    audioElement.removeEventListener('ended', this.handleEnded);
+    audioElement.removeEventListener('error', this.handleError);
+    audioElement.removeEventListener('play', this.handlePlay);
+    audioElement.removeEventListener('pause', this.handlePause);
+}
+}
+
+addAudioEventListeners() {
+const audioElement = document.getElementById('audioElement');
+if (!audioElement) return;
+
+this.handleLoadStart = () => {
+    this.updatePlayButton('loading');
+};
+
+this.handleCanPlay = () => {
+    this.updatePlayButton('play');
+};
+
+this.handleLoadedMetadata = () => {
+    const totalTimeEl = document.getElementById('totalTime');
+    if (totalTimeEl) {
+        totalTimeEl.textContent = this.formatTime(audioElement.duration);
+    }
+};
+
+this.handleTimeUpdate = () => {
+    if (audioElement.duration) {
+        const progress = (audioElement.currentTime / audioElement.duration) * 100;
+        const audioProgressBar = document.getElementById('audioProgressBar');
+        const currentTimeEl = document.getElementById('currentTime');
+        
+        if (audioProgressBar) {
+            audioProgressBar.style.width = progress + '%';
+        }
+        if (currentTimeEl) {
+            currentTimeEl.textContent = this.formatTime(audioElement.currentTime);
+        }
+        
+        this.audioState.currentTime = audioElement.currentTime;
+    }
+};
+
+this.handleEnded = () => {
+    if (this.audioState.isRepeat) {
+        audioElement.currentTime = 0;
+        audioElement.play();
+    } else {
+        this.closeAudio();
+    }
+};
+
+this.handleError = (error) => {
+    console.error('Audio error:', error);
+    this.closeAudio();
+};
+
+this.handlePlay = () => {
+    this.audioState.isPlaying = true;
+    this.updatePlayButton('pause');
+};
+
+this.handlePause = () => {
+    this.audioState.isPlaying = false;
+    this.updatePlayButton('play');
+};
+
+audioElement.addEventListener('loadstart', this.handleLoadStart);
+audioElement.addEventListener('canplay', this.handleCanPlay);
+audioElement.addEventListener('loadedmetadata', this.handleLoadedMetadata);
+audioElement.addEventListener('timeupdate', this.handleTimeUpdate);
+audioElement.addEventListener('ended', this.handleEnded);
+audioElement.addEventListener('error', this.handleError);
+audioElement.addEventListener('play', this.handlePlay);
+audioElement.addEventListener('pause', this.handlePause);
+}
+
+updatePlayButton(state) {
+const audioPlayBtn = document.getElementById('audioPlayBtn');
+if (!audioPlayBtn) return;
+
+switch (state) {
+    case 'loading':
+        audioPlayBtn.innerHTML = `
+            <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="10,8 16,12 10,16"></polyline>
+            </svg>
+        `;
+        break;
+    case 'play':
+        audioPlayBtn.innerHTML = `
+            <svg class="icon" viewBox="0 0 24 24">
+                <polygon points="5,3 19,12 5,21"></polygon>
+            </svg>
+        `;
+        break;
+    case 'pause':
+        audioPlayBtn.innerHTML = `
+            <svg class="icon" viewBox="0 0 24 24">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+        `;
+        break;
+}
+}
+
+formatTime(seconds) {
+if (isNaN(seconds)) return '0:00';
+const minutes = Math.floor(seconds / 60);
+const remainingSeconds = Math.floor(seconds % 60);
+return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
+
+seekAudio(event) {
+const audioElement = document.getElementById('audioElement');
+if (!audioElement || !audioElement.duration) return;
+
+const progressBar = event.currentTarget;
+const rect = progressBar.getBoundingClientRect();
+const clickX = event.clientX - rect.left;
+const width = rect.width;
+const percentage = clickX / width;
+
+audioElement.currentTime = audioElement.duration * percentage;
 }
 
 toggleAudio() {
-// Audio toggle logic would go here
-console.log('Toggle audio');
+const audioElement = document.getElementById('audioElement');
+if (!audioElement) return;
+
+if (audioElement.paused) {
+    audioElement.play().catch(error => {
+        console.log('Play failed:', error);
+        this.showNotification('Ses çalınamadı');
+    });
+} else {
+    audioElement.pause();
+}
 }
 
 previousTrack() {
-console.log('Previous track');
+if (this.currentSurahId && this.currentSurahId > 1) {
+    this.playSurah(this.currentSurahId - 1);
+}
 }
 
 nextTrack() {
-console.log('Next track');
+if (this.currentSurahId && this.currentSurahId < 114) {
+    this.playSurah(this.currentSurahId + 1);
+}
 }
 
 toggleRepeat() {
 this.audioState.isRepeat = !this.audioState.isRepeat;
 const repeatBtn = document.getElementById('audioRepeatBtn');
 if (repeatBtn) {
-    if (this.audioState.isRepeat) {
-        repeatBtn.style.color = 'var(--primary-color)';
-    } else {
-        repeatBtn.style.color = 'var(--text-secondary)';
-    }
+    repeatBtn.style.color = this.audioState.isRepeat ? 'var(--primary-color)' : 'var(--text-secondary)';
 }
+this.showNotification(this.audioState.isRepeat ? 'Tekrar açık' : 'Tekrar kapalı');
 }
 
 toggleShuffle() {
 this.audioState.isShuffle = !this.audioState.isShuffle;
 const shuffleBtn = document.getElementById('audioShuffleBtn');
 if (shuffleBtn) {
-    if (this.audioState.isShuffle) {
-        shuffleBtn.style.color = 'var(--primary-color)';
-    } else {
-        shuffleBtn.style.color = 'var(--text-secondary)';
-    }
+    shuffleBtn.style.color = this.audioState.isShuffle ? 'var(--primary-color)' : 'var(--text-secondary)';
 }
-}
-
-seekAudio(event) {
-// Audio seeking logic would go here
-console.log('Seek audio', event);
-}
-
-setAudioVolume(value) {
-this.audioState.volume = value / 100;
-const audioElement = document.getElementById('audioElement');
-if (audioElement) {
-    audioElement.volume = this.audioState.volume;
-}
+this.showNotification(this.audioState.isShuffle ? 'Karıştırma açık' : 'Karıştırma kapalı');
 }
 
 toggleMute() {
-this.audioState.isMuted = !this.audioState.isMuted;
-const volumeIcon = document.getElementById('volumeIcon');
 const audioElement = document.getElementById('audioElement');
+const volumeIcon = document.getElementById('volumeIcon');
+
+if (!audioElement || !volumeIcon) return;
+
+this.audioState.isMuted = !this.audioState.isMuted;
+audioElement.muted = this.audioState.isMuted;
 
 if (this.audioState.isMuted) {
-    if (audioElement) audioElement.volume = 0;
-    if (volumeIcon) {
-        volumeIcon.innerHTML = `
-            <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-        `;
-    }
+    volumeIcon.innerHTML = `
+        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+    `;
 } else {
-    if (audioElement) audioElement.volume = this.audioState.volume;
-    if (volumeIcon) {
-        volumeIcon.innerHTML = `
-            <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-        `;
-    }
+    volumeIcon.innerHTML = `
+        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+    `;
 }
+}
+
+setAudioVolume(value) {
+const audioElement = document.getElementById('audioElement');
+if (audioElement) {
+    this.audioState.volume = value / 100;
+    audioElement.volume = this.audioState.volume;
+    
+    if (this.audioState.volume === 0) {
+        this.audioState.isMuted = true;
+        audioElement.muted = true;
+    } else {
+        this.audioState.isMuted = false;
+        audioElement.muted = false;
+    }
+    
+    this.updateVolumeIcon();
+}
+}
+
+updateVolumeIcon() {
+const volumeIcon = document.getElementById('volumeIcon');
+if (!volumeIcon) return;
+
+if (this.audioState.isMuted || this.audioState.volume === 0) {
+    volumeIcon.innerHTML = `
+        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+    `;
+} else if (this.audioState.volume < 0.5) {
+    volumeIcon.innerHTML = `
+        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+    `;
+} else {
+    volumeIcon.innerHTML = `
+        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+    `;
+}
+}
+
+closeAudio() {
+const audioElement = document.getElementById('audioElement');
+const audioPlayer = document.getElementById('audioPlayer');
+const audioProgressBar = document.getElementById('audioProgressBar');
+const currentTimeEl = document.getElementById('currentTime');
+const totalTimeEl = document.getElementById('totalTime');
+
+if (audioElement) {
+    audioElement.pause();
+    audioElement.src = '';
+    this.removeAudioEventListeners();
+}
+
+if (audioPlayer) {
+    audioPlayer.classList.remove('active');
+}
+
+if (audioProgressBar) {
+    audioProgressBar.style.width = '0%';
+}
+
+if (currentTimeEl) {
+    currentTimeEl.textContent = '0:00';
+}
+
+if (totalTimeEl) {
+    totalTimeEl.textContent = '0:00';
+}
+
+this.updatePlayButton('play');
+this.currentAudio = null;
+this.audioState.isPlaying = false;
+this.audioState.currentTime = 0;
+this.audioState.duration = 0;
+}
+
+// Scroll to top function
+scrollToTop() {
+window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+});
 }
 
 showLoading() {
@@ -3978,7 +4288,7 @@ const content = document.getElementById('content');
 content.innerHTML = `
     <div class="loading">
         <div class="spinner"></div>
-        <div class="loading-text">Yükleniyor...</div>
+        <div class="loading-text">Kuran verileri yükleniyor...</div>
     </div>
 `;
 }
@@ -3986,41 +4296,127 @@ content.innerHTML = `
 showError(message) {
 const content = document.getElementById('content');
 content.innerHTML = `
-    <div class="error">${message}</div>
+    <div class="error">
+        <strong>Hata:</strong> ${message}
+    </div>
 `;
 }
+
+showNotification(message) {
+const notification = document.createElement('div');
+notification.style.cssText = `
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+    animation: slideInRight 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px var(--shadow-dark);
+`;
+notification.textContent = message;
+document.body.appendChild(notification);
+
+setTimeout(() => {
+    notification.style.animation = 'slideOutRight 0.3s ease forwards';
+    setTimeout(() => notification.remove(), 300);
+}, 3000);
+}
 }
 
-// Initialize the app
-const app = new QuranApp();
+// Ripple effect functionality
+function createRipple(event) {
+const button = event.currentTarget;
 
-// Global functions for onclick handlers
+// Don't add ripple if element is disabled
+if (button.disabled || button.classList.contains('disabled')) {
+    return;
+}
+
+const circle = document.createElement("span");
+const diameter = Math.max(button.clientWidth, button.clientHeight);
+const radius = diameter / 2;
+
+const rect = button.getBoundingClientRect();
+const x = event.clientX - rect.left - radius;
+const y = event.clientY - rect.top - radius;
+
+circle.style.width = circle.style.height = `${diameter}px`;
+circle.style.left = `${x}px`;
+circle.style.top = `${y}px`;
+circle.classList.add("ripple-effect");
+
+const ripple = button.getElementsByClassName("ripple-effect")[0];
+if (ripple) {
+    ripple.remove();
+}
+
+button.appendChild(circle);
+
+// Remove the ripple element after animation
+setTimeout(() => {
+    if (circle.parentNode) {
+        circle.remove();
+    }
+}, 600);
+}
+
+// Add ripple effect to all elements with ripple class
+document.addEventListener('DOMContentLoaded', function() {
+// Add event listeners for ripple effect
+function addRippleListeners() {
+    const rippleElements = document.querySelectorAll('.ripple');
+    rippleElements.forEach(element => {
+        // Remove existing listeners to avoid duplicates
+        element.removeEventListener('click', createRipple);
+        element.removeEventListener('touchstart', createRipple);
+        
+        // Add new listeners
+        element.addEventListener('click', createRipple);
+        element.addEventListener('touchstart', createRipple);
+    });
+}
+
+// Initial setup
+addRippleListeners();
+
+// Re-add listeners when new content is loaded
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList') {
+            addRippleListeners();
+        }
+    });
+});
+
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+});
+
 function showHome() {
 window.location.hash = '';
 }
 
-// Add ripple effect to elements
-document.addEventListener('click', function(e) {
-if (e.target.closest('.ripple')) {
-    const ripple = e.target.closest('.ripple');
-    const rect = ripple.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    
-    const rippleEffect = document.createElement('span');
-    rippleEffect.classList.add('ripple-effect');
-    rippleEffect.style.width = rippleEffect.style.height = size + 'px';
-    rippleEffect.style.left = x + 'px';
-    rippleEffect.style.top = y + 'px';
-    
-    ripple.appendChild(rippleEffect);
-    
-    setTimeout(() => {
-        rippleEffect.remove();
-    }, 600);
-}
+const app = new QuranApp();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+window.addEventListener("load", function () {
+  navigator.serviceWorker.register("/service-worker.js")
+    .then(function (registration) {
+      console.log("Service Worker kayıtlı:", registration.scope);
+    })
+    .catch(function (error) {
+      console.log("Service Worker hatası:", error);
+    });
 });
+}
 </script>
 
 </body>
