@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PWA Yükleme Butonu</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ffffff" />
+</head>
+<body>
+  <h1>SADECE KURAN</h1>
+  <p>Web uygulamamızı ana ekrana eklemek ister misiniz?</p>
+  
+  <button id="installBtn" style="display: none;">📲 Ana Ekrana Ekle</button>
+
+  <script>
+    // Service Worker kaydı
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log("SW başarıyla kaydedildi"))
+        .catch(err => console.error("SW kaydı başarısız:", err));
+    }
+
+    // beforeinstallprompt yakalama
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      const installBtn = document.getElementById('installBtn');
+      installBtn.style.display = 'inline-block';
+
+      installBtn.addEventListener('click', () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('Kullanıcı yüklemeyi kabul etti');
+          } else {
+            console.log('Kullanıcı yüklemeyi reddetti');
+          }
+          deferredPrompt = null;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

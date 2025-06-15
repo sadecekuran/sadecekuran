@@ -384,17 +384,23 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 1.5rem;
-    margin: 2rem auto;
+    margin: 0 auto 2rem;
     max-width: 600px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    box-shadow: 0 8px 32px var(--shadow-dark);
+    box-shadow: 0 4px 20px var(--shadow-dark);
     animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+    transition: all 0.3s ease;
 }
 
-.pwa-install-left {
+.pwa-install-panel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--shadow-dark);
+}
+
+.pwa-panel-left {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -402,30 +408,30 @@ body {
 }
 
 .pwa-app-logo {
-    width: 60px;
-    height: 60px;
-    background: var(--primary-color);
+    width: 48px;
+    height: 48px;
     border-radius: 12px;
+    background: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--bg-primary);
-    font-size: 1.5rem;
     font-weight: bold;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.pwa-install-info h3 {
+.pwa-panel-info h3 {
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 0.25rem;
     color: var(--text-primary);
 }
 
-.pwa-install-info p {
+.pwa-panel-info p {
     font-size: 0.9rem;
     color: var(--text-secondary);
-    line-height: 1.4;
+    margin: 0;
 }
 
 .pwa-install-btn {
@@ -434,24 +440,30 @@ body {
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 12px;
-    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .pwa-install-btn:hover {
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-.pwa-install-btn.hidden {
-    display: none;
+.pwa-install-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pwa-install-btn:disabled:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .home-search {
@@ -1185,22 +1197,6 @@ body {
     text-decoration: underline;
 }
 
-/* Smooth scroll to top animation */
-.page-transition {
-    animation: pageSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes pageSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 @keyframes slideDown {
     from {
         opacity: 0;
@@ -1328,15 +1324,14 @@ body {
         padding: 1rem;
     }
 
-    .pwa-install-left {
-        flex-direction: column;
-        text-align: center;
+    .pwa-panel-left {
+        justify-content: center;
     }
 
     .pwa-app-logo {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 
     .pwa-install-btn {
@@ -1633,13 +1628,13 @@ body {
 
     .pwa-install-panel {
         padding: 0.8rem;
-        margin: 1rem auto;
+        margin-bottom: 1.5rem;
     }
 
     .pwa-app-logo {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
     }
 
     .pwa-install-btn {
@@ -2567,7 +2562,7 @@ async init() {
         await this.loadTranslationsData();
         this.buildSearchIndex();
         this.setupEventListeners();
-        this.setupPWAInstall();
+        this.setupPWAInstallPrompt();
         this.handleRoute();
         this.updateSettingsUI();
     } catch (error) {
@@ -2587,7 +2582,7 @@ async init() {
     }, 1000);
 }
 
-setupPWAInstall() {
+setupPWAInstallPrompt() {
     // Listen for the beforeinstallprompt event
     window.addEventListener('beforeinstallprompt', (e) => {
         // Prevent the mini-infobar from appearing on mobile
@@ -2611,40 +2606,53 @@ setupPWAInstall() {
 showInstallButton() {
     const installBtn = document.getElementById('pwaInstallBtn');
     if (installBtn) {
-        installBtn.classList.remove('hidden');
+        installBtn.style.display = 'flex';
+        installBtn.disabled = false;
     }
 }
 
 hideInstallButton() {
     const installBtn = document.getElementById('pwaInstallBtn');
     if (installBtn) {
-        installBtn.classList.add('hidden');
+        installBtn.style.display = 'none';
     }
 }
 
 async installPWA() {
     if (!this.deferredPrompt) {
-        this.showNotification('Uygulama zaten yüklenmiş veya yükleme mevcut değil');
+        // Fallback for iOS or if prompt is not available
+        this.showIOSInstallInstructions();
         return;
     }
 
     // Show the install prompt
     this.deferredPrompt.prompt();
-
+    
     // Wait for the user to respond to the prompt
     const { outcome } = await this.deferredPrompt.userChoice;
-
+    
     if (outcome === 'accepted') {
-        this.showNotification('Uygulama yükleniyor...');
+        console.log('User accepted the install prompt');
     } else {
-        this.showNotification('Uygulama yüklemesi iptal edildi');
+        console.log('User dismissed the install prompt');
     }
-
+    
     // Clear the deferredPrompt so it can be garbage collected
     this.deferredPrompt = null;
 }
 
-// Scroll to top with animation for all page navigations
+showIOSInstallInstructions() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    
+    if (isIOS && !isStandalone) {
+        this.showNotification('iOS\'ta yüklemek için: Paylaş butonuna basın ve "Ana Ekrana Ekle" seçeneğini seçin');
+    } else {
+        this.showNotification('Bu uygulama zaten yüklü veya tarayıcınız PWA yüklemeyi desteklemiyor');
+    }
+}
+
+// Scroll to top function
 scrollToTop() {
     window.scrollTo({
         top: 0,
@@ -2975,8 +2983,9 @@ highlightText(text, query) {
 
 setupEventListeners() {
     window.addEventListener('hashchange', () => {
-        this.scrollToTop();
         this.handleRoute();
+        // Scroll to top when route changes
+        setTimeout(() => this.scrollToTop(), 100);
     });
 
     const content = document.getElementById('content');
@@ -3045,14 +3054,6 @@ handleRoute() {
     const hash = window.location.hash.slice(1);
     this.currentHash = hash;
 
-    // Add page transition class
-    const content = document.getElementById('content');
-    content.classList.add('page-transition');
-    
-    setTimeout(() => {
-        content.classList.remove('page-transition');
-    }, 500);
-
     if (!hash) {
         this.renderHome();
     } else if (hash.startsWith('sure-')) {
@@ -3089,14 +3090,14 @@ renderHome() {
 
         <!-- PWA Install Panel -->
         <div class="pwa-install-panel">
-            <div class="pwa-install-left">
+            <div class="pwa-panel-left">
                 <div class="pwa-app-logo">SK</div>
-                <div class="pwa-install-info">
+                <div class="pwa-panel-info">
                     <h3>Uygulamayı İndir</h3>
-                    <p>Kuran-ı Kerim'e her zaman erişim için uygulamayı cihazınıza yükleyin</p>
+                    <p>Offline erişim ve daha hızlı deneyim için uygulamayı cihazınıza yükleyin</p>
                 </div>
             </div>
-            <button class="pwa-install-btn ripple" id="pwaInstallBtn" onclick="app.installPWA()">
+            <button class="pwa-install-btn ripple" id="pwaInstallBtn" onclick="app.installPWA()" style="display: none;">
                 <svg class="icon" viewBox="0 0 24 24">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="7,10 12,15 17,10"></polyline>
@@ -3122,15 +3123,13 @@ renderHome() {
     this.renderSurahsGrid();
     
     // Check if PWA install is available
-    if (!this.deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
-        // If not available or already installed, hide the button
-        setTimeout(() => {
-            const installBtn = document.getElementById('pwaInstallBtn');
-            if (installBtn && !this.deferredPrompt) {
-                installBtn.classList.add('hidden');
-            }
-        }, 1000);
+    if (this.deferredPrompt || this.isIOSDevice()) {
+        this.showInstallButton();
     }
+}
+
+isIOSDevice() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 }
 
 renderSupportPage() {
