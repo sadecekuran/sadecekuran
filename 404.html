@@ -1,446 +1,507 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
-    <title>Sayfa Bulunamadı - SADECE KURAN</title>
-    <link rel="icon" type="image/png" href="/logokuran2.jpg"/>
-    <link rel="apple-touch-icon" href="/logokuran2.jpg">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-dark: #15202b;
-            --secondary-dark: #192734;
-            --accent-dark: #22303c;
-            --text-dark: #ffffff;
-            --highlight-dark: #1da1f2;
-            
-            --primary-light: #ffffff;
-            --secondary-light: #f7f9fa;
-            --accent-light: #ebeef0;
-            --text-light: #0f1419;
-            --highlight-light: #1da1f2;
-            
-            --transition-speed: 0.3s;
-            --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--primary-dark);
-            color: var(--text-dark);
-            line-height: 1.5;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            transition: background 0.3s var(--transition-function), color 0.3s var(--transition-function);
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-dark) var(--primary-dark);
-            overflow-x: hidden;
-        }
-        
-        body.day-mode {
-            background-color: var(--primary-light);
-            color: var(--text-light);
-            scrollbar-color: var(--accent-light) var(--primary-light);
-        }
-        
-        /* Header */
-        .header {
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--accent-dark);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background-color: var(--primary-dark);
-            z-index: 5;
-            transition: background-color 0.3s var(--transition-function);
-        }
-        
-        body.day-mode .header {
-            background-color: var(--primary-light);
-            border-bottom: 1px solid var(--accent-light);
-        }
-        
-        .header h1 {
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-        
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        #theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-dark);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s var(--transition-function);
-        }
-        
-        body.day-mode #theme-toggle {
-            color: var(--text-light);
-        }
-        
-        #theme-toggle:hover {
-            background-color: var(--accent-dark);
-        }
-        
-        body.day-mode #theme-toggle:hover {
-            background-color: var(--accent-light);
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        
-        /* 404 Container */
-        .error-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .error-code {
-            font-size: 8rem;
-            font-weight: 700;
-            color: var(--highlight-dark);
-            line-height: 1;
-            margin-bottom: 20px;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        body.day-mode .error-code {
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .error-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        
-        .error-message {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            max-width: 600px;
-            color: var(--text-dark);
-            opacity: 0.9;
-        }
-        
-        body.day-mode .error-message {
-            color: var(--text-light);
-        }
-        
-        .error-image {
-            width: 250px;
-            height: 250px;
-            margin-bottom: 30px;
-            object-fit: contain;
-        }
-        
-        .search-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 30px;
-        }
-        
-        #search {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--accent-dark);
-            border-radius: 20px;
-            background-color: var(--secondary-dark);
-            color: var(--text-dark);
-            font-size: 0.95rem;
-            transition: all 0.2s var(--transition-function);
-            padding-right: 40px;
-        }
-        
-        body.day-mode #search {
-            background-color: var(--secondary-light);
-            border: 1px solid var(--accent-light);
-            color: var(--text-light);
-        }
-        
-        #search:focus {
-            outline: none;
-            border-color: var(--highlight-dark);
-            box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
-        }
-        
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-dark);
-            opacity: 0.6;
-            cursor: pointer;
-        }
-        
-        body.day-mode .search-icon {
-            color: var(--text-light);
-        }
-        
-        .navigation-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .nav-link {
-            padding: 10px 20px;
-            background-color: var(--secondary-dark);
-            border-radius: 20px;
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s var(--transition-function);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        body.day-mode .nav-link {
-            background-color: var(--secondary-light);
-            color: var(--text-light);
-        }
-        
-        .nav-link:hover {
-            background-color: var(--highlight-dark);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .home-button {
-            padding: 12px 25px;
-            background-color: var(--highlight-dark);
-            border-radius: 20px;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s var(--transition-function);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-        }
-        
-        .home-button:hover {
-            background-color: #1a91da;
-            transform: translateY(-2px);
-        }
-        
-        .quran-quote {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: var(--secondary-dark);
-            border-radius: 12px;
-            max-width: 600px;
-            position: relative;
-        }
-        
-        body.day-mode .quran-quote {
-            background-color: var(--secondary-light);
-        }
-        
-        .quran-quote::before {
-            content: '\f10d';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            font-size: 1.5rem;
-            color: var(--highlight-dark);
-            background-color: var(--primary-dark);
-            padding: 5px;
-            border-radius: 50%;
-        }
-        
-        body.day-mode .quran-quote::before {
-            background-color: var(--primary-light);
-        }
-        
-        .quote-text {
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-        
-        .quote-source {
-            text-align: right;
-            font-weight: 500;
-            color: var(--highlight-dark);
-        }
-        
-        /* Footer */
-        footer {
-            padding: 15px 20px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            opacity: 0.8;
-            border-top: 1px solid var(--accent-dark);
-            transition: all 0.3s var(--transition-function);
-        }
-        
-        body.day-mode footer {
-            color: var(--text-light);
-            border-top: 1px solid var(--accent-light);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .error-code {
-                font-size: 6rem;
-            }
-            
-            .error-title {
-                font-size: 1.5rem;
-            }
-            
-            .error-message {
-                font-size: 1rem;
-            }
-            
-            .error-image {
-                width: 200px;
-                height: 200px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .error-code {
-                font-size: 4rem;
-            }
-            
-            .error-title {
-                font-size: 1.2rem;
-            }
-            
-            .navigation-links {
-                flex-direction: column;
-                width: 100%;
-            }
-            
-            .nav-link {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .home-button {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="/sdc5.PNG"/>
+<link rel="apple-touch-icon" href="/sdc5.PNG">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>404 - Sayfa Bulunamadı | SADECE KURAN</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--font-size-multiplier: 1;
+--arabic-font-size-multiplier: 1;
+}
+
+:root[data-theme="dark"] {
+--bg-primary: #000000;
+--bg-secondary: #111111;
+--bg-tertiary: #1a1a1a;
+--text-primary: #ffffff;
+--text-secondary: #cccccc;
+--text-muted: #888888;
+--border-color: #333333;
+--accent-light: #ffffff;
+--accent-dark: #000000;
+--shadow-light: rgba(255, 255, 255, 0.1);
+--shadow-dark: rgba(0, 0, 0, 0.5);
+--gradient-primary: linear-gradient(135deg, #ffffff, #cccccc);
+--gradient-secondary: linear-gradient(135deg, #333333, #111111);
+--wire-color: #666666;
+--primary-color: #ffffff;
+--secondary-color: #cccccc;
+--accent-color: #888888;
+--header-height: 60px;
+--navbar-bg: #111111;
+}
+
+:root[data-theme="light"] {
+--bg-primary: #ffffff;
+--bg-secondary: #f8fafc;
+--bg-tertiary: #f1f5f9;
+--text-primary: #1e293b;
+--text-secondary: #475569;
+--text-muted: #64748b;
+--border-color: #e2e8f0;
+--accent-light: #1e293b;
+--accent-dark: #ffffff;
+--shadow-light: rgba(0, 0, 0, 0.1);
+--shadow-dark: rgba(0, 0, 0, 0.1);
+--gradient-primary: linear-gradient(135deg, #1e293b, #475569);
+--gradient-secondary: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+--wire-color: #94a3b8;
+--primary-color: #2563eb;
+--secondary-color: #475569;
+--accent-color: #64748b;
+--header-height: 60px;
+--navbar-bg: #f8fafc;
+}
+
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+-webkit-tap-highlight-color: transparent;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+user-select: none;
+}
+
+/* Allow text selection for specific elements */
+p, h1, h2, h3, h4, h5, h6, span, div.verse-text {
+-webkit-user-select: text;
+user-select: text;
+}
+
+/* Ripple effect container */
+.ripple {
+position: relative;
+overflow: hidden;
+}
+
+/* Ripple animation */
+.ripple-effect {
+position: absolute;
+border-radius: 50%;
+background-color: rgba(255, 255, 255, 0.4);
+transform: scale(0);
+animation: ripple-animation 0.6s linear;
+pointer-events: none;
+}
+
+@keyframes ripple-animation {
+to {
+transform: scale(2.5);
+opacity: 0;
+}
+}
+
+body {
+background: var(--bg-primary);
+color: var(--text-primary);
+font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+min-height: 100vh;
+position: relative;
+overflow-x: hidden;
+font-size: calc(16px * var(--font-size-multiplier));
+line-height: 1.6;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 2rem;
+}
+
+.arabic {
+font-family: 'Amiri', serif;
+direction: rtl;
+text-align: right;
+font-size: calc(1.2em * var(--arabic-font-size-multiplier));
+line-height: 2;
+color: var(--text-primary);
+}
+
+.icon {
+display: inline-block;
+width: 20px;
+height: 20px;
+stroke: var(--wire-color);
+fill: none;
+stroke-width: 1.5;
+stroke-linecap: round;
+stroke-linejoin: round;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon:hover {
+stroke: var(--text-primary);
+transform: scale(1.1);
+}
+
+.error-container {
+max-width: 800px;
+width: 100%;
+text-align: center;
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+border-radius: 20px;
+padding: 3rem 2rem;
+backdrop-filter: blur(10px);
+box-shadow: 0 8px 32px var(--shadow-dark);
+animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.error-number {
+font-size: clamp(4rem, 12vw, 8rem);
+font-weight: 700;
+background: var(--gradient-primary);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 1rem;
+line-height: 1;
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+.error-title {
+font-size: clamp(1.5rem, 4vw, 2.5rem);
+font-weight: 600;
+margin-bottom: 1rem;
+color: var(--text-primary);
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+.error-description {
+font-size: calc(1.1rem * var(--font-size-multiplier));
+color: var(--text-secondary);
+margin-bottom: 2rem;
+line-height: 1.6;
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+}
+
+.verse-container {
+background: var(--bg-tertiary);
+border: 1px solid var(--border-color);
+border-radius: 16px;
+padding: 2rem;
+margin: 2rem 0;
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+}
+
+.verse-text {
+font-size: calc(1.2rem * var(--font-size-multiplier));
+line-height: 1.8;
+color: var(--text-primary);
+text-align: left;
+margin-bottom: 1rem;
+font-weight: 500;
+}
+
+.verse-arabic {
+font-size: calc(1.8rem * var(--arabic-font-size-multiplier));
+margin-bottom: 1rem;
+padding: 1rem;
+background: transparent;
+border-radius: 12px;
+text-align: right;
+}
+
+.verse-reference {
+font-size: calc(0.9rem * var(--font-size-multiplier));
+color: var(--text-muted);
+font-style: italic;
+text-align: center;
+}
+
+.home-button {
+display: inline-flex;
+align-items: center;
+gap: 0.75rem;
+background: var(--primary-color);
+color: var(--bg-primary);
+padding: 1rem 2rem;
+border-radius: 16px;
+text-decoration: none;
+font-size: calc(1.1rem * var(--font-size-multiplier));
+font-weight: 600;
+transition: all 0.3s ease;
+box-shadow: 0 8px 32px var(--shadow-dark);
+border: none;
+cursor: pointer;
+animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+}
+
+.home-button:hover {
+transform: translateY(-4px) scale(1.05);
+box-shadow: 0 12px 40px var(--shadow-dark);
+}
+
+.theme-toggle {
+position: fixed;
+top: 2rem;
+right: 2rem;
+background: var(--bg-secondary);
+border: 1px solid var(--border-color);
+padding: 0.75rem;
+border-radius: 12px;
+cursor: pointer;
+color: var(--text-secondary);
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+}
+
+.theme-toggle:hover {
+background: var(--bg-tertiary);
+color: var(--text-primary);
+border-color: var(--wire-color);
+transform: scale(1.05);
+}
+
+@keyframes slideUp {
+from {
+opacity: 0;
+transform: translateY(40px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+:root {
+--font-size-multiplier: 1.1;
+--arabic-font-size-multiplier: 1.2;
+}
+
+body {
+padding: 1rem;
+}
+
+.error-container {
+padding: 2rem 1.5rem;
+}
+
+.verse-container {
+padding: 1.5rem;
+margin: 1.5rem 0;
+}
+
+.verse-text {
+font-size: calc(1rem * var(--font-size-multiplier));
+}
+
+.verse-arabic {
+font-size: calc(1.5rem * var(--arabic-font-size-multiplier));
+padding: 0.75rem;
+}
+
+.home-button {
+padding: 0.875rem 1.5rem;
+font-size: calc(1rem * var(--font-size-multiplier));
+}
+
+.theme-toggle {
+top: 1rem;
+right: 1rem;
+padding: 0.5rem;
+}
+}
+
+@media (max-width: 480px) {
+:root {
+--font-size-multiplier: 1.2;
+--arabic-font-size-multiplier: 1.3;
+}
+
+body {
+padding: 0.75rem;
+}
+
+.error-container {
+padding: 1.5rem 1rem;
+}
+
+.verse-container {
+padding: 1rem;
+margin: 1rem 0;
+}
+
+.verse-text {
+font-size: calc(0.95rem * var(--font-size-multiplier));
+}
+
+.verse-arabic {
+font-size: calc(1.3rem * var(--arabic-font-size-multiplier));
+padding: 0.5rem;
+}
+
+.home-button {
+padding: 0.75rem 1.25rem;
+font-size: calc(0.95rem * var(--font-size-multiplier));
+}
+
+.error-description {
+font-size: calc(1rem * var(--font-size-multiplier));
+}
+}
+
+.text-center {
+text-align: center;
+}
+</style>
 </head>
-<body>
-    <div class="main-content">
-        <header class="header">
-            <h1>SADECE KURAN</h1> 
-            <div class="header-actions">
-                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
-            </div>
-        </header>
-        
-        <div class="error-container">
-            <div class="error-code">404</div>
-            <h1 class="error-title">Sayfa Bulunamadı</h1>
-            <p class="error-message">Aradığınız sayfa mevcut değil veya taşınmış olabilir. Lütfen aşağıdaki bağlantıları kullanarak devam edin veya arama yapın.</p>
-            
-           <div class="quran-quote">
-                <p class="quote-text">"Şüphesiz zorlukla beraber bir kolaylık vardır. Gerçekten, zorlukla beraber bir kolaylık vardır."</p>
-                <p class="quote-source">İnşirah Suresi, 5-6</p>
-            </div>
-            
-           <a href="/index.html" class="home-button">
-                <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
-            </a>
-            
-        </div>
-        
-        <footer>
-            <p>© 2025 SADECE KURAN</p>
-        </footer>
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Theme Toggle
-            const themeToggle = document.getElementById('theme-toggle');
-            const body = document.body;
-            
-            // Check for saved theme preference
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'day') {
-                body.classList.add('day-mode');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            }
-            
-            themeToggle.addEventListener('click', function() {
-                body.classList.toggle('day-mode');
-                
-                if (body.classList.contains('day-mode')) {
-                    localStorage.setItem('theme', 'day');
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                } else {
-                    localStorage.setItem('theme', 'night');
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                }
-            });
-            
-            // Search functionality
-            const searchInput = document.getElementById('search');
-            const searchIcon = document.querySelector('.search-icon');
-            
-            function performSearch() {
-                const query = searchInput.value.trim();
-                if (query) {
-                    window.location.href = `/search?q=${encodeURIComponent(query)}`;
-                }
-            }
-            
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
-            
-            searchIcon.addEventListener('click', performSearch);
-        });
-    </script>
+<body data-theme="dark">
+
+<!-- Theme Toggle Button -->
+<button class="theme-toggle ripple" onclick="toggleTheme()">
+<svg class="icon" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="5"></circle>
+<line x1="12" y1="1" x2="12" y2="3"></line>
+<line x1="12" y1="21" x2="12" y2="23"></line>
+<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+<line x1="1" y1="12" x2="3" y2="12"></line>
+<line x1="21" y1="12" x2="23" y2="12"></line>
+<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+</svg>
+</button>
+
+<!-- Error Container -->
+<div class="error-container">
+<div class="error-number">404</div>
+<h1 class="error-title">Sayfa Bulunamadı</h1>
+<p class="error-description">
+Aradığınız sayfa mevcut değil veya taşınmış olabilir. Lütfen URL'yi kontrol edin veya ana sayfaya dönün.
+</p>
+
+<div class="verse-container">
+<div class="verse-text">
+"Kim Allah'a tevekkül ederse, O ona yeter. Şüphesiz Allah, emrini yerine getirendir. Allah her şey için bir ölçü koymuştur."
+</div>
+<div class="verse-arabic arabic">
+وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ ۚ إِنَّ اللَّهَ بَالِغُ أَمْرِهِ ۚ قَدْ جَعَلَ اللَّهُ لِكُلِّ شَيْءٍ قَدْرًا
+</div>
+<div class="verse-reference">
+Talak Suresi, 3. Ayet
+</div>
+</div>
+
+<a href="/index.html" class="home-button ripple">
+<svg class="icon" viewBox="0 0 24 24">
+<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9,22 9,12 15,12 15,22"></polyline>
+</svg>
+Ana Sayfaya Dön
+</a>
+</div>
+
+<script>
+// Theme management
+let currentTheme = localStorage.getItem('theme') || 'dark';
+
+function setTheme(theme) {
+currentTheme = theme;
+document.documentElement.setAttribute('data-theme', theme);
+localStorage.setItem('theme', theme);
+
+const themeBtn = document.querySelector('.theme-toggle .icon');
+if (themeBtn) {
+if (theme === 'dark') {
+    themeBtn.innerHTML = `
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    `;
+} else {
+    themeBtn.innerHTML = `
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    `;
+}
+}
+}
+
+function toggleTheme() {
+const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+setTheme(newTheme);
+}
+
+// Ripple effect functionality
+function createRipple(event) {
+const button = event.currentTarget;
+
+if (button.disabled || button.classList.contains('disabled')) {
+return;
+}
+
+const circle = document.createElement("span");
+const diameter = Math.max(button.clientWidth, button.clientHeight);
+const radius = diameter / 2;
+
+const rect = button.getBoundingClientRect();
+const x = event.clientX - rect.left - radius;
+const y = event.clientY - rect.top - radius;
+
+circle.style.width = circle.style.height = `${diameter}px`;
+circle.style.left = `${x}px`;
+circle.style.top = `${y}px`;
+circle.classList.add("ripple-effect");
+
+const ripple = button.getElementsByClassName("ripple-effect")[0];
+if (ripple) {
+ripple.remove();
+}
+
+button.appendChild(circle);
+
+setTimeout(() => {
+if (circle.parentNode) {
+    circle.remove();
+}
+}, 600);
+}
+
+// Initialize theme and ripple effects
+document.addEventListener('DOMContentLoaded', function() {
+setTheme(currentTheme);
+
+// Add ripple effect listeners
+const rippleElements = document.querySelectorAll('.ripple');
+rippleElements.forEach(element => {
+element.addEventListener('click', createRipple);
+element.addEventListener('touchstart', createRipple);
+});
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+if (e.key === 'Enter' || e.key === ' ') {
+const homeButton = document.querySelector('.home-button');
+if (document.activeElement === homeButton) {
+e.preventDefault();
+window.location.href = '/';
+}
+}
+if (e.key === 'Escape') {
+window.location.href = '/';
+}
+});
+</script>
+
 </body>
 </html>
