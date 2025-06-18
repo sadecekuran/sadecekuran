@@ -31,7 +31,6 @@
             --accent-color: #888888;
             --header-height: 60px;
             --navbar-bg: #111111;
-            --ripple-color: rgba(255, 255, 255, 0.3);
         }
 
         :root[data-theme="light"] {
@@ -55,7 +54,6 @@
             --accent-color: #64748b;
             --header-height: 60px;
             --navbar-bg: #f8fafc;
-            --ripple-color: rgba(37, 99, 235, 0.3);
         }
 
         :root[data-theme="sepia"] {
@@ -78,7 +76,6 @@
             --accent-color: #a0916f;
             --header-height: 60px;
             --navbar-bg: #f0e6d2;
-            --ripple-color: rgba(139, 69, 19, 0.3);
         }
 
         :root[data-theme="blue"] {
@@ -101,7 +98,6 @@
             --accent-color: #94a3b8;
             --header-height: 60px;
             --navbar-bg: #1e293b;
-            --ripple-color: rgba(59, 130, 246, 0.3);
         }
 
         :root[data-theme="green"] {
@@ -124,7 +120,6 @@
             --accent-color: #a7f3d0;
             --header-height: 60px;
             --navbar-bg: #065f46;
-            --ripple-color: rgba(16, 185, 129, 0.3);
         }
 
         :root[data-theme="purple"] {
@@ -147,7 +142,6 @@
             --accent-color: #d8b4fe;
             --header-height: 60px;
             --navbar-bg: #6b21a8;
-            --ripple-color: rgba(139, 92, 246, 0.3);
         }
 
         :root[data-theme="rose"] {
@@ -170,43 +164,12 @@
             --accent-color: #fbcfe8;
             --header-height: 60px;
             --navbar-bg: #9f1239;
-            --ripple-color: rgba(236, 72, 153, 0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* Mavi dokunma efektini kaldır */
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        /* Ripple Effect için gerekli stiller */
-        .ripple-container {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: var(--ripple-color);
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
-            pointer-events: none;
-        }
-
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
         }
 
         body {
@@ -219,6 +182,36 @@
             font-size: calc(16px * var(--font-size-multiplier));
             line-height: 1.6;
             transition: all 0.3s ease;
+        }
+
+        /* Ripple Effect Styles */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ripple:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .ripple-dark::before {
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .icon {
@@ -290,7 +283,7 @@
             gap: 0.5rem;
         }
 
-        .search-btn, .theme-btn, .categories-btn, .about-btn, .destekle-btn {
+        .search-btn, .theme-btn, .categories-btn, .about-btn, .destekle-btn, .home-btn {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             padding: 0.5rem;
@@ -302,11 +295,9 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            position: relative;
-            overflow: hidden;
         }
 
-        .search-btn:hover, .theme-btn:hover, .categories-btn:hover, .about-btn:hover, .destekle-btn:hover {
+        .search-btn:hover, .theme-btn:hover, .categories-btn:hover, .about-btn:hover, .destekle-btn:hover, .home-btn:hover {
             background: var(--bg-tertiary);
             color: var(--text-primary);
             border-color: var(--wire-color);
@@ -389,8 +380,6 @@
             outline: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px var(--shadow-dark);
-            position: relative;
-            overflow: hidden;
         }
 
         .home-search-input:focus {
@@ -493,7 +482,7 @@
         }
 
         .article-detail {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -545,61 +534,46 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.9);
             font-size: calc(0.875rem * var(--font-size-multiplier));
         }
 
         .meta-detail .author-link {
-            color: var(--primary-color);
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .meta-detail .author-link:hover {
-            color: var(--accent-color);
+            color: white;
             text-decoration: underline;
         }
 
         .article-detail-content {
-            background: rgba(var(--bg-secondary-rgb), 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2.5rem;
+            padding: 3rem 0;
             line-height: 1.8;
             animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .article-detail-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-            pointer-events: none;
-            border-radius: 20px;
+            font-size: calc(1.2rem * var(--font-size-multiplier));
         }
 
         .article-detail-content h2 {
-            font-size: 1.75rem;
-            margin: 2rem 0 1rem 0;
+            font-size: calc(2rem * var(--font-size-multiplier));
+            margin: 2.5rem 0 1.5rem 0;
             color: var(--text-primary);
+            font-weight: 600;
         }
 
         .article-detail-content h3 {
-            font-size: 1.5rem;
-            margin: 1.5rem 0 0.75rem 0;
+            font-size: calc(1.6rem * var(--font-size-multiplier));
+            margin: 2rem 0 1rem 0;
             color: var(--text-primary);
+            font-weight: 600;
         }
 
         .article-detail-content p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             color: var(--text-secondary);
+            font-size: calc(1.2rem * var(--font-size-multiplier));
         }
 
         .article-detail-content pre {
@@ -625,8 +599,9 @@
         }
 
         .article-detail-content li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             color: var(--text-secondary);
+            font-size: calc(1.1rem * var(--font-size-multiplier));
         }
 
         .article-detail-content strong {
@@ -650,8 +625,6 @@
             transition: all 0.3s ease;
             padding: 0.25rem 0.5rem;
             border-radius: 6px;
-            position: relative;
-            overflow: hidden;
         }
 
         .breadcrumb a:hover {
@@ -696,8 +669,6 @@
             outline: none;
             transition: all 0.3s ease;
             margin-bottom: 1rem;
-            position: relative;
-            overflow: hidden;
         }
 
         .search-page-input:focus {
@@ -752,8 +723,6 @@
             text-decoration: none;
             color: inherit;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .category-card:hover {
@@ -806,6 +775,41 @@
             padding: 2rem;
             line-height: 1.8;
             animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+        }
+
+        .about-content h2 {
+            font-size: calc(1.8rem * var(--font-size-multiplier));
+            margin: 2rem 0 1rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .about-content h3 {
+            font-size: calc(1.4rem * var(--font-size-multiplier));
+            margin: 1.5rem 0 0.75rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+        }
+
+        .about-content ul {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .about-content li {
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+        }
+
+        .about-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
         .author-page {
@@ -907,8 +911,6 @@
             color: var(--text-secondary);
             text-decoration: none;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
         .social-link:hover {
@@ -951,13 +953,41 @@
             margin-bottom: 1rem;
         }
 
-        .destekle-content {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+        .destekle-description {
+            color: var(--text-secondary);
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .donation-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--bg-primary);
+            padding: 1.5rem 3rem;
             border-radius: 16px;
-            padding: 2rem;
-            line-height: 1.8;
-            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+            text-decoration: none;
+            font-size: calc(1.2rem * var(--font-size-multiplier));
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px var(--shadow-dark);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 40px var(--shadow-dark);
+        }
+
+        .donation-button-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .loading {
@@ -1108,7 +1138,7 @@
                 margin: 0;
             }
 
-            .search-btn, .theme-btn {
+            .search-btn, .theme-btn, .home-btn {
                 padding: 0.4rem;
             }
 
@@ -1146,7 +1176,7 @@
             }
 
             .article-detail-content {
-                padding: 1rem;
+                padding: 1rem 0;
             }
 
             .search-page-header {
@@ -1174,8 +1204,13 @@
                 font-size: 1.5rem;
             }
 
-            .about-content, .destekle-content {
+            .about-content {
                 padding: 1rem;
+            }
+
+            .donation-button {
+                padding: 1rem 2rem;
+                font-size: calc(1rem * var(--font-size-multiplier));
             }
 
             .author-info {
@@ -1255,6 +1290,11 @@
             .search-page-title, .about-title, .destekle-title {
                 font-size: 1.3rem;
             }
+
+            .donation-button {
+                padding: 0.8rem 1.5rem;
+                font-size: calc(0.9rem * var(--font-size-multiplier));
+            }
         }
 
         .hidden {
@@ -1280,21 +1320,27 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <a href="#" class="logo ripple-container" onclick="showHome()">SADECE KURAN</a>
+            <a href="#" class="logo ripple" onclick="showHome()">SADECE KURAN</a>
             <div class="header-actions">
-                <button class="search-btn ripple-container" onclick="app.showSearchPage()">
+                <button class="home-btn ripple" onclick="window.location.href='/index.html'">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </button>
+                <button class="search-btn ripple" onclick="app.showSearchPage()">
                     <svg class="icon" viewBox="0 0 24 24">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
                 </button>
-                <button class="categories-btn ripple-container" onclick="app.showCategories()">
+                <button class="categories-btn ripple" onclick="app.showCategories()">
                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                         <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
                     </svg>
                     <span>Kategoriler</span>
                 </button>
-                <button class="about-btn ripple-container" onclick="app.showAbout()">
+                <button class="about-btn ripple" onclick="app.showAbout()">
                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
@@ -1302,13 +1348,13 @@
                     </svg>
                     <span>Hakkında</span>
                 </button>
-                <button class="destekle-btn ripple-container" onclick="app.showDestekle()">
+                <button class="destekle-btn ripple" onclick="app.showDestekle()">
                     <svg class="icon icon-sm" viewBox="0 0 24 24">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                     </svg>
                     <span>Destekle</span>
                 </button>
-                <button class="theme-btn ripple-container" onclick="app.toggleTheme()">
+                <button class="theme-btn ripple" onclick="app.toggleTheme()">
                     <svg class="icon" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -1333,47 +1379,6 @@
     </main>
 
     <script>
-        // Ripple Effect Fonksiyonu
-        function createRipple(event) {
-            const button = event.currentTarget;
-            
-            // Eğer element ripple-container sınıfına sahip değilse, ripple ekleme
-            if (!button.classList.contains('ripple-container')) {
-                return;
-            }
-
-            const circle = document.createElement("span");
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
-
-            const rect = button.getBoundingClientRect();
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - rect.left - radius}px`;
-            circle.style.top = `${event.clientY - rect.top - radius}px`;
-            circle.classList.add("ripple");
-
-            const ripple = button.getElementsByClassName("ripple")[0];
-
-            if (ripple) {
-                ripple.remove();
-            }
-
-            button.appendChild(circle);
-
-            // Ripple'ı animasyon bitince kaldır
-            setTimeout(() => {
-                if (circle.parentNode) {
-                    circle.parentNode.removeChild(circle);
-                }
-            }, 600);
-        }
-
-        // Tüm ripple-container elementlerine event listener ekle
-        function addRippleEffect() {
-            document.addEventListener("click", createRipple);
-            document.addEventListener("touchstart", createRipple);
-        }
-
         class BlogApp {
             constructor() {
                 this.data = null;
@@ -1392,12 +1397,64 @@
                     this.buildSearchIndex();
                     this.setupEventListeners();
                     this.handleRoute();
-                    // Ripple effect'i başlat
-                    addRippleEffect();
+                    this.addRippleEffects();
                 } catch (error) {
                     console.error('Initialization error:', error);
                     this.showError('Veri yüklenirken bir hata oluştu.');
                 }
+            }
+
+            addRippleEffects() {
+                // Add ripple effect to all buttons and clickable elements
+                document.addEventListener('click', (e) => {
+                    const rippleElement = e.target.closest('.ripple');
+                    if (rippleElement) {
+                        this.createRipple(e, rippleElement);
+                    }
+                });
+            }
+
+            createRipple(event, element) {
+                const rect = element.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size / 2;
+                const y = event.clientY - rect.top - size / 2;
+                
+                const ripple = document.createElement('span');
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: scale(0);
+                    animation: ripple-animation 0.6s linear;
+                    left: ${x}px;
+                    top: ${y}px;
+                    width: ${size}px;
+                    height: ${size}px;
+                    pointer-events: none;
+                    z-index: 1000;
+                `;
+
+                // Add ripple animation keyframes if not already added
+                if (!document.querySelector('#ripple-styles')) {
+                    const style = document.createElement('style');
+                    style.id = 'ripple-styles';
+                    style.textContent = `
+                        @keyframes ripple-animation {
+                            to {
+                                transform: scale(2);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+
+                element.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
             }
 
             async loadData() {
@@ -1593,7 +1650,7 @@
                     </div>
 
                     <div class="home-search">
-                        <input type="text" class="home-search-input ripple-container" id="homeSearchInput" placeholder="Makale, kategori veya yazar ara..." onclick="app.showSearchPage()">
+                        <input type="text" class="home-search-input ripple" id="homeSearchInput" placeholder="Makale, kategori veya yazar ara..." onclick="app.showSearchPage()">
                         <svg class="icon home-search-icon" viewBox="0 0 24 24">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
@@ -1616,7 +1673,7 @@
                 }
 
                 articlesGrid.innerHTML = this.data.map((article, index) => `
-                    <a href="#makale-${article.id}" class="article-card ripple-container" style="animation-delay: ${index * 0.1}s;">
+                    <a href="#makale-${article.id}" class="article-card ripple" style="animation-delay: ${index * 0.1}s;">
                         <div class="article-image-container">
                             <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
                             <div class="article-overlay">
@@ -1651,7 +1708,7 @@
                 content.innerHTML = `
                     <div class="article-detail">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()" class="ripple-container">
+                            <a href="#" onclick="showHome()">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -1659,7 +1716,7 @@
                                 Ana Sayfa
                             </a>
                             <span>›</span>
-                            <a href="#kategori-${encodeURIComponent(article.kategori)}" class="ripple-container">${article.kategori}</a>
+                            <a href="#kategori-${encodeURIComponent(article.kategori)}">${article.kategori}</a>
                             <span>›</span>
                             <span>${article.baslik}</span>
                         </div>
@@ -1674,7 +1731,7 @@
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                        <a href="#yazar-${this.getAuthorSlug(article.yazar)}" class="author-link ripple-container" style="color: rgba(255, 255, 255, 0.9);">${article.yazar}</a>
+                                        <a href="#yazar-${this.getAuthorSlug(article.yazar)}" class="author-link" style="color: rgba(255, 255, 255, 0.9);">${article.yazar}</a>
                                     </div>
                                     <div class="meta-detail">
                                         <svg class="icon" viewBox="0 0 24 24">
@@ -1707,206 +1764,6 @@
                 `;
             }
 
-            renderAuthor(authorSlug) {
-                const author = this.authorsData?.find(a => a.slug === authorSlug);
-                if (!author) {
-                    this.showError('Yazar bulunamadı.');
-                    return;
-                }
-
-                const authorArticles = this.data?.filter(article => 
-                    this.getAuthorSlug(article.yazar) === authorSlug
-                ) || [];
-
-                const content = document.getElementById('content');
-                content.innerHTML = `
-                    <div class="author-page">
-                        <div class="breadcrumb">
-                            <a href="#" onclick="showHome()" class="ripple-container">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                                </svg>
-                                Ana Sayfa
-                            </a>
-                            <span>›</span>
-                            <span>Yazarlar</span>
-                            <span>›</span>
-                            <span>${author.isim}</span>
-                        </div>
-
-                        <div class="author-header">
-                            <div class="author-info">
-                                <img src="${author.profil_resmi}" alt="${author.isim}" class="author-avatar">
-                                <div class="author-details">
-                                    <h1>${author.isim}</h1>
-                                    <p class="author-bio">${author.biyografi}</p>
-                                    <div class="author-stats">
-                                        <div class="stat-item">
-                                            <div class="stat-number">${authorArticles.length}</div>
-                                            <div class="stat-label">Makale</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-number">${author.deneyim}</div>
-                                            <div class="stat-label">Deneyim</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-number">${author.uzmanlik_alanlari.length}</div>
-                                            <div class="stat-label">Uzmanlık</div>
-                                        </div>
-                                    </div>
-                                    <div class="author-expertise">
-                                        <strong>Uzmanlık Alanları:</strong>
-                                        <div class="expertise-tags">
-                                            ${author.uzmanlik_alanlari.map(alan => `
-                                                <span class="expertise-tag">${alan}</span>
-                                            `).join('')}
-                                        </div>
-                                    </div>
-                                    <div class="author-social">
-                                        ${author.sosyal_medya.twitter ? `
-                                            <a href="https://twitter.com/${author.sosyal_medya.twitter.replace('@', '')}" target="_blank" class="social-link ripple-container">
-                                                <svg class="icon" viewBox="0 0 24 24">
-                                                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                                                </svg>
-                                            </a>
-                                        ` : ''}
-                                        ${author.sosyal_medya.instagram ? `
-                                            <a href="https://instagram.com/${author.sosyal_medya.instagram.replace('@', '')}" target="_blank" class="social-link ripple-container">
-                                                <svg class="icon" viewBox="0 0 24 24">
-                                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                                    <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                                </svg>
-                                            </a>
-                                        ` : ''}
-                                        ${author.sosyal_medya.linkedin ? `
-                                            <a href="https://linkedin.com/in/${author.sosyal_medya.linkedin}" target="_blank" class="social-link ripple-container">
-                                                <svg class="icon" viewBox="0 0 24 24">
-                                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                                    <circle cx="4" cy="4" r="2"></circle>
-                                                </svg>
-                                            </a>
-                                        ` : ''}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="author-content">
-                            <h2>Hakkında</h2>
-                            <p>${author.hakkinda}</p>
-                            
-                            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Eğitim</h3>
-                            <p>${author.egitim}</p>
-                            
-                            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">İletişim</h3>
-                            <p>E-posta: <a href="mailto:${author.iletisim}" style="color: var(--primary-color);">${author.iletisim}</a></p>
-                        </div>
-
-                        ${authorArticles.length > 0 ? `
-                            <div class="author-content">
-                                <h2>Makaleleri (${authorArticles.length})</h2>
-                                <div class="articles-grid" style="margin-top: 1rem;">
-                                    ${authorArticles.map((article, index) => `
-                                        <a href="#makale-${article.id}" class="article-card ripple-container" style="animation-delay: ${index * 0.1}s;">
-                                            <div class="article-image-container">
-                                                <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
-                                                <div class="article-overlay">
-                                                    <h2 class="article-title">${article.baslik}</h2>
-                                                    <div class="article-meta">
-                                                        <span>${article.yazar}</span>
-                                                        <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-            }
-
-            renderDestekle() {
-                const content = document.getElementById('content');
-                
-                content.innerHTML = `
-                    <div class="destekle-page">
-                        <div class="breadcrumb">
-                            <a href="#" onclick="showHome()" class="ripple-container">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                                </svg>
-                                Ana Sayfa
-                            </a>
-                            <span>›</span>
-                            <span>Destekle</span>
-                        </div>
-
-                        <div class="destekle-header">
-                            <h1 class="destekle-title">Bizi Destekleyin</h1>
-                            <p style="color: var(--text-secondary);">İslami içerik üretmeye devam edebilmemiz için desteğinize ihtiyacımız var</p>
-                        </div>
-
-                        <div class="destekle-content">
-                            <h2>Neden Desteğinize İhtiyacımız Var?</h2>
-                            <p>SADECE KURAN olarak, Kur'an-ı Kerim'in ışığında kaliteli İslami içerikler üretmeye devam edebilmek için sizlerin desteğine ihtiyaç duyuyoruz. Amacımız, İslam'ın güzelliklerini ve Kur'an-ı Kerim'in evrensel mesajlarını daha geniş kitlelere ulaştırmaktır.</p>
-                            
-                            <h3>Destekleriniz Nerelerde Kullanılıyor?</h3>
-                            <ul>
-                                <li><strong>İçerik Üretimi:</strong> Kaliteli makale ve araştırmaların hazırlanması</li>
-                                <li><strong>Yazar Ücretleri:</strong> Uzman yazarlarımızın emeklerinin karşılanması</li>
-                                <li><strong>Teknik Altyapı:</strong> Web sitesi ve sunucu maliyetleri</li>
-                                <li><strong>Araştırma:</strong> Akademik kaynaklara erişim ve araştırma maliyetleri</li>
-                                <li><strong>Çeviri:</strong> İçeriklerin farklı dillere çevrilmesi</li>
-                            </ul>
-                            
-                            <h3>Nasıl Destek Olabilirsiniz?</h3>
-                            <p>Desteğinizi aşağıdaki yöntemlerle verebilirsiniz:</p>
-                            
-                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 1px solid var(--border-color);">
-                                <h4 style="color: var(--primary-color); margin-bottom: 1rem;">💳 Banka Havalesi</h4>
-                                <p><strong>Banka:</strong> Türkiye İş Bankası</p>
-                                <p><strong>IBAN:</strong> TR12 0006 4000 0011 2345 6789 01</p>
-                                <p><strong>Hesap Sahibi:</strong> SADECE KURAN Derneği</p>
-                            </div>
-                            
-                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 1px solid var(--border-color);">
-                                <h4 style="color: var(--primary-color); margin-bottom: 1rem;">📱 Mobil Ödeme</h4>
-                                <p><strong>Papara:</strong> 1234567890</p>
-                                <p><strong>İninal:</strong> 9876543210</p>
-                            </div>
-                            
-                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; border: 1px solid var(--border-color);">
-                                <h4 style="color: var(--primary-color); margin-bottom: 1rem;">🌐 Kripto Para</h4>
-                                <p><strong>Bitcoin (BTC):</strong> 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</p>
-                                <p><strong>Ethereum (ETH):</strong> 0x742d35Cc6634C0532925a3b8D4C9db96590645d8</p>
-                            </div>
-                            
-                            <h3>Diğer Destek Yöntemleri</h3>
-                            <ul>
-                                <li><strong>İçerik Paylaşımı:</strong> Makalelerimizi sosyal medyada paylaşın</li>
-                                <li><strong>Geri Bildirim:</strong> Görüş ve önerilerinizi bizimle paylaşın</li>
-                                <li><strong>Dua:</strong> Hayır dualarınız bizim için çok değerli</li>
-                                <li><strong>Gönüllülük:</strong> Çeviri, editörlük gibi alanlarda gönüllü olabilirsiniz</li>
-                            </ul>
-                            
-                            <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: var(--bg-tertiary); border-radius: 12px; border: 1px solid var(--border-color);">
-                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🤲 Allah Razı Olsun</h3>
-                                <p style="font-style: italic;">"Kim bir mümine dünyada bir sıkıntısını giderirse, Allah da kıyamet gününde onun bir sıkıntısını giderir."</p>
-                                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">- Hz. Muhammed (s.a.v)</p>
-                            </div>
-                            
-                            <p style="text-align: center; margin-top: 2rem; font-weight: 600;">Desteğiniz için şimdiden teşekkür ederiz. Allah razı olsun.</p>
-                        </div>
-                    </div>
-                `;
-            }
-
             formatArticleContent(content) {
                 // Basit markdown-benzeri formatlamalar
                 return content
@@ -1923,122 +1780,6 @@
                     .split('</p><p>').map(p => `<p>${p}</p>`).join('');
             }
 
-            renderSearchPage() {
-                const content = document.getElementById('content');
-                
-                content.innerHTML = `
-                    <div class="search-page">
-                        <div class="breadcrumb">
-                            <a href="#" onclick="showHome()" class="ripple-container">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                                </svg>
-                                Ana Sayfa
-                            </a>
-                            <span>›</span>
-                            <span>Arama</span>
-                        </div>
-
-                        <div class="search-page-header">
-                            <h1 class="search-page-title">Makalelerde Arama</h1>
-                            <input type="text" class="search-page-input ripple-container" id="searchPageInput" placeholder="Makale, kategori veya yazar ara..." autofocus>
-                        </div>
-
-                        <div id="searchPageResults"></div>
-                    </div>
-                `;
-
-                const searchInput = document.getElementById('searchPageInput');
-                let searchTimeout;
-                
-                searchInput.addEventListener('input', (e) => {
-                    clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        this.handleSearchPageSearch(e.target.value);
-                    }, 300);
-                });
-            }
-
-            handleSearchPageSearch(query) {
-                const resultsContainer = document.getElementById('searchPageResults');
-                
-                if (!query || query.length < 2) {
-                    resultsContainer.innerHTML = '';
-                    return;
-                }
-
-                const results = this.search(query);
-                
-                if (results.length === 0) {
-                    resultsContainer.innerHTML = `
-                        <div class="search-results">
-                            <div class="search-header">
-                                <h2>Sonuç Bulunamadı</h2>
-                                <div class="search-meta">"${query}" için sonuç bulunamadı</div>
-                            </div>
-                        </div>
-                    `;
-                    return;
-                }
-
-                resultsContainer.innerHTML = `
-                    <div class="search-results">
-                        <div class="search-header">
-                            <h2>Arama Sonuçları</h2>
-                            <div class="search-meta">"${query}" için ${results.length} sonuç bulundu</div>
-                        </div>
-                        <div class="articles-grid">
-                            ${results.slice(0, 12).map(result => {
-                                const article = this.data.find(a => a.id === result.id);
-                                if (!article) return '';
-                                
-                                return `
-                                    <a href="${result.url}" class="article-card ripple-container">
-                                        <div class="article-image-container">
-                                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
-                                            <div class="article-overlay">
-                                                <h2 class="article-title">${this.highlightText(article.baslik, query)}</h2>
-                                                <div class="article-meta">
-                                                    <span class="article-author" onclick="event.preventDefault(); event.stopPropagation(); app.goToAuthor('${this.getAuthorSlug(article.yazar)}')">${article.yazar}</span>
-                                                    <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                `;
-                            }).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            search(query) {
-                const results = [];
-                const queryLower = query.toLowerCase();
-                
-                this.searchIndex.forEach((categoryMap, category) => {
-                    categoryMap.forEach((items, term) => {
-                        if (term.includes(queryLower)) {
-                            results.push(...items);
-                        }
-                    });
-                });
-
-                const uniqueResults = results.filter((result, index, self) => 
-                    index === self.findIndex(r => r.id === result.id && r.type === result.type)
-                );
-
-                return uniqueResults.slice(0, 50);
-            }
-
-            highlightText(text, query) {
-                if (!query || query.length < 2) return text;
-                
-                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-                return text.replace(regex, '<span style="background: #ffff00; color: #000000; padding: 0.1em 0.2em; border-radius: 3px; font-weight: bold;">$1</span>');
-            }
-
             renderCategories() {
                 const content = document.getElementById('content');
                 const categories = this.getCategories();
@@ -2046,7 +1787,7 @@
                 content.innerHTML = `
                     <div class="categories-page">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()" class="ripple-container">
+                            <a href="#" onclick="showHome()">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -2064,7 +1805,7 @@
 
                         <div class="categories-grid">
                             ${categories.map(category => `
-                                <a href="#kategori-${encodeURIComponent(category.name)}" class="category-card ripple-container">
+                                <a href="#kategori-${encodeURIComponent(category.name)}" class="category-card ripple">
                                     <div class="category-name">${category.name}</div>
                                     <div class="category-count">${category.count} makale</div>
                                 </a>
@@ -2085,58 +1826,13 @@
                 return Object.entries(categoryCount).map(([name, count]) => ({ name, count }));
             }
 
-            renderCategoryArticles(category) {
-                const content = document.getElementById('content');
-                const categoryArticles = this.data?.filter(article => article.kategori === category) || [];
-                
-                content.innerHTML = `
-                    <div class="search-page">
-                        <div class="breadcrumb">
-                            <a href="#" onclick="showHome()" class="ripple-container">
-                                <svg class="icon" viewBox="0 0 24 24">
-                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                                </svg>
-                                Ana Sayfa
-                            </a>
-                            <span>›</span>
-                            <a href="#kategoriler" class="ripple-container">Kategoriler</a>
-                            <span>›</span>
-                            <span>${category}</span>
-                        </div>
-
-                        <div class="search-page-header">
-                            <h1 class="search-page-title">${category}</h1>
-                            <p style="color: var(--text-secondary);">${categoryArticles.length} makale bulundu</p>
-                        </div>
-
-                        <div class="articles-grid">
-                            ${categoryArticles.map((article, index) => `
-                                <a href="#makale-${article.id}" class="article-card ripple-container" style="animation-delay: ${index * 0.1}s;">
-                                    <div class="article-image-container">
-                                        <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
-                                        <div class="article-overlay">
-                                            <h2 class="article-title">${article.baslik}</h2>
-                                            <div class="article-meta">
-                                                <span class="article-author" onclick="event.preventDefault(); event.stopPropagation(); app.goToAuthor('${this.getAuthorSlug(article.yazar)}')">${article.yazar}</span>
-                                                <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
             renderAbout() {
                 const content = document.getElementById('content');
                 
                 content.innerHTML = `
                     <div class="about-page">
                         <div class="breadcrumb">
-                            <a href="#" onclick="showHome()" class="ripple-container">
+                            <a href="#" onclick="showHome()">
                                 <svg class="icon" viewBox="0 0 24 24">
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
@@ -2194,6 +1890,178 @@
                         </div>
                     </div>
                 `;
+            }
+
+            renderDestekle() {
+                const content = document.getElementById('content');
+                
+                content.innerHTML = `
+                    <div class="destekle-page">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <span>Destekle</span>
+                        </div>
+
+                        <div class="destekle-header">
+                            <h1 class="destekle-title">Projeyi Destekle</h1>
+                            <p class="destekle-description">
+                                <strong>Hakikatin Tek Kaynağına Davet</strong>
+                                <br><br>
+                                Biz, İslam dininin yegâne kaynağının Allah'ın kelamı olan Kur'an-ı Kerim olduğuna inanan bir topluluğuz. Amacımız, dini; hurafelerden, uydurma rivayetlerden ve mezhep temelli insan yorumlarından arındırmak, Allah'ın indirdiği saf ve evrensel mesaja geri dönmektir.
+                                <br><br>
+                                Kur'an merkezli bir bilinç inşa etmek için büyük bir çaba içindeyiz. Bu çaba, yalnızca bir inanç meselesi değil; aynı zamanda doğru bilgiye ulaşma, sorgulama ve hakikati yaşama mücadelesidir.
+                                <br><br>
+                                Bu doğrultuda:
+                                <br><br>
+                                Eğitim içerikleri hazırlıyor,<br>
+                                Kitaplar, makaleler ve videolar üretiyor,<br>
+                                Gençlerimize rehber olacak dijital projeler geliştiriyoruz.
+                                <br><br>
+                                Toplumda yaygın olan yanlış dini algıları Kur'an ışığında sorgulayan, düşünen, araştıran bireylerin çoğalması için var gücümüzle çalışıyoruz. Fakat bu mücadelede yalnız değiliz — sizin desteğinizle daha da güçlü olabiliriz.
+                                <br><br>
+                                Siz de Kur'an'a dayalı bir İslam anlayışının yayılmasına katkıda bulunarak bu hakikat yolculuğunun bir parçası olun.
+                            </p>
+
+                            <a href="https://www.patreon.com/sadecekuran/membership" target="_blank" class="donation-button">
+                                <div class="donation-button-content">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                    </svg>
+                                    Patreon'da Destekle
+                                </div>
+                            </a>
+                            <p class="destekle-description">
+                                <br><br>
+                                info@sadecekuran.com.tr
+                                <br><br>
+                                sdckuran@hotmail.com
+                            </p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderSearchPage() {
+                const content = document.getElementById('content');
+                
+                content.innerHTML = `
+                    <div class="search-page">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <span>Arama</span>
+                        </div>
+
+                        <div class="search-page-header">
+                            <h1 class="search-page-title">Makalelerde Arama</h1>
+                            <input type="text" class="search-page-input ripple" id="searchPageInput" placeholder="Makale, kategori veya yazar ara..." autofocus>
+                        </div>
+
+                        <div id="searchPageResults"></div>
+                    </div>
+                `;
+
+                const searchInput = document.getElementById('searchPageInput');
+                let searchTimeout;
+                
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        this.handleSearchPageSearch(e.target.value);
+                    }, 300);
+                });
+            }
+
+            handleSearchPageSearch(query) {
+                const resultsContainer = document.getElementById('searchPageResults');
+                
+                if (!query || query.length < 2) {
+                    resultsContainer.innerHTML = '';
+                    return;
+                }
+
+                const results = this.search(query);
+                
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="search-results">
+                            <div class="search-header">
+                                <h2>Sonuç Bulunamadı</h2>
+                                <div class="search-meta">"${query}" için sonuç bulunamadı</div>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                resultsContainer.innerHTML = `
+                    <div class="search-results">
+                        <div class="search-header">
+                            <h2>Arama Sonuçları</h2>
+                            <div class="search-meta">"${query}" için ${results.length} sonuç bulundu</div>
+                        </div>
+                        <div class="articles-grid">
+                            ${results.slice(0, 12).map(result => {
+                                const article = this.data.find(a => a.id === result.id);
+                                if (!article) return '';
+                                
+                                return `
+                                    <a href="${result.url}" class="article-card ripple">
+                                        <div class="article-image-container">
+                                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-image">
+                                            <div class="article-overlay">
+                                                <h2 class="article-title">${this.highlightText(article.baslik, query)}</h2>
+                                                <div class="article-meta">
+                                                    <span class="article-author" onclick="event.preventDefault(); event.stopPropagation(); app.goToAuthor('${this.getAuthorSlug(article.yazar)}')">${article.yazar}</span>
+                                                    <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            search(query) {
+                const results = [];
+                const queryLower = query.toLowerCase();
+                
+                this.searchIndex.forEach((categoryMap, category) => {
+                    categoryMap.forEach((items, term) => {
+                        if (term.includes(queryLower)) {
+                            results.push(...items);
+                        }
+                    });
+                });
+
+                const uniqueResults = results.filter((result, index, self) => 
+                    index === self.findIndex(r => r.id === result.id && r.type === result.type)
+                );
+
+                return uniqueResults.slice(0, 50);
+            }
+
+            highlightText(text, query) {
+                if (!query || query.length < 2) return text;
+                
+                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                return text.replace(regex, '<span style="background: #ffff00; color: #000000; padding: 0.1em 0.2em; border-radius: 3px; font-weight: bold;">$1</span>');
             }
 
             showSearchPage() {
