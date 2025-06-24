@@ -83,6 +83,18 @@
   "etiketler": ["kuran", "hadis", "sünnet", "icma", "kıyas", "islam"],
   "okuma_suresi": 15,
   "gorsel": "yeter.png"
+},
+{
+  "id": "",
+  "baslik": "Üyelik Planlarını Seçin",
+  "ozet": "Sadece Kuran platformunda farklı üyelik planlarıyla Kur'an merkezli bir bilinç yolculuğuna katılın. Sorgulayan, Akleden, Uyanan ve Arayan planlarıyla hakikate ulaşmak için destek olun.",
+  "icerik": "Üyelik Planlarını Seçin\n\nSorgulayan\n$5 / ay\nSorgulayan Müslüman, sadece gelenekle yetinmez; her bilgiyi Kuran süzgecinden geçirir. Çünkü iman, taklit değil tefekkürle güçlenir. Allah, düşünen ve araştıran kullarını över.\n\nAkleden\n$10 / ay\nAkleden Müslüman, vahyi körü körüne değil, anlayarak ve düşünerek okuyan kişidir. Allah, Kuran’ı akılla kavranması için indirmiştir. Çünkü hakikate ulaşmanın yolu, aklı kullanmaktan geçer.\n\nUyanan\n$15 / ay\nUyanan Müslüman, kör inançla değil, uyanışla hareket eder. Gerçeğe gözünü açar, geleneklerin değil Kuran’ın izinden gider. Çünkü Allah, uyananları uyarır; gaflette olanları değil.\n\nArayan\n$20 / ay\nArayan Müslüman, hakikatin peşinden yılmadan giden kişidir. O, kalıplarla yetinmez; Allah’ın gösterdiği yolu bizzat Kuran’dan arar. Çünkü arayana Kuran yeter. Allah, doğru yolu sadece gerçekten isteyenlere gösterir.",
+  "yazar": "",
+  "tarih": "2025-06-24",
+  "kategori": "Destek",
+  "etiketler": ["üyelik", "kuran", "sorgulayan", "akleden", "uyanan", "arayan"],
+  "okuma_suresi": 3,
+  "gorsel": ""
 }
   	
   ]
