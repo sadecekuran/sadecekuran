@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>MV Arama</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, select { margin: 5px; padding: 5px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #aaa; padding: 8px; text-align: left; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+  <h1>1980–Sonrası TBMM Milletvekilleri</h1>
+
+  <button id="indir">Veriyi İndir (JSON)</button><br><br>
+
+  <input type="text" id="aramaAd" placeholder="Ada göre ara">
+  <select id="aramaParti">
+    <option value="">Tüm Partiler</option>
+  </select>
+  <select id="aramaIl">
+    <option value="">Tüm İller</option>
+  </select>
+  <input type="number" id="aramaDonem" placeholder="Dönem numarası">
+
+  <button id="filtrele">Filtrele</button>
+
+  <table id="sonucTablo">
+    <thead>
+      <tr><th>Ad</th><th>Parti</th><th>İl</th><th>Dönem</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    let tumVeri = [];
+
+    async function veriYukle() {
+      // GitHub veya sunucuna yerleştirdiğin JSON dosyasının URL'si:
+      const url = "https://raw.githubusercontent.com/KULLANICI_ADIN/REPO_ADIN/main/milletvekilleri.json";
+      try {
+        const res = await fetch(url);
+        tumVeri = await res.json();
+        doldurFiltreler();
+        gosterFiltrelenmis(tumVeri);
+      } catch(e) {
+        alert("Veri yüklenemedi! URL doğru mu?: " + e);
+      }
+    }
+
+    function doldurFiltreler() {
+      const partis = Array.from(new Set(tumVeri.map(v => v.parti))).sort();
+      const iller = Array.from(new Set(tumVeri.map(v => v.il))).sort();
+
+      const sp = document.getElementById("aramaParti");
+      partis.forEach(p => {
+        const o = document.createElement("option");
+        o.value = p; o.textContent = p;
+        sp.appendChild(o);
+      });
+
+      const si = document.getElementById("aramaIl");
+      iller.forEach(i => {
+        const o = document.createElement("option");
+        o.value = i; o.textContent = i;
+        si.appendChild(o);
+      });
+    }
+
+    function gosterFiltrelenmis(list) {
+      const tbody = document.querySelector("#sonucTablo tbody");
+      tbody.innerHTML = "";
+      list.forEach(v => {
+        const r = document.createElement("tr");
+        ["ad","parti","il","donem"].forEach(k => {
+          const td = document.createElement("td");
+          td.textContent = v[k];
+          r.appendChild(td);
+        });
+        tbody.appendChild(r);
+      });
+    }
+
+    document.getElementById("filtrele").onclick = () => {
+      const ad = document.getElementById("aramaAd").value.trim().toLowerCase();
+      const parti = document.getElementById("aramaParti").value;
+      const il = document.getElementById("aramaIl").value;
+      const don = parseInt(document.getElementById("aramaDonem").value);
+
+      const sonuc = tumVeri.filter(v => {
+        if (ad && !v.ad.toLowerCase().includes(ad)) return false;
+        if (parti && v.parti !== parti) return false;
+        if (il && v.il !== il) return false;
+        if (!isNaN(don) && v.donem !== don) return false;
+        return true;
+      });
+      gosterFiltrelenmis(sonuc);
+    };
+
+    document.getElementById("indir").onclick = () => {
+      const blob = new Blob([JSON.stringify(tumVeri, null,2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "milletvekilleri.json";
+      a.click();
+    };
+
+    // Sayfa yüklendiğinde çalıştır:
+    window.onload = veriYukle;
+  </script>
+</body>
+</html>
