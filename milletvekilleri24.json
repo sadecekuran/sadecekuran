@@ -1,0 +1,3290 @@
+[
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6957,
+    "isim": "Murat BOZLAK",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6026,
+    "isim": "Ömer ÇELİK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 5540,
+    "isim": "Mehmet Necati ÇETİNKAYA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6758,
+    "isim": "Ali DEMİRÇALI",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6859,
+    "isim": "Turgay DEVELİ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6852,
+    "isim": "Mehmet Şükrü ERDİNÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6585,
+    "isim": "Fatoş GÜRKAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 5857,
+    "isim": "Ali HALAMAN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6349,
+    "isim": "Ali KÜÇÜKAYDIN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6782,
+    "isim": "Osman Faruk LOĞOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6931,
+    "isim": "Ümit ÖZGÜMÜŞ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6508,
+    "isim": "Necdet ÜNÜVAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6439,
+    "isim": "Muharrem VARLI",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ADANA",
+    "sicilNo": 6905,
+    "isim": "Seyfettin YILMAZ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ADIYAMAN",
+    "sicilNo": 6608,
+    "isim": "Ahmet AYDIN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADIYAMAN",
+    "sicilNo": 6565,
+    "isim": "Mehmet ERDOĞAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADIYAMAN",
+    "sicilNo": 6760,
+    "isim": "Salih FIRAT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADIYAMAN",
+    "sicilNo": 6660,
+    "isim": "Mehmet METİNER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ADIYAMAN",
+    "sicilNo": 6793,
+    "isim": "Muhammed Murtaza YETİŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AFYONKARAHİSAR",
+    "sicilNo": 5336,
+    "isim": "Sait AÇBA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AFYONKARAHİSAR",
+    "sicilNo": 6545,
+    "isim": "Veysel EROĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AFYONKARAHİSAR",
+    "sicilNo": 6712,
+    "isim": "Ahmet TOPTAŞ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "AFYONKARAHİSAR",
+    "sicilNo": 6898,
+    "isim": "Halil ÜRÜN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AFYONKARAHİSAR",
+    "sicilNo": 6828,
+    "isim": "Kemalettin YILMAZ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "AĞRI",
+    "sicilNo": 6954,
+    "isim": "Halil AKSOY",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "AĞRI",
+    "sicilNo": 6665,
+    "isim": "Ekrem ÇELEBİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AĞRI",
+    "sicilNo": 6575,
+    "isim": "Fatma SALMAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AĞRI",
+    "sicilNo": 6090,
+    "isim": "Mehmet Kerim YILDIZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AKSARAY",
+    "sicilNo": 5981,
+    "isim": "Ruhi AÇIKGÖZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AKSARAY",
+    "sicilNo": 5988,
+    "isim": "Ali Rıza ALABOYUN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AKSARAY",
+    "sicilNo": 6566,
+    "isim": "İlknur İNCEÖZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AMASYA",
+    "sicilNo": 6667,
+    "isim": "Mehmet Naci BOSTANCI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AMASYA",
+    "sicilNo": 6386,
+    "isim": "Avni ERDEMİR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AMASYA",
+    "sicilNo": 6880,
+    "isim": "Ramis TOPAL",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6689,
+    "isim": "Yalçın AKDOĞAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6814,
+    "isim": "Süleyman Sencer AYATA",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6720,
+    "isim": "Sinan Aydın AYGÜN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6063,
+    "isim": "Ali BABACAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 5948,
+    "isim": "Ayşe Gülsün BİLGEHAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6148,
+    "isim": "İzzet ÇETİN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 4445,
+    "isim": "Cemil ÇİÇEK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6095,
+    "isim": "Reha DENEMEÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6702,
+    "isim": "Mustafa ERDEM",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6302,
+    "isim": "Cevdet ERDÖL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6199,
+    "isim": "Bülent GEDİKLİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6692,
+    "isim": "Levent GÖK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6721,
+    "isim": "Gökhan GÜNAYDIN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6703,
+    "isim": "Ülker GÜZEL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 5644,
+    "isim": "Mehmet Emrehan HALICI",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 5930,
+    "isim": "Haluk İPEK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6704,
+    "isim": "Emrullah İŞLER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 5347,
+    "isim": "Ahmet İYİMAYA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 4634,
+    "isim": "Salih KAPUSUZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6801,
+    "isim": "Zelkif KAZDAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6717,
+    "isim": "Bülent KUŞOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6690,
+    "isim": "Aylin NAZLIAKA",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6525,
+    "isim": "Nazmi Haluk ÖZDALGA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6701,
+    "isim": "Tülay SELAMOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6697,
+    "isim": "Seyit SERTÇELİK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6810,
+    "isim": "Fatih ŞAHİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6696,
+    "isim": "Nurdan ŞANLI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6700,
+    "isim": "Emine Ülker TARHAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6727,
+    "isim": "Zühal TOPCU",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6375,
+    "isim": "Yıldırım Tuğrul TÜRKEŞ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ANKARA",
+    "sicilNo": 6699,
+    "isim": "Özcan YENİÇERİ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6688,
+    "isim": "Gürkut ACAR",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6552,
+    "isim": "Sadık BADAK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 3377,
+    "isim": "Deniz BAYKAL",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6678,
+    "isim": "Arif BULUT",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6235,
+    "isim": "Mevlüt ÇAVUŞOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 5691,
+    "isim": "Mehmet Vecdi GÖNÜL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6469,
+    "isim": "Mehmet GÜNAL",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6451,
+    "isim": "Yusuf Ziya İRBEÇ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6031,
+    "isim": "Osman KAPTAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6911,
+    "isim": "Gökcen ÖZDOĞAN ENÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6893,
+    "isim": "Hüseyin SAMANİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6919,
+    "isim": "Yıldıray SAPAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 4603,
+    "isim": "Tunca TOSKAY",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ANTALYA",
+    "sicilNo": 6949,
+    "isim": "Menderes M. Tevfik TÜREL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ARDAHAN",
+    "sicilNo": 6687,
+    "isim": "Orhan ATALAY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ARDAHAN",
+    "sicilNo": 6353,
+    "isim": "Ensar ÖĞÜT",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ARTVİN",
+    "sicilNo": 6909,
+    "isim": "Uğur BAYRAKTUTAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ARTVİN",
+    "sicilNo": 6847,
+    "isim": "İsrafil KIŞLA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AYDIN",
+    "sicilNo": 6723,
+    "isim": "Osman AYDIN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "AYDIN",
+    "sicilNo": 6839,
+    "isim": "Metin Lütfi BAYDAR",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "AYDIN",
+    "sicilNo": 6603,
+    "isim": "Mehmet ERDEM",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AYDIN",
+    "sicilNo": 6892,
+    "isim": "Ali Gültekin KILINÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AYDIN",
+    "sicilNo": 6164,
+    "isim": "Semiha ÖYÜŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "AYDIN",
+    "sicilNo": 6734,
+    "isim": "Bülent TEZCAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "AYDIN",
+    "sicilNo": 5776,
+    "isim": "Ali UZUNIRMAK",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "BALIKESİR",
+    "sicilNo": 6790,
+    "isim": "Ayşe Nedret AKOVA",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BALIKESİR",
+    "sicilNo": 6362,
+    "isim": "Ali AYDINLIOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BALIKESİR",
+    "sicilNo": 6953,
+    "isim": "Tülay BABUŞCU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BALIKESİR",
+    "sicilNo": 6446,
+    "isim": "Ahmet Duran BULUT",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "BALIKESİR",
+    "sicilNo": 6827,
+    "isim": "Haluk Ahmet GÜMÜŞ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BALIKESİR",
+    "sicilNo": 6762,
+    "isim": "Namık HAVUTÇA",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BALIKESİR",
+    "sicilNo": 4499,
+    "isim": "Mehmet Cemal ÖZTAYLAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BALIKESİR",
+    "sicilNo": 4255,
+    "isim": "Ahmet Edip UĞUR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BARTIN",
+    "sicilNo": 6541,
+    "isim": "Yılmaz TUNÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BARTIN",
+    "sicilNo": 6407,
+    "isim": "Muhammet Rıza YALÇINKAYA",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BATMAN",
+    "sicilNo": 6477,
+    "isim": "Ayla AKAT ATA",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "BATMAN",
+    "sicilNo": 6730,
+    "isim": "Ziver ÖZDEMİR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BATMAN",
+    "sicilNo": 6398,
+    "isim": "Mehmet ŞİMŞEK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BATMAN",
+    "sicilNo": 6489,
+    "isim": "Bengi YILDIZ",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "BAYBURT",
+    "sicilNo": 6874,
+    "isim": "Bünyamin ÖZBEK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BİLECİK",
+    "sicilNo": 5959,
+    "isim": "Fahrettin POYRAZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BİLECİK",
+    "sicilNo": 4505,
+    "isim": "Bahattin ŞEKER",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "BİNGÖL",
+    "sicilNo": 6972,
+    "isim": "İdris BALUKEN",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "BİNGÖL",
+    "sicilNo": 6724,
+    "isim": "Eşref TAŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BİNGÖL",
+    "sicilNo": 6577,
+    "isim": "Cevdet YILMAZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BİTLİS",
+    "sicilNo": 6757,
+    "isim": "Vedat DEMİRÖZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BİTLİS",
+    "sicilNo": 6266,
+    "isim": "Vahit KİLER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BİTLİS",
+    "sicilNo": 6956,
+    "isim": "Hüsamettin ZENDERLİOĞLU",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "BOLU",
+    "sicilNo": 6705,
+    "isim": "Ali ERCOŞKUN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BOLU",
+    "sicilNo": 6751,
+    "isim": "Fehmi KÜPÇÜ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BOLU",
+    "sicilNo": 6691,
+    "isim": "Tanju ÖZCAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BURDUR",
+    "sicilNo": 6112,
+    "isim": "Bayram ÖZÇELİK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURDUR",
+    "sicilNo": 6035,
+    "isim": "Ramazan Kerim ÖZKAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BURDUR",
+    "sicilNo": 6676,
+    "isim": "Hasan Hami YILDIRIM",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 5551,
+    "isim": "Bülent ARINÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6842,
+    "isim": "İsmail AYDIN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6444,
+    "isim": "İsmet BÜYÜKATAMAN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6619,
+    "isim": "Canan CANDEMİR ÇELİK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6843,
+    "isim": "Hakan ÇAVUŞOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6773,
+    "isim": "İlhan DEMİRÖZ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6831,
+    "isim": "Kemal EKİNCİ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6806,
+    "isim": "Aykan ERDEMİR",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6845,
+    "isim": "Tülin ERKAL KARA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6820,
+    "isim": "Sena KALELİ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6849,
+    "isim": "Önder MATLI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6431,
+    "isim": "Necati ÖZENSOY",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6844,
+    "isim": "Mustafa ÖZTÜRK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6840,
+    "isim": "İsmet SU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6841,
+    "isim": "Hüseyin ŞAHİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6824,
+    "isim": "Mustafa Kemal ŞERBETÇİOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 4522,
+    "isim": "Turhan TAYAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "BURSA",
+    "sicilNo": 6835,
+    "isim": "Bedrettin YILDIRIM",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ÇANAKKALE",
+    "sicilNo": 6254,
+    "isim": "Mehmet DANİŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ÇANAKKALE",
+    "sicilNo": 6902,
+    "isim": "İsmail KAŞDEMİR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ÇANAKKALE",
+    "sicilNo": 6832,
+    "isim": "Ali SARIBAŞ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ÇANAKKALE",
+    "sicilNo": 6753,
+    "isim": "Mustafa Serdar SOYDAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ÇANKIRI",
+    "sicilNo": 6653,
+    "isim": "Hüseyin FİLİZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ÇANKIRI",
+    "sicilNo": 6654,
+    "isim": "İdris ŞAHİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ÇORUM",
+    "sicilNo": 6387,
+    "isim": "Cahit BAĞCI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ÇORUM",
+    "sicilNo": 6803,
+    "isim": "Tufan KÖSE",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ÇORUM",
+    "sicilNo": 6708,
+    "isim": "Salim USLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ÇORUM",
+    "sicilNo": 6202,
+    "isim": "Murat YILDIRIM",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DENİZLİ",
+    "sicilNo": 6426,
+    "isim": "Emin Haluk AYHAN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "DENİZLİ",
+    "sicilNo": 6923,
+    "isim": "İlhan CİHANER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "DENİZLİ",
+    "sicilNo": 6797,
+    "isim": "Nurcan DALBUDAK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DENİZLİ",
+    "sicilNo": 3658,
+    "isim": "Adnan KESKİN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "DENİZLİ",
+    "sicilNo": 6795,
+    "isim": "Bilal UÇAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DENİZLİ",
+    "sicilNo": 6601,
+    "isim": "Mehmet YÜKSEL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DENİZLİ",
+    "sicilNo": 6783,
+    "isim": "Nihat ZEYBEKCİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6960,
+    "isim": "Nursel AYDOĞAN",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6549,
+    "isim": "Emine AYNA",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6123,
+    "isim": "Mehmet Mehdi EKER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6946,
+    "isim": "Mehmet Galip ENSARİOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6939,
+    "isim": "Oya ERONAT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6944,
+    "isim": "Mehmet Süleyman HAMZAOĞULLARI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6935,
+    "isim": "Cuma İÇTEN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6940,
+    "isim": "Mine LÖK BEYAZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 6959,
+    "isim": "Altan TAN",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "DİYARBAKIR",
+    "sicilNo": 4537,
+    "isim": "Leyla ZANA",
+    "parti": "BAĞIMSIZ"
+  },
+  {
+    "sehir": "DÜZCE",
+    "sicilNo": 6878,
+    "isim": "Fevai ARSLAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DÜZCE",
+    "sicilNo": 6813,
+    "isim": "Osman ÇAKIR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "DÜZCE",
+    "sicilNo": 6815,
+    "isim": "İbrahim KORKMAZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "EDİRNE",
+    "sicilNo": 6755,
+    "isim": "Kemal DEĞİRMENDERELİ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "EDİRNE",
+    "sicilNo": 6743,
+    "isim": "Recep GÜRKAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "EDİRNE",
+    "sicilNo": 6491,
+    "isim": "Mehmet MÜEZZİNOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ELAZIĞ",
+    "sicilNo": 6729,
+    "isim": "Şuay ALPAY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ELAZIĞ",
+    "sicilNo": 6761,
+    "isim": "Sermin BALIK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ELAZIĞ",
+    "sicilNo": 6097,
+    "isim": "Zülfü DEMİRBAĞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ELAZIĞ",
+    "sicilNo": 6821,
+    "isim": "Enver ERDEM",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ELAZIĞ",
+    "sicilNo": 6453,
+    "isim": "Faruk SEPTİOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ERZİNCAN",
+    "sicilNo": 6659,
+    "isim": "Muharrem IŞIK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ERZİNCAN",
+    "sicilNo": 5821,
+    "isim": "Sebahattin KARAKELLE",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ERZURUM",
+    "sicilNo": 6331,
+    "isim": "Recep AKDAĞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ERZURUM",
+    "sicilNo": 6576,
+    "isim": "Muhyettin AKSAK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ERZURUM",
+    "sicilNo": 6496,
+    "isim": "Fazilet DAĞCI ÇIĞLIK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ERZURUM",
+    "sicilNo": 4548,
+    "isim": "Oktay ÖZTÜRK",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ERZURUM",
+    "sicilNo": 6728,
+    "isim": "Cengiz YAVİLİOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ERZURUM",
+    "sicilNo": 6750,
+    "isim": "Adnan YILMAZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ESKİŞEHİR",
+    "sicilNo": 6804,
+    "isim": "Nabi AVCI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ESKİŞEHİR",
+    "sicilNo": 6808,
+    "isim": "Bedii Süheyl BATUM",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ESKİŞEHİR",
+    "sicilNo": 6818,
+    "isim": "Ülker CAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ESKİŞEHİR",
+    "sicilNo": 6722,
+    "isim": "Ruhsar DEMİREL",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ESKİŞEHİR",
+    "sicilNo": 6817,
+    "isim": "Salih KOCA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ESKİŞEHİR",
+    "sicilNo": 6713,
+    "isim": "Kazım KURT",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6766,
+    "isim": "Derya BAKBAK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 5800,
+    "isim": "Hüseyin ÇELİK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6506,
+    "isim": "Mehmet ERDOĞAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6763,
+    "isim": "Abdullah Nejat KOÇER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6498,
+    "isim": "İbrahim Halil MAZICIOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6264,
+    "isim": "Mehmet SARI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6679,
+    "isim": "Ali SERİNDAĞ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6770,
+    "isim": "Ali ŞAHİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6159,
+    "isim": "Fatma ŞAHİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6764,
+    "isim": "Mehmet ŞEKER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6776,
+    "isim": "Şamil TAYYAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GAZİANTEP",
+    "sicilNo": 6726,
+    "isim": "Edip Semih YALÇIN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "GİRESUN",
+    "sicilNo": 5943,
+    "isim": "Nurettin CANİKLİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GİRESUN",
+    "sicilNo": 6735,
+    "isim": "Mehmet GELDİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GİRESUN",
+    "sicilNo": 6829,
+    "isim": "Selahattin KARAAHMETOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "GİRESUN",
+    "sicilNo": 5946,
+    "isim": "Adem TATLI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GÜMÜŞHANE",
+    "sicilNo": 6593,
+    "isim": "Kemalettin AYDIN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "GÜMÜŞHANE",
+    "sicilNo": 6869,
+    "isim": "Feramuz ÜSTÜN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "HAKKARİ",
+    "sicilNo": 4561,
+    "isim": "Esat CANAN",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "HAKKARİ",
+    "sicilNo": 6482,
+    "isim": "Selahattin DEMİRTAŞ",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "HAKKARİ",
+    "sicilNo": 6969,
+    "isim": "Adil ZOZANİ",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6784,
+    "isim": "Hasan AKGÖL",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6673,
+    "isim": "Adnan Şefik ÇİRKİN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6926,
+    "isim": "Mevlüt DUDU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6669,
+    "isim": "Mehmet Ali EDİBOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6013,
+    "isim": "Sadullah ERGİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6925,
+    "isim": "Refik ERYILMAZ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6604,
+    "isim": "Orhan KARASAYAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6731,
+    "isim": "Mehmet ÖNTÜRK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6736,
+    "isim": "Hacı Bayram TÜRKOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "HATAY",
+    "sicilNo": 6932,
+    "isim": "Adem YEŞİLDAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "IĞDIR",
+    "sicilNo": 6475,
+    "isim": "Pervin BULDAN",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "IĞDIR",
+    "sicilNo": 6772,
+    "isim": "Sinan OĞAN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ISPARTA",
+    "sicilNo": 6378,
+    "isim": "Süreyya Sadi BİLGİÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ISPARTA",
+    "sicilNo": 6427,
+    "isim": "Süleyman Nevzat KORKMAZ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "ISPARTA",
+    "sicilNo": 6851,
+    "isim": "Ali Haydar ÖNER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ISPARTA",
+    "sicilNo": 6089,
+    "isim": "Recep ÖZEL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 5687,
+    "isim": "Celal ADAN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6942,
+    "isim": "Sabahat AKKİRAY",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 4279,
+    "isim": "Abdülkadir AKSU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 5460,
+    "isim": "Meral AKŞENER",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6951,
+    "isim": "Engin ALAN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6228,
+    "isim": "Ferit Mevlüt ASLANOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6168,
+    "isim": "Mustafa ATAŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 5709,
+    "isim": "Aydın Ağan AYAYDIN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6025,
+    "isim": "Egemen BAĞIŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6628,
+    "isim": "Ayşe Nur BAHÇEKAPILI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6848,
+    "isim": "Osman Aşkın BAK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6819,
+    "isim": "İhsan BARUTÇU",
+    "parti": "BAĞIMSIZ"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6209,
+    "isim": "Nimet BAŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 4362,
+    "isim": "Murat BAŞESGİOĞLU",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6896,
+    "isim": "Osman BOYRAZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6871,
+    "isim": "Volkan BOZKIR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6785,
+    "isim": "Hüseyin BÜRGE",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6742,
+    "isim": "Ercan CENGİZ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6767,
+    "isim": "Süleyman ÇELEBİ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6899,
+    "isim": "Muhammed ÇETİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6897,
+    "isim": "Ahmet Berat ÇONKAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6759,
+    "isim": "Türkan DAĞOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6947,
+    "isim": "Gülay DALYAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6921,
+    "isim": "Ayşe Eser DANIŞOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6624,
+    "isim": "Alev DEDEGİL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6812,
+    "isim": "Celal DİNÇER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6610,
+    "isim": "Ömer DİNÇER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6383,
+    "isim": "Mehmet DOMAÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 4840,
+    "isim": "Osman Oktay EKŞİ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 5471,
+    "isim": "Ekrem ERDEM",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6371,
+    "isim": "Recep Tayyip ERDOĞAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6748,
+    "isim": "Aykut ERDOĞDU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6174,
+    "isim": "Gürsoy EROL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6936,
+    "isim": "Ahmet Haldun ERTÜRK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6756,
+    "isim": "Haluk EYİDOĞAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6408,
+    "isim": "İdris GÜLLÜCE",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6069,
+    "isim": "Mehmet Akif HAMZAÇEBİ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6336,
+    "isim": "Halide İNCEKARA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6167,
+    "isim": "Ünal KACIR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6915,
+    "isim": "Harun KARACA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6495,
+    "isim": "Atila KAYA",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6883,
+    "isim": "Erol KAYA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6910,
+    "isim": "Tülay KAYNARCA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 5982,
+    "isim": "Kemal KILIÇDAROĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6379,
+    "isim": "Feyzullah KIYIKLIK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6858,
+    "isim": "Osman Taney KORUTÜRK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6799,
+    "isim": "Mehmet Doğan KUBAT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6274,
+    "isim": "Burhan KUZU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6885,
+    "isim": "Sedef KÜÇÜK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6777,
+    "isim": "Metin KÜLÜNK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6870,
+    "isim": "Muhammet Bilal MACİT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6775,
+    "isim": "Mehmet MUŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6918,
+    "isim": "Nureddin NEBATİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6864,
+    "isim": "Melda ONUR",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6800,
+    "isim": "Umut ORAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6929,
+    "isim": "Kadir Gökmen ÖĞÜT",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6903,
+    "isim": "Ahmet Baha ÖĞÜTKEN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6963,
+    "isim": "Sırrı Süreyya ÖNDER",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6744,
+    "isim": "Ali ÖZGÜNDÜZ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6916,
+    "isim": "İhsan ÖZKES",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6920,
+    "isim": "Şafak PAVEY",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6854,
+    "isim": "İsmail SAFİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6930,
+    "isim": "Oktay SARAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6895,
+    "isim": "Müslim SARI",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6866,
+    "isim": "Mihrimah Belma SATIR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6876,
+    "isim": "Sevim SAVAŞER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6613,
+    "isim": "Fatma Nur SERTER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6906,
+    "isim": "Mustafa ŞENTOP",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6912,
+    "isim": "Hakan ŞÜKÜR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6204,
+    "isim": "Bihlun TAMAYLIGİL",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6765,
+    "isim": "Mahmut TANAL",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6908,
+    "isim": "Mustafa Sezgin TANRIKULU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6836,
+    "isim": "Gürsel TEKİN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6922,
+    "isim": "Binnaz TOPRAK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 5486,
+    "isim": "Erdoğan TOPRAK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6413,
+    "isim": "Durmuşali TORLAK",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6877,
+    "isim": "Faik TUNAY",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6548,
+    "isim": "Sebahat TUNCEL",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6771,
+    "isim": "Bülent TURAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6950,
+    "isim": "Ahmet Kutalmış TÜRKEŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6962,
+    "isim": "Abdullah Levent TÜZEL",
+    "parti": "BAĞIMSIZ"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6952,
+    "isim": "İsmet UÇMA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6823,
+    "isim": "Şirin ÜNAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 5971,
+    "isim": "Enver YILMAZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İSTANBUL",
+    "sicilNo": 6505,
+    "isim": "İbrahim YİĞİT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6856,
+    "isim": "Erdal AKSÜNGER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6865,
+    "isim": "Ali AŞLIK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6794,
+    "isim": "Birgül AYMAN GÜLER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6945,
+    "isim": "Mustafa Ali BALBAY",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6838,
+    "isim": "Musa ÇAM",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6779,
+    "isim": "Aytun ÇIRAY",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6875,
+    "isim": "Hamza DAĞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6934,
+    "isim": "İlknur DENİZLİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 3782,
+    "isim": "Ertuğrul GÜNAY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6781,
+    "isim": "Hülya GÜVEN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6752,
+    "isim": "İlhan İŞBİLEN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 4287,
+    "isim": "Erdal KALKAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6786,
+    "isim": "Mustafa MOROĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6564,
+    "isim": "Şükran Güldal MUMCU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6121,
+    "isim": "Oğuz OYAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6891,
+    "isim": "Rıfat SAİT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6523,
+    "isim": "Mehmet Ali SUSAM",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6860,
+    "isim": "Aydın ŞENGÜL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 5683,
+    "isim": "Ahmet Kenan TANRIKULU",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6286,
+    "isim": "Mehmet Sayım TEKELİOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6853,
+    "isim": "Rahmi Aşkın TÜRELİ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6802,
+    "isim": "Rıza Mahmut TÜRMEN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6872,
+    "isim": "Nesrin ULEMA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 5763,
+    "isim": "Oktay VURAL",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6239,
+    "isim": "Binali YILDIRIM",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "İZMİR",
+    "sicilNo": 6809,
+    "isim": "Alaattin YÜKSEL",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KAHRAMANMARAŞ",
+    "sicilNo": 6769,
+    "isim": "Sevde BAYAZIT KAÇAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAHRAMANMARAŞ",
+    "sicilNo": 6739,
+    "isim": "Mesut DEDEOĞLU",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "KAHRAMANMARAŞ",
+    "sicilNo": 6787,
+    "isim": "Sıtkı GÜVENÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAHRAMANMARAŞ",
+    "sicilNo": 6515,
+    "isim": "Durdu ÖZBOLAT",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KAHRAMANMARAŞ",
+    "sicilNo": 6002,
+    "isim": "Nevzat PAKDİL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAHRAMANMARAŞ",
+    "sicilNo": 6754,
+    "isim": "Yıldırım Mehmet RAMAZANOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAHRAMANMARAŞ",
+    "sicilNo": 5506,
+    "isim": "Mehmet SAĞLAM",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAHRAMANMARAŞ",
+    "sicilNo": 6862,
+    "isim": "Mahir ÜNAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KARABÜK",
+    "sicilNo": 6661,
+    "isim": "Osman KAHVECİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KARABÜK",
+    "sicilNo": 5482,
+    "isim": "Mehmet Ali ŞAHİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KARAMAN",
+    "sicilNo": 6306,
+    "isim": "Mevlüt AKGÜN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KARAMAN",
+    "sicilNo": 6440,
+    "isim": "Lütfi ELVAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KARS",
+    "sicilNo": 6698,
+    "isim": "Ahmet ARSLAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KARS",
+    "sicilNo": 6966,
+    "isim": "Mülkiye BİRTANE",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "KARS",
+    "sicilNo": 6693,
+    "isim": "Yunus KILIÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KASTAMONU",
+    "sicilNo": 6749,
+    "isim": "Emin ÇINAR",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "KASTAMONU",
+    "sicilNo": 6943,
+    "isim": "Mustafa Gökhan GÜLŞEN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KASTAMONU",
+    "sicilNo": 6337,
+    "isim": "Hakkı KÖYLÜ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 6318,
+    "isim": "Mustafa ELİTAŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 6900,
+    "isim": "Pelin GÜNDEŞ BAKIR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 6746,
+    "isim": "Yusuf HALAÇOĞLU",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 6433,
+    "isim": "Yaşar KARAYEL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 6509,
+    "isim": "Mehmet Şevki KULKULOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 6529,
+    "isim": "Ahmet ÖKSÜZKAYA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 6948,
+    "isim": "İsmail TAMER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 5686,
+    "isim": "Sadık YAKUT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KAYSERİ",
+    "sicilNo": 6317,
+    "isim": "Taner YILDIZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KIRIKKALE",
+    "sicilNo": 5932,
+    "isim": "Beşir ATALAY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KIRIKKALE",
+    "sicilNo": 6133,
+    "isim": "Ramazan CAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KIRIKKALE",
+    "sicilNo": 6716,
+    "isim": "Oğuz Kağan KÖKSAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KIRKLARELİ",
+    "sicilNo": 6500,
+    "isim": "Turgut DİBEK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KIRKLARELİ",
+    "sicilNo": 6917,
+    "isim": "Şenol GÜRŞAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KIRKLARELİ",
+    "sicilNo": 6079,
+    "isim": "Mehmet Siyam KESİMOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KIRŞEHİR",
+    "sicilNo": 6816,
+    "isim": "Muzaffer ASLAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KIRŞEHİR",
+    "sicilNo": 6550,
+    "isim": "Abdullah ÇALIŞKAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KİLİS",
+    "sicilNo": 6656,
+    "isim": "Ahmet Salih DAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KİLİS",
+    "sicilNo": 6657,
+    "isim": "Fuat KARAKUŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6680,
+    "isim": "Haydar AKAR",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6937,
+    "isim": "Zeki AYGÜN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6321,
+    "isim": "Muzaffer BAŞTOPÇU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6327,
+    "isim": "Nihat ERGÜN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6535,
+    "isim": "Azize Sibel GÖNÜL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6684,
+    "isim": "Hurşit GÜNEŞ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6534,
+    "isim": "Fikri IŞIK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6683,
+    "isim": "Mehmet Hilal KAPLAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6938,
+    "isim": "Mehmet Ali OKUR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6941,
+    "isim": "İlyas ŞEKER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KOCAELİ",
+    "sicilNo": 6664,
+    "isim": "Lütfü TÜRKKAN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6672,
+    "isim": "Mustafa AKIŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 5668,
+    "isim": "Faruk BAL",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6868,
+    "isim": "Mustafa BALOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6648,
+    "isim": "Ahmet DAVUTOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6423,
+    "isim": "Mustafa KABAKCI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6466,
+    "isim": "Mustafa KALAYCI",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 5938,
+    "isim": "Atilla KART",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6281,
+    "isim": "Kerim ÖZKUL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6718,
+    "isim": "Gülay SAMANCI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6276,
+    "isim": "Harun TÜFEKCİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6420,
+    "isim": "Ayşe TÜRKMENOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6677,
+    "isim": "Hüseyin ÜZÜLMEZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6670,
+    "isim": "İlhan YERLİKAYA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KONYA",
+    "sicilNo": 6725,
+    "isim": "Cem ZORLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KÜTAHYA",
+    "sicilNo": 5979,
+    "isim": "Soner AKSOY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KÜTAHYA",
+    "sicilNo": 6741,
+    "isim": "İdris BAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KÜTAHYA",
+    "sicilNo": 6437,
+    "isim": "Alim IŞIK",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "KÜTAHYA",
+    "sicilNo": 6658,
+    "isim": "Vural KAVUNCU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "KÜTAHYA",
+    "sicilNo": 6171,
+    "isim": "Hasan Fehmi KİNAY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MALATYA",
+    "sicilNo": 6857,
+    "isim": "Veli AĞBABA",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MALATYA",
+    "sicilNo": 6685,
+    "isim": "Hüseyin Cemal AKIN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MALATYA",
+    "sicilNo": 6615,
+    "isim": "Öznur ÇALIK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MALATYA",
+    "sicilNo": 6518,
+    "isim": "Mahmut Mücahit FINDIKLI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MALATYA",
+    "sicilNo": 6429,
+    "isim": "Ömer Faruk ÖZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MALATYA",
+    "sicilNo": 6924,
+    "isim": "Mustafa ŞAHİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6462,
+    "isim": "Erkan AKÇAY",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6913,
+    "isim": "Uğur AYDEMİR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6522,
+    "isim": "Recai BERBER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 3764,
+    "isim": "Sümer ORAL",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6324,
+    "isim": "Hasan ÖREN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6778,
+    "isim": "Sakine ÖZ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6907,
+    "isim": "Selçuk ÖZDAĞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6928,
+    "isim": "Özgür ÖZEL",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6179,
+    "isim": "Hüseyin TANRIVERDİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MANİSA",
+    "sicilNo": 6863,
+    "isim": "Muzaffer YURTTAŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MARDİN",
+    "sicilNo": 6732,
+    "isim": "Abdurrahim AKDAĞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MARDİN",
+    "sicilNo": 6633,
+    "isim": "Gönül BEKİN ŞAHKULUBEY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MARDİN",
+    "sicilNo": 6965,
+    "isim": "Erol DORA",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "MARDİN",
+    "sicilNo": 6737,
+    "isim": "Muammer GÜLER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MARDİN",
+    "sicilNo": 3536,
+    "isim": "Ahmet TÜRK",
+    "parti": "BAĞIMSIZ"
+  },
+  {
+    "sehir": "MARDİN",
+    "sicilNo": 6964,
+    "isim": "Gülser YILDIRIM",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6927,
+    "isim": "Aytuğ ATICI",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6719,
+    "isim": "Nebi BOZKURT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6531,
+    "isim": "Mehmet Zafer ÇAĞLAYAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6641,
+    "isim": "İsa GÖK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6955,
+    "isim": "Ertuğrul KÜRKCÜ",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6715,
+    "isim": "Çiğdem Münevver ÖKTEN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6811,
+    "isim": "Ali ÖZ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6563,
+    "isim": "Ali Rıza ÖZTÜRK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6557,
+    "isim": "Vahap SEÇER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 5782,
+    "isim": "Mehmet ŞANDIR",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "MERSİN",
+    "sicilNo": 6714,
+    "isim": "Ahmet Tevfik UZUN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MUĞLA",
+    "sicilNo": 6830,
+    "isim": "Ömer Süha ALDAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MUĞLA",
+    "sicilNo": 6833,
+    "isim": "Ali BOĞA",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MUĞLA",
+    "sicilNo": 6791,
+    "isim": "Tolga ÇANDAR",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MUĞLA",
+    "sicilNo": 6914,
+    "isim": "Nurettin DEMİR",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "MUĞLA",
+    "sicilNo": 6881,
+    "isim": "Mehmet ERDOĞAN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "MUĞLA",
+    "sicilNo": 6422,
+    "isim": "Yüksel ÖZDEN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MUŞ",
+    "sicilNo": 6890,
+    "isim": "Muzaffer ÇAKAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MUŞ",
+    "sicilNo": 6961,
+    "isim": "Demir ÇELİK",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "MUŞ",
+    "sicilNo": 6733,
+    "isim": "Faruk IŞIK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "MUŞ",
+    "sicilNo": 4673,
+    "isim": "Sırrı SAKİK",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "NEVŞEHİR",
+    "sicilNo": 6517,
+    "isim": "Ahmet Erdal FERALAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "NEVŞEHİR",
+    "sicilNo": 6904,
+    "isim": "Ebu Bekir GİZLİGİDER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "NEVŞEHİR",
+    "sicilNo": 6882,
+    "isim": "Murat GÖKTÜRK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "NİĞDE",
+    "sicilNo": 6682,
+    "isim": "Alpaslan KAVAKLIOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "NİĞDE",
+    "sicilNo": 6706,
+    "isim": "Ömer SELVİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "NİĞDE",
+    "sicilNo": 6711,
+    "isim": "Doğan ŞAFAK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ORDU",
+    "sicilNo": 6578,
+    "isim": "Mustafa HAMARAT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ORDU",
+    "sicilNo": 6312,
+    "isim": "İdris Naim ŞAHİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ORDU",
+    "sicilNo": 6879,
+    "isim": "İhsan ŞENER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ORDU",
+    "sicilNo": 6888,
+    "isim": "Fatih Han ÜNAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ORDU",
+    "sicilNo": 6798,
+    "isim": "İdris YILDIZ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "OSMANİYE",
+    "sicilNo": 5801,
+    "isim": "Devlet BAHÇELİ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "OSMANİYE",
+    "sicilNo": 6339,
+    "isim": "Durdu Mehmet KASTAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "OSMANİYE",
+    "sicilNo": 6740,
+    "isim": "Suat ÖNAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "OSMANİYE",
+    "sicilNo": 6694,
+    "isim": "Hasan Hüseyin TÜRKOĞLU",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "RİZE",
+    "sicilNo": 6260,
+    "isim": "Nusret BAYRAKTAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "RİZE",
+    "sicilNo": 6889,
+    "isim": "Hasan KARAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "RİZE",
+    "sicilNo": 5996,
+    "isim": "Hayati YAZICI",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAKARYA",
+    "sicilNo": 6348,
+    "isim": "Hasan Ali ÇELİK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAKARYA",
+    "sicilNo": 5997,
+    "isim": "Şaban DİŞLİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAKARYA",
+    "sicilNo": 6861,
+    "isim": "Ayşenur İSLAM",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAKARYA",
+    "sicilNo": 6438,
+    "isim": "Münir KUTLUATA",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "SAKARYA",
+    "sicilNo": 6789,
+    "isim": "Engin ÖZKOÇ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "SAKARYA",
+    "sicilNo": 6347,
+    "isim": "Ayhan Sefer ÜSTÜN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAKARYA",
+    "sicilNo": 6822,
+    "isim": "Ali İhsan YAVUZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6675,
+    "isim": "Tülay BAKIR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6269,
+    "isim": "Cemal Yılmaz DEMİR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6270,
+    "isim": "Mustafa DEMİR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6834,
+    "isim": "Ahmet İhsan KALKAVAN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6662,
+    "isim": "Akif Çağatay KILIÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6153,
+    "isim": "Suat KILIÇ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6081,
+    "isim": "Ahmet Haluk KOÇ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6850,
+    "isim": "Cemalettin ŞİMŞEK",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "SAMSUN",
+    "sicilNo": 6008,
+    "isim": "Ahmet YENİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SİİRT",
+    "sicilNo": 6010,
+    "isim": "Afif DEMİRKIRAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SİİRT",
+    "sicilNo": 6479,
+    "isim": "Gültan KIŞANAK",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "SİİRT",
+    "sicilNo": 6901,
+    "isim": "Osman ÖREN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SİNOP",
+    "sicilNo": 6030,
+    "isim": "Engin ALTAY",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "SİNOP",
+    "sicilNo": 6745,
+    "isim": "Mehmet ERSOY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SİVAS",
+    "sicilNo": 6887,
+    "isim": "Hilmi BİLGİN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SİVAS",
+    "sicilNo": 6620,
+    "isim": "Mesude Nursuna MEMECAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SİVAS",
+    "sicilNo": 6405,
+    "isim": "Malik Ecder ÖZDEMİR",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "SİVAS",
+    "sicilNo": 6886,
+    "isim": "Ali TURAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "SİVAS",
+    "sicilNo": 6374,
+    "isim": "İsmet YILMAZ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 5754,
+    "isim": "Yahya AKMAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6695,
+    "isim": "Mehmet AKYÜREK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6968,
+    "isim": "İbrahim AYHAN",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6474,
+    "isim": "İbrahim BİNİCİ",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 5905,
+    "isim": "Faruk ÇELİK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 4698,
+    "isim": "Seyit EYYÜPOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6663,
+    "isim": "Abdulkerim GÖK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6671,
+    "isim": "Mehmet Kasım GÜLPINAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6707,
+    "isim": "Mahmut KAÇAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6488,
+    "isim": "Abdulkadir Emin ÖNEN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6674,
+    "isim": "Halil ÖZCAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞANLIURFA",
+    "sicilNo": 6104,
+    "isim": "Zeynep Armağan USLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞIRNAK",
+    "sicilNo": 6681,
+    "isim": "Mehmet Emin DİNDAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ŞIRNAK",
+    "sicilNo": 6970,
+    "isim": "Selma IRMAK",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "ŞIRNAK",
+    "sicilNo": 6476,
+    "isim": "Hasip KAPLAN",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "ŞIRNAK",
+    "sicilNo": 6971,
+    "isim": "Faysal SARIYILDIZ",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "TEKİRDAĞ",
+    "sicilNo": 5954,
+    "isim": "Tevfik Ziyaeddin AKBULUT",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TEKİRDAĞ",
+    "sicilNo": 6655,
+    "isim": "Bülent BELEN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "TEKİRDAĞ",
+    "sicilNo": 6686,
+    "isim": "Emre KÖPRÜLÜ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "TEKİRDAĞ",
+    "sicilNo": 6402,
+    "isim": "Faik ÖZTRAK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "TEKİRDAĞ",
+    "sicilNo": 6884,
+    "isim": "Özlem YEMİŞÇİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TEKİRDAĞ",
+    "sicilNo": 6837,
+    "isim": "Candan YÜCEER",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "TOKAT",
+    "sicilNo": 6290,
+    "isim": "Zeyid ASLAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TOKAT",
+    "sicilNo": 5973,
+    "isim": "Şükrü AYALAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TOKAT",
+    "sicilNo": 5676,
+    "isim": "Reşat DOĞRU",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "TOKAT",
+    "sicilNo": 6780,
+    "isim": "Orhan DÜZGÜN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "TOKAT",
+    "sicilNo": 6616,
+    "isim": "Dilek YÜKSEL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TRABZON",
+    "sicilNo": 4712,
+    "isim": "Koray AYDIN",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "TRABZON",
+    "sicilNo": 6933,
+    "isim": "Erdoğan BAYRAKTAR",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TRABZON",
+    "sicilNo": 6846,
+    "isim": "Aydın BIYIKLIOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TRABZON",
+    "sicilNo": 6825,
+    "isim": "Mehmet Volkan CANALİOĞLU",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "TRABZON",
+    "sicilNo": 6294,
+    "isim": "Faruk Nafız ÖZAK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TRABZON",
+    "sicilNo": 6555,
+    "isim": "Safiye SEYMENOĞLU",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "TUNCELİ",
+    "sicilNo": 6826,
+    "isim": "Hüseyin AYGÜN",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "TUNCELİ",
+    "sicilNo": 4440,
+    "isim": "Kamer GENÇ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "UŞAK",
+    "sicilNo": 6792,
+    "isim": "Dilek AKAGÜN YILMAZ",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "UŞAK",
+    "sicilNo": 6788,
+    "isim": "Mehmet ALTAY",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "UŞAK",
+    "sicilNo": 6768,
+    "isim": "İsmail GÜNEŞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "VAN",
+    "sicilNo": 6958,
+    "isim": "Kemal AKTAŞ",
+    "parti": "BAĞIMSIZ"
+  },
+  {
+    "sehir": "VAN",
+    "sicilNo": 6807,
+    "isim": "Mustafa BİLİCİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "VAN",
+    "sicilNo": 6805,
+    "isim": "Fatih ÇİFTCİ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "VAN",
+    "sicilNo": 6967,
+    "isim": "Nazmi GÜR",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "VAN",
+    "sicilNo": 6394,
+    "isim": "Burhan KAYATÜRK",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "VAN",
+    "sicilNo": 6572,
+    "isim": "Gülşen ORHAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "VAN",
+    "sicilNo": 6478,
+    "isim": "Aysel TUĞLUK",
+    "parti": "BAĞIMSIZ"
+  },
+  {
+    "sehir": "VAN",
+    "sicilNo": 6484,
+    "isim": "Özdal ÜÇER",
+    "parti": "BDP"
+  },
+  {
+    "sehir": "YALOVA",
+    "sicilNo": 6747,
+    "isim": "Temel COŞKUN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "YALOVA",
+    "sicilNo": 6367,
+    "isim": "Muharrem İNCE",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "YOZGAT",
+    "sicilNo": 6709,
+    "isim": "Yusuf BAŞER",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "YOZGAT",
+    "sicilNo": 6238,
+    "isim": "Bekir BOZDAĞ",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "YOZGAT",
+    "sicilNo": 6855,
+    "isim": "Sadir DURMAZ",
+    "parti": "MHP"
+  },
+  {
+    "sehir": "YOZGAT",
+    "sicilNo": 6710,
+    "isim": "Ertuğrul SOYSAL",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ZONGULDAK",
+    "sicilNo": 6796,
+    "isim": "Ercan CANDAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ZONGULDAK",
+    "sicilNo": 6894,
+    "isim": "Mehmet HABERAL",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ZONGULDAK",
+    "sicilNo": 6512,
+    "isim": "Ali İhsan KÖKTÜRK",
+    "parti": "CHP"
+  },
+  {
+    "sehir": "ZONGULDAK",
+    "sicilNo": 3822,
+    "isim": "Köksal TOPTAN",
+    "parti": "AK Parti"
+  },
+  {
+    "sehir": "ZONGULDAK",
+    "sicilNo": 6738,
+    "isim": "Özcan ULUPINAR",
+    "parti": "AK Parti"
+  }
+]
