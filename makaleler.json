@@ -95,7 +95,18 @@
       "etiketler": ["üyelik", "kuran", "sorgulayan", "akleden", "uyanan", "arayan"],
       "okuma_suresi": 3,
       "gorsel": ""
+    },
+    {
+      "id": 3,
+      "baslik": "CSS Grid ile Modern Layout Tasarımı",
+      "ozet": "CSS Grid sisteminin gücü ve modern web sayfalarında layout oluşturmanın yeni yolları.",
+      "icerik": "CSS Grid, web tasarımında devrim yaratan bir layout sistemidir. Flexbox'tan farklı olarak, iki boyutlu layout'lar oluşturmamıza olanak tanır.\n\n## Grid Container Oluşturma\n\nBir elementi grid container yapmak için:\n\n```css\n.container {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-template-rows: auto;\n  gap: 20px;\n}\n```\n\n## Grid Areas\n\nGrid areas ile semantic layout'lar oluşturabiliriz:\n\n```css\n.layout {\n  display: grid;\n  grid-template-areas:\n    'header header header'\n    'sidebar main main'\n    'footer footer footer';\n}\n\n.header { grid-area: header; }\n.sidebar { grid-area: sidebar; }\n.main { grid-area: main; }\n.footer { grid-area: footer; }\n```\n\n## Responsive Grid\n\nCSS Grid ile responsive tasarım:\n\n```css\n.responsive-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n  gap: 1rem;\n}\n```\n\nCSS Grid, karmaşık layout'ları basit ve anlaşılır kod ile oluşturmamızı sağlar.",
+      "yazar": "Ayşe Kaya",
+      "tarih": "2024-01-05",
+      "kategori": "CSS",
+      "etiketler": ["css", "grid", "layout", "responsive"],
+      "okuma_suresi": 6,
+      "gorsel": "/sızıntı.webp?height=400&width=800"
     }
-  	
   ]
 }
