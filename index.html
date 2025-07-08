@@ -2955,7 +2955,7 @@ return this.currentHash.startsWith('ayet-') && this.currentSurahId && this.curre
 handleSwipe() {
 if (!this.isVerseDetailPage()) return;
 
-const swipeThreshold = 100;
+const swipeThreshold = 80;
 const swipeDistance = this.touchEndX - this.touchStartX;
 
 if (Math.abs(swipeDistance) > swipeThreshold) {
