@@ -461,13 +461,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            /* Updated background for better readability */
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
-            padding: 2rem 1.5rem 1.5rem;
+            /* Updated background for better readability and blur */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2));
+            padding: 4rem 1.5rem 1.5rem; /* Increased padding-top to push title down */
             color: white;
-            /* backdrop-filter removed */
+            backdrop-filter: blur(8px); /* Re-added backdrop-filter for blur effect */
+            -webkit-backdrop-filter: blur(8px); /* For Safari compatibility */
             border-radius: 0 0 20px 20px;
-            will-change: auto; /* Filter removed, so will-change can be auto or removed */
+            will-change: transform, opacity, backdrop-filter; /* Added backdrop-filter to will-change */
         }
 
         .article-title {
