@@ -244,14 +244,13 @@
             top: 0;
             left: 0;
             right: 0;
-            background: var(--navbar-bg);
-            backdrop-filter: blur(10px);
+            background: var(--navbar-bg); /* backdrop-filter removed */
             border-bottom: 1px solid var(--border-color);
             padding: 0.75rem 1rem;
             z-index: 1000;
             height: var(--header-height);
             animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform, opacity, filter; /* Added for performance hint */
+            will-change: transform, opacity; /* Filter removed as backdrop-filter is gone */
         }
 
         .header-content {
@@ -426,9 +425,9 @@
             position: relative;
             width: 320px;
             height: 280px;
-            backdrop-filter: blur(5px);
+            /* backdrop-filter removed */
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            will-change: transform, box-shadow; /* Added for performance hint */
+            will-change: transform, box-shadow;
         }
 
         .article-image-container {
@@ -444,7 +443,7 @@
             object-fit: cover;
             transition: transform 0.2s ease;
             filter: brightness(0.7);
-            will-change: transform, filter; /* Added for performance hint */
+            will-change: transform, filter;
         }
 
         .article-card:hover .article-image {
@@ -465,9 +464,9 @@
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
             padding: 2rem 1.5rem 1.5rem;
             color: white;
-            backdrop-filter: blur(5px);
+            /* backdrop-filter removed */
             border-radius: 0 0 20px 20px;
-            will-change: filter; /* Added for performance hint */
+            will-change: auto; /* Filter removed, so will-change can be auto or removed */
         }
 
         .article-title {
@@ -523,7 +522,7 @@
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
             padding: 3rem 2rem 2rem;
             color: white;
-            backdrop-filter: blur(5px);
+            /* backdrop-filter removed */
         }
 
         .article-detail-title {
