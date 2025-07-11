@@ -425,16 +425,28 @@
             position: relative;
             width: 320px;
             height: 280px;
-            /* backdrop-filter removed */
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             will-change: transform, box-shadow;
         }
 
         .article-image-container {
-            position: relative;
+            position: relative; /* Needed for absolute positioning of pseudo-element */
             height: 100%;
             overflow: hidden;
             border-radius: 20px;
+        }
+
+        /* New pseudo-element for gradient darkening on the image */
+        .article-image-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70%; /* Adjust height to control how much of the image is darkened */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent); /* Darkest at bottom, fades to transparent */
+            pointer-events: none; /* Ensure clicks pass through */
+            z-index: 1; /* Ensure it's above the image but below the overlay content */
         }
 
         .article-image {
@@ -442,7 +454,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.2s ease;
-            filter: brightness(0.7);
+            filter: brightness(0.7); /* Keep general darkening */
             will-change: transform, filter;
         }
 
@@ -461,13 +473,13 @@
             bottom: 0;
             left: 0;
             right: 0;
-            /* Updated background for better readability */
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
-            padding: 2rem 1.5rem 1.5rem;
+            background: transparent; /* Make it transparent, gradient is now on image container */
+            padding: 6rem 1.5rem 1.5rem; /* Increased padding-top to push title down further */
             color: white;
             /* backdrop-filter removed */
             border-radius: 0 0 20px 20px;
-            will-change: auto; /* Filter removed, so will-change can be auto or removed */
+            will-change: transform, opacity; /* Removed backdrop-filter from will-change */
+            z-index: 2; /* Ensure overlay content is above the gradient pseudo-element */
         }
 
         .article-title {
