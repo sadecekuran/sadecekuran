@@ -171,8 +171,6 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
-            -moz-tap-highlight-color: transparent;
-            tap-highlight-color: transparent;
         }
 
         body {
@@ -184,37 +182,16 @@
             overflow-x: hidden;
             font-size: calc(16px * var(--font-size-multiplier));
             line-height: 1.6;
-            transition: all 0.2s ease;
         }
 
-        /* Optimized Ripple Effect Styles */
+        /* Simplified Ripple Effect */
         .ripple {
             position: relative;
             overflow: hidden;
         }
 
-        .ripple::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .ripple:active::before {
-            width: 200px;
-            height: 200px;
-        }
-
-        .ripple-dark::before {
-            background: rgba(0, 0, 0, 0.1);
+        .ripple:active {
+            transform: scale(0.98);
         }
 
         .icon {
@@ -226,12 +203,10 @@
             stroke-width: 1.5;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .icon:hover {
             stroke: var(--text-primary);
-            transform: scale(1.05);
         }
 
         .icon-sm {
@@ -250,7 +225,6 @@
             padding: 0.75rem 1rem;
             z-index: 1000;
             height: var(--header-height);
-            animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .header-content {
@@ -272,12 +246,7 @@
             background-clip: text;
             text-decoration: none;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
-        }
-
-        .logo:hover {
-            transform: scale(1.02);
         }
 
         .header-actions {
@@ -293,7 +262,7 @@
             border-radius: 8px;
             cursor: pointer;
             color: var(--text-secondary);
-            transition: all 0.2s ease;
+            transition: background-color 0.15s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -303,8 +272,6 @@
         .search-btn:hover, .theme-btn:hover, .categories-btn:hover, .about-btn:hover, .destekle-btn:hover, .home-btn:hover {
             background: var(--bg-tertiary);
             color: var(--text-primary);
-            border-color: var(--wire-color);
-            transform: scale(1.02);
         }
 
         .categories-btn, .about-btn, .destekle-btn {
@@ -324,10 +291,6 @@
             border-color: var(--accent-color);
         }
 
-        .categories-btn .icon, .about-btn .icon, .destekle-btn .icon {
-            margin: 0;
-        }
-
         .main {
             margin-top: var(--header-height);
             min-height: calc(100vh - var(--header-height));
@@ -337,7 +300,6 @@
             padding: 2rem;
             max-width: 1400px;
             margin: 0 auto;
-            animation: fadeInUp 0.6s ease-out 0.3s both;
         }
 
         .home-hero {
@@ -355,21 +317,18 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 1rem;
-            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
         }
 
         .home-hero p {
             font-size: calc(1.2rem * var(--font-size-multiplier));
             color: var(--text-secondary);
             margin-bottom: 2rem;
-            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
         }
 
         .home-search {
             max-width: 600px;
             margin: 0 auto 3rem;
             position: relative;
-            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
         }
 
         .home-search-input {
@@ -381,14 +340,11 @@
             color: var(--text-primary);
             font-size: calc(1rem * var(--font-size-multiplier));
             outline: none;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 20px var(--shadow-dark);
+            transition: border-color 0.15s ease;
         }
 
         .home-search-input:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1), 0 8px 32px var(--shadow-dark);
-            transform: translateY(-1px);
         }
 
         .home-search-icon {
@@ -404,7 +360,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
             gap: 1.5rem;
-            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
             position: relative;
             z-index: 1;
             justify-content: center;
@@ -416,17 +371,14 @@
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
             text-decoration: none;
             color: inherit;
             transform: translateY(0);
-            opacity: 0;
-            animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             position: relative;
             width: 320px;
             height: 280px;
             backdrop-filter: blur(5px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
         .article-image-container {
@@ -440,18 +392,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.2s ease;
             filter: brightness(0.7);
         }
 
-        .article-card:hover .article-image {
-            transform: scale(1.03);
-            filter: brightness(0.5);
+        .article-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-dark);
         }
 
-        .article-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px var(--shadow-dark);
+        .article-card:hover .article-image {
+            filter: brightness(0.5);
         }
 
         .article-overlay {
@@ -500,8 +450,6 @@
             border-radius: 24px;
             margin-bottom: 2rem;
             overflow: hidden;
-            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
         }
 
         .article-detail-image {
@@ -549,7 +497,6 @@
         .meta-detail .author-link {
             color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
-            transition: color 0.2s ease;
         }
 
         .meta-detail .author-link:hover {
@@ -560,7 +507,6 @@
         .article-detail-content {
             padding: 3rem 0;
             line-height: 1.8;
-            animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
             font-size: calc(1.2rem * var(--font-size-multiplier));
         }
 
@@ -624,13 +570,11 @@
             margin-bottom: 1rem;
             font-size: calc(0.9rem * var(--font-size-multiplier));
             color: var(--text-secondary);
-            animation: fadeIn 0.4s ease-out;
         }
 
         .breadcrumb a {
             color: var(--text-secondary);
             text-decoration: none;
-            transition: all 0.2s ease;
             padding: 0.25rem 0.5rem;
             border-radius: 6px;
         }
@@ -638,7 +582,6 @@
         .breadcrumb a:hover {
             color: var(--text-primary);
             background: var(--bg-tertiary);
-            transform: translateY(-1px);
         }
 
         .search-page {
@@ -653,7 +596,6 @@
             padding: 2rem;
             margin-bottom: 2rem;
             text-align: center;
-            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .search-page-title {
@@ -675,13 +617,12 @@
             color: var(--text-primary);
             font-size: calc(1rem * var(--font-size-multiplier));
             outline: none;
-            transition: all 0.2s ease;
+            transition: border-color 0.15s ease;
             margin-bottom: 1rem;
         }
 
         .search-page-input:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
         .search-results {
@@ -727,15 +668,14 @@
             border-radius: 12px;
             padding: 1.5rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.15s ease;
             text-decoration: none;
             color: inherit;
             text-align: center;
         }
 
         .category-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px var(--shadow-dark);
+            transform: translateY(-2px);
             border-color: var(--wire-color);
         }
 
@@ -763,7 +703,6 @@
             padding: 2rem;
             margin-bottom: 2rem;
             text-align: center;
-            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .about-title {
@@ -782,7 +721,6 @@
             border-radius: 16px;
             padding: 2rem;
             line-height: 1.8;
-            animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
         }
 
         .about-content h2 {
@@ -831,7 +769,6 @@
             border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
-            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .author-info {
@@ -918,13 +855,12 @@
             border-radius: 8px;
             color: var(--text-secondary);
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
 
         .social-link:hover {
             background: var(--primary-color);
             color: white;
-            transform: translateY(-2px);
         }
 
         .author-content {
@@ -933,7 +869,6 @@
             border-radius: 16px;
             padding: 2rem;
             margin-bottom: 2rem;
-            animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
         }
 
         .destekle-page {
@@ -948,7 +883,6 @@
             padding: 2rem;
             margin-bottom: 2rem;
             text-align: center;
-            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .destekle-title {
@@ -977,8 +911,7 @@
             text-decoration: none;
             font-size: calc(1.2rem * var(--font-size-multiplier));
             font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 8px 32px var(--shadow-dark);
+            transition: transform 0.15s ease;
             border: none;
             cursor: pointer;
             position: relative;
@@ -986,8 +919,7 @@
         }
 
         .donation-button:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 12px 40px var(--shadow-dark);
+            transform: translateY(-2px);
         }
 
         .donation-button-content {
@@ -1025,12 +957,6 @@
         .loading-text {
             color: var(--text-secondary);
             font-size: calc(1rem * var(--font-size-multiplier));
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
         }
 
         .error {
@@ -1044,55 +970,7 @@
             font-size: calc(1rem * var(--font-size-multiplier));
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
             .articles-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1140,10 +1018,6 @@
             .categories-btn, .about-btn, .destekle-btn {
                 padding: 0.4rem;
                 font-size: 0;
-            }
-
-            .categories-btn .icon, .about-btn .icon, .destekle-btn .icon {
-                margin: 0;
             }
 
             .search-btn, .theme-btn, .home-btn {
@@ -1237,6 +1111,12 @@
 
             .author-stats {
                 justify-content: center;
+            }
+
+            /* Disable animations on mobile for better performance */
+            * {
+                animation-duration: 0s !important;
+                transition-duration: 0.1s !important;
             }
         }
 
@@ -1394,6 +1274,8 @@
                 this.currentHash = '';
                 this.searchIndex = new Map();
                 this.currentTheme = localStorage.getItem('theme') || 'dark';
+                this.isLoading = false;
+                this.searchCache = new Map();
                 this.init();
             }
 
@@ -1413,25 +1295,23 @@
             }
 
             addRippleEffects() {
-                // Optimized ripple effect
+                // Simplified ripple effect for better performance
                 document.addEventListener('click', (e) => {
                     const rippleElement = e.target.closest('.ripple');
-                    if (rippleElement && !rippleElement.dataset.rippling) {
-                        this.createRipple(e, rippleElement);
+                    if (rippleElement && !this.isLoading) {
+                        rippleElement.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            rippleElement.style.transform = '';
+                        }, 100);
                     }
                 });
             }
 
-            createRipple(event, element) {
-                element.dataset.rippling = 'true';
-                
-                setTimeout(() => {
-                    delete element.dataset.rippling;
-                }, 300);
-            }
-
             async loadData() {
+                if (this.isLoading) return;
+                this.isLoading = true;
                 this.showLoading();
+                
                 try {
                     const response = await fetch('makaleler.json');
                     if (!response.ok) {
@@ -1443,6 +1323,8 @@
                 } catch (error) {
                     console.error('Error loading data:', error);
                     this.data = this.getSampleData();
+                } finally {
+                    this.isLoading = false;
                 }
             }
 
@@ -1529,62 +1411,44 @@
 
                 this.searchIndex.clear();
                 
-                // Optimized search index building
+                // Optimized search index building with reduced complexity
                 this.data.forEach(article => {
-                    // Başlık indeksi
-                    this.addToSearchIndex('title', article.baslik.toLowerCase(), {
-                        type: 'makale',
-                        id: article.id,
-                        title: article.baslik,
-                        content: article.ozet,
-                        url: `#makale-${article.id}`
-                    });
+                    // Only index essential fields for better performance
+                    const searchTerms = [
+                        article.baslik.toLowerCase(),
+                        article.kategori.toLowerCase(),
+                        article.yazar.toLowerCase(),
+                        ...(article.etiketler || []).map(tag => tag.toLowerCase())
+                    ];
 
-                    // İçerik indeksi (sadece ilk 500 karakter)
-                    this.addToSearchIndex('content', article.icerik.toLowerCase().substring(0, 500), {
-                        type: 'makale',
-                        id: article.id,
-                        title: article.baslik,
-                        content: article.ozet,
-                        url: `#makale-${article.id}`
-                    });
-
-                    // Etiket indeksi
-                    article.etiketler?.forEach(etiket => {
-                        this.addToSearchIndex('tag', etiket.toLowerCase(), {
-                            type: 'etiket',
-                            id: `${article.id}-${etiket}`,
-                            title: `${etiket} - ${article.baslik}`,
+                    searchTerms.forEach(term => {
+                        if (!this.searchIndex.has(term)) {
+                            this.searchIndex.set(term, []);
+                        }
+                        this.searchIndex.get(term).push({
+                            type: 'makale',
+                            id: article.id,
+                            title: article.baslik,
                             content: article.ozet,
                             url: `#makale-${article.id}`
                         });
                     });
-
-                    // Kategori indeksi
-                    this.addToSearchIndex('category', article.kategori.toLowerCase(), {
-                        type: 'kategori',
-                        id: article.kategori,
-                        title: `${article.kategori} - ${article.baslik}`,
-                        content: article.ozet,
-                        url: `#makale-${article.id}`
-                    });
                 });
-            }
-
-            addToSearchIndex(category, term, item) {
-                if (!this.searchIndex.has(category)) {
-                    this.searchIndex.set(category, new Map());
-                }
-                
-                const categoryIndex = this.searchIndex.get(category);
-                if (!categoryIndex.has(term)) {
-                    categoryIndex.set(term, []);
-                }
-                categoryIndex.get(term).push(item);
             }
 
             setupEventListeners() {
                 window.addEventListener('hashchange', () => this.handleRoute());
+                
+                // Optimize scroll performance
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(() => {
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
             }
 
             handleRoute() {
@@ -1638,7 +1502,7 @@
                     </div>
                 `;
 
-                // Use requestAnimationFrame to defer heavy operations for better performance
+                // Use requestAnimationFrame for better performance
                 requestAnimationFrame(() => {
                     this.renderArticlesGrid();
                 });
@@ -1654,11 +1518,13 @@
                 // Use document fragment for better performance
                 const fragment = document.createDocumentFragment();
                 
-                this.data.forEach((article, index) => {
+                // Limit initial render for better performance
+                const articlesToRender = this.data.slice(0, 20);
+                
+                articlesToRender.forEach((article, index) => {
                     const articleElement = document.createElement('a');
                     articleElement.href = `#makale-${article.id}`;
                     articleElement.className = 'article-card ripple';
-                    articleElement.style.animationDelay = `${index * 0.05}s`;
                     articleElement.innerHTML = `
                         <div class="article-image-container">
                             <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
@@ -1675,6 +1541,58 @@
                 });
 
                 articlesGrid.appendChild(fragment);
+
+                // Load more articles if needed (lazy loading)
+                if (this.data.length > 20) {
+                    this.setupLazyLoading(articlesGrid);
+                }
+            }
+
+            setupLazyLoading(container) {
+                let currentIndex = 20;
+                const loadMore = () => {
+                    if (currentIndex >= this.data.length) return;
+
+                    const nextBatch = this.data.slice(currentIndex, currentIndex + 10);
+                    const fragment = document.createDocumentFragment();
+
+                    nextBatch.forEach(article => {
+                        const articleElement = document.createElement('a');
+                        articleElement.href = `#makale-${article.id}`;
+                        articleElement.className = 'article-card ripple';
+                        articleElement.innerHTML = `
+                            <div class="article-image-container">
+                                <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
+                                <div class="article-overlay">
+                                    <h2 class="article-title">${article.baslik}</h2>
+                                    <div class="article-meta">
+                                        <span class="article-author" onclick="event.preventDefault(); event.stopPropagation(); app.goToAuthor('${this.getAuthorSlug(article.yazar)}')">${article.yazar}</span>
+                                        <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        fragment.appendChild(articleElement);
+                    });
+
+                    container.appendChild(fragment);
+                    currentIndex += 10;
+                };
+
+                // Intersection Observer for lazy loading
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            loadMore();
+                        }
+                    });
+                });
+
+                // Create a sentinel element
+                const sentinel = document.createElement('div');
+                sentinel.style.height = '1px';
+                container.appendChild(sentinel);
+                observer.observe(sentinel);
             }
 
             getAuthorSlug(authorName) {
@@ -1754,7 +1672,7 @@
             }
 
             formatArticleContent(content) {
-                // Basit markdown-benzeri formatlamalar
+                // Simplified markdown-like formatting for better performance
                 return content
                     .replace(/\n\n/g, '</p><p>')
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -1763,9 +1681,6 @@
                     .replace(/`(.*?)`/g, '<code>$1</code>')
                     .replace(/^## (.*$)/gim, '<h2>$1</h2>')
                     .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                    .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
-                    .replace(/^- (.*$)/gim, '<li>$1</li>')
-                    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
                     .split('</p><p>').map(p => `<p>${p}</p>`).join('');
             }
 
@@ -2113,10 +2028,20 @@
                     return;
                 }
 
+                // Check cache first
+                if (this.searchCache.has(query)) {
+                    this.displaySearchResults(query, this.searchCache.get(query), resultsContainer);
+                    return;
+                }
+
                 const results = this.search(query);
-                
+                this.searchCache.set(query, results);
+                this.displaySearchResults(query, results, resultsContainer);
+            }
+
+            displaySearchResults(query, results, container) {
                 if (results.length === 0) {
-                    resultsContainer.innerHTML = `
+                    container.innerHTML = `
                         <div class="search-results">
                             <div class="search-header">
                                 <h2>Sonuç Bulunamadı</h2>
@@ -2127,7 +2052,7 @@
                     return;
                 }
 
-                resultsContainer.innerHTML = `
+                container.innerHTML = `
                     <div class="search-results">
                         <div class="search-header">
                             <h2>Arama Sonuçları</h2>
@@ -2162,19 +2087,22 @@
                 const results = [];
                 const queryLower = query.toLowerCase();
                 
-                this.searchIndex.forEach((categoryMap, category) => {
-                    categoryMap.forEach((items, term) => {
-                        if (term.includes(queryLower)) {
-                            results.push(...items);
-                        }
-                    });
-                });
+                // Optimized search with early termination
+                for (const [term, items] of this.searchIndex) {
+                    if (term.includes(queryLower)) {
+                        results.push(...items);
+                        if (results.length > 50) break; // Limit results for performance
+                    }
+                }
 
-                const uniqueResults = results.filter((result, index, self) => 
-                    index === self.findIndex(r => r.id === result.id && r.type === result.type)
-                );
-
-                return uniqueResults.slice(0, 50);
+                // Remove duplicates efficiently
+                const seen = new Set();
+                return results.filter(result => {
+                    const key = `${result.id}-${result.type}`;
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                }).slice(0, 20); // Limit final results
             }
 
             highlightText(text, query) {
