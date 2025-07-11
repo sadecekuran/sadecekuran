@@ -1,187 +1,2234 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" dir="ltr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>24. Dönem Milletvekilleri</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    input, select {
-      padding: 10px;
-      font-size: 15px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      min-width: 180px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white;
-      box-shadow: 0 0 8px rgba(0,0,0,0.05);
-    }
-    th, td {
-      padding: 12px 15px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
-    th {
-      background-color: #0078d4;
-      color: white;
-    }
-    tr:hover {
-      background-color: #f0f8ff;
-    }
-    @media (max-width: 600px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-      thead tr {
-        display: none;
-      }
-      tr {
-        margin-bottom: 15px;
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-      }
-      td {
-        padding-left: 50%;
-        position: relative;
-        text-align: right;
-      }
-      td::before {
-        position: absolute;
-        left: 15px;
-        top: 12px;
-        width: 45%;
-        font-weight: bold;
-        content: attr(data-label);
-        text-align: left;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SADECE KURAN - İslami Makaleler ve Araştırmalar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-size-multiplier: 1;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --bg-secondary-rgb: 17, 17, 17;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --border-color: #333333;
+            --accent-light: #ffffff;
+            --accent-dark: #000000;
+            --shadow-light: rgba(255, 255, 255, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            --gradient-primary: linear-gradient(135deg, #ffffff, #cccccc);
+            --gradient-secondary: linear-gradient(135deg, #333333, #111111);
+            --wire-color: #666666;
+            --primary-color: #ffffff;
+            --secondary-color: #cccccc;
+            --accent-color: #888888;
+            --header-height: 60px;
+            --navbar-bg: #111111;
+        }
+
+        :root[data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-secondary-rgb: 248, 250, 252;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent-light: #1e293b;
+            --accent-dark: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #1e293b, #475569);
+            --gradient-secondary: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            --wire-color: #94a3b8;
+            --primary-color: #2563eb;
+            --secondary-color: #475569;
+            --accent-color: #64748b;
+            --header-height: 60px;
+            --navbar-bg: #f8fafc;
+        }
+
+        :root[data-theme="sepia"] {
+            --bg-primary: #f7f3e9;
+            --bg-secondary: #f0e6d2;
+            --bg-tertiary: #e8dcc0;
+            --text-primary: #5d4e37;
+            --text-secondary: #8b7355;
+            --text-muted: #a0916f;
+            --border-color: #d4c4a8;
+            --accent-light: #5d4e37;
+            --accent-dark: #f7f3e9;
+            --shadow-light: rgba(93, 78, 55, 0.1);
+            --shadow-dark: rgba(93, 78, 55, 0.15);
+            --gradient-primary: linear-gradient(135deg, #5d4e37, #8b7355);
+            --gradient-secondary: linear-gradient(135deg, #e8dcc0, #d4c4a8);
+            --wire-color: #a0916f;
+            --primary-color: #8b4513;
+            --secondary-color: #8b7355;
+            --accent-color: #a0916f;
+            --header-height: 60px;
+            --navbar-bg: #f0e6d2;
+        }
+
+        :root[data-theme="blue"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #475569;
+            --accent-light: #f1f5f9;
+            --accent-dark: #0f172a;
+            --shadow-light: rgba(241, 245, 249, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            --gradient-primary: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            --gradient-secondary: linear-gradient(135deg, #334155, #1e293b);
+            --wire-color: #64748b;
+            --primary-color: #3b82f6;
+            --secondary-color: #cbd5e1;
+            --accent-color: #94a3b8;
+            --header-height: 60px;
+            --navbar-bg: #1e293b;
+        }
+
+        :root[data-theme="green"] {
+            --bg-primary: #064e3b;
+            --bg-secondary: #065f46;
+            --bg-tertiary: #047857;
+            --text-primary: #ecfdf5;
+            --text-secondary: #d1fae5;
+            --text-muted: #a7f3d0;
+            --border-color: #059669;
+            --accent-light: #ecfdf5;
+            --accent-dark: #064e3b;
+            --shadow-light: rgba(236, 253, 245, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            --gradient-primary: linear-gradient(135deg, #10b981, #059669);
+            --gradient-secondary: linear-gradient(135deg, #047857, #065f46);
+            --wire-color: #6ee7b7;
+            --primary-color: #10b981;
+            --secondary-color: #d1fae5;
+            --accent-color: #a7f3d0;
+            --header-height: 60px;
+            --navbar-bg: #065f46;
+        }
+
+        :root[data-theme="purple"] {
+            --bg-primary: #581c87;
+            --bg-secondary: #6b21a8;
+            --bg-tertiary: #7c2d92;
+            --text-primary: #faf5ff;
+            --text-secondary: #e9d5ff;
+            --text-muted: #d8b4fe;
+            --border-color: #8b5cf6;
+            --accent-light: #faf5ff;
+            --accent-dark: #581c87;
+            --shadow-light: rgba(250, 245, 255, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            --gradient-primary: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            --gradient-secondary: linear-gradient(135deg, #7c2d92, #6b21a8);
+            --wire-color: #c4b5fd;
+            --primary-color: #8b5cf6;
+            --secondary-color: #e9d5ff;
+            --accent-color: #d8b4fe;
+            --header-height: 60px;
+            --navbar-bg: #6b21a8;
+        }
+
+        :root[data-theme="rose"] {
+            --bg-primary: #881337;
+            --bg-secondary: #9f1239;
+            --bg-tertiary: #be185d;
+            --text-primary: #fdf2f8;
+            --text-secondary: #fce7f3;
+            --text-muted: #fbcfe8;
+            --border-color: #ec4899;
+            --accent-light: #fdf2f8;
+            --accent-dark: #881337;
+            --shadow-light: rgba(253, 242, 248, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            --gradient-primary: linear-gradient(135deg, #ec4899, #db2777);
+            --gradient-secondary: linear-gradient(135deg, #be185d, #9f1239);
+            --wire-color: #f9a8d4;
+            --primary-color: #ec4899;
+            --secondary-color: #fce7f3;
+            --accent-color: #fbcfe8;
+            --header-height: 60px;
+            --navbar-bg: #9f1239;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            -moz-tap-highlight-color: transparent;
+            tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Rubik', 'Segoe UI', system-ui, sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            font-size: calc(16px * var(--font-size-multiplier));
+            line-height: 1.6;
+            /* Removed: transition: all 0.2s ease; */
+        }
+
+        /* Optimized Ripple Effect Styles */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ripple:active::before {
+            width: 200px;
+            height: 200px;
+        }
+
+        .ripple-dark::before {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            stroke: var(--wire-color);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .icon:hover {
+            stroke: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        .icon-sm {
+            width: 16px;
+            height: 16px;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--navbar-bg); /* backdrop-filter removed */
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            z-index: 1000;
+            height: var(--header-height);
+            animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, opacity; /* Filter removed as backdrop-filter is gone */
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-btn, .theme-btn, .categories-btn, .about-btn, .destekle-btn, .home-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .search-btn:hover, .theme-btn:hover, .categories-btn:hover, .about-btn:hover, .destekle-btn:hover, .home-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--wire-color);
+            transform: scale(1.02);
+        }
+
+        .categories-btn, .about-btn, .destekle-btn {
+            gap: 0.25rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        .destekle-btn {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .destekle-btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .categories-btn .icon, .about-btn .icon, .destekle-btn .icon {
+            margin: 0;
+        }
+
+        .main {
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        .content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .home-hero {
+            text-align: center;
+            padding: 2rem 0 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .home-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+        }
+
+        .home-hero p {
+            font-size: calc(1.2rem * var(--font-size-multiplier));
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+        }
+
+        .home-search {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+        }
+
+        .home-search-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: calc(1rem * var(--font-size-multiplier));
+            outline: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 20px var(--shadow-dark);
+        }
+
+        .home-search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1), 0 8px 32px var(--shadow-dark);
+            transform: translateY(-1px);
+        }
+
+        .home-search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
+            gap: 1.5rem;
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+            position: relative;
+            z-index: 1;
+            justify-content: center;
+        }
+
+        .article-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            transform: translateY(0);
+            opacity: 0;
+            animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            position: relative;
+            width: 320px;
+            height: 280px;
+            /* backdrop-filter removed */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            will-change: transform, box-shadow;
+        }
+
+        .article-image-container {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s ease;
+            filter: brightness(0.7);
+            will-change: transform, filter;
+        }
+
+        .article-card:hover .article-image {
+            transform: scale(1.03);
+            filter: brightness(0.5);
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-dark);
+        }
+
+        .article-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            /* Updated background for better readability */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
+            padding: 2rem 1.5rem 1.5rem;
+            color: white;
+            /* backdrop-filter removed */
+            border-radius: 0 0 20px 20px;
+            will-change: auto; /* Filter removed, so will-change can be auto or removed */
+        }
+
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            color: white;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 2.6rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: auto;
+        }
+
+        .article-detail {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .article-detail-header {
+            position: relative;
+            height: 400px;
+            border-radius: 24px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .article-detail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+
+        .article-detail-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 3rem 2rem 2rem;
+            color: white;
+            /* backdrop-filter removed */
+        }
+
+        .article-detail-title {
+            font-size: calc(2.5rem * var(--font-size-multiplier));
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-detail-meta {
+            display: flex;
+            justify-content: flex-start;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: calc(0.875rem * var(--font-size-multiplier));
+        }
+
+        .meta-detail .author-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .meta-detail .author-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .article-detail-content {
+            padding: 3rem 0;
+            line-height: 1.8;
+            animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+            font-size: calc(1.2rem * var(--font-size-multiplier));
+        }
+
+        .article-detail-content h2 {
+            font-size: calc(2rem * var(--font-size-multiplier));
+            margin: 2.5rem 0 1.5rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .article-detail-content h3 {
+            font-size: calc(1.6rem * var(--font-size-multiplier));
+            margin: 2rem 0 1rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .article-detail-content p {
+            margin-bottom: 1.8rem;
+            color: var(--text-secondary);
+            font-size: calc(1.2rem * var(--font-size-multiplier));
+        }
+
+        .article-detail-content pre {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .article-detail-content code {
+            background: var(--bg-tertiary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+        }
+
+        .article-detail-content ul, .article-detail-content ol {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .article-detail-content li {
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+        }
+
+        .article-detail-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: calc(0.9rem * var(--font-size-multiplier));
+            color: var(--text-secondary);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+            transform: translateY(-1px);
+        }
+
+        .search-page {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .search-page-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .search-page-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: calc(1rem * var(--font-size-multiplier));
+            outline: none;
+            transition: all 0.2s ease;
+            margin-bottom: 1rem;
+        }
+
+        .search-page-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-results {
+            margin-top: 2rem;
+        }
+
+        .search-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .search-header h2 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            font-size: calc(1.5rem * var(--font-size-multiplier));
+        }
+
+        .search-meta {
+            color: var(--text-secondary);
+            font-size: calc(0.875rem * var(--font-size-multiplier));
+        }
+
+        .categories-page {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .category-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            text-align: center;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-dark);
+            border-color: var(--wire-color);
+        }
+
+        .category-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .category-count {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .about-page {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .about-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .about-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            line-height: 1.8;
+            animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+        }
+
+        .about-content h2 {
+            font-size: calc(1.8rem * var(--font-size-multiplier));
+            margin: 2rem 0 1rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .about-content h3 {
+            font-size: calc(1.4rem * var(--font-size-multiplier));
+            margin: 1.5rem 0 0.75rem 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+        }
+
+        .about-content ul {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .about-content li {
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+        }
+
+        .about-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .author-page {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .author-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .author-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .author-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--border-color);
+        }
+
+        .author-details h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .author-bio {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .author-expertise {
+            margin-bottom: 1rem;
+        }
+
+        .expertise-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .expertise-tag {
+            background: var(--bg-tertiary);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .author-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .author-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+        }
+
+        .destekle-page {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .destekle-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .destekle-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .destekle-description {
+            color: var(--text-secondary);
+            font-size: calc(1.1rem * var(--font-size-multiplier));
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .donation-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--bg-primary);
+            padding: 1.5rem 3rem;
+            border-radius: 16px;
+            text-decoration: none;
+            font-size: calc(1.2rem * var(--font-size-multiplier));
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 32px var(--shadow-dark);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-button:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 40px var(--shadow-dark);
+        }
+
+        .donation-button-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: calc(1rem * var(--font-size-multiplier));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .error {
+            background: var(--bg-secondary);
+            border: 1px solid #ff4444;
+            color: #ff6666;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: calc(1rem * var(--font-size-multiplier));
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                justify-items: center;
+            }
+
+            .article-card {
+                width: 100%;
+                max-width: 252px;
+                height: 256px;
+            }
+
+            .article-overlay {
+                padding: 1rem 0.75rem 0.75rem;
+            }
+
+            .article-title {
+                font-size: 0.9rem;
+                -webkit-line-clamp: 3;
+                min-height: 2.7rem;
+            }
+
+            .article-meta {
+                font-size: 0.7rem;
+            }
+
+            :root {
+                --font-size-multiplier: 1.1;
+            }
+
+            .header {
+                padding: 0.4rem 0.8rem;
+                height: 50px;
+            }
+
+            .header-content {
+                gap: 0.4rem;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .categories-btn, .about-btn, .destekle-btn {
+                padding: 0.4rem;
+                font-size: 0;
+            }
+
+            .categories-btn .icon, .about-btn .icon, .destekle-btn .icon {
+                margin: 0;
+            }
+
+            .search-btn, .theme-btn, .home-btn {
+                padding: 0.4rem;
+            }
+
+            .content {
+                padding: 0.8rem;
+            }
+
+            .home-hero {
+                padding: 0.8rem 0 1rem;
+            }
+
+            .home-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .home-search {
+                margin-bottom: 1.5rem;
+            }
+
+            .home-search-input {
+                padding: 0.8rem 2.5rem 0.8rem 0.8rem;
+            }
+
+            .article-detail-header {
+                padding: 1rem;
+            }
+
+            .article-detail-title {
+                font-size: 1.8rem;
+            }
+
+            .article-detail-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .article-detail-content {
+                padding: 1rem 0;
+            }
+
+            .search-page-header {
+                padding: 1rem;
+            }
+
+            .search-page-title {
+                font-size: 1.5rem;
+            }
+
+            .search-page-input {
+                padding: 0.8rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .about-header, .destekle-header {
+                padding: 1rem;
+            }
+
+            .about-title, .destekle-title {
+                font-size: 1.5rem;
+            }
+
+            .about-content {
+                padding: 1rem;
+            }
+
+            .donation-button {
+                padding: 1rem 2rem;
+                font-size: calc(1rem * var(--font-size-multiplier));
+            }
+
+            .author-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .author-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .author-details h1 {
+                font-size: 2rem;
+            }
+
+            .author-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .article-card {
+                width: 100%;
+                max-width: 200px;
+                height: 200px;
+            }
+
+            .article-overlay {
+                padding: 0.75rem 0.5rem 0.5rem;
+            }
+
+            .article-title {
+                font-size: 0.8rem;
+                -webkit-line-clamp: 3;
+                min-height: 2.4rem;
+            }
+
+            .article-meta {
+                font-size: 0.65rem;
+            }
+            
+            :root {
+                --font-size-multiplier: 1.2;
+            }
+
+            .header {
+                padding: 0.3rem 0.6rem;
+                height: 45px;
+            }
+
+            .logo {
+                font-size: 0.8rem;
+            }
+
+            .content {
+                padding: 0.6rem;
+            }
+
+            .home-hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .article-detail-title {
+                font-size: 1.5rem;
+            }
+
+            .search-page-header, .about-header, .destekle-header {
+                padding: 0.8rem;
+            }
+
+            .search-page-title, .about-title, .destekle-title {
+                font-size: 1.3rem;
+            }
+
+            .donation-button {
+                padding: 0.8rem 1.5rem;
+                font-size: calc(0.9rem * var(--font-size-multiplier));
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+    </style>
 </head>
-<body>
+<body data-theme="dark">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo ripple" onclick="showHome()">SADECE KURAN</a>
+            <div class="header-actions">
+                <button class="home-btn ripple" onclick="window.location.href='/index.html'">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                </button>
+                <button class="search-btn ripple" onclick="app.showSearchPage()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <button class="categories-btn ripple" onclick="app.showCategories()">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path>
+                    </svg>
+                    <span>Kategoriler</span>
+                </button>
+                <button class="about-btn ripple" onclick="app.showAbout()">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <span>Hakkında</span>
+                </button>
+                <button class="destekle-btn ripple" onclick="app.showDestekle()">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <span>Destekle</span>
+                </button>
+                <button class="theme-btn ripple" onclick="app.toggleTheme()">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
 
-<h1>24. Dönem Milletvekilleri</h1>
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content" id="content">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </main>
 
-<div class="filters">
-  <input type="text" id="searchName" placeholder="İsim ile ara..." />
-  <select id="filterParty">
-    <option value="">Tüm Partiler</option>
-  </select>
-  <select id="filterProvince">
-    <option value="">Tüm Şehirler</option>
-  </select>
-</div>
+    <script>
+        class BlogApp {
+            constructor() {
+                this.data = null;
+                this.authorsData = null;
+                this.currentHash = '';
+                this.searchIndex = new Map();
+                this.currentTheme = localStorage.getItem('theme') || 'dark';
+                this.init();
+            }
 
-<table id="mvTable">
-  <thead>
-    <tr>
-      <th>İsim</th>
-      <th>Parti</th>
-      <th>Şehir</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Satırlar buraya gelecek -->
-  </tbody>
-</table>
+            async init() {
+                try {
+                    this.setTheme(this.currentTheme);
+                    await this.loadData();
+                    await this.loadAuthorsData();
+                    this.buildSearchIndex();
+                    this.setupEventListeners();
+                    this.handleRoute();
+                    this.addRippleEffects();
+                } catch (error) {
+                    console.error('Initialization error:', error);
+                    this.showError('Veri yüklenirken bir hata oluştu.');
+                }
+            }
 
-<script>
-const dataUrl = "milletvekilleri24.json"; // JSON dosyanı buraya koy veya raw link ver
+            addRippleEffects() {
+                // Optimized ripple effect
+                document.addEventListener('click', (e) => {
+                    const rippleElement = e.target.closest('.ripple');
+                    if (rippleElement && !rippleElement.dataset.rippling) {
+                        this.createRipple(e, rippleElement);
+                    }
+                });
+            }
 
-let milletvekilleri = [];
+            createRipple(event, element) {
+                element.dataset.rippling = 'true';
+                
+                setTimeout(() => {
+                    delete element.dataset.rippling;
+                }, 300);
+            }
 
-const tableBody = document.querySelector("#mvTable tbody");
-const searchName = document.getElementById("searchName");
-const filterParty = document.getElementById("filterParty");
-const filterProvince = document.getElementById("filterProvince");
+            async loadData() {
+                this.showLoading();
+                try {
+                    const response = await fetch('makaleler.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    this.data = data.makaleler || data;
+                    console.log('Data loaded successfully:', this.data.length, 'articles');
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    this.data = this.getSampleData();
+                }
+            }
 
-// Veri çek
-async function loadData() {
-  const res = await fetch(dataUrl);
-  milletvekilleri = await res.json();
-  populateFilters();
-  renderTable(milletvekilleri);
-}
+            async loadAuthorsData() {
+                try {
+                    const response = await fetch('yazarlar.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    this.authorsData = data.yazarlar || data;
+                    console.log('Authors data loaded successfully:', this.authorsData.length, 'authors');
+                } catch (error) {
+                    console.error('Error loading authors data:', error);
+                    this.authorsData = [];
+                }
+            }
 
-// Filtreleri doldur
-function populateFilters() {
-  const parties = [...new Set(milletvekilleri.map(mv => mv.parti).filter(Boolean))].sort();
-  const provinces = [...new Set(milletvekilleri.map(mv => mv.sehir).filter(Boolean))].sort();
+            getSampleData() {
+                return [
+                    {
+                        id: 1,
+                        baslik: "Kur'an-ı Kerim'de Bilimsel Mucizeler",
+                        ozet: "Kur'an-ı Kerim'in içerdiği bilimsel gerçeklerin modern bilimle uyumu üzerine detaylı bir inceleme.",
+                        icerik: "Kur'an-ı Kerim, 1400 yıl önce indirilmiş olmasına rağmen, modern bilimin keşfettiği birçok gerçeği içermektedir...",
+                        yazar: "Ahmet Yılmaz",
+                        tarih: "2024-01-15",
+                        kategori: "Bilimsel Mucizeler",
+                        etiketler: ["bilim", "mucize", "Kur'an", "araştırma"],
+                        okuma_suresi: 5,
+                        gorsel: "/placeholder.svg?height=400&width=800"
+                    }
+                ];
+            }
 
-  parties.forEach(p => {
-    const option = document.createElement("option");
-    option.value = p;
-    option.textContent = p;
-    filterParty.appendChild(option);
-  });
+            setTheme(theme) {
+                this.currentTheme = theme;
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                
+                const themeBtn = document.querySelector('.theme-btn .icon');
+                if (themeBtn) {
+                    if (theme === 'dark') {
+                        themeBtn.innerHTML = `
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        `;
+                    } else if (theme === 'light') {
+                        themeBtn.innerHTML = `
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        `;
+                    } else {
+                        themeBtn.innerHTML = `
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v2"></path>
+                            <path d="M12 20v2"></path>
+                            <path d="m4.93 4.93 1.41 1.41"></path>
+                            <path d="m17.66 17.66 1.41 1.41"></path>
+                            <path d="M2 12h2"></path>
+                            <path d="M20 12h2"></path>
+                            <path d="m6.34 17.66-1.41 1.41"></path>
+                            <path d="m19.07 4.93-1.41 1.41"></path>
+                        `;
+                    }
+                }
+            }
 
-  provinces.forEach(il => {
-    const option = document.createElement("option");
-    option.value = il;
-    option.textContent = il;
-    filterProvince.appendChild(option);
-  });
-}
+            toggleTheme() {
+                const themes = ['dark', 'light', 'sepia', 'blue', 'green', 'purple', 'rose'];
+                const currentIndex = themes.indexOf(this.currentTheme);
+                const nextIndex = (currentIndex + 1) % themes.length;
+                this.setTheme(themes[nextIndex]);
+            }
 
-// Tabloyu göster
-function renderTable(list) {
-  tableBody.innerHTML = "";
-  if (list.length === 0) {
-    tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center'>Sonuç bulunamadı.</td></tr>";
-    return;
-  }
-  list.forEach(mv => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td data-label="İsim">${mv.isim}</td>
-      <td data-label="Parti">${mv.parti}</td>
-      <td data-label="Şehir">${mv.sehir}</td>
-    `;
-    tableBody.appendChild(tr);
-  });
-}
+            buildSearchIndex() {
+                if (!this.data) return;
 
-// Filtreleme işlemi
-function applyFilters() {
-  const nameFilter = searchName.value.toLowerCase();
-  const partyFilter = filterParty.value;
-  const provinceFilter = filterProvince.value;
+                this.searchIndex.clear();
+                
+                // Optimized search index building
+                this.data.forEach(article => {
+                    // Başlık indeksi
+                    this.addToSearchIndex('title', article.baslik.toLowerCase(), {
+                        type: 'makale',
+                        id: article.id,
+                        title: article.baslik,
+                        content: article.ozet,
+                        url: `#makale-${article.id}`
+                    });
 
-  const filtered = milletvekilleri.filter(mv => {
-    const matchName = mv.isim.toLowerCase().includes(nameFilter);
-    const matchParty = partyFilter === "" || mv.parti === partyFilter;
-    const matchProvince = provinceFilter === "" || mv.sehir === provinceFilter;
-    return matchName && matchParty && matchProvince;
-  });
+                    // İçerik indeksi (sadece ilk 500 karakter)
+                    this.addToSearchIndex('content', article.icerik.toLowerCase().substring(0, 500), {
+                        type: 'makale',
+                        id: article.id,
+                        title: article.baslik,
+                        content: article.ozet,
+                        url: `#makale-${article.id}`
+                    });
 
-  renderTable(filtered);
-}
+                    // Etiket indeksi
+                    article.etiketler?.forEach(etiket => {
+                        this.addToSearchIndex('tag', etiket.toLowerCase(), {
+                            type: 'etiket',
+                            id: `${article.id}-${etiket}`,
+                            title: `${etiket} - ${article.baslik}`,
+                            content: article.ozet,
+                            url: `#makale-${article.id}`
+                        });
+                    });
 
-// Dinleyiciler
-searchName.addEventListener("input", applyFilters);
-filterParty.addEventListener("change", applyFilters);
-filterProvince.addEventListener("change", applyFilters);
+                    // Kategori indeksi
+                    this.addToSearchIndex('category', article.kategori.toLowerCase(), {
+                        type: 'kategori',
+                        id: article.kategori,
+                        title: `${article.kategori} - ${article.baslik}`,
+                        content: article.ozet,
+                        url: `#makale-${article.id}`
+                    });
+                });
+            }
 
-// Başlat
-loadData();
-</script>
+            addToSearchIndex(category, term, item) {
+                if (!this.searchIndex.has(category)) {
+                    this.searchIndex.set(category, new Map());
+                }
+                
+                const categoryIndex = this.searchIndex.get(category);
+                if (!categoryIndex.has(term)) {
+                    categoryIndex.set(term, []);
+                }
+                categoryIndex.get(term).push(item);
+            }
 
+            setupEventListeners() {
+                window.addEventListener('hashchange', () => this.handleRoute());
+            }
+
+            handleRoute() {
+                const hash = window.location.hash.slice(1);
+                this.currentHash = hash;
+
+                if (!hash) {
+                    this.renderHome();
+                } else if (hash.startsWith('makale-')) {
+                    const articleId = parseInt(hash.split('-')[1]);
+                    this.renderArticle(articleId);
+                } else if (hash.startsWith('yazar-')) {
+                    const authorSlug = hash.substring(6);
+                    this.renderAuthor(authorSlug);
+                } else if (hash === 'ara') {
+                    this.renderSearchPage();
+                } else if (hash.startsWith('ara-')) {
+                    const query = decodeURIComponent(hash.substring(4));
+                    this.renderSearchResults(query);
+                } else if (hash === 'kategoriler') {
+                    this.renderCategories();
+                } else if (hash.startsWith('kategori-')) {
+                    const category = decodeURIComponent(hash.substring(9));
+                    this.renderCategoryArticles(category);
+                } else if (hash === 'hakkinda') {
+                    this.renderAbout();
+                } else if (hash === 'destekle') {
+                    this.renderDestekle();
+                }
+            }
+
+            renderHome() {
+                const content = document.getElementById('content');
+                
+                content.innerHTML = `
+                    <div class="home-hero">
+                        <h1>SADECE KURAN</h1>
+                        <p>Kur'an-ı Kerim'in ışığında İslami makaleler, araştırmalar ve derinlemesine analizler. İslam'ın güzelliklerini keşfedin ve manevi yolculuğunuza devam edin.</p>
+                    </div>
+
+                    <div class="home-search">
+                        <input type="text" class="home-search-input ripple" id="homeSearchInput" placeholder="Makale, kategori veya yazar ara..." onclick="app.showSearchPage()">
+                        <svg class="icon home-search-icon" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </div>
+
+                    <div class="articles-grid" id="articlesGrid">
+                        <!-- Articles will be populated by JavaScript -->
+                    </div>
+                `;
+
+                // Use requestAnimationFrame to defer heavy operations for better performance
+                requestAnimationFrame(() => {
+                    this.renderArticlesGrid();
+                });
+            }
+
+            renderArticlesGrid() {
+                const articlesGrid = document.getElementById('articlesGrid');
+                if (!this.data) {
+                    articlesGrid.innerHTML = '<div class="loading"><div class="spinner"></div><div class="loading-text">Makaleler yükleniyor...</div></div>';
+                    return;
+                }
+
+                // Use document fragment for better performance
+                const fragment = document.createDocumentFragment();
+                
+                this.data.forEach((article, index) => {
+                    const articleElement = document.createElement('a');
+                    articleElement.href = `#makale-${article.id}`;
+                    articleElement.className = 'article-card ripple';
+                    articleElement.style.animationDelay = `${index * 0.05}s`;
+                    articleElement.innerHTML = `
+                        <div class="article-image-container">
+                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
+                            <div class="article-overlay">
+                                <h2 class="article-title">${article.baslik}</h2>
+                                <div class="article-meta">
+                                    <!-- Author name removed as requested -->
+                                    <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    fragment.appendChild(articleElement);
+                });
+
+                articlesGrid.appendChild(fragment);
+            }
+
+            getAuthorSlug(authorName) {
+                const author = this.authorsData?.find(a => a.isim === authorName);
+                return author ? author.slug : authorName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+            }
+
+            goToAuthor(authorSlug) {
+                window.location.hash = `yazar-${authorSlug}`;
+            }
+
+            renderArticle(articleId) {
+                const article = this.data?.find(a => a.id === articleId);
+                if (!article) {
+                    this.showError('Makale bulunamadı.');
+                    return;
+                }
+
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="article-detail">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <a href="#kategori-${encodeURIComponent(article.kategori)}">${article.kategori}</a>
+                            <span>›</span>
+                            <span>${article.baslik}</span>
+                        </div>
+
+                        <div class="article-detail-header">
+                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-detail-image">
+                            <div class="article-detail-overlay">
+                                <h1 class="article-detail-title">${article.baslik}</h1>
+                                <div class="article-detail-meta">
+                                    <div class="meta-detail">
+                                        <svg class="icon" viewBox="0 0 24 24">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <a href="#yazar-${this.getAuthorSlug(article.yazar)}" class="author-link" style="color: rgba(255, 255, 255, 0.9);">${article.yazar}</a>
+                                    </div>
+                                    <div class="meta-detail">
+                                        <svg class="icon" viewBox="0 0 24 24">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                        <span style="color: rgba(255, 255, 255, 0.9);">${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="article-detail-content">
+                            ${this.formatArticleContent(article.icerik)}
+                            
+                            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                                <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Etiketler:</h3>
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                    ${article.etiketler?.map(etiket => `
+                                        <span style="background: var(--bg-tertiary); color: var(--primary-color); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--border-color);">
+                                            #${etiket}
+                                        </span>
+                                    `).join('') || ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            formatArticleContent(content) {
+                // Basit markdown-benzeri formatlamalar
+                return content
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\`\`\`([\s\S]*?)\`\`\`/g, '<pre><code>$1</code></pre>')
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
+                    .replace(/^- (.*$)/gim, '<li>$1</li>')
+                    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+                    .split('</p><p>').map(p => `<p>${p}</p>`).join('');
+            }
+
+            renderCategories() {
+                const content = document.getElementById('content');
+                const categories = this.getCategories();
+                
+                content.innerHTML = `
+                    <div class="categories-page">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <span>Kategoriler</span>
+                        </div>
+
+                        <div class="search-page-header">
+                            <h1 class="search-page-title">Kategoriler</h1>
+                            <p style="color: var(--text-secondary);">İlgilendiğiniz konulara göre makaleleri keşfedin</p>
+                        </div>
+
+                        <div class="categories-grid">
+                            ${categories.map(category => `
+                                <a href="#kategori-${encodeURIComponent(category.name)}" class="category-card ripple">
+                                    <div class="category-name">${category.name}</div>
+                                    <div class="category-count">${category.count} makale</div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            getCategories() {
+                if (!this.data) return [];
+                
+                const categoryCount = {};
+                this.data.forEach(article => {
+                    categoryCount[article.kategori] = (categoryCount[article.kategori] || 0) + 1;
+                });
+
+                return Object.entries(categoryCount).map(([name, count]) => ({ name, count }));
+            }
+
+            renderCategoryArticles(category) {
+                const content = document.getElementById('content');
+                const categoryArticles = this.data?.filter(article => article.kategori === category) || [];
+                
+                content.innerHTML = `
+                    <div class="search-page">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <a href="#kategoriler">Kategoriler</a>
+                            <span>›</span>
+                            <span>${category}</span>
+                        </div>
+
+                        <div class="search-page-header">
+                            <h1 class="search-page-title">${category}</h1>
+                            <p style="color: var(--text-secondary);">${categoryArticles.length} makale bulundu</p>
+                        </div>
+
+                        <div class="articles-grid">
+                            ${categoryArticles.map(article => `
+                                <a href="#makale-${article.id}" class="article-card ripple">
+                                    <div class="article-image-container">
+                                        <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
+                                        <div class="article-overlay">
+                                            <h2 class="article-title">${article.baslik}</h2>
+                                            <div class="article-meta">
+                                                <span>${article.kategori}</span>
+                                                <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderAuthor(authorSlug) {
+                const author = this.authorsData?.find(a => a.slug === authorSlug);
+                if (!author) {
+                    this.showError('Yazar bulunamadı.');
+                    return;
+                }
+
+                const authorArticles = this.data?.filter(article => article.yazar === author.isim) || [];
+                
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="author-page">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <span>Yazarlar</span>
+                            <span>›</span>
+                            <span>${author.isim}</span>
+                        </div>
+
+                        <div class="author-header">
+                            <div class="author-info">
+                                <img src="${author.avatar || '/placeholder.svg?height=120&width=120'}" alt="${author.isim}" class="author-avatar">
+                                <div class="author-details">
+                                    <h1>${author.isim}</h1>
+                                    <p class="author-bio">${author.bio || 'İslami araştırmalar ve yazılar konusunda uzman yazar.'}</p>
+                                    <div class="author-stats">
+                                        <div class="stat-item">
+                                            <div class="stat-number">${authorArticles.length}</div>
+                                            <div class="stat-label">Makale</div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-number">${author.deneyim || '5+'}</div>
+                                            <div class="stat-label">Yıl Deneyim</div>
+                                        </div>
+                                    </div>
+                                    ${author.uzmanlik ? `
+                                        <div class="author-expertise">
+                                            <strong>Uzmanlık Alanları:</strong>
+                                            <div class="expertise-tags">
+                                                ${author.uzmanlik.map(alan => `
+                                                    <span class="expertise-tag">${alan}</span>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                    ${author.sosyal ? `
+                                        <div class="author-social">
+                                            ${author.sosyal.twitter ? `<a href="${author.sosyal.twitter}" class="social-link" target="_blank">Twitter</a>` : ''}
+                                            ${author.sosyal.linkedin ? `<a href="${author.sosyal.linkedin}" class="social-link" target="_blank">LinkedIn</a>` : ''}
+                                            ${author.sosyal.website ? `<a href="${author.sosyal.website}" class="social-link" target="_blank">Website</a>` : ''}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="author-content">
+                            <h2>Makaleleri</h2>
+                            <div class="articles-grid">
+                                ${authorArticles.map(article => `
+                                    <a href="#makale-${article.id}" class="article-card ripple">
+                                        <div class="article-image-container">
+                                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
+                                            <div class="article-overlay">
+                                                <h2 class="article-title">${article.baslik}</h2>
+                                                <div class="article-meta">
+                                                    <span>${article.kategori}</span>
+                                                    <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderAbout() {
+                const content = document.getElementById('content');
+                
+                content.innerHTML = `
+                    <div class="about-page">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <span>Hakkında</span>
+                        </div>
+
+                        <div class="about-header">
+                            <h1 class="about-title">Hakkımızda</h1>
+                            <p style="color: var(--text-secondary);">Kur'an-ı Kerim'in ışığında İslami içerikler</p>
+                        </div>
+
+                        <div class="about-content">
+                            <h2>SADECE KURAN'a Hoş Geldiniz</h2>
+                            <p>SADECE KURAN, Kur'an-ı Kerim'in ışığında İslami makaleler, araştırmalar ve derinlemesine analizler sunmak amacıyla kurulmuş bir platformdur. Amacımız, İslam'ın güzelliklerini ve Kur'an-ı Kerim'in evrensel mesajlarını çağdaş bir yaklaşımla sunmaktır.</p>
+                            
+                            <h3>Misyonumuz</h3>
+                            <p>Kur'an-ı Kerim'in öğrettiklerini günümüz insanına ulaştırmak, İslam'ın güzelliklerini anlatmak ve müslümanların dini bilgilerini artırmalarına katkıda bulunmak. Karmaşık dini konuları basit ve anlaşılır bir dille açıklayarak, öğrenme sürecini kolaylaştırmak.</p>
+                            
+                            <h3>Vizyonumuz</h3>
+                            <p>İslami bilgilerin en güvenilir ve kaliteli kaynaklarından biri olmak, Kur'an-ı Kerim'in ışığında yaşamak isteyen herkese rehberlik etmek ve İslam'ın evrensel değerlerini tüm dünyaya tanıtmak.</p>
+                            
+                            <h3>İçeriklerimiz</h3>
+                            <ul>
+                                <li><strong>Tefsir ve Meal:</strong> Kur'an-ı Kerim ayetlerinin açıklamaları ve günümüz Türkçesi ile anlamları</li>
+                                <li><strong>İslami Araştırmalar:</strong> Dini konularda derinlemesine araştırmalar ve akademik çalışmalar</li>
+                                <li><strong>Bilimsel Mucizeler:</strong> Kur'an-ı Kerim'deki bilimsel işaretler ve modern bilimle uyumu</li>
+                                <li><strong>Günlük Hayat:</strong> İslami değerlerin günlük yaşama uygulanması</li>
+                                <li><strong>Tarih ve Siyer:</strong> İslam tarihi ve Hz. Muhammed'in (s.a.v) hayatı</li>
+                            </ul>
+                            
+                            <h3>Yazarlarımız</h3>
+                            <p>Deneyimli İslam araştırmacıları, ilahiyat uzmanları ve akademisyenlerden oluşan ekibimiz, sektördeki en güncel bilgileri ve en doğru yaklaşımları sizlerle paylaşıyor. Tüm yazarlarımız alanlarında uzman, güvenilir kaynaklardır.</p>
+                            
+                            <h3>Değerlerimiz</h3>
+                            <ul>
+                                <li><strong>Doğruluk:</strong> Sadece doğru ve güvenilir bilgileri paylaşırız</li>
+                                <li><strong>Samimiyet:</strong> İçtenlikle ve samimiyetle yazarız</li>
+                                <li><strong>Hoşgörü:</strong> Farklı görüşlere saygı duyarız</li>
+                                <li><strong>Kalite:</strong> Her zaman en yüksek kalitede içerik üretmeye odaklanırız</li>
+                                <li><strong>Erişilebilirlik:</strong> Bilgiyi herkese ulaştırmaya çalışırız</li>
+                            </ul>
+                            
+                            <h3>İletişim</h3>
+                            <p>Sorularınız, önerileriniz veya katkılarınız için bizimle iletişime geçebilirsiniz. İslami bilgilerin yayılmasında birlikte çalışalım!</p>
+                            
+                            <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: var(--bg-tertiary); border-radius: 12px; border: 1px solid var(--border-color);">
+                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🕌 SADECE KURAN Ekibi</h3>
+                                <p style="font-style: italic;">"Rabbimiz! Bizi doğru yola ilet."</p>
+                                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">- Fatiha Suresi, 6. Ayet</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderDestekle() {
+                const content = document.getElementById('content');
+                
+                content.innerHTML = `
+                    <div class="destekle-page">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <span>Destekle</span>
+                        </div>
+
+                        <div class="destekle-header">
+                            <h1 class="destekle-title">Projeyi Destekle</h1>
+                            <p class="destekle-description">
+                                <strong>Hakikatin Tek Kaynağına Davet</strong>
+                                <br><br>
+                                Biz, İslam dininin yegâne kaynağının Allah'ın kelamı olan Kur'an-ı Kerim olduğuna inanan bir topluluğuz. Amacımız, dini; hurafelerden, uydurma rivayetlerden ve mezhep temelli insan yorumlarından arındırmak, Allah'ın indirdiği saf ve evrensel mesaja geri dönmektir.
+                                <br><br>
+                                Kur'an merkezli bir bilinç inşa etmek için büyük bir çaba içindeyiz. Bu çaba, yalnızca bir inanç meselesi değil; aynı zamanda doğru bilgiye ulaşma, sorgulama ve hakikati yaşama mücadelesidir.
+                                <br><br>
+                                Bu doğrultuda:
+                                <br><br>
+                                Eğitim içerikleri hazırlıyor,<br>
+                                Kitaplar, makaleler ve videolar üretiyor,<br>
+                                Gençlerimize rehber olacak dijital projeler geliştiriyoruz.
+                                <br><br>
+                                Toplumda yaygın olan yanlış dini algıları Kur'an ışığında sorgulayan, düşünen, araştıran bireylerin çoğalması için var gücümüzle çalışıyoruz. Fakat bu mücadelede yalnız değiliz — sizin desteğinizle daha da güçlü olabiliriz.
+                                <br><br>
+                                Siz de Kur'an'a dayalı bir İslam anlayışının yayılmasına katkıda bulunarak bu hakikat yolculuğunun bir parçası olun.
+                            </p>
+
+                            <a href="https://www.patreon.com/sadecekuran/membership" target="_blank" class="donation-button">
+                                <div class="donation-button-content">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                    </svg>
+                                    Patreon'da Destekle
+                                </div>
+                            </a>
+                            <p class="destekle-description">
+                                <br><br>
+                                info@sadecekuran.com.tr
+                                <br><br>
+                                sdckuran@hotmail.com
+                            </p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderSearchPage() {
+                const content = document.getElementById('content');
+                
+                content.innerHTML = `
+                    <div class="search-page">
+                        <div class="breadcrumb">
+                            <a href="#" onclick="showHome()">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                </svg>
+                                Ana Sayfa
+                            </a>
+                            <span>›</span>
+                            <span>Arama</span>
+                        </div>
+
+                        <div class="search-page-header">
+                            <h1 class="search-page-title">Makalelerde Arama</h1>
+                            <input type="text" class="search-page-input ripple" id="searchPageInput" placeholder="Makale, kategori veya yazar ara..." autofocus>
+                        </div>
+
+                        <div id="searchPageResults"></div>
+                    </div>
+                `;
+
+                const searchInput = document.getElementById('searchPageInput');
+                let searchTimeout;
+                
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        this.handleSearchPageSearch(e.target.value);
+                    }, 300);
+                });
+            }
+
+            handleSearchPageSearch(query) {
+                const resultsContainer = document.getElementById('searchPageResults');
+                
+                if (!query || query.length < 2) {
+                    resultsContainer.innerHTML = '';
+                    return;
+                }
+
+                const results = this.search(query);
+                
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="search-results">
+                            <div class="search-header">
+                                <h2>Sonuç Bulunamadı</h2>
+                                <div class="search-meta">"${query}" için sonuç bulunamadı</div>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                resultsContainer.innerHTML = `
+                    <div class="search-results">
+                        <div class="search-header">
+                            <h2>Arama Sonuçları</h2>
+                            <div class="search-meta">"${query}" için ${results.length} sonuç bulundu</div>
+                        </div>
+                        <div class="articles-grid">
+                            ${results.slice(0, 12).map(result => {
+                                const article = this.data.find(a => a.id === result.id);
+                                if (!article) return '';
+                                
+                                return `
+                                    <a href="${result.url}" class="article-card ripple">
+                                        <div class="article-image-container">
+                                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
+                                            <div class="article-overlay">
+                                                <h2 class="article-title">${this.highlightText(article.baslik, query)}</h2>
+                                                <div class="article-meta">
+                                                    <span class="article-author" onclick="event.preventDefault(); event.stopPropagation(); app.goToAuthor('${this.getAuthorSlug(article.yazar)}')">${article.yazar}</span>
+                                                    <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            search(query) {
+                const results = [];
+                const queryLower = query.toLowerCase();
+                
+                this.searchIndex.forEach((categoryMap, category) => {
+                    categoryMap.forEach((items, term) => {
+                        if (term.includes(queryLower)) {
+                            results.push(...items);
+                        }
+                    });
+                });
+
+                const uniqueResults = results.filter((result, index, self) => 
+                    index === self.findIndex(r => r.id === result.id && r.type === result.type)
+                );
+
+                return uniqueResults.slice(0, 50);
+            }
+
+            highlightText(text, query) {
+                if (!query || query.length < 2) return text;
+                
+                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                return text.replace(regex, '<span style="background: #ffff00; color: #000000; padding: 0.1em 0.2em; border-radius: 3px; font-weight: bold;">$1</span>');
+            }
+
+            showSearchPage() {
+                window.location.hash = 'ara';
+            }
+
+            showCategories() {
+                window.location.hash = 'kategoriler';
+            }
+
+            showAbout() {
+                window.location.hash = 'hakkinda';
+            }
+
+            showDestekle() {
+                window.location.hash = 'destekle';
+            } 
+
+            showLoading() {
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Makaleler yükleniyor...</div>
+                    </div>
+                `;
+            }
+
+            showError(message) {
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="error">
+                        <strong>Hata:</strong> ${message}
+                    </div>
+                `;
+            } 
+        }
+
+        function showHome() {
+            window.location.hash = '';
+        }
+
+        const app = new BlogApp();
+    </script>
 </body>
 </html>
