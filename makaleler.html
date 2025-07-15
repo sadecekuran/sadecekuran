@@ -184,7 +184,6 @@
             overflow-x: hidden;
             font-size: calc(16px * var(--font-size-multiplier));
             line-height: 1.6;
-            /* Removed: transition: all 0.2s ease; */
         }
 
         /* Optimized Ripple Effect Styles */
@@ -244,13 +243,13 @@
             top: 0;
             left: 0;
             right: 0;
-            background: var(--navbar-bg); /* backdrop-filter removed */
+            background: var(--navbar-bg);
             border-bottom: 1px solid var(--border-color);
             padding: 0.75rem 1rem;
             z-index: 1000;
             height: var(--header-height);
             animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform, opacity; /* Filter removed as backdrop-filter is gone */
+            will-change: transform, opacity;
         }
 
         .header-content {
@@ -430,23 +429,22 @@
         }
 
         .article-image-container {
-            position: relative; /* Needed for absolute positioning of pseudo-element */
+            position: relative;
             height: 100%;
             overflow: hidden;
             border-radius: 20px;
         }
 
-        /* New pseudo-element for gradient darkening on the image */
         .article-image-container::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 70%; /* Adjust height to control how much of the image is darkened */
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent); /* Darkest at bottom, fades to transparent */
-            pointer-events: none; /* Ensure clicks pass through */
-            z-index: 1; /* Ensure it's above the image but below the overlay content */
+            height: 70%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            pointer-events: none;
+            z-index: 1;
         }
 
         .article-image {
@@ -454,7 +452,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.2s ease;
-            filter: brightness(0.7); /* Keep general darkening */
+            filter: brightness(0.7);
             will-change: transform, filter;
         }
 
@@ -473,13 +471,12 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: transparent; /* Make it transparent, gradient is now on image container */
-            padding: 6rem 1.5rem 1.5rem; /* Increased padding-top to push title down further */
+            background: transparent;
+            padding: 6rem 1.5rem 1.5rem;
             color: white;
-            /* backdrop-filter removed */
             border-radius: 0 0 20px 20px;
-            will-change: transform, opacity; /* Removed backdrop-filter from will-change */
-            z-index: 2; /* Ensure overlay content is above the gradient pseudo-element */
+            will-change: transform, opacity;
+            z-index: 2;
         }
 
         .article-title {
@@ -535,7 +532,6 @@
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
             padding: 3rem 2rem 2rem;
             color: white;
-            /* backdrop-filter removed */
         }
 
         .article-detail-title {
@@ -1346,10 +1342,10 @@
         <div class="header-content">
             <a href="#" class="logo ripple" onclick="showHome()">SADECE KURAN</a>
             <div class="header-actions">
-                <button class="home-btn ripple" onclick="window.location.href='/index.html'">
+                <button class="home-btn ripple" onclick="showHome()">
                     <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
                     </svg>
                 </button>
                 <button class="search-btn ripple" onclick="app.showSearchPage()">
@@ -1428,8 +1424,43 @@
                 }
             }
 
+            // Update page title dynamically
+            updatePageTitle(title) {
+                document.title = title ? `${title} - SADECE KURAN` : 'SADECE KURAN - İslami Makaleler ve Araştırmalar';
+            }
+
+            // Generate slug from Turkish text
+            generateSlug(text) {
+                const turkishMap = {
+                    'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u',
+                    'Ç': 'c', 'Ğ': 'g', 'I': 'i', 'İ': 'i', 'Ö': 'o', 'Ş': 's', 'Ü': 'u'
+                };
+                
+                return text
+                    .split('')
+                    .map(char => turkishMap[char] || char)
+                    .join('')
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
+            }
+
+            // Get article by slug
+            getArticleBySlug(slug) {
+                return this.data?.find(article => {
+                    const articleSlug = article.slug || this.generateSlug(article.baslik);
+                    return articleSlug === slug;
+                });
+            }
+
+            // Get article slug
+            getArticleSlug(article) {
+                return article.slug || this.generateSlug(article.baslik);
+            }
+
             addRippleEffects() {
-                // Optimized ripple effect
                 document.addEventListener('click', (e) => {
                     const rippleElement = e.target.closest('.ripple');
                     if (rippleElement && !rippleElement.dataset.rippling) {
@@ -1482,6 +1513,7 @@
                     {
                         id: 1,
                         baslik: "Kur'an-ı Kerim'de Bilimsel Mucizeler",
+                        slug: "kuran-kerimde-bilimsel-mucizeler",
                         ozet: "Kur'an-ı Kerim'in içerdiği bilimsel gerçeklerin modern bilimle uyumu üzerine detaylı bir inceleme.",
                         icerik: "Kur'an-ı Kerim, 1400 yıl önce indirilmiş olmasına rağmen, modern bilimin keşfettiği birçok gerçeği içermektedir...",
                         yazar: "Ahmet Yılmaz",
@@ -1545,24 +1577,25 @@
 
                 this.searchIndex.clear();
                 
-                // Optimized search index building
                 this.data.forEach(article => {
+                    const slug = this.getArticleSlug(article);
+                    
                     // Başlık indeksi
                     this.addToSearchIndex('title', article.baslik.toLowerCase(), {
                         type: 'makale',
                         id: article.id,
                         title: article.baslik,
                         content: article.ozet,
-                        url: `#makale-${article.id}`
+                        url: `#makale/${slug}`
                     });
 
-                    // İçerik indeksi (sadece ilk 500 karakter)
+                    // İçerik indeksi
                     this.addToSearchIndex('content', article.icerik.toLowerCase().substring(0, 500), {
                         type: 'makale',
                         id: article.id,
                         title: article.baslik,
                         content: article.ozet,
-                        url: `#makale-${article.id}`
+                        url: `#makale/${slug}`
                     });
 
                     // Etiket indeksi
@@ -1572,7 +1605,7 @@
                             id: `${article.id}-${etiket}`,
                             title: `${etiket} - ${article.baslik}`,
                             content: article.ozet,
-                            url: `#makale-${article.id}`
+                            url: `#makale/${slug}`
                         });
                     });
 
@@ -1582,7 +1615,7 @@
                         id: article.kategori,
                         title: `${article.kategori} - ${article.baslik}`,
                         content: article.ozet,
-                        url: `#makale-${article.id}`
+                        url: `#makale/${slug}`
                     });
                 });
             }
@@ -1609,9 +1642,9 @@
 
                 if (!hash) {
                     this.renderHome();
-                } else if (hash.startsWith('makale-')) {
-                    const articleId = parseInt(hash.split('-')[1]);
-                    this.renderArticle(articleId);
+                } else if (hash.startsWith('makale/')) {
+                    const slug = hash.substring(7);
+                    this.renderArticleBySlug(slug);
                 } else if (hash.startsWith('yazar-')) {
                     const authorSlug = hash.substring(6);
                     this.renderAuthor(authorSlug);
@@ -1633,6 +1666,7 @@
             }
 
             renderHome() {
+                this.updatePageTitle('');
                 const content = document.getElementById('content');
                 
                 content.innerHTML = `
@@ -1654,7 +1688,6 @@
                     </div>
                 `;
 
-                // Use requestAnimationFrame to defer heavy operations for better performance
                 requestAnimationFrame(() => {
                     this.renderArticlesGrid();
                 });
@@ -1667,12 +1700,12 @@
                     return;
                 }
 
-                // Use document fragment for better performance
                 const fragment = document.createDocumentFragment();
                 
                 this.data.forEach((article, index) => {
+                    const slug = this.getArticleSlug(article);
                     const articleElement = document.createElement('a');
-                    articleElement.href = `#makale-${article.id}`;
+                    articleElement.href = `#makale/${slug}`;
                     articleElement.className = 'article-card ripple';
                     articleElement.style.animationDelay = `${index * 0.05}s`;
                     articleElement.innerHTML = `
@@ -1681,7 +1714,6 @@
                             <div class="article-overlay">
                                 <h2 class="article-title">${article.baslik}</h2>
                                 <div class="article-meta">
-                                    <!-- Author name removed as requested -->
                                     <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
                                 </div>
                             </div>
@@ -1695,20 +1727,21 @@
 
             getAuthorSlug(authorName) {
                 const author = this.authorsData?.find(a => a.isim === authorName);
-                return author ? author.slug : authorName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                return author ? author.slug : this.generateSlug(authorName);
             }
 
             goToAuthor(authorSlug) {
                 window.location.hash = `yazar-${authorSlug}`;
             }
 
-            renderArticle(articleId) {
-                const article = this.data?.find(a => a.id === articleId);
+            renderArticleBySlug(slug) {
+                const article = this.getArticleBySlug(slug);
                 if (!article) {
                     this.showError('Makale bulunamadı.');
                     return;
                 }
 
+                this.updatePageTitle(article.baslik);
                 const content = document.getElementById('content');
                 content.innerHTML = `
                     <div class="article-detail">
@@ -1718,7 +1751,6 @@
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                                 </svg>
-       
                             </a>
                             <span>›</span>
                             <a href="#kategori-${encodeURIComponent(article.kategori)}">${article.kategori}</a>
@@ -1736,7 +1768,7 @@
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                        <a href="#yazar-${this.getAuthorSlug(article.yazar)}" class="author-link" style="color: rgba(255, 255, 255, 0.9);">${article.yazar}</a>
+                                        <a href="#yazar-${this.getAuthorSlug(article.yazar)}" class="author-link">${article.yazar}</a>
                                     </div>
                                     <div class="meta-detail">
                                         <svg class="icon" viewBox="0 0 24 24">
@@ -1745,7 +1777,7 @@
                                             <line x1="8" y1="2" x2="8" y2="6"></line>
                                             <line x1="3" y1="10" x2="21" y2="10"></line>
                                         </svg>
-                                        <span style="color: rgba(255, 255, 255, 0.9);">${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                        <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
                                     </div>
                                 </div>
                             </div>
@@ -1770,7 +1802,6 @@
             }
 
             formatArticleContent(content) {
-                // Basit markdown-benzeri formatlamalar
                 return content
                     .replace(/\n\n/g, '</p><p>')
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -1786,6 +1817,7 @@
             }
 
             renderCategories() {
+                this.updatePageTitle('Kategoriler');
                 const content = document.getElementById('content');
                 const categories = this.getCategories();
                 
@@ -1797,7 +1829,6 @@
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                                 </svg>
-                              
                             </a>
                             <span>›</span>
                             <span>Kategoriler</span>
@@ -1832,6 +1863,7 @@
             }
 
             renderCategoryArticles(category) {
+                this.updatePageTitle(category);
                 const content = document.getElementById('content');
                 const categoryArticles = this.data?.filter(article => article.kategori === category) || [];
                 
@@ -1843,7 +1875,6 @@
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                                 </svg>
-                           
                             </a>
                             <span>›</span>
                             <a href="#kategoriler">Kategoriler</a>
@@ -1857,20 +1888,23 @@
                         </div>
 
                         <div class="articles-grid">
-                            ${categoryArticles.map(article => `
-                                <a href="#makale-${article.id}" class="article-card ripple">
-                                    <div class="article-image-container">
-                                        <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
-                                        <div class="article-overlay">
-                                            <h2 class="article-title">${article.baslik}</h2>
-                                            <div class="article-meta">
-                                                <span>${article.kategori}</span>
-                                                <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                            ${categoryArticles.map(article => {
+                                const slug = this.getArticleSlug(article);
+                                return `
+                                    <a href="#makale/${slug}" class="article-card ripple">
+                                        <div class="article-image-container">
+                                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
+                                            <div class="article-overlay">
+                                                <h2 class="article-title">${article.baslik}</h2>
+                                                <div class="article-meta">
+                                                    <span>${article.kategori}</span>
+                                                    <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                            `).join('')}
+                                    </a>
+                                `;
+                            }).join('')}
                         </div>
                     </div>
                 `;
@@ -1883,6 +1917,7 @@
                     return;
                 }
 
+                this.updatePageTitle(author.isim);
                 const authorArticles = this.data?.filter(article => article.yazar === author.isim) || [];
                 
                 const content = document.getElementById('content');
@@ -1894,7 +1929,6 @@
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                                 </svg>
-                        
                             </a>
                             <span>›</span>
                             <span>Yazarlar</span>
@@ -1942,20 +1976,23 @@
                         <div class="author-content">
                             <h2>Makaleleri</h2>
                             <div class="articles-grid">
-                                ${authorArticles.map(article => `
-                                    <a href="#makale-${article.id}" class="article-card ripple">
-                                        <div class="article-image-container">
-                                            <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
-                                            <div class="article-overlay">
-                                                <h2 class="article-title">${article.baslik}</h2>
-                                                <div class="article-meta">
-                                                    <span>${article.kategori}</span>
-                                                    <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                ${authorArticles.map(article => {
+                                    const slug = this.getArticleSlug(article);
+                                    return `
+                                        <a href="#makale/${slug}" class="article-card ripple">
+                                            <div class="article-image-container">
+                                                <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
+                                                <div class="article-overlay">
+                                                    <h2 class="article-title">${article.baslik}</h2>
+                                                    <div class="article-meta">
+                                                        <span>${article.kategori}</span>
+                                                        <span>${new Date(article.tarih).toLocaleDateString('tr-TR')}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                `).join('')}
+                                        </a>
+                                    `;
+                                }).join('')}
                             </div>
                         </div>
                     </div>
@@ -1963,6 +2000,7 @@
             }
 
             renderAbout() {
+                this.updatePageTitle('Hakkında');
                 const content = document.getElementById('content');
                 
                 content.innerHTML = `
@@ -1973,7 +2011,6 @@
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                                 </svg>
-                  
                             </a>
                             <span>›</span>
                             <span>Hakkında</span>
@@ -1991,13 +2028,11 @@
                             <h3>Misyonumuz</h3>
                             <p>Kur'an-ı Kerim'in öğrettiklerini günümüz insanına ulaştırmak, İslam'ın güzelliklerini anlatmak ve müslümanların dini bilgilerini artırmalarına katkıda bulunmak. Karmaşık dini konuları basit ve anlaşılır bir dille açıklayarak, öğrenme sürecini kolaylaştırmak.</p>
                             
-                            
                             <h3>İçeriklerimiz</h3>
                             <ul>
                                 <li><strong>Tefsir ve Meal:</strong> Kur'an-ı Kerim ayetlerinin açıklamaları ve günümüz Türkçesi ile anlamları</li>
                                 <li><strong>İslami Araştırmalar:</strong> Dini konularda derinlemesine araştırmalar ve akademik çalışmalar</li>
                             </ul>
-                            
                             
                             <h3>Değerlerimiz</h3>
                             <ul>
@@ -2012,8 +2047,7 @@
                             <p>Sorularınız, önerileriniz veya katkılarınız için bizimle iletişime geçebilirsiniz. İslami bilgilerin yayılmasında birlikte çalışalım!</p>
                             
                             <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: var(--bg-tertiary); border-radius: 12px; border: 1px solid var(--border-color);">
-                                
-                                <p style="font-style: italic;">"info@sadecekuran.com.tr."</p>
+                                <p style="font-style: italic;">"info@sadecekuran.com.tr"</p>
                             </div>
                         </div>
                     </div>
@@ -2021,6 +2055,7 @@
             }
 
             renderDestekle() {
+                this.updatePageTitle('Destekle');
                 const content = document.getElementById('content');
                 
                 content.innerHTML = `
@@ -2031,7 +2066,6 @@
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                                 </svg>
-                          
                             </a>
                             <span>›</span>
                             <span>Destekle</span>
@@ -2077,6 +2111,7 @@
             }
 
             renderSearchPage() {
+                this.updatePageTitle('Arama');
                 const content = document.getElementById('content');
                 
                 content.innerHTML = `
@@ -2087,7 +2122,6 @@
                                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9,22 9,12 15,12 15,22"></polyline>
                                 </svg>
-                          
                             </a>
                             <span>›</span>
                             <span>Arama</span>
@@ -2146,8 +2180,9 @@
                                 const article = this.data.find(a => a.id === result.id);
                                 if (!article) return '';
                                 
+                                const slug = this.getArticleSlug(article);
                                 return `
-                                    <a href="${result.url}" class="article-card ripple">
+                                    <a href="#makale/${slug}" class="article-card ripple">
                                         <div class="article-image-container">
                                             <img src="${article.gorsel}" alt="${article.baslik}" class="article-image" loading="lazy">
                                             <div class="article-overlay">
