@@ -3,17 +3,17 @@
   "short_name": "Sadece Kuran",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#dc2626",
-  "theme_color": "#8bff00 ",
+  "background_color": "#111111",
+  "theme_color": "#111111",
   "description": "Sadece Kur'an meali ve araştırma sitesi. 24 farklı meal, not alma ve gelişmiş arama özelliği.",
   "icons": [
     {
-      "src": "/applogo2.jpg",
+      "src": "/sdc5.PNG",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/applogo2.jpg",
+      "src": "/sdc5.PNG",
       "sizes": "512x512",
       "type": "image/png"
     }
