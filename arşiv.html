@@ -1572,9 +1572,9 @@
         
         // Add shadow effect
         ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
+        ctx.shadowBlur = 2;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
         
         for (let i = wrappedLines.length - 1; i >= 0; i--) {
           ctx.fillText(wrappedLines[i], leftPadding, y);
