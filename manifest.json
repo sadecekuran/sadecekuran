@@ -8,12 +8,12 @@
   "description": "Sadece Kur'an meali ve araştırma sitesi. 24 farklı meal, not alma ve gelişmiş arama özelliği.",
   "icons": [
     {
-      "src": "/sdc5.PNG",
+      "src": "/applogo3.jpg",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/sdc5.PNG",
+      "src": "/applogo3.jpeg",
       "sizes": "512x512",
       "type": "image/png"
     }
