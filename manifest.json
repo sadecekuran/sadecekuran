@@ -1,21 +1,293 @@
-{
-  "name": "SADECE KURAN",
-  "short_name": "Sadece Kuran",
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#111111",
-  "theme_color": "#111111",
-  "description": "Sadece Kur'an meali ve araştırma sitesi. 24 farklı meal, not alma ve gelişmiş arama özelliği.",
-  "icons": [
-    {
-      "src": "/applogo3.jpg",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "/applogo3.jpg",
-      "sizes": "512x512",
-      "type": "image/png"
+const CACHE_NAME = 'sadece-kuran-v1.0.0';
+const STATIC_CACHE_NAME = 'sadece-kuran-static-v1.0.0';
+const DYNAMIC_CACHE_NAME = 'sadece-kuran-dynamic-v1.0.0';
+
+// Files to cache immediately
+const STATIC_FILES = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/sdc5.PNG',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap'
+];
+
+// Files to cache on demand
+const DYNAMIC_FILES = [
+  '/all_surahs_data.json',
+  '/kuran_mealleri.json'
+];
+
+// Audio files pattern
+const AUDIO_PATTERN = /https:\/\/api\.sadecekuran\.com\.tr\/\d+\.mp3/;
+
+// Install event - cache static files
+self.addEventListener('install', (event) => {
+  console.log('Service Worker: Installing...');
+  
+  event.waitUntil(
+    caches.open(STATIC_CACHE_NAME)
+      .then((cache) => {
+        console.log('Service Worker: Caching static files');
+        return cache.addAll(STATIC_FILES);
+      })
+      .then(() => {
+        console.log('Service Worker: Static files cached successfully');
+        return self.skipWaiting();
+      })
+      .catch((error) => {
+        console.error('Service Worker: Error caching static files:', error);
+      })
+  );
+});
+
+// Activate event - clean up old caches
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker: Activating...');
+  
+  event.waitUntil(
+    caches.keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (cacheName !== STATIC_CACHE_NAME && 
+                cacheName !== DYNAMIC_CACHE_NAME && 
+                cacheName !== CACHE_NAME) {
+              console.log('Service Worker: Deleting old cache:', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      })
+      .then(() => {
+        console.log('Service Worker: Activated successfully');
+        return self.clients.claim();
+      })
+  );
+});
+
+// Fetch event - serve from cache, fallback to network
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Skip non-GET requests
+  if (request.method !== 'GET') {
+    return;
+  }
+
+  // Handle different types of requests
+  if (STATIC_FILES.some(file => request.url.includes(file))) {
+    // Static files - cache first
+    event.respondWith(cacheFirst(request, STATIC_CACHE_NAME));
+  } else if (DYNAMIC_FILES.some(file => request.url.includes(file))) {
+    // Dynamic files (JSON data) - network first with cache fallback
+    event.respondWith(networkFirstWithCache(request, DYNAMIC_CACHE_NAME));
+  } else if (AUDIO_PATTERN.test(request.url)) {
+    // Audio files - cache first with network fallback
+    event.respondWith(cacheFirstWithNetwork(request, DYNAMIC_CACHE_NAME));
+  } else if (url.origin === location.origin) {
+    // Same origin requests - network first
+    event.respondWith(networkFirstWithCache(request, DYNAMIC_CACHE_NAME));
+  } else {
+    // External resources - network first
+    event.respondWith(networkFirst(request));
+  }
+});
+
+// Cache first strategy
+async function cacheFirst(request, cacheName) {
+  try {
+    const cache = await caches.open(cacheName);
+    const cachedResponse = await cache.match(request);
+    
+    if (cachedResponse) {
+      console.log('Service Worker: Serving from cache:', request.url);
+      return cachedResponse;
     }
-  ]
+    
+    console.log('Service Worker: Fetching from network:', request.url);
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse.ok) {
+      cache.put(request, networkResponse.clone());
+    }
+    
+    return networkResponse;
+  } catch (error) {
+    console.error('Service Worker: Cache first failed:', error);
+    return new Response('Offline - Content not available', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
+  }
 }
+
+// Network first with cache fallback
+async function networkFirstWithCache(request, cacheName) {
+  try {
+    console.log('Service Worker: Trying network first:', request.url);
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse.ok) {
+      const cache = await caches.open(cacheName);
+      cache.put(request, networkResponse.clone());
+      console.log('Service Worker: Network response cached:', request.url);
+    }
+    
+    return networkResponse;
+  } catch (error) {
+    console.log('Service Worker: Network failed, trying cache:', request.url);
+    const cache = await caches.open(cacheName);
+    const cachedResponse = await cache.match(request);
+    
+    if (cachedResponse) {
+      console.log('Service Worker: Serving from cache:', request.url);
+      return cachedResponse;
+    }
+    
+    console.error('Service Worker: Both network and cache failed:', error);
+    return new Response('Offline - Content not available', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
+  }
+}
+
+// Cache first with network fallback (for audio files)
+async function cacheFirstWithNetwork(request, cacheName) {
+  try {
+    const cache = await caches.open(cacheName);
+    const cachedResponse = await cache.match(request);
+    
+    if (cachedResponse) {
+      console.log('Service Worker: Audio served from cache:', request.url);
+      return cachedResponse;
+    }
+    
+    console.log('Service Worker: Fetching audio from network:', request.url);
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse.ok) {
+      // Only cache audio files if they're not too large
+      const contentLength = networkResponse.headers.get('content-length');
+      if (!contentLength || parseInt(contentLength) < 50 * 1024 * 1024) { // 50MB limit
+        cache.put(request, networkResponse.clone());
+        console.log('Service Worker: Audio cached:', request.url);
+      }
+    }
+    
+    return networkResponse;
+  } catch (error) {
+    console.error('Service Worker: Audio fetch failed:', error);
+    return new Response('Audio not available offline', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
+  }
+}
+
+// Network first (no caching)
+async function networkFirst(request) {
+  try {
+    return await fetch(request);
+  } catch (error) {
+    console.error('Service Worker: Network request failed:', error);
+    return new Response('Network error', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
+  }
+}
+
+// Background sync for offline actions
+self.addEventListener('sync', (event) => {
+  console.log('Service Worker: Background sync triggered:', event.tag);
+  
+  if (event.tag === 'background-sync') {
+    event.waitUntil(doBackgroundSync());
+  }
+});
+
+async function doBackgroundSync() {
+  console.log('Service Worker: Performing background sync');
+  // Add any background sync logic here
+}
+
+// Push notification handling
+self.addEventListener('push', (event) => {
+  console.log('Service Worker: Push notification received');
+  
+  if (event.data) {
+    const data = event.data.json();
+    const options = {
+      body: data.body || 'Yeni içerik mevcut',
+      icon: '/sdc5.PNG',
+      badge: '/sdc5.PNG',
+      vibrate: [100, 50, 100],
+      data: {
+        dateOfArrival: Date.now(),
+        primaryKey: '1'
+      },
+      actions: [
+        {
+          action: 'explore',
+          title: 'Görüntüle',
+          icon: '/sdc5.PNG'
+        },
+        {
+          action: 'close',
+          title: 'Kapat'
+        }
+      ]
+    };
+    
+    event.waitUntil(
+      self.registration.showNotification(data.title || 'Sadece Kuran', options)
+    );
+  }
+});
+
+// Notification click handling
+self.addEventListener('notificationclick', (event) => {
+  console.log('Service Worker: Notification clicked');
+  
+  event.notification.close();
+  
+  if (event.action === 'explore') {
+    event.waitUntil(
+      clients.openWindow('/')
+    );
+  } else if (event.action === 'close') {
+    // Just close the notification
+    return;
+  } else {
+    // Default action - open the app
+    event.waitUntil(
+      clients.openWindow('/')
+    );
+  }
+});
+
+// Message handling from main thread
+self.addEventListener('message', (event) => {
+  console.log('Service Worker: Message received:', event.data);
+  
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+  
+  if (event.data && event.data.type === 'GET_VERSION') {
+    event.ports[0].postMessage({ version: CACHE_NAME });
+  }
+});
+
+// Error handling
+self.addEventListener('error', (event) => {
+  console.error('Service Worker: Error occurred:', event.error);
+});
+
+self.addEventListener('unhandledrejection', (event) => {
+  console.error('Service Worker: Unhandled promise rejection:', event.reason);
+});
+
+console.log('Service Worker: Script loaded successfully');
