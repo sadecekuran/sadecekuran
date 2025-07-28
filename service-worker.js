@@ -1,38 +1,100 @@
-const CACHE_NAME = "sadecekuran-cache-v1";
-const urlsToCache = [
-  "/",                  // ana sayfa
-  "/index.html",        // varsa
-  "/manifest.json",
-  "/sdc1.PNG",
-  "/sdc5.PNG",
-  "/style.css",         // varsa
-  "/kuran_mealleri.json", 
-  "/all_surahs_data.json",         // varsa
-  "/main.js"            // varsa
-];
-
-// Kurulumda dosyaları önbelleğe al
-self.addEventListener("install", function (event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function (cache) {
-        console.log("Cache açıldı");
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
-
-// İstek geldiğinde önbellekten döndür
-self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function (response) {
-        // Eğer cache'de varsa onu döndür
-        if (response) {
-          return response;
+{
+  "name": "SADECE KURAN - Kuran Meali ve Kelime Analizi",
+  "short_name": "Sadece Kuran",
+  "description": "Kur'an meali ve kelime analizi ile Kur'an'ı daha yakından keşfedin. Sadece Kur'an ile İslam.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#111111",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "tr",
+  "dir": "ltr",
+  "categories": ["education", "books", "lifestyle"],
+  "icons": [
+    {
+      "src": "/sdc5.PNG",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/sdc5.PNG",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/sdc5.PNG",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/sdc5.PNG",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/sdc5.PNG",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/sdc5.PNG",
+      "sizes": "48x48",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Arama",
+      "short_name": "Ara",
+      "description": "Kuran'da arama yap",
+      "url": "/#ara",
+      "icons": [
+        {
+          "src": "/sdc5.PNG",
+          "sizes": "96x96"
         }
-        // Yoksa normal isteği yap
-        return fetch(event.request);
-      })
-  );
-});
+      ]
+    },
+    {
+      "name": "Kaydedilenler",
+      "short_name": "Kayıtlı",
+      "description": "Kaydettiğin ayetleri görüntüle",
+      "url": "/#kaydedilenler",
+      "icons": [
+        {
+          "src": "/sdc5.PNG",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Ayarlar",
+      "short_name": "Ayarlar",
+      "description": "Uygulama ayarları",
+      "url": "/#ayarlar",
+      "icons": [
+        {
+          "src": "/sdc5.PNG",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/onizleme.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Sadece Kuran ana sayfa görünümü"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}
