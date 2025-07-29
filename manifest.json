@@ -51,34 +51,16 @@
   ],
   "screenshots": [
     {
-      "src": "/app1.jpg",
-      "sizes": "1080x1456",
+      "src": "/onizleme.jpg",
+      "sizes": "1280x720",
       "type": "image/jpeg",
       "form_factor": "wide"
     },
     {
-      "src": "/app2.JPG",
-      "sizes": "1080x1456",
+      "src": "/onizleme.jpg",
+      "sizes": "750x1334",
       "type": "image/jpeg",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/app3.JPG",
-      "sizes": "1080x1456",
-      "type": "image/jpeg",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/app4.JPG",
-      "sizes": "1080x1456",
-      "type": "image/jpeg",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/app5.JPG",
-      "sizes": "1080x1456",
-      "type": "image/jpeg",
-      "form_factor": "wide"
+      "form_factor": "narrow"
     }
   ],
   "shortcuts": [
