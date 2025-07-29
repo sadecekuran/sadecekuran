@@ -4,12 +4,6 @@ const urlsToCache = [
   '/index.html',
   '/manifest.json',
   '/sdc5.PNG',
-  '/app1.JPG',
-  '/app2.JPG',
-  '/app3.JPG',
-  '/app4.JPG',
-  '/app5.JPG',
-  '/app6.JPG',
   '/all_surahs_data.json',
   '/kuran_mealleri.json',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap'
