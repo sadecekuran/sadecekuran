@@ -61,6 +61,36 @@
       "sizes": "750x1334",
       "type": "image/jpeg",
       "form_factor": "narrow"
+    },
+    {
+      "src": "/app2.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/app3.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/app4.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/app5.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/app6.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
     }
   ],
   "shortcuts": [
