@@ -79,24 +79,6 @@
       "sizes": "1080x1450",
       "type": "image/jpeg",
       "form_factor": "wide"
-    },
-    {
-      "src": "/app6.JPG",
-      "sizes": "1080x1450",
-      "type": "image/jpeg",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/onizleme.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/onizleme.jpg",
-      "sizes": "750x1334",
-      "type": "image/jpeg",
-      "form_factor": "narrow"
     }
   ],
   "shortcuts": [
