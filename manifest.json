@@ -51,6 +51,42 @@
   ],
   "screenshots": [
     {
+      "src": "/app1.JPG",
+      "sizes": "1080x1450",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app2.JPG",
+      "sizes": "1080x1450",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app3.JPG",
+      "sizes": "1080x1450",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app4.JPG",
+      "sizes": "1080x1450",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app5.JPG",
+      "sizes": "1080x1450",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app6.JPG",
+      "sizes": "1080x1450",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
       "src": "/onizleme.jpg",
       "sizes": "1280x720",
       "type": "image/jpeg",
