@@ -51,8 +51,38 @@
   ],
   "screenshots": [
     {
-      "src": "/onizleme.jpg",
-      "sizes": "1280x720",
+      "src": "/app1.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app2.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app3.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app4.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app5.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/app6.jpg",
+      "sizes": "750x1334",
       "type": "image/jpeg",
       "form_factor": "wide"
     },
