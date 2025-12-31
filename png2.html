@@ -2,13 +2,11 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Kur'an – Meal Seçimi</title>
+<title>Kur’an Meali</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  margin: 0;
   padding: 20px;
 }
 
@@ -18,117 +16,86 @@ body {
   background: #fff;
   padding: 10px;
   border-bottom: 1px solid #ccc;
-  z-index: 10;
-}
-
-#kuran {
-  column-count: 3;
-  column-gap: 40px;
-}
-
-.surah {
-  break-inside: avoid;
-  margin-bottom: 30px;
-}
-
-.surah h2 {
-  text-align: center;
-  border-bottom: 1px solid #aaa;
-  padding-bottom: 5px;
 }
 
 .ayah {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.ayah-no {
-  color: #777;
-  font-size: 12px;
-}
-
-.meal {
-  font-size: 14px;
+.ref {
+  color: #888;
+  font-size: 11px;
 }
 </style>
 </head>
 <body>
 
 <div id="controls">
-  <label>Meal Seç:</label>
   <select id="mealSelect"></select>
 </div>
 
-<div id="kuran"></div>
+<div id="content"></div>
 
 <script>
 let DATA;
-let AUTHORS = [];
+let CURRENT_AUTHOR;
 
 async function loadJSON() {
-  const res = await fetch("all_surahs_data.json");
+  const res = await fetch("kuran_mealleri.json");
   DATA = await res.json();
 
-  extractAuthors();
   setupMealSelect();
-  renderKuran();
-}
-
-function extractAuthors() {
-  const set = new Set();
-
-  DATA.surahs.forEach(s =>
-    s.verses.forEach(v =>
-      v.translations.forEach(t => set.add(t.author))
-    )
-  );
-
-  AUTHORS = [...set];
+  render();
 }
 
 function setupMealSelect() {
+  const authors = new Set();
+
+  DATA.surahs.forEach(surah => {
+    surah.verses.forEach(verse => {
+      verse.translations.forEach(t => {
+        authors.add(t.author);
+      });
+    });
+  });
+
   const select = document.getElementById("mealSelect");
 
-  AUTHORS.forEach(author => {
+  [...authors].forEach(author => {
     const opt = document.createElement("option");
     opt.value = author;
     opt.textContent = author;
     select.appendChild(opt);
   });
 
-  select.onchange = renderKuran;
+  CURRENT_AUTHOR = select.value = [...authors][0];
+
+  select.onchange = e => {
+    CURRENT_AUTHOR = e.target.value;
+    render();
+  };
 }
 
-function getMealText(verse, author) {
-  const found = verse.translations.find(t => t.author === author);
-  return found ? found.text : "";
-}
-
-function renderKuran() {
-  const selectedAuthor = document.getElementById("mealSelect").value;
-  const container = document.getElementById("kuran");
-
-  container.innerHTML = "";
+function render() {
+  const box = document.getElementById("content");
+  box.innerHTML = "";
 
   DATA.surahs.forEach(surah => {
-    const sDiv = document.createElement("div");
-    sDiv.className = "surah";
+    surah.verses.forEach(verse => {
+      const tr = verse.translations.find(
+        t => t.author === CURRENT_AUTHOR
+      );
 
-    sDiv.innerHTML = `<h2>${surah.name}</h2>`;
+      if (!tr) return;
 
-    surah.verses.forEach(v => {
-      const meal = getMealText(v, selectedAuthor);
-
-      sDiv.innerHTML += `
-        <div class="ayah">
-          <div class="meal">
-            <span class="ayah-no">(${v.verse_id})</span>
-            ${meal}
-          </div>
-        </div>
+      const div = document.createElement("div");
+      div.className = "ayah";
+      div.innerHTML = `
+        <span class="ref">(${surah.id}:${verse.verse_id})</span>
+        ${tr.text}
       `;
+      box.appendChild(div);
     });
-
-    container.appendChild(sDiv);
   });
 }
 
