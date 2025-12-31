@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Kur'an – Seçilebilir Meal</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
+
+#controls {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  z-index: 10;
+}
+
+#kuran {
+  column-count: 3;           /* POSTER ETKİSİ */
+  column-gap: 40px;
+}
+
+.surah {
+  break-inside: avoid;
+  margin-bottom: 25px;
+}
+
+.surah h2 {
+  text-align: center;
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 5px;
+}
+
+.ayah {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.ayah-no {
+  color: #666;
+  font-size: 12px;
+}
+
+.arabic {
+  direction: rtl;
+  font-size: 20px;
+  font-family: "Amiri", serif;
+}
+
+.meal {
+  margin-top: 4px;
+}
+</style>
+</head>
+<body>
+
+<div id="controls">
+  <label>Meal Seç:</label>
+  <select id="mealSelect"></select>
+</div>
+
+<div id="kuran"></div>
+
+<script>
+let SURAH_DATA;
+let MEALS_DATA;
+
+async function loadJSON() {
+  const s = await fetch("all_surahs_data.json");
+  const m = await fetch("kuran_mealleri.json");
+
+  SURAH_DATA = await s.json();
+  MEALS_DATA = await m.json();
+
+  setupMealSelect();
+  renderKuran();
+}
+
+function setupMealSelect() {
+  const select = document.getElementById("mealSelect");
+
+  MEALS_DATA.meals.forEach((meal, index) => {
+    const opt = document.createElement("option");
+    opt.value = index;
+    opt.textContent = meal.author;
+    select.appendChild(opt);
+  });
+
+  select.onchange = renderKuran;
+}
+
+function getMealText(mealIndex, surahNo, ayahNo) {
+  const meal = MEALS_DATA.meals[mealIndex];
+  const surah = meal.translations.find(s => s.surah_number === surahNo);
+  if (!surah) return "";
+  const ayah = surah.verses.find(v => v.verse_number === ayahNo);
+  return ayah ? ayah.text : "";
+}
+
+function renderKuran() {
+  const mealIndex = document.getElementById("mealSelect").value;
+  const container = document.getElementById("kuran");
+  container.innerHTML = "";
+
+  SURAH_DATA.surahs.forEach(surah => {
+    const sDiv = document.createElement("div");
+    sDiv.className = "surah";
+
+    sDiv.innerHTML = `<h2>${surah.name} (${surah.name_original})</h2>`;
+
+    surah.verses.forEach(v => {
+      const mealText = getMealText(+mealIndex, surah.id, v.verse_number);
+
+      sDiv.innerHTML += `
+        <div class="ayah">
+          <div class="arabic">${v.text}</div>
+          <div class="meal">
+            <span class="ayah-no">(${v.verse_number})</span>
+            ${mealText}
+          </div>
+        </div>
+      `;
+    });
+
+    container.appendChild(sDiv);
+  });
+}
+
+loadJSON();
+</script>
+
+</body>
+</html>
