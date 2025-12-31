@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Kur'an – Meal Seçimi</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+#controls {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  z-index: 10;
+}
+
+#kuran {
+  column-count: 3;
+  column-gap: 40px;
+}
+
+.surah {
+  break-inside: avoid;
+  margin-bottom: 30px;
+}
+
+.surah h2 {
+  text-align: center;
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 5px;
+}
+
+.ayah {
+  margin-bottom: 10px;
+}
+
+.ayah-no {
+  color: #777;
+  font-size: 12px;
+}
+
+.meal {
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<div id="controls">
+  <label>Meal Seç:</label>
+  <select id="mealSelect"></select>
+</div>
+
+<div id="kuran"></div>
+
+<script>
+let DATA;
+let AUTHORS = [];
+
+async function loadJSON() {
+  const res = await fetch("all_surahs_data.json");
+  DATA = await res.json();
+
+  extractAuthors();
+  setupMealSelect();
+  renderKuran();
+}
+
+function extractAuthors() {
+  const set = new Set();
+
+  DATA.surahs.forEach(s =>
+    s.verses.forEach(v =>
+      v.translations.forEach(t => set.add(t.author))
+    )
+  );
+
+  AUTHORS = [...set];
+}
+
+function setupMealSelect() {
+  const select = document.getElementById("mealSelect");
+
+  AUTHORS.forEach(author => {
+    const opt = document.createElement("option");
+    opt.value = author;
+    opt.textContent = author;
+    select.appendChild(opt);
+  });
+
+  select.onchange = renderKuran;
+}
+
+function getMealText(verse, author) {
+  const found = verse.translations.find(t => t.author === author);
+  return found ? found.text : "";
+}
+
+function renderKuran() {
+  const selectedAuthor = document.getElementById("mealSelect").value;
+  const container = document.getElementById("kuran");
+
+  container.innerHTML = "";
+
+  DATA.surahs.forEach(surah => {
+    const sDiv = document.createElement("div");
+    sDiv.className = "surah";
+
+    sDiv.innerHTML = `<h2>${surah.name}</h2>`;
+
+    surah.verses.forEach(v => {
+      const meal = getMealText(v, selectedAuthor);
+
+      sDiv.innerHTML += `
+        <div class="ayah">
+          <div class="meal">
+            <span class="ayah-no">(${v.verse_id})</span>
+            ${meal}
+          </div>
+        </div>
+      `;
+    });
+
+    container.appendChild(sDiv);
+  });
+}
+
+loadJSON();
+</script>
+
+</body>
+</html>
